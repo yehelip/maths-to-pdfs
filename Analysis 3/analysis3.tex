@@ -1,0 +1,218 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,   %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\idealin}{\triangleleft}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\std}{std}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Omicron}{O}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Analysis 3}}
+\author{Yeheli Fomberg}
+\date{326269651}
+\begin{document}
+	\maketitle
+	\newpage
+	\section{Introduction to Topology}
+	\subsection{Norms and Metrics}
+	In this course we are going to analyze functions of the form 
+	$f\colon \R^n\to\R^m$ which requires of course knowing analysis $2$ but
+	since will also be using linear analysis tools this course is in
+	some way a continuation of linear analysis as well. We will
+	start by giving basic topological definitions in the eclidean
+	space $\R^d$, first we define:
+	\[
+		\R^d = \set{(x_1,x_2,\dots,x_d)}{\substack{1 \le i \le d \\ x_i\in\R}}
+	\]
+	And now we can continue to define some more topological terms:
+	\begin{definition}
+	The \textbf{Eulidean norm} is defined as:
+	\[
+		\|x\| = \|x\|_2 = \sqrt{\sum_{i=1}^{d}{x_i^2}}
+	\]
+	We can similarly define the $L_p$ norm as:
+	\[
+		\|x\| = \|x\|_p = \sqrt[p]{\sum_{i=1}^{d}{x_i^p}}
+	\]
+	\end{definition}
+	\noindent Which satisfies all properties of the norm
+	\begin{definition}
+	The \textbf{Euclidean metric} is defined as:
+	\[
+		d_2(P_1,P_2) = \|P_1-P_2\|_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
+	\]
+	\end{definition}
+	\noindent Notice that it is induced by the Eculidean norm and similarly
+	we can induce $L_p$ metric using $L_p$ norms.
+	\subsection{Sequences}
+	Up until now we didn't have many problems using subscript for indexes
+	of sequences, but now since we have coordinates we must denote a sequence
+	in another similar way $^{\text{superscript}}$ as such 
+	$(x^n)_{n=1}^{\infty}$. To define convergence:
+	\[
+		\lim_{n\to\infty}{x^n} = x 
+		\quad \iff \quad
+		\forall i\left(\lim_{n\to\infty}{x_i^n} = x_i\right)
+	\]
+	\begin{definition}
+	A sequence $(x^n)_{n=1}^{\infty}$ is called a Cauchy sequence if and only 
+	if:
+	\[
+		\lim_{n,m\to\infty}{\|x^n-x^m\|} = 0
+	\]
+	\end{definition}
+	
+	\newpage
+	
+	\subsection{Topology}
+	\begin{definition}
+	A \textbf{complete metric space} is a metric space $M$ such that every
+	Cauchy sequence in $M$ converges to some limit in $M$.
+	\end{definition}
+	\begin{definition}
+	An \textbf{open set} in a Euclidean space is a subset $U$ such that
+	for any $x \in U$ exists $\varepsilon > 0$ such that any $y$ such that
+	any $y \in B_\varepsilon(x)$ satisfies $y\in U$
+	\end{definition}
+	\begin{definition}
+	In a topological space $X$ a space a \textbf{neighborhood} of a point 
+	$x\in X$ is a subset such that exists an open set $U$ such that 
+	$p\in U\subset V$
+	\end{definition}
+	\begin{definition}
+	A \textbf{close set} $E$ in a Eculidean space $X$ is a subset of $X$ such
+	that:
+	\[
+		(x^n)_{n=1}^{\infty}\subseteq E \quad x^n \xrightarrow{n\to\infty} x
+		\implies x \in E
+	\]
+	\end{definition}
+	\begin{definition}
+	A topological space is called \textbf{compact} if every open cover of 
+	$X$ has a finite subcover. An equivalent definition if the space is
+	Eculidean is that for every sequence $(x^n)_{n=1}^{\infty}$ has
+	a subsequence $(x^{n_k})_{k=1}^{\infty}$ that converges to a point
+	$x$ in the space.
+	\end{definition}
+	\begin{definition}
+	The \textbf{closure} of a topological space $X$ is defined as:
+	\[
+		\mathrm{Cl}(X) = \set{x}{\exists (x^n) \colon 
+		x^n \xrightarrow{n\to\infty} x}
+	\]
+	\end{definition}
+	\begin{definition}
+	The \textbf{interior} of a topological space $X$ is defined as:
+	\[
+		\mathrm{Int}(X) = \set{x}{\exists r > 0 \colon B_r(x) \subseteq X}
+	\]
+	\end{definition}
+	\begin{definition}
+	The \textbf{boundary} of a topological space $X$ is defined as:
+	\[
+		\partial X = \set{x\in\R^d}{\forall r > 0\
+		\exists x \in X \land \exists y \in X^c\ : y,z\in B_r(x)}
+	\]
+	\end{definition}
+	\begin{definition}
+	A function is continuous at $x\in X$ if for every $\varepsilon > 0$
+	exists $\delta > 0$ such that for every $\|x-y\| < \delta$
+	\[
+		\|f(y) - f(x)\| < \varepsilon
+	\]
+	And we say that a function is continuous on $X$ if it is continuous
+	for every $x\in X$
+	\end{definition}
+	\begin{definition}
+	A function is uniformly continuous on $X$ if for every $\varepsilon > 0$
+	exists $\delta > 0$ such that for every $\|x-y\| < \delta$
+	\[
+		\|f(x) - f(y)\| < \varepsilon
+	\]
+	\end{definition}
+	\begin{remark}
+	An important equivalent, more general definition for continuity is that
+	if $f$ is a function from $A$ to $B$ then if $U$ is an open set in $B$
+	implies $f^{-1}(U)$ is an open set we say that $f$ is continuous on $A$.
+	\end{remark}
+	\begin{definition}
+	A \textbf{connected} space is a topological space that cannot be 
+	represented as the union of two or more disjoint non-empty open subsets. 
+	\end{definition}
+	\begin{definition}
+	A \textbf{path} from $x\in X$ to $y\in X$ is a continuous function from 
+	the unit interval $[0,1]$ to $X$ such that $f(0) = 0$ and $f(1) = y$
+	\end{definition}
+	\begin{definition}
+	A \textbf{path connected} space $X$ is a topological space such that 
+	exists a path between any two points in $X$
+	\end{definition}
+	
+	\newpage
+	
+	\section{Practice}
+	Phew! These were a lot of definitions... Now it's time for some practice!
+	\\ \textbf{Prove that a continuous function $f\colon A\to B$ has 
+	a maximum in a compact space} \\
+	By the completeness axiom for the real numbers we know that the set
+	$f(A)$ has a supremum which we will denote $S$. By the definition
+	of the supremum it is possible to construct a sequence that converges
+	to it which we shall denote $f(x^n)$. We don't know whether $x^n$
+	converges or not but we know it has a subsequence that converges so:
+	\[
+		\lim_{k\to\infty}{x^{n_k}} = x \quad \text{and} \quad 
+		\lim_{k\to\infty}{f(x^{n_k})} = S
+	\]
+	Since $f$ is close we get $x\in A$ and since it is continuous $f(x) = S$
+	which shows that it is continuous and also has a maximum. \\
+	\textbf{Prove that a set $E$ is closed if and only if it's complement
+	$E^c$ is open} \\
+	\underline{$(\Rightarrow)$} \\
+	Suppose that $E$ is closed, and $E^c$ is not open. Then exists
+	$x\notin E$ such that for all $r > 0$ we get $B_r(x) \cap E \neq 
+	\emptyset$ which means we can construct a sequence in $E$ that converges
+	to $x$ but $x\notin E$ in contradiction to the assumption that $E$ is 
+	close. \\
+	\underline{$(\Leftarrow)$} \\
+	Suppose that $E^c$ is open and $E$ is not closed, then exists a sequence
+	$(x^n)_{n=1}^{\infty}$ that converges to some $x \in E^c$ which means
+	that for every $r > 0$ that $B_r(x) \cap E \neq \emptyset$ in 
+	contradiction to $E_c$ being open.
+	
+	
+	
+	
+\end{document}
