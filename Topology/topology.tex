@@ -1,0 +1,90 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,   %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\idealin}{\triangleleft}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\std}{std}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Omicron}{O}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Introduction to Metric and Topological Spaces}}
+\author{Yeheli Fomberg}
+\date{326269651}
+\begin{document}
+	\maketitle
+	\newpage
+	\section{Metric Spaces}
+	First we will begin with metric spaces.
+	\begin{definition}
+	Let $X$ be a non-empty set. A metric on $X$ is a function 
+	$d \colon X \times X \to [0,\infty]$ such that for all $x,y,z \in X$,
+	\end{definition}
+	\begin{enumerate}
+	\item $d(x,y) = 0$ if and only if $x = y$;
+	\item $d(x,y) = d(y,x)$ (symmetry);
+	\item $d(x,z) \le d(x,y) + d(y,z)$ (triangle inequality);
+	\end{enumerate}
+	\emph{The pair $(X,d)$ is said to be a \textbf{metric space}.}
+	\begin{example}
+	Let $X$ be a non-empty set. Let $d \colon X \times X \to [0,\infty)$ be
+	the function such that for $x,y \in X$,
+	\[
+		d(x,y) := \begin{cases}
+			0, & x=y \\
+			1, & x \neq y
+		\end{cases}
+	\]
+	The function $d$ is a metric and it is called \textbf{the discrete metric}
+	on $X$.
+	\end{example}
+	\begin{example}
+	Let $X = \R^n$ and define the function:
+	\[
+		d(x-y) := |x - y|
+	\]
+	Where $|\cdot | \colon \R \to \R$ is the Eclidean norm function. 
+	Then the pair $(X, d)$ forms a metric space.
+	\end{example}
+	\begin{example}
+	Let $(X, N)$ be an arbitrary normed space and define the function:
+	\[
+		d(x-y) := N(x - y)
+	\] 
+	Then the pair $(X, d)$ forms a metric space.
+	\end{example}
+	
+	
+	
+\end{document}

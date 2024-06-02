@@ -212,6 +212,38 @@
 	that for every $r > 0$ that $B_r(x) \cap E \neq \emptyset$ in 
 	contradiction to $E_c$ being open.
 	
+	\newpage
+	
+	\section{Differentiability}
+	Let $A \in \R^{m \times n}$. We define the linear map 
+	$T_A \colon \R^N \to \R^M$ by:
+	\[
+		T(x) = Ax \quad x\in \R^n
+	\]
+	Let $T \colon V \to M$ be a linear transformation between inner product
+	spaces, we define the operator norm to be:
+	\[
+		\|T\|_{\mathrm{op}} = \|T\| = \sup_{v \neq 0}{\frac{\|Tv\|_W}{\|v\|_V}}
+	\]
+	and $T$ is said to be bounded if $\|T\| < \infty$. An important result
+	to prove is that if $T$:
+	\[
+		\|T\|_{\mathrm{op}} \le 
+		\left(\sum_{i,j}{}a_{ij}^{2}\right)^{\frac{1}{2}} < \infty
+	\]
+	since this gives that:
+	\[
+		\|T(x) - T(y)\| \le \|T\|_{\mathrm{op}}\|x-y\|
+	\]
+	which means that $T$ is continuous and even Lipschitz continuous.
+	\begin{definition}
+	An \textbf{affine function} is a function fo the form:
+	\[
+		T_{A,b}(x) = Ax + b
+	\]
+	such that $A\in\R^{m \times n}$ and $b\in x\in \R^{m}$ 
+	\end{definition}
+	
 	
 	
 	
