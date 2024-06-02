@@ -89,6 +89,7 @@
 	
 	\subsection{$V = \R^4$ with 
 	\[ W = \text{Sp}\{e_1+e_4,e_2+e_4\},\quad U = \{e_1,e_2+e_3\} \] 
+	\noindent
 	where $E = (e_1,...,e_4)$ is the standard basis.}
 	Consider the following matrix with the vectors from $U$ and $W$:
 	\[ \begin{pmatrix}
@@ -369,8 +370,8 @@
 	\newpage
 	
 	\section{Let $V$ be a vector space, $T,S\in \text{End}(V)$, and let $S$ be 
-	diagonalizable. Prove: 
-	\[ \text{the eigenspaces of $S$ are $T$-invariant} \iff TS = ST \]}
+	diagonalizable. Prove that the eigenspaces of $S$ are $T$-invariant if 
+	and only if $TS = ST$}
 	{$(\Leftarrow)$} \\
 	For any eignenvalue $\lambda$ of $S$:
 	\begin{align*}
@@ -454,7 +455,7 @@
 	
 	\section{Let $T,S,Q\in\text{End}(v)$ such that $T = Q^{-1}SQ$. 
 	Show that $U\subseteq V$ is $T$-invariant $\iff Q(U)$ is $S$-invariant}
-	\underline{$(\Rightarrow)$} Suppose that $U\subseteq V$ is $T$-invariant.
+	\underline{$(\Rightarrow)$} \\ Suppose that $U\subseteq V$ is $T$-invariant.
 	That means that:
 	\[
 		T(U)\subseteq U
@@ -473,7 +474,7 @@
 		&\Rightarrow S(Q(U)) \subseteq Q(U)
 	\end{align*}
 	In other words - $Q(U)$ is $S$-invariant. \\\\
-	\underline{$(\Leftarrow)$} Suppose that $Q(U)$ is $S$-invariant:
+	\underline{$(\Leftarrow)$} \\ Suppose that $Q(U)$ is $S$-invariant:
 	\[
 		(*) \quad S(Q(U)) \subseteq Q(U)
 	\]
@@ -673,12 +674,12 @@
 	So we found all of our Jordan chains and also the Jordan basis for $A$:
 	\[
 		B_J = 
-		\{
+		\left\{
 		\begin{pmatrix} 0\\ 0\\ 2\\ 0\\ \end{pmatrix}
 		\begin{pmatrix} 0\\ 0\\ 1\\ 1\\ \end{pmatrix}
 		\begin{pmatrix} 1\\ -2\\ 0\\ 0\\ \end{pmatrix}
 		\begin{pmatrix} -1\\ 1\\ 1\\ 0\\ \end{pmatrix}
-		\}
+		\right\}
 	\]
 	Now we will find the minimal polynomial. To find the minimal polynomial
 	we will see that it is excactly the product of the the polynomials
@@ -836,15 +837,10 @@
 	From linear algebra $1$ we know that a if $AB=I$ then $BA=I$ which means
 	that we found the inverse of $J_n(\lambda)$:
 	\[
-		J_n(\lambda)^{-1} = \left(\prod_{i=1}^{k}{(I + \lambda^{-2^k}J_n^{2^k}(0))}
+		J_n(\lambda)^{-1} = 
+		\left(\prod_{i=1}^{k}{(I + \lambda^{-2^k}J_n^{2^k}(0))}
 		\right)(I - \lambda^{-1}J_n(0))(\lambda^{-1} I)
 	\]
-
-	\newpage
-
-	\subsection{Find a sufficient and necessary condition that a real matrix has to
-	meet to be similar to its inverse.}
-
 
 	\newpage
 
@@ -858,10 +854,7 @@
 	\end{pmatrix}
 	\] There's no need to find one explicitly.}
 	Since the matrix we get by the calculation is of order $3$ we know that $A$
-	is also of order $3$. 1
-
-
-	Consider $A = J_3(\lambda)$, by a theorem we proved
+	is also of order $3$. Consider $A = J_3(\lambda)$, by a theorem we proved
 	in class we can see that for the polynome $f(x) = x^9 + x^{99}$:
 	\[
 		f(A) = 
