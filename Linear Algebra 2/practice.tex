@@ -2305,8 +2305,163 @@
 	\textbf{Let $V$ be a vector space over $\C$ and let $D,T\in\End(v)$ such
 	that $TD = DT$ and $D$ is diagonalizable. Prove that the eigenspaces of $D$
 	are $T$-invariant.} \\
+	Let $\lambda$ be an eigenvalue of $D$. The corresponding eigenspace is:
+	\[
+		V_\lambda = \{v \in V \mid D(v) = \lambda v \}
+	\]
+	To show this space is $T$-invariant by definition we can consider 
+	$v\in V_\lambda$ and indeed:
+	\[
+		D(T(v)) = T(D(v)) = T(\lambda v) = \lambda T(v)
+	\]
+	Which implies that $T(v)\in V_\lambda$ as wanted. \\
+	\textbf{Show that exists a basis $B$ of $V$ such that $[D]_B$ is diagonal
+	and $[T]_B$ is in Jordan normal form.} \\
+	In the previous exercise we have shown that the eigenspaces of $D$ are
+	$T$-invariant, and since we know they also span $V$ we get that:
+	\[
+		V = V_{\lambda_1} \oplus \cdots \oplus V_{\lambda_k}
+	\]
+	Is a direct product decomposition of $T$. From Jordan's theorem
+	for every $V_{\lambda_i}$ exists a basis $B_i$ that changes $T$ to a normal
+	form, so we get that the ordered union $B = \bigcup B_i$ is a basis
+	such that $[T]_B$ is in Jordan normal form and since it is made of
+	eigenvectors of $D$ it of course diagonalizes $D$ as well.
 	
+	\newpage
+	\noindent
+	\textbf{For $\R^3$ coupled with the standard inner product we denote the
+	norm and metric it induces as $|\cdot|$ and $d(\cdot,\cdot)$ 
+	correspondingly. Let:
+	\[
+	A = \begin{pmatrix}
+			4 & 3 & 0\\
+			2 & -1 & 0\\
+			0 & 0 & 2\\
+		\end{pmatrix}
+	\]
+	Find the value of $\max\{d(Av,v) \mid v\in\R^3 \land \|v\| = 1\}$} \\
+	This is a clearly a question about SVD decomposition. We see that:
+	\[
+		\max\{d(Av,v) \mid v\in\R^3 \land \|v\| = 1\} =
+		\max\{\|(A-I)(v)\| \mid v\in\R^3 \land \|v\| = 1\}
+	\]
+	We denote:
+	\[
+		B = \begin{pmatrix}
+			3 & 3 & 0\\
+			2 & -2 & 0\\
+			0 & 0 & 1\\
+		\end{pmatrix}
+	\]
+	To find it's singular values we calculate:
+	\[
+		B^TB = 
+		\left(\begin{matrix}
+			13 & 5 & 0 \\
+			5 & 13 & 0 \\
+			0 & 0 & 1
+		\end{matrix}\right)
+	\]
+	This is a block matrix so we can easily find that its eigenvalues are
+	\[
+		(\lambda_1, \lambda_2, \lambda_3) = (18,8,1)
+	\]
+	Thus the singular values of $B$ are:
+	\[
+		(\sigma_1, \sigma_2, \sigma_3) = (\sqrt{18},\sqrt{8},\sqrt{1})
+	\]
+	So finally:
+	\[
+		\max\{d(Av,v) \mid v\in\R^3 \land \|v\| = 1\} = \sqrt{18}
+	\]
+	\textbf{Find a unit vector $v\in V$ that gives that maximum} \\ 
+	This is just the unit eigenvector corresponding to the eigenvalue $18$ of
+	$B^TB$. We can easily find one:
+	\[
+		\tilde{v} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}
+	\]
+	And now normalizing it we get:
+	\[
+		v = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}
+	\]
 	
+	\newpage
+	\noindent
+	\textbf{Let $A\in U_n$. Prove that $|\tr(A)| = n$ if and only if $A$ is
+	a scalar matrix} \\
+	We know that $A$ is unitary so it is also normal and from the spectral
+	theorem for normal matrices it is diagonalizable. Since it is unitary
+	we also know that all of its eigenvalues are on the unit circle which means
+	that:
+	\[
+		|\tr(A)| = \left|\sum_i{\lambda_i}\right| \le \sum_i{|\lambda_i|}
+		= n
+	\]
+	We know that the equality holds if and only if all the vectors are
+	in the same direction. Thus $|\tr(A)| = n$ if and only if $A$ is a
+	scalar matrix.
+	\\ \noindent
+	\textbf{Let $B\in O_n$. Prove that $|\tr(A)| = n$ if and only if $A$ is
+	$\pm I$} \\
+	Since $A\in O_n$ it is also in $U_n$ which implies that $|\tr(A)| = n$ 
+	if and only if $A$ is a scalar matrix. We can see that:
+	\[
+		n = |\tr(A)| = |\tr(cI)| = |c*n| = |n||c|
+	\]
+	This implies that $|\tr(A)| = n$ if and only if $A$ is $\pm I$.
+	
+	\newpage
+	\noindent
+	\textbf{Let $V$ be a finite dimension vector space over $\R$ and let
+	$\varphi,\phi \colon V \to \R$ be linear functionals. Define:
+	\[
+		q(v) = \varphi(v)\phi(v)
+	\]
+	Prove that $q(v)$ is a quadratic form on $V$.} \\
+	We know that:
+	\[
+		f(v,u) = \varphi(v)\phi(u)
+	\]
+	Is a bilinear form, and since the quadratic form it induces is $q$ we get
+	that $q$ is a bilinear form by definition. Usually when working with
+	bilinear and quadratic forms it's convenient to find the symmetric bilinear
+	form that induces $q$ and it is:
+	\[
+		g(v,u) = \frac 12 \left(\varphi(v)\phi(u) + \varphi(u)\phi(v)\right)
+	\]
+	\textbf{Show that $n_+ \le 1$ and also that $n_- \le 1$} \\
+	Denote $\dim(V) = n$. We know that $\varphi,\phi$ are linear functionals
+	and thus, 
+	\begin{align*}
+		\mathrm{null} \varphi \geq n - 1 \\
+		\mathrm{null} \phi \geq n - 1
+	\end{align*}
+	The intuition is that we want to eventually get to a matrix that has a 
+	block of $0_{n-2}$ so we can consider $K = \ker \varphi \cup \ker \phi$. 
+	We know that $\dim K \geq n - 2$. Complete it with some space $W$ to $V$ 
+	as such:
+	\[
+		V = W \oplus K
+	\]
+	We can now make a basis for $V$ as the union of the basis for $W$ and the
+	basis for $K$ denoted $B= B_W \cup B_K$. The representing matrix of $g$
+	with this basis will be:
+	\[
+		B = [g|_{W \times W}]_{B_W} \oplus 0_{n - 2}
+	\]
+	This tells us that $n_- + n_+ \le 2$. Suppose $n_+ = 2$ this would mean
+	that $\dim W = 2$ and that for any $0 \neq w\in V - K$ that $q(w) > 0$
+	but that can't be the case since $\dim \ker \phi \geq n-1$ so we can
+	choose a vector that is not in $W$ such that $q(w) = 0$ in contradiction.
+	Thus $n_-,n_+ \le 1$ as wanted. \\
+	\textbf{Find examples for functionals that gives all $4$ options $(0,0),
+	(1,0),(0,1),(1,1)$} \\
+	We can choose the functionals for $(n_+,n_-)$ such that:
+	\begin{align*}
+		\varphi(a,b) &= n_+a + n_-b \\
+		\phi(a,b) &= n_+a - n_-b
+	\end{align*}
 	
 	
 	
