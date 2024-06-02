@@ -2456,7 +2456,69 @@
 		\phi(a,b) &= n_+a - n_-b
 	\end{align*}
 	
+	\newpage
 	
+	\textbf{Let $V$ be a vector space over $\C$ and $T\in\End(V)$. Prove
+	or disprove that for any $0 \le k \le \dim V$ exists a subspace $U$ that
+	is $T$-invariant of dimension $k$.} \\
+	
+	\noindent
+	\textbf{Let $V$ be a vector space over $\C$ and $T\in\End(V)$. Prove
+	or disprove that for any $0 \le k \le \dim V$ exists at most one subspace 
+	$U$ that is $T$-invariant of dimension $k$.}
+	
+	\newpage
+	\noindent
+	\textbf{Let $V = \C_4[x]$. Define:
+	\[
+		(T(p))(x) = p''(x^2)
+	\]
+	Find the Jordan normal form of $T$ and a Jordan basis.} \\
+	\textbf{Calculate $T^{100}(x^4+x^3+x^2+x+1)$} \\
+	
+	\newpage
+	\noindent
+	\textbf{Let $(V, \ip{\cdot}{\cdot})$ be an inner product space over $\R$.
+	Let $U_1$, $U_2$ be two non-trivial subspaces of $V$. Define:
+	\[
+		\angle(U_1,U_2) = 
+		\min\{\angle(u_1,u_2) \mid 
+		u_1,u_2 \neq 0 \land (u_1,u_2)\in U_1 \times U_2\}
+	\]
+	Show that if $P_1,P_2$ are the orthogonal projections on $U_1,U_2$ then
+	the first singular value of $P_1 \circ P_2$ is $\cos(\angle (U_1,U_2))$.} \\
+	
+	\newpage
+	\noindent
+	\textbf{Let $(V, \ip{\cdot}{\cdot})$ be an inner product space
+	of dimension $5$ over $\R$. Let $T$ be an invertible linear operator such
+	that:
+	\[
+		T^* = 3I - 2T^{-1}
+	\]
+	And also $\tr(T)=9$. Show that $T$ is diagonalizble and find its 
+	diagonal form.}
+	
+	\newpage
+	\noindent
+	\textbf{Let $A \in O(n)$. Prove that:
+	\[
+		q_A(v) = \|v\|^2\cos(\angle(v,Av))
+	\]
+	Is a quadratic form.} \\
+	
+	\noindent	\textbf{Now suppose that $n=2$. For any $\theta\in[0,2\pi]$ find the
+	signature of the quadratic form $q_A$ for the rotation matrix:
+	\[
+		A = \begin{pmatrix}
+			\cos(\theta) & -\sin(\theta)\\
+			\sin(\theta) &  \cos(\theta)\\
+		\end{pmatrix}
+	\]} \\
+	
+	\noindent
+	\textbf{For $\theta$ values such that $q_A$ is positive definite, find
+	an orthonormal basis for the inner product that $q_A$ is its sqaured norm.}
 	
 	
 \end{document}
