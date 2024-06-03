@@ -2457,15 +2457,51 @@
 	\end{align*}
 	
 	\newpage
-	
+	\noindent
 	\textbf{Let $V$ be a vector space over $\C$ and $T\in\End(V)$. Prove
 	or disprove that for any $0 \le k \le \dim V$ exists a subspace $U$ that
 	is $T$-invariant of dimension $k$.} \\
+	We notice that the trivial subspace $\{0\}$ is $T$-invariant. Assuming
+	we have invariant subspaces of dimension $m < k \le n$ we will prove
+	an invariant subspace of size $k$ exists. Let $U$ be an invariant subspace
+	of size $k-1$. Complete $U$ to $V$ with $W$ such that:
+	\[
+		V = U \oplus W
+	\]
+	If exists $w \in W$ such that $T(w) \in U$ than if we add $w$ to $U$
+	we get an invariant subspace of dimension $k$ as wanted. Otherwise
+	we have:
+	\[
+		T(W) \subseteq W
+	\]
+	We see now that $V = U \oplus W$ is a direct decomposition of $T$. Since
+	we are working over $\C$ this means that exists at least one eigenvector
+	in $W$ which we denote $w'$. Since it is a eigenvector we have:
+	\[
+		T(\Sp\{w'\}) \subseteq \Sp\{w'\}
+	\]
+	And now if we add $w'$ to $U$ we get an invariant subspace of dimension 
+	$k$ as wanted which completes the proof.
 	
 	\noindent
 	\textbf{Let $V$ be a vector space over $\C$ and $T\in\End(V)$. Prove
 	or disprove that for any $0 \le k \le \dim V$ exists at most one subspace 
 	$U$ that is $T$-invariant of dimension $k$.}
+	Take:
+	\[
+		V = \C^2 \quad T = \mathrm{Id}
+	\]
+	And the subspaces will be:
+	\begin{align*}
+		A_1 &= \Sp \{\begin{pmatrix} 1 \\ 0\end{pmatrix}\}  \\
+		A_2 &= \Sp \{\begin{pmatrix} 0 \\ 1\end{pmatrix}\}
+	\end{align*}
+	It is clear that:
+	\begin{align*}
+		T(A_1) \subseteq A_1 \\
+		T(A_2) \subseteq A_2 
+	\end{align*}
+	Which means we found two different $T$-invariant subspaces of dimension $1$.
 	
 	\newpage
 	\noindent
@@ -2474,7 +2510,99 @@
 		(T(p))(x) = p''(x^2)
 	\]
 	Find the Jordan normal form of $T$ and a Jordan basis.} \\
+	We see that:
+	\[
+		T(ax^4 + bx^3 + cx^2 + dx + e) =
+		12x^2 + 6bx + 2c
+	\]
+	So the representing matrix of $T$ under the standard basis is:
+	\[
+		A = [T]_E = \left(\begin{matrix}
+				12 & 0 & 0 & 0 & 0 \\
+				0 & 0 & 0 & 0 & 0 \\
+				0 & 6 & 0 & 0 & 0 \\
+				0 & 0 & 0 & 0 & 0 \\
+				0 & 0 & 2 & 0 & 0
+				\end{matrix}\right)
+	\]
+	To find its Jordan normal form we can first find its eigenvalues.
+	We see that it is a lower triangular matrix and so its eigenvalues
+	are $\lambda_1 = 0$ with algebraic multiplicity
+	\begin{center}	
+	\begin{tabular}{ll | l}
+	$\lambda_1 = 0$ & $\lambda_2 = 12$ & \\
+	\hline
+	4 & 1 & algebraic multiplicity\\
+	2 & 1 & geometric multiplicity\\
+	\end{tabular}
+	\end{center}
+	Now to find the Jordan chains of $\lambda_1$ we get:
+	\begin{align*}
+		\ker(A - 12I) &= \ker
+		\left(\begin{matrix}
+		12 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 6 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 2 & 0 & 0
+		\end{matrix}\right) = 
+		\Sp\{
+		e_4,e_5
+		\} \\
+		\ker(A - 12I)^2 &= \ker
+		\left(\begin{matrix}
+		144 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 12 & 0 & 0 & 0
+		\end{matrix}\right) = 
+		\Sp\{
+		e_4,e_5,e_3
+		\} \\
+		\ker(A - 12I)^3 &= \ker
+		\left(\begin{matrix}
+		1728 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0
+		\end{matrix}\right) = 
+		\Sp\{
+		e_4,e_5,e_3,e_2
+		\}
+	\end{align*}
+	This means that there is at least one block of size $3$ with eigenvalue
+	$\lambda_1$. So considering the multiplicities from earlier we get that
+	the Jordan normal form of $A$ up to order is:
+	\[
+		A = J_1(12) \oplus J_3(0) \oplus J_1(0)
+	\]
+	Which means that the chain of $\lambda_1$ of length $3$ is:
+	\[
+		v_4 = \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}, \quad
+		v_3 = Av_4 = \begin{pmatrix} 0 \\ 0 \\ 6 \\ 0 \\ 0 \end{pmatrix}, \quad
+		v_2 = Av_3 = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 12 \end{pmatrix} \quad
+	\]
+	And the Jordan basis is:
+	\[
+		B_J = 
+		\left\{
+			e_1, 12e_5, 6e_3, e_2, e_4
+		\right\}
+	\]
+	
+	\newpage
+	\noindent
 	\textbf{Calculate $T^{100}(x^4+x^3+x^2+x+1)$} \\
+	We can see that:
+	\[
+		T^{100}(x^4+x^3+x^2+x+1) = 
+		T^{100}(x^3+x^2+x+1) + 
+		T^{100}(x^4) = 
+		0 + 12^{100}x^4 = 
+		12^{100}x^4
+	\]
 	
 	\newpage
 	\noindent
@@ -2507,8 +2635,7 @@
 	\]
 	Is a quadratic form.} \\
 	
-	\noindent
-	\textbf{Now suppose that $n=2$. For any $\theta\in[0,2\pi]$ find the
+	\noindent	\textbf{Now suppose that $n=2$. For any $\theta\in[0,2\pi]$ find the
 	signature of the quadratic form $q_A$ for the rotation matrix:
 	\[
 		A = \begin{pmatrix}
@@ -2520,6 +2647,7 @@
 	\noindent
 	\textbf{For $\theta$ values such that $q_A$ is positive definite, find
 	an orthonormal basis for the inner product that $q_A$ is its sqaured norm.}
+	\\
 	
 	
 \end{document}
