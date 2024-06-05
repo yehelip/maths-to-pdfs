@@ -853,37 +853,57 @@
 		0 & 0 & 2\\
 	\end{pmatrix}
 	\] There's no need to find one explicitly.}
-	Since the matrix we get by the calculation is of order $3$ we know that $A$
-	is also of order $3$. Consider $A = J_3(\lambda)$, by a theorem we proved
-	in class we can see that for the polynome $f(x) = x^9 + x^{99}$:
+	First we denote:
 	\[
-		f(A) = 
-		\begin{pmatrix}
-		f(\lambda) & f'(\lambda) & \frac{1}{2}f''(\lambda)\\
-		0 & f(\lambda) & f'(\lambda)\\
-		0 & 0 & f(\lambda)\\
+		B = \begin{pmatrix}
+		2 & 99 & 999\\
+		0 & 2 & -9\\
+		0 & 0 & 2\\
 		\end{pmatrix}
 	\]
+	We notice that $\lambda = 2$ is an eigenvalue of algebraic multiplicity $3$
+	and:
+	\[
+		B - 2I = \begin{pmatrix}
+		0 & 99 & 999\\
+		0 & 0 & -9\\
+		0 & 0 & 0\\
+		\end{pmatrix}
+	\]
+	Of geometric multiplicity $1$ which means that the Jordan normal form of $B$
+	is $J_3(2)$ so exists an invertible $P$ such that:
+	\[
+		P^{-1}BP = J_3(2)
+	\]
+	We notice that according to the combinatorial calculation we did in class we
+	can calculate and get:
+	\[
+	(J_3(2))^9 + (J_3(2))^{99} = \begin{pmatrix}
+		2 & 108 & 4887\\
+		0 & 2 & 108\\
+		0 & 0 & 2\\
+	\end{pmatrix}
+	\]
+	This matrix is similarly similar to $J_3(2)$ which means that exists an invertible
+	$Q$ such that:
+	\[
+		(J_3(2))^9 + (J_3(2))^{99} = Q^{-1}BQ
+	\]
+	We get that:
+	\[
+		Q (J_3(2))^9 Q^{-1} + Q (J_3(2))^{99} Q^{-1} = B
+	\]
+	And now if we denote $A = Q (J_3(2)) Q^{-1}$ we get that:
+	\[
+		A^9+A^{99} = \begin{pmatrix}
+		2 & 99 & 999\\
+		0 & 2 & -9\\
+		0 & 0 & 2\\
+		\end{pmatrix}
+	\]
+	As wanted.
 
 	\newpage
-
-	\section{The one with high powers}
-	\subsection{Find all the matrices $A\in M_4(\C)$ that satisfy $A^4-2A^2+1=0$
-	up to similarity.}
-
-	\newpage
-
-	\section{The one with invariant subspaces}
-	\subsection{Compute the invariant subspaces of a jordan block $J_n(\lambda)$.
-	Use what we saw in the rehearsal about the invariant subspaces of $J_n(0)$.}
-
-	\newpage
-
-	\subsection{Let $T\in End(V)$ where $V$ is a complex vector space of finite
-	dimension. Show that there is a finite amount of $T$-invariant subspaces iff
-	$p_T(x) = m_T(X)$}
-
-\newpage
 	\section{The one with the Cauchy-Schwartz inequality}
 	
 	\subsection{Show that for all positive $x_1,\dots,x_n\in\R$:
@@ -1590,28 +1610,18 @@
 	Let $T$ be a operator over an inner product space $V$ and let 
 	$TT^{*}=\alpha T + \beta I$ for some $\alpha,\beta\in\R$.
 	\subsection{Show that $\alpha^2+4\beta \ge 0$}
-	\underline{case $a=0$}
+	We can see that:
 	\[
-		TT^* = \beta I
+		T^*T = T^{-1}(TT^{*})T = T^{-1}(\alpha T + \beta I)T = \alpha T + \beta I = 
+		TT^*
 	\]
-	So \[ \beta T^{-1} = T^* \] This implies??? \\ 
-	\underline{case $a \neq 0$} \\
-	We know that $TT^*$ is self-adjoint, and since $\alpha,\beta\in\R$ 
-	we get that:
+	So we get that $T$ is normal so by the spectral theorem exists a basis of
+	eigenvectors of $T$ such that according to that basis $T$ is diagonalizable.
+	Let $\lambda$ be an eigenvalue of $T$ we get that:
 	\[
-		\alpha T + \beta I = (TT^*)
-		= (TT^*)^* = (\alpha T + \beta I)^* = \alpha T^* + \beta I
+		\|\lambda\|^2 = \alpha \lambda + \beta
 	\]
-	Because $a\neq 0$ we get:
-	\[
-		T = T^*
-	\]
-	Which means that:
-	\begin{align*}
-		T^2 &= \alpha T + \beta I \\ \Rightarrow 
-		p(T) &= T^2 -  \alpha T - \beta I = 0
-	\end{align*}
-	This implies???
+	
 	
 	\newpage
 	
@@ -2730,6 +2740,12 @@
 	an orthonormal basis for the inner product that $q_A$ is its sqaured norm.} \\
 	We have seen that $q_A(v) = \cos(\theta)\|v\|^2$ so a symmetric bilinear form
 	the induces it is $g(u,v) = \cos(\theta)\|v\|\|u\|$. In 
+	
+	\newpage
+	
+	\textbf{Let $T\in End(V)$ where $V$ is a complex vector space of finite
+	dimension. Show that there is a finite amount of $T$-invariant subspaces iff
+	$p_T(x) = m_T(X)$} \\
 	
 	
 \end{document}
