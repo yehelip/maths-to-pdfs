@@ -2603,8 +2603,21 @@
 		0 + 12^{100}x^4 = 
 		12^{100}x^4
 	\]
+	Notice that there is also an easier way to solve the earlier problem by noticing
+	that:
+	\[
+		T(x^4) = 12x^4
+	\]
+	So $x^4$ is an eigenvector with the eigenvalue $12$, and we can also see that:
+	\begin{align*}
+		&T(x^3) = 6x^2 \quad T(6x^2) = 12 \quad T(12) = 0 \\
+		&T(x) = 0
+	\end{align*}
+	Which means that $(12,6x^2,x^3), (x)$ are Jordan chains with eigenvalue $0$
+	and then we get the same Jordan normal form and the same basis.
 	
 	\newpage
+
 	\noindent
 	\textbf{Let $(V, \ip{\cdot}{\cdot})$ be an inner product space over $\R$.
 	Let $U_1$, $U_2$ be two non-trivial subspaces of $V$. Define:
@@ -2615,6 +2628,25 @@
 	\]
 	Show that if $P_1,P_2$ are the orthogonal projections on $U_1,U_2$ then
 	the first singular value of $P_1 \circ P_2$ is $\cos(\angle (U_1,U_2))$.} \\
+	First we recall that the biggest singular value of $P_2 \circ P_1$ is:
+	\[
+		\sigma_1 = \max\{\|P_2 \circ P_1 (v)\| \mid \|v\| = 1\}
+	\]
+	Let $u_1, u_2$ be the vectors where we attain the minimum for $\angle (U_1,U_2)$,
+	without loss of generality we can assume they are unit vectors. Now by calculation
+	we get:
+	\[
+		\cos(\angle (U_1,U_2)) = 
+		\cos(\angle (u_1,u_2)) = 
+		\cos(\angle (u_1,u_2))\|u_1\|\|u_2\| =
+		\ip{u_1}{u_2} =_{(*)}
+		\ip{u_1}{P_1(u_2)} \le_{\mathrm{CS}}
+		\|u_1\|\|P_1(u_2)\| = 
+		\|P_1(u_2)\| = 
+		\|P_1 \circ P_2 (u_2)\| \le \sigma_1
+	\]
+	The equality $(*)$ is from the fact that $u_2 = P_1(u_2) + u^\perp$ where
+	$u^\perp \in U_1^\perp$.
 	
 	\newpage
 	\noindent
@@ -2626,6 +2658,35 @@
 	\]
 	And also $\tr(T)=9$. Show that $T$ is diagonalizble and find its 
 	diagonal form.}
+	First we can notice that $T$ and $T*$ commute because $T$ commutes with $I$ and
+	with $T^-1$ so $T$ is normal. From the spectral theorem it follows that it
+	has an orthonormal basis of eigenvectors such that $T$ is diagonalizble and all
+	of its eigenvalues are real. Let $v$ be an eigenvector of $T$
+	with eigenvalue $\lambda$. We know that $v$ is also an eigenvalue of $T^*$
+	and $T^{-1}$ with eigenvalues $\overline{\lambda}$ and $\lambda^{-1}$ accordingly.
+	It follows that:
+	\[
+		\overline{\lambda} = 3\lambda - 2\lambda^{-1}
+	\]
+	Solving this equation we get:
+	\begin{align*}
+		\overline{\lambda} &= 3 - 2\lambda^{-1} \\
+		\|\lambda\|^2 &= 3\lambda - 2 \\
+		0 &= \|\lambda\|^2 - 3\lambda + 2 \\
+		0 &= \lambda^2 - 3\lambda + 2, \quad \lambda\in\R \\
+		0 &= (\lambda - 1)(\lambda - 2) \\
+	\end{align*}
+	So the possible eigenvalues of $T$ are $\lambda_1 = 1$ and $\lambda_2 = 2$ and 
+	we only need find their multiplicities. Denote their multiplicities $r_1,r_2$
+	and we get:
+	\[
+		\begin{cases}
+			r_1 + 2r_2 = 9 \\
+			r_1 + r_2 = \dim V = 5
+		\end{cases}
+	\]
+	The only solution in natrual numbers is $(r_1,r_2) = (1,4)$ so the diagonal form
+	of $T$ is $\mathrm{diag(1,2,2,2,2)}$.
 	
 	\newpage
 	\noindent
@@ -2634,6 +2695,15 @@
 		q_A(v) = \|v\|^2\cos(\angle(v,Av))
 	\]
 	Is a quadratic form.} \\
+	We define the function:
+	\[
+		f(u,v) = \ip{u}{Av} = \|u\|\|Av\|\cos(\angle(u,Av))
+	\]
+	It is clear that this is a bilinear form and we have:
+	\[
+		f(v,v) = \|v\|^2\cos(\angle(v,Av))
+	\]
+	So $q_A(v)$ is indeed a quadratic form.
 	
 	\noindent	\textbf{Now suppose that $n=2$. For any $\theta\in[0,2\pi]$ find the
 	signature of the quadratic form $q_A$ for the rotation matrix:
@@ -2643,11 +2713,23 @@
 			\sin(\theta) &  \cos(\theta)\\
 		\end{pmatrix}
 	\]} \\
+	If the matrix is the rotation matrix in angle $\theta$ we get that:
+	\[
+		q_A(v) = \|v\|^2\cos(\angle(v,Av)) = \|v\|^2\cos(\theta)
+	\]
+	This means that if 
+	$x\in\left[0,\frac{\pi}{2}\right) \cup \left(\frac{3\pi}{2},2\pi\right)$
+	then $q_A(v) > 0$ for all $0 \neq v \in V$ so $(n_0,n_+,n_-) = (0,2,0)$ and
+	similarly if $x \in \left(\frac{\pi}{2},\frac{3\pi}{2}\right)$ then 
+	$(n_0,n_+,n_-) = (0,0,2)$ and if 
+	$\theta \in \left\{\frac{\pi}{2},\frac{3\pi}{2}\right\}$ then 
+	$(n_0,n_+,n_-) = (2,0,0)$.
 	
 	\noindent
 	\textbf{For $\theta$ values such that $q_A$ is positive definite, find
-	an orthonormal basis for the inner product that $q_A$ is its sqaured norm.}
-	\\
+	an orthonormal basis for the inner product that $q_A$ is its sqaured norm.} \\
+	We have seen that $q_A(v) = \cos(\theta)\|v\|^2$ so a symmetric bilinear form
+	the induces it is $g(u,v) = \cos(\theta)\|v\|\|u\|$. In 
 	
 	
 \end{document}
