@@ -114,6 +114,67 @@
 	\]
 	\end{example}
 	
+	\newpage
+	
+	\section{Compactness}
+	Let $X$ be a fixed topological space.
+	\begin{definition}
+		A class $\mathcal{U} := \{U_i\}_{i \in I}$ of open subsets of a
+		$X$ is said to be an \emph{open cover of $X$} if 
+		$X = \bigcup_{i \in I} U_i$. A subclass of $\mathcal{U}$ is said
+		to be a subcover of $\mathcal{U}$ if it is in itself an open cover
+		of $X$.
+	\end{definition}
+	\begin{definition}
+		The space $X$ is said to be compact if every open cover of $X$
+		has a finite subcover.
+	\end{definition}
+	\begin{definition}
+		A subset $Y$ of $X$ is said to be compact if for every family of open
+		sets $\{U_i\}_{i \in I}$ such that $Y \subset \bigcup_{i \in I} U_i$
+		exists a finite index set $I_0 \subset I$ such that 
+		$Y \subset \bigcup_{i \in I_0} U_i$.
+	\end{definition}
+	\begin{remark}
+		It follows easily from the definition of the subspace topology that 
+		a nonempty subset $Y$ of $X$ is compact if and only if $Y$ is a 
+		compact space when equipped with the subspace topology.
+	\end{remark}
+	\begin{proposition}
+		Suppose that $X$ is compact and let $F \subset X$ be closed. Then
+		$F$ is compact.
+	\end{proposition}
+	\begin{proof}
+		Let $\{U_i\}_{i \in I}$ be an open cover of $F$. Since $F$ is closed
+		we know that $X \setminus F \cup \{U_i\}_{i \in I}$ is an open cover
+		of $X$. Since $X$ is compact exists a finite index set $I_0 \subset I$
+		such that $X \setminus F \cup \{U_i\}_{i \in I_0}$ is a finite
+		open cover of $X$. It is clear that $F \subset \{U_i\}_{i \in I_0}$
+		which completes the proof.
+	\end{proof}
+	\begin{proposition}
+		Suppose $X$ is compact, let $Y$ be a topological space, and let
+		$f \colon X \to Y$ be continuous. Then $f(X)$ is compact.
+	\end{proposition}
+	\begin{proof}
+		Let $\{U_i\}_{i \in I}$ be an open cover of $f(X)$. Since $f$
+		is continuous $\{f^{-1}(U_i)\}_{i \in I}$ is an open cover of $X$.
+		Since $X$ is compact exists a finite index set $I_0 \subset I$
+		such that $\{f^{-1}(U_i)\}_{i \in I_0}$ is an open cover of $X$.
+		We now have:
+		\[
+			f(X) = f(\cup_{i \in I_0} f^{-1}(U_i)) = 
+			\cup_{i \in I_0} f(f^{-1}(U_i)) = 
+			\cup_{i \in I_0} U_i
+		\]
+		Which completes the proof.
+	\end{proof}
+	Here are some more equivalent forms of compactness that are ofter easier
+	to apply.
+	\begin{proposition}
+		
+	\end{proposition}
+	
 	
 	
 \end{document}
