@@ -3,6 +3,9 @@
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage[disable]{todonotes}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 \usetikzlibrary{positioning}
 \geometry{margin=1in}
 \hypersetup{
@@ -12,14 +15,17 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{remark}{Remark}[section]
 \newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\idealin}{\triangleleft}
 \DeclareMathOperator{\im}{im}
@@ -41,14 +47,14 @@
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Analysis 3}}
-\author{Yeheli Fomberg}
-\date{326269651}
+\title{\textbf{Analysis Notes}}
+\author{yehelip}
+\date{}
 \usepackage{amsmath}
 \begin{document}
 	\maketitle
 	\newpage
-	\section{Introduction to Topology}
+	\section{Introduction to Topology in Euclidean Spaces}
 	\subsection{Norms and Metrics}
 	In this course we are going to analyze functions of the form 
 	$f\colon \R^n\to\R^m$ which requires of course knowing analysis $2$ but
@@ -77,7 +83,7 @@
 		d_2(P_1,P_2) = \|P_1-P_2\|_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
 	\]
 	\end{definition}
-	\noindent Notice that it is induced by the Eculidean norm and similarly
+	\noindent Notice that it is induced by the Euclidean norm and similarly
 	we can induce $L_p$ metric using $L_p$ norms.
 	\subsection{Sequences}
 	Up until now we didn't have many problems using subscript for indexes
@@ -99,7 +105,7 @@
 	
 	\newpage
 	
-	\subsection{Topology}
+	\subsection{Definitions}
 	\begin{definition}
 	A \textbf{complete metric space} is a metric space $M$ such that every
 	Cauchy sequence in $M$ converges to some limit in $M$.
@@ -115,7 +121,7 @@
 	$p\in U\subset V$
 	\end{definition}
 	\begin{definition}
-	A \textbf{close set} $E$ in a Eculidean space $X$ is a subset of $X$ such
+	A \textbf{close set} $E$ in a Euclidean space $X$ is a subset of $X$ such
 	that:
 	\[
 		(x^n)_{n=1}^{\infty}\subseteq E \quad x^n \xrightarrow{n\to\infty} x
@@ -124,33 +130,38 @@
 	\end{definition}
 	\begin{definition}
 	A topological space is called \textbf{compact} if every open cover of 
-	$X$ has a finite subcover. An equivalent definition if the space is
-	Eculidean is that for every sequence $(x^n)_{n=1}^{\infty}$ has
-	a subsequence $(x^{n_k})_{k=1}^{\infty}$ that converges to a point
-	$x$ in the space.
+	$X$ has a finite subcover.
 	\end{definition}
 	\begin{definition}
-	The \textbf{closure} of a topological space $X$ is defined as:
+		A topological space is called \textbf{sequentially compact} if
+		every sequence $(x^n)_{n=1}^{\infty}$ has a subsequence 
+		$(x^{n_k})_{k=1}^{\infty}$ that converges to a point $x$ in the space.
+	\end{definition}
+	\noindent
+	In Euclidean spaces, being sequentially compact is equivalent to being
+	compact. Let $E$ be a subset of a Euclidean space.
+	\begin{definition}
+	The \textbf{closure} of $E$ is defined as:
 	\[
-		\mathrm{Cl}(X) = \set{x}{\exists (x^n) \colon 
+		\mathrm{Cl}(E) = \set{x}{\exists (x^n) \colon 
 		x^n \xrightarrow{n\to\infty} x}
 	\]
 	\end{definition}
 	\begin{definition}
-	The \textbf{interior} of a topological space $X$ is defined as:
+	The \textbf{interior} of $E$ is defined as:
 	\[
-		\mathrm{Int}(X) = \set{x}{\exists r > 0 \colon B_r(x) \subseteq X}
+		\mathrm{Int}(E) = \set{x}{\exists r > 0 \colon B_r(x) \subseteq X}
 	\]
 	\end{definition}
 	\begin{definition}
-	The \textbf{boundary} of a topological space $X$ is defined as:
+	The \textbf{boundary} of $E$ is defined as:
 	\[
-		\partial X = \set{x\in\R^d}{\forall r > 0\
+		\partial E = \set{x\in\R^d}{\forall r > 0\
 		\exists x \in X \land \exists y \in X^c\ : y,z\in B_r(x)}
 	\]
 	\end{definition}
 	\begin{definition}
-	A function is continuous at $x\in X$ if for every $\varepsilon > 0$
+	A function is \textbf{continuous} at $x\in X$ if for every $\varepsilon > 0$
 	exists $\delta > 0$ such that for every $\|x-y\| < \delta$
 	\[
 		\|f(y) - f(x)\| < \varepsilon
@@ -158,18 +169,17 @@
 	And we say that a function is continuous on $X$ if it is continuous
 	for every $x\in X$
 	\end{definition}
+	An important, equivalent, more general definition for continuity is that
+	if $f$ is a function from $A$ to $B$ then if $U$ is an open set in $B$
+	implies $f^{-1}(U)$ is an open set we say that $f$ is continuous on $A$.
 	\begin{definition}
-	A function is uniformly continuous on $X$ if for every $\varepsilon > 0$
-	exists $\delta > 0$ such that for every $\|x-y\| < \delta$
+	A function is \textbf{uniformly continuous} on $X$ if for every 
+	$\varepsilon > 0$ exists $\delta > 0$ such that for every 
+	$\|x-y\| < \delta$
 	\[
 		\|f(x) - f(y)\| < \varepsilon
 	\]
 	\end{definition}
-	\begin{remark}
-	An important equivalent, more general definition for continuity is that
-	if $f$ is a function from $A$ to $B$ then if $U$ is an open set in $B$
-	implies $f^{-1}(U)$ is an open set we say that $f$ is continuous on $A$.
-	\end{remark}
 	\begin{definition}
 	A \textbf{connected} space is a topological space that cannot be 
 	represented as the union of two or more disjoint non-empty open subsets. 
@@ -218,7 +228,7 @@
 	
 	\section{Differentiability}
 	Let $A \in \R^{m \times n}$. We define the linear map 
-	$T_A \colon \R^N \to \R^M$ by:
+	$T_A \colon \R^n \to \R^m$ by:
 	\[
 		T(x) = Ax \quad x\in \R^n
 	\]
@@ -228,38 +238,221 @@
 		\|T\|_{\mathrm{op}} = \|T\| = \sup_{v \neq 0}{\frac{\|Tv\|_W}{\|v\|_V}}
 	\]
 	and $T$ is said to be bounded if $\|T\| < \infty$. An important result
-	to prove is that if $T$:
+	to prove is that if $T$ is a bounded linear transformation then:
 	\[
 		\|T\|_{\mathrm{op}} \le 
 		\left(\sum_{i,j}{}a_{ij}^{2}\right)^{\frac{1}{2}} < \infty
 	\]
-	since this gives that:
+	and since this gives that:
 	\[
 		\|T(x) - T(y)\| \le \|T\|_{\mathrm{op}}\|x-y\|
 	\]
-	which means that $T$ is continuous and even Lipschitz continuous.
+	we get that $T$ is continuous and even Lipschitz continuous on its domain.
 	\begin{definition}
 	An \textbf{affine function} is a function fo the form:
 	\[
 		T_{A,b}(x) = Ax + b
 	\]
-	such that $A\in\R^{m \times n}$ and $b\in x\in \R^{m}$ 
+	such that $A\in\R^{m \times n}$ and $b\in x\in \R^{m}$.
 	\end{definition}
+	\noindent Many basic properties of derivatives also satisfied by this
+	definition of differentiablity. Now to define a general directional
+	derivative:
+	\begin{definition}
+		Let $f \colon U \to \R$ with $U \subset \R^n$, $a \in U$, $0 \neq v
+		\in \R^n$. Then, if the following limit exists:
+		\[
+			D_v f(a) = \lim_{t \to 0}{\frac{f(a + tv) - f(a)}{t}}
+		\]
+		Then we say that $f$ is differentiable in the direction of $v$ and
+		$D_v f(a)$ is called the \textbf{directional derivative} of $f$ at $a$.
+	\end{definition}
+	\noindent
+	Note that if $\mathcal{E} = \{e_1,\dots,e_n\}$ is the standard basis
+	for $\R^n$ then we may denote the directional derivative of $f$ at $a$
+	in the direction of $e_i$ in one of the following ways:
+	\[
+		D_{e_i} f(a) = D_i f(a) = \frac{\partial f}{\partial e_i}(a) = 
+		f_{x_i}(a)
+	\]
+	\begin{proposition}
+		If $f$ is differentiable at $a$ then:
+			\[
+				D_v f(a) = D f(a) v
+			\]	
+		For every $v \in \R^n$.
+	\end{proposition} 
+	\noindent Try proving this using the fact that:
+	\[
+		f(a+h) = f(a) + Df(a)h + o(h)
+	\]
+	An important corollary of this proposition is:
+	\[
+		D_vf(a) = D f(a) v = \nabla f(a) \cdot v = 
+		\sum_{i}^{n}{\frac{\partial f}{\partial x_i}(a)v_i}
+	\]
+	
+	\newpage
+	\noindent Notice that we get the biggest value for $\|v\| = 1$ if
+	$v = \frac{\nabla f(a)}{\|\nabla f(a)\|}$ which implies that the direction
+	of the gradient is the direction of the steepest ascent. Conversely,
+	the direction orthogonal to it, is the direction of least change.
+	\begin{proposition}
+		Let $f \colon U \to \R$ for $U \subset \R^n$ be differetiable in $U$.
+		Then if $f$ has a local minimum or maximum at $a \in U$ then:
+		\[
+			\nabla f(a) = 0
+		\]
+	\end{proposition}
+	\noindent
+	This is simply a reiteration of Fermat's theorem for the $n$-dimensional
+	case.
+	\begin{proposition}
+		A linear function $f \colon \R^n \to \R^m$ is differentiable at 
+		$a \in U$ if and only if $f_i = f \circ \pi_i$ is differentibale 
+		for every $1 \le i \le n$ where $\pi_i$ is the projection function 
+		on the $i$th coordinate.
+	\end{proposition}
+	\begin{proof}
+		Suppose that $f_i$ is differentiable for every $1 \le i \le n$ then
+		we can define a new function:
+		\[
+			Tv := \begin{pmatrix}Df_1(a)v \\ Df_1(a)v \\ 
+			\vdots \\ Df_m(a)v \end{pmatrix}
+		\]
+		And see that indeed:
+		\[
+			\|f(a + h) - f(a) - Th\| \le 
+			\sum_{i=1}^{m}|f(a + h) - f(a) - Df_i(a)h| = 
+			\sum_{i=1}^{m}|\epsilon_i(h)| = o(h)
+		\]
+		As wanted. On the other hand, if $f$ is differentiable we can use
+		the chain rule to show that each $f_i$ is differentiable with the
+		desired derivative.
+	\end{proof}
+	\begin{definition}
+		Let $f \colon \R^n \to \R^m$ such that each of its first-order partial 
+		derivatives exists. We define the \textbf{Jacobian} of $f$ to be the 
+		matrix:
+		\[
+			{J_{f}} ={\begin{bmatrix}{\dfrac {\partial {f} }
+			{\partial x_{1}}}&\cdots &{\dfrac {\partial {f} }{\partial 
+			x_{n}}}\end{bmatrix}}={\begin{bmatrix}\nabla ^{\mathrm {T} }f_{1}\\
+			\vdots \\\nabla ^{\mathrm {T} }f_{m}\end{bmatrix}}={\begin{bmatrix}
+			{\dfrac {\partial f_{1}}{\partial x_{1}}}&\cdots &{\dfrac {\partial 
+			f_{1}}{\partial x_{n}}}\\\vdots &\ddots &\vdots \\{\dfrac {\partial 
+			f_{m}}{\partial x_{1}}}&\cdots &{\dfrac {\partial f_{m}}{\partial 
+			x_{n}}}\end{bmatrix}}
+		\]
+	\end{definition}
+
+	\newpage
+	
+	\section{Least Squares and Gradient Descent}
 	
 	\newpage
 	
-	\section{Determining critical points}
+	\section{Taylor's Theorem}
+	\subsection{Higher Order Partial Derivatives}
+	\begin{theorem}
+		\textnormal{\textbf{(Schwart'z Theorem).}}
+		A function $f \colon \Omega \to \R$ defined
+		on a set $\Omega \subset \R^n$, then if $p \in \Omega$ is a point
+		with some neighbourhood contained in $\Omega$, and $f$ has continuous
+		second partial derivatives in that neighbourhood then for all $i,j$
+		in $\{1,2,\dots,n\}$,
+		\[
+			{\frac {\partial ^{2}}{\partial x_{i}\,
+			\partial x_{j}}}f({p})={\frac {\partial ^{2}}{\partial x_{j}\,
+			\partial x_{i}}}f({p}).
+		\]
+	\end{theorem}
+	
+	\subsection{Multi-index Notation}
+	An $n$-dimensional multi-index is an $n$-tuple,
+	\[
+		\alpha =(\alpha _{1},\alpha _{2},\ldots ,\alpha _{n})
+	\]
+	of non-negative integers. Define the following operations on some
+	multi-indices $\alpha ,\beta \in \N_{0}^{n}$ and a vector
+	$x=(x_{1},x_{2},\ldots ,x_{n})\in \mathbb {R} ^{n}$: \\\\
+	\textbf{Addition and Subtraction}
+	\[
+		\alpha \pm \beta =
+		(\alpha _{1}\pm \beta _{1},\,\alpha _{2}\pm 
+		\beta _{2},\ldots ,\,\alpha _{n}\pm \beta _{n})
+	\]
+	\textbf{Partial Order}
+	\[
+		\alpha \leq \beta \quad \Leftrightarrow \quad 
+		\alpha _{i}\leq \beta _{i}\quad \forall \,i\in \{1,\ldots ,n\}
+	\]
+	\textbf{Absolute Value}
+	\[
+		|\alpha |=\alpha _{1}+\alpha _{2}+\cdots +\alpha _{n}
+	\]
+	\textbf{Factorial}
+	\[
+		\alpha !=\alpha _{1}!\cdot \alpha _{2}!\cdots \alpha _{n}!
+	\]
+	\textbf{Binomial Coefficient}
+	\[
+		{\binom {\alpha}{\beta}} = 
+		{\binom {\alpha_{1}}{\beta_{1}}}
+		{\binom {\alpha_{2}}{\beta_{2}}}\cdots 
+		{\binom {\alpha_{n}}{\beta_{n}}} = 
+		{\frac {\alpha!}{\beta! (\alpha-\beta)!}}
+	\]
+	\textbf{Multinomial Coefficient}
+	\[
+		{\binom {k}{\alpha}} = 
+		{\frac {k!}{\alpha_{1}!\alpha_{2}! \cdots \alpha_{n}!}} = 
+		{\frac {k!}{\alpha!}}, 
+		\quad k:=|\alpha |\in \mathbb {N}_{0}
+	\]
+	\textbf{Power}
+	\[
+		x^{\alpha} = 
+		x_{1}^{\alpha_{1}}x_{2}^{\alpha_{2}}\ldots x_{n}^{\alpha_{n}}
+	\]
+	\textbf{Higher Order Partial Derivatives}
+	\[
+		\partial^{\alpha} = 
+		\partial_{1}^{\alpha _{1}}
+		\partial _{2}^{\alpha _{2}} \ldots 
+		\partial _{n}^{\alpha _{n}},
+	\]
+	\subsection{Taylor's Theorem}
+	\textnormal{\textbf{(Multivariate Version of Taylor's Theorem).}}
+	Let $f \colon \R^n \to \R$ be a $k$-times continuously differentiable 
+	function at the point $\boldsymbol{a} \in \R^n$. Then there exist functions 
+	$h_\alpha \colon \R^n \to \R$, where $|\alpha| = k$, such that:
+	\[
+		{\begin{aligned}&f({\boldsymbol {x}})=\sum _{|\alpha |\leq k}{\frac 
+		{D^{\alpha }f({\boldsymbol {a}})}{\alpha !}}({\boldsymbol {x}}-
+		{\boldsymbol 
+		{a}})^{\alpha }+\underbrace{\sum _{|\alpha |=k}h_{\alpha }({\boldsymbol 
+		{x}})({\boldsymbol {x}}-{\boldsymbol {a}})^{\alpha }}_{o(\|x-\alpha\|
+		^k)},\\&{\mbox{and}}\quad \lim _{{\boldsymbol {x}}\to {\boldsymbol {a}}}
+		h_{\alpha }({\boldsymbol {x}})=0.\end{aligned}}
+	\]
+	
+	\newpage
+	
+	\section{Determining Critical Points}
 	Suppose that $f \colon U \to \R$ such that $U \subset \R^n$ is open
 	and $a \in U$.
 	\begin{definition}
 		If exists $r > 0$ such that for any point $x \in B_r(a)$ we have
-		$f(a) \le f(x)$ then the point is called a \textbf{local weak minimal 
-		point}. If the inequality is strict it is a \textbf{local strong 
-		minimal point}. The same applies for a local weak/strong maximum
-		point.
+		$f(a) \le f(x)$ then the point is called a \textbf{local weak minimum}.
 	\end{definition}
+	\begin{remark}
+		If the inequality is strict it is called a \textbf{local strong
+		maximum}.
+	\end{remark}
+	\noindent We define a local weak/strong maximum in the same manner.
 	\begin{definition}
-		If $f$ is differentiable in $a$ and $\nabla f(a) = 0$ then $a$
+		If $f$ is differentiable at $a$ and $\nabla f(a) = 0$ then $a$
 		is called a \textbf{critical point} of $f$.
 	\end{definition}
 	\begin{definition}
@@ -267,7 +460,7 @@
 		$x,y \in B_r(a)$ such that $f(x) < f(a) < f(y)$ then $a$ is called
 		a \textbf{saddle point} of $f$.
 	\end{definition}
-	ADD EXAMPLES HERE USING PGFPLOTS
+	\todo[inline]{ADD EXAMPLES HERE USING PGFPLOTS}
 	\begin{definition}
 		Let $f \in C^2(U)$. We define the \textbf{Hessian} of $f$ at $a$ to be
 		the matrix:
@@ -315,7 +508,7 @@
 	\]
 	And in case $n = 2$ we have more simply:
 	\[
-		f(x + (a,b)) - f(x) \approx \lambda_1 a + \lambda_2 b
+		f(x + (a,b)) - f(x) \approx \lambda_1 a^2 + \lambda_2 b^2
 	\]
 	And we can use this formula to determine the type of critical points.
 	
@@ -333,16 +526,18 @@
 	\end{enumerate}
 	In other cases we can't tell anything about the point and it might be
 	of any type.
-	ADD PROOF LATER	
+	\todo[inline]{ADD EXAMPLES}
 
 	\newpage
 	
-	\section{The inverse function theorem}
+	\section{The Inverse Function Theorem}
 	A set $C \subset \R^n$ is called \textbf{convex} if and only if:
 	\[
 		\forall x,y \in C \quad \forall t \in [0,1] \quad
 		tx + (1-t)y = y + t(x-y) \in C
 	\]
+	Intuitively, we say that $C$ is convex if for every two points $a,b \in C$
+	the interval connecting the points is a subset of $C$.
 	\begin{proposition}
 		Let $U \subset \R^n$ be convex and open, let $f \colon U \to \R^n$
 		be differentiable. If $f'(x)$ is bounded by $M$ then,
@@ -383,30 +578,32 @@
 	\]
 	As wanted.
 	\end{proof}
-	TRY SHOWING THIS STILL STANDS FOR THE $|\cdot|_\infty$ NORM.
+	\noindent Try showing this still stands for the $|\cdot|_\infty$ norm.
 	\begin{corollary}
 		If $f \in C^1$ then $f$ is Lifschitz continuous on any compact
 		subset of its domain.
 	\end{corollary}
 	\begin{theorem}
-	The inverse function theorem - Let $U \subset \R^n$ be open,
+	\textnormal{\textbf{(Inverse Function Theorem).}}
+	Let $U \subset \R^n$ be open,
 	$f \in C^1(U,\R^n)$, and $a \in U$. If $f'(a)$ is invertible then
-	exist open sets $x \in V \subset U$ and $f(x) \in W$ such that
-	$f \colon V \to W$ is a bijection and $f^{-1}$ is also differetiable
-	and:
+	exist open sets $a \in V \subset U$ and $f(a) \in W$ such that
+	$f \colon V \to W$ is a bijection and $f^{-1}$ is also continuously 
+	differetiable and:
 	\[
 		(f^{-1})'(f(x)) = [f'(x)]^{-1}
 	\]
 	\end{theorem}
-	TEDIOUS PROOF TO BE ADDED LATER.
+	\todo[inline]{ADD PROOF}
+	
 	
 	\newpage
 	
-	\section{Newton-Raphson method}
+	\section{Newton-Raphson Method}
 	
 	\newpage
 	
-	\section{The open transformation theorem}
+	\section{The Open Mapping Theorem}
 	\begin{definition}
 		Suppose $U \subset \R^n$. A function $f \in C^1(U, \R^m)$ is called 
 		\textbf{regular} in a point $a \in U$ if $\mathrm{rank}J_f(a) = m$.
@@ -419,9 +616,9 @@
 		$W \subset U$ then $f(W) \subset V$ is also open.
 	\end{definition}
 	\begin{theorem}
-		The open mapping theorem - Let $U \subset \R^n$ be an open set, 
-		and let $f \in C^1(U,\R^m)$ be regular in $U$. Then $f$ is an open 
-		mapping.
+		\textnormal{(\textbf{The Open Mapping Theorem).}} Let $U \subset \R^n$ 
+		be an open set, and let $f \in C^1(U,\R^m)$ be regular in $U$. 
+		Then $f$ is an open mapping.
 	\end{theorem}
 	\begin{proof}
 		In the case of $m = n$ the theorem follows directly from the inverse
@@ -471,7 +668,7 @@
 	
 	\newpage
 	
-	\section{Constrained optimization}
+	\section{Constrained Optimization}
 	\begin{proposition}
 		Let $g \in C^1(U,\R^m)$ be regular,
 		$M = \{x \in U \mid g(x) = 0\}$, and $f \in C(U)$. If $a \in M$ and
@@ -598,8 +795,8 @@
 		exists $x \in U$ such that 
 		$F(x) = (f(a) - \varepsilon), 0) = (f(x), g(x))$ which means that:
 		\begin{enumerate}
-			\item g(x) = 0
-			\item f(x) < f(a)
+			\item $g(x) = 0$
+			\item $f(x) < f(a)$
 		\end{enumerate}
 		It follows that $x \in M$ and $f(x) < f(a)$ and thus $a$ is not
 		a minimum point in $M$.
@@ -608,7 +805,7 @@
 	\newpage
 	
 	
-	\section{The implicit function theorem}
+	\section{The Implicit Function Theorem}
 	In mathematics we have so far talked about explicit function - functions
 	that take the elements of one set and transform them into an element
 	of the other. In contrast, we can consider a new way of looking at
@@ -627,22 +824,21 @@
 	Intuitively the function maps each $x \in V_1$ to its corresponding
 	unique $y$.
 	\begin{theorem}
-		The implicit function theorem - Let $U \subset \R^n \times \R^m$
-		be open, $f \in C^1(U,\R^m)$, $(a,b)$ a solution of $f(x,y) = 0$
-		and also assume that 
-		$\mathrm{det}
+		\textnormal{\textbf{(The Implicit Function Theorem).}} 
+		Let $U \subset \R^n \times \R^m$ be open, $f \in C^1(U,\R^m)$, $(a,b)$ 
+		a solution of $f(x,y) = 0$ and also assume that $\mathrm{det}
 		\frac{\partial(f_1,\dots,f_m)}{(x_1,\dots,x_m)}\vert_{(a,b)} \neq 0$.
-		Then exists a neighborhood $(a,b) \in V$ and a function 
-		$g \in C^1$ defined around $a$ such that:
+		Then exists a neighborhood $(a,b) \in V$ and a function $g \in C^1$ 
+		defined around $a$ such that:
 		\[
 			\forall (x,y) \in V \quad f(x,y) \iff y = g(x)
 		\]
 		And $g(a) = b$ and $f(x,g(x)) = 0$ for every $x$ near $a$.
 	\end{theorem}
 	\begin{theorem}
-		The derivative of an implicit function - Let $U \subset \R^n \times 
-		\R^m$ be open, $f \in C^1(U,\R^m)$, $(a,b)$ a solution of $f(x,y) = 0$
-		and also assume that $\mathrm{det}
+		\textnormal{\textbf{(Implicit Function Differentiation).}}
+		Let $U \subset \R^n \times \R^m$ be an open set, $f \in C^1(U,\R^m)$, 
+		$(a,b)$ a solution of $f(x,y) = 0$, and also assume that $\mathrm{det}
 		\frac{\partial(f_1,\dots,f_m)}{(x_1,\dots,x_m)}\vert_{(a,b)} \neq 0$.
 		Then the derivative of the function $g$ from the implicit function
 		theorem is:
@@ -652,12 +848,11 @@
 	\end{theorem}
 	Notice that this thoerem is very useful because it allows us to find
 	$g'(a)$ without knowing what is $g(a)$ itself.
-	
-	ADD PROOFS LATER.
+	\todo[inline]{ADD PROOFS}
 	
 	\newpage
 	
-	\section{Finding roots of polynomials}
+	\section{Finding Roots of Polynomials}
 	So it turns out that given a polynomial $p(x) = \sum_{i=0}^{n}{a_n x^n}$
 	then its root are continuously dependent on the coefficients.
 	\begin{definition}
@@ -708,7 +903,7 @@
 	\begin{definition}
 		Let $k,n \in \N$ such that $k \le n$. A subset $M \subset \R^n$
 		is called a \textbf{$C^1$ manifold of dimension \textbf{$k$}}
-		if for every $a \in m$ exist open sets $U,V \subset \R^n$ such that
+		if for every $a \in M$ exist open sets $U,V \subset \R^n$ such that
 		$a \in U$ and $V \cap \R^k \times \{0_{n-k}\} \neq \emptyset$ and 
 		exists a regular function $f \in C^1(U,V)$ such that:
 		\[
@@ -732,12 +927,10 @@
 		\textbf{differential curve} and a $2$-dimensional manifold is 
 		sometimes called a \textbf{differential surface}.
 	\end{remark}
-	\begin{remark}
-		The title of this section is indeed ``manifolds'' but in fact we
-		are only talking about \textbf{embedded manifolds}. That is to say,
-		we are not talking about manifolds in the abstract sense at all,
-		only about those who are specifically embedded in $\R^n$.
-	\end{remark}
+	The title of this section is indeed ``manifolds'' but in fact we
+	are only talking about \textbf{embedded manifolds}. That is to say,
+	we are not talking about manifolds in the abstract sense at all,
+	only about those who are specifically embedded in the Euclidean space.
 	\begin{proposition}
 		The following conditions are equivalent:
 		\begin{enumerate}
@@ -846,7 +1039,7 @@
 		and every vector space $V \subset \R^n$ is a manifold of dimension 
 		$\dim(V)$.
 	\end{remark}
-	ADD PROOF OF THE EQUIVALENCIES.
+	\todo[inline]{ADD PROOF OF THE EQUIVALENCIES}
 	
 	\begin{definition}
 		Let $M \subset \R^n$ be a manifold of dimension $k$. A function
@@ -858,22 +1051,22 @@
 		\]
 	\end{definition}
 	\noindent
-	SHOW THAT THE DEFINITION IS NOT DEPENDENT ON THE CHOICE OF THE COORDIANTE
-	SYSTEM. \\
-	SHOW THAT THIS DEFINITION IS EQUIVALENT TO exists a neighborhood $a \in U$
-	and a function $G \in C^1(U,\R^m)$ such that 
-	$G \vert_{M \cap U} = g \vert_{M \cap U}$ where $g$ is the $C^1$ function.
+	For practice, show that the definition is not dependent on the choice of 
+	the coordiante system. Also, show that this definition is equivalent to 
+	exists a neighborhood $a \in U$ and a function $G \in C^1(U,\R^m)$ such 
+	that  $G \vert_{M \cap U} = g \vert_{M \cap U}$ where $g$ is the $C^1$ 
+	function.
 	
 	\newpage
 	
-	\section{The tangent space}
+	\section{The Tangent Space}
 	\begin{definition}
 		A continuous function $f \colon [a,b] \to \R^n$ is called a
 		\textbf{continuous path}. If $f$ is also differentiable we say
 		it is a \textbf{continuously differentiable path}. The ``$1$-
 		dimensional'' set $f([a,b])$ is called a \textbf{curve}.
 	\end{definition}
-	INTUITION FOR THE TANGENT SPACE
+	\todo[inline]{ADD INTUITION FOR THE TANGENT SPACE}
 	\begin{definition}
 		For each point $p \in \R^n$ we define the \textbf{tangent space}
 		to $\R^n$ in $p$ as:
@@ -941,7 +1134,7 @@
 			\end{pmatrix} \biggr\vert a \in \R \right\}
 		\end{align*}
 	\end{example}
-	MORE DEFINITIONS \\
+	\todo[inline]{MORE DEFINITIONS \\}
 	\begin{definition}
 		Let $N \subset \R^3$ be a smooth surface. A vector 
 		$0 \neq v \in \R^3$ is said to be \textbf{normal} to $M$ at a 
@@ -950,12 +1143,13 @@
 	\begin{remark}
 		If $M$ is equal to the set of roots of a regular function $g$
 		in a neighborhood of $a$ then a vector normal to $M$ must be 
-		co-linear with $\nabla g(p)$. That is because COMPLETE LATER
+		co-linear with $\nabla g(p)$. 
+		\todo{add later} That is because
 	\end{remark}
 	
 	\newpage
 	
-	\section{Manifolds with a boundary}
+	\section{Manifolds With a Boundary}
 	Defining manifolds is very convenient, but many intresting sets
 	we want to analyze are not manifolds like any closed interval or
 	half a sphere. That is why in this section we introduce a new object
@@ -1005,7 +1199,7 @@
 	
 	\newpage
 	
-	\section{Length of a path}
+	\section{Length of a Path}
 	\begin{definition}
 		Let $f \colon [a,b] \to \R^n$ be a continuous path, and let
 		$P = (t_0 = a < \cdots < t_k = b)$. Define:
@@ -1025,7 +1219,7 @@
 		$l(f,P) \le \int_{a}^{b}{\|f'(t)\|\,dt}$, and 
 		$l(f) = \int_{a}^{b}{\|f'(t)\|\,dt}$.
 	\end{proposition}
-	PROOF LATER
+	\todo[inline]{ADD PROOF}
 	\begin{definition}
 		A \textbf{simple smooth curve} is a set $C \subset \R^n$ that
 		is the image of a path $f \in C^1([a,b],\R^n)$. That satisfies:
@@ -1053,12 +1247,12 @@
 		A parametrization of a curve $g$ such that $\|g'(s)\| = 1$
 		is called an \textbf{arc length paramtrization}.
 	\end{definition}
-	STUFF
+	\todo{Some stuff is missing}
 	
 	\newpage
 	
-	\section{Line integrals}
-	ADD SOME MORE PRACTICE FOR ARC LENGTH PARAMETRIZATION
+	\section{Line Integrals}
+	\todo[inline]{ADD PRACTICE FOR ARC LENGTH PARAMETRIZATION}
 	
 	\begin{definition}
 		Let $C \subset \R^n$ be a smooth simple curve with 
@@ -1133,7 +1327,7 @@
 		I = \int_{R}{f\,dV} = 
 		\int_{R}{f(x)\,dx} = \int_{R}{f}
 	\]
-	MORE THEOREMS FROM ANALYSIS $2$ ENSUE.
+	Most theorems from analysis $2$ also apply here.
 	\begin{definition}
 		Fubini's theorem - Let 
 		$R = [a_1,b_1] \times \cdots \times [a_n,b_n]$ and suppose
@@ -1150,8 +1344,8 @@
 		\end{align*}
 		Are integrable then $I = \int_{R}{f\,dV}$.
 	\end{definition}
-	To caclculate the volume of a space $\Omega$ we can calculate
-	the integral $\int_{R}{f\,dV}$ for the function $f \equiv 1$.
+	To calculate the volume of a space $\Omega$ we can calculate
+	the integral $\int_{\Omega}{f\,dV}$ for the function $f \equiv 1$.
 	For a simple space in $\R^3$ we can use Fubini's theorem and get:
 	\[
 		I = \iiint_{\Omega}{f(x,y,z)\,dxdydz}
@@ -1159,11 +1353,12 @@
 		  	\int_{y_1(x)}^{y_2(x)}{\,dy}
 		  	\int_{z_1(x)}^{z_2(x)}{f(x,y,z)\,dz}
 	\]
-	For the relevant functions.
+	For the relevant functions. \hfill
+	\todo{Add an example}
 	
 	\newpage
 	
-	\section{Zero volume}
+	\section{Zero Volume}
 	\begin{remark}
 		If $f \colon R \to \R^n$ is a continuous function on $R$
 		then it is integrable.
@@ -1241,6 +1436,95 @@
 		if it is of measure zero.
 	\end{theorem}
 	The proof of this theorem is very direct and thus omitted.
+	\begin{theorem}
+		\textnormal{\textbf{((Lebesgue's Theorem).}} Let $R \subset \R^n$ be 
+		a box and let $f \colon R \to \R^n$ be bounded. Then $f$ is integrable
+		if and only if the set of discontinuity points of $f$ is of 
+		meausre zero.
+	\end{theorem}
+	\noindent
+	Before proving the theorem we will define the \textbf{oscillation}
+	of $f$ over a set $B \subset \R^n$ as:
+	\[
+		\omega(f,B) = 
+		\sup\{f(x) \mid x \in R \cap B\} -
+		\inf\{f(x) \mid x \in R \cap B\}
+	\]
+	And also define the \textbf{oscillation} of $f$ at a point 
+	$x \in R$ as:
+	\[
+		\omega(f,x) = \lim_{r \to 0^+}{\omega(f,U_r(x))}
+	\]
+	Where $U_r(x) = (x_1-r,x_1+r) \times \cdots \times (x_n-r,x_n+r)$
+	which is the open ball with radius $r$ around $x$ with the
+	infinity norm.
+	\begin{lemma}
+		The function $f$ is continuous at $x \in R$ if and only of
+		$\omega(f,x) = 0$.
+	\end{lemma}
+	\begin{lemma}
+		For every $\varepsilon > 0$ the set:
+		\[
+			W_\varepsilon = 
+			\{x \in R \mid \omega(f,x) \geq \varepsilon\}
+		\]
+		Is continuous.
+	\end{lemma}
+	We also define another set:
+	\[
+		W = \{x \in R \mid \omega(f,x) \neq 0\}		
+	\]
+	\begin{proof}
+		\todo[inline]{MISSING}
+	\end{proof}
+	
+	\begin{definition}
+		A space $\Omega \subset \R^n$ is said to \textbf{have volume}
+		if it is bounded and $\partial \Omega$ is of measure zero.
+	\end{definition}
+	\begin{definition}
+		Let $\Omega \subset \R^n$ be a space with volume, let
+		$f \colon R \to \R^n$ be a function, and assume that
+		$\Omega \subset R$. We say that $f$ is 
+		\textbf{integrable over $\Omega$} if $f\cdot1_\Omega$
+		is integrable over $R$ and:
+		\[
+			\int_{\Omega}{f\,dV} = \int_{R}{f\cdot1_\Omega\,dV}
+		\]
+	\end{definition}
+	\begin{theorem}
+		If $f \colon \Omega \to \R^n$ is continuous and $\Omega$
+		has volume then $f$ is integrable over $\Omega$.
+	\end{theorem}
+	\begin{definition}
+		The volume of a set that has volume $A \subset \R^n$ is 
+		defined as:
+		\[
+			\mathrm{Vol}(A) = \int_{A}{1\,dv}
+		\]
+	\end{definition}
+	We notice that this function is well defined because the constant
+	function $f \equiv 1$ is always continuous on any domain that
+	has volume.
+	\begin{remark}
+		A Riemann integral on a space with volume has all the basic
+		properties as we defined them on intervals: linearity,
+		additivity, the triangle inequlity, and more. 
+	\end{remark}
+	\begin{theorem}
+		The graph of a Riemann integrable function is of measure 
+		zero, or volume zero if the function was defined on a
+		compact space. A manifold has measure zero. The image
+		of a manifold by a smooth transformation is of volume zero. 
+	\end{theorem}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 \end{document}

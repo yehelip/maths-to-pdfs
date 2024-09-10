@@ -669,135 +669,184 @@ subset $S \subseteq X$ exists a minimal element $b\in S$
     $X/Y$ and that can't be!
     
     \newpage
-    \section{Ordinals}
-    Ordinals are the generalization of ordinal numerals aimed to extend enumeration to infinite sets.
-The finite ordinals will be defined as such:
-\begin{align*}
-	&k = ord(\{0,1,\ldots,k-1\}) = ord(I_{\N}(k)) \\
-	&ord(\emptyset) = 0 \\
-	&ord(\N) = \omega
-\end{align*}
-By the comparability of wosets we can define an order on the ordinals 
-as such:
-\begin{align*}
-	A\cong B \iff ord(A)=ord(B) \\
-	A<B \iff ord(A)<ord(B) \\
-	A>B \iff ord(A)>ord(B)
-\end{align*}
-Now we will define a new set function on ordinals $W(\alpha)$
-\[
-	W(\alpha) = \{\beta:\beta<\alpha\}
-\]
-We can show that $W(\alpha)$ is a woset and $ord(W(\alpha))=\alpha$
-by constructing the isomorphism: 
-$\phi \colon A \footnote[1]{$|A|=\alpha $ and A is a woset}
-\rightarrow W(\alpha)$
-\[
-	\phi(a)=W(ord(I_A(a)))
-\]
-So by our construction, every set of ordinals $A$ is a woset.
-A proof can be made by showing that every $A'\subseteq A$ has an 
-element $a$, which if not already minimal, has a $W(a)\bigcup A'$ that 
-contains the minimal element since it's a woset as a subset of a woset.
-\subsection{Cesare Burali-Forti Paradox}
-The set of all ordinals can't be well defined. Suppose it were a set, 
-it will be a woset, we'll denote it $\Omicron \Rightarrow ord(\Omicron)
-\in\Omicron \Rightarrow W(\Omicron)\subseteq\Omicron$ but we know 
-$ord(W(\Omicron))=\Omicron$ and that means $I_\Omicron(ord(\Omicron))
-\cong\Omicron$ Thus an initial segment of the set is isomorphic to it 
-which is a contradiction.
+	\section{Ordinals}
+		Ordinals are the generalization of ordinal numerals aimed to extend 		
+		enumeration to infinite sets. Since sets don't have an innate order
+		we only define ordinals on well ordered sets. It's easy to see that
+		all well orders on finite sets are isomorphic, thus the following
+		definition for ordinals makes sense:
+		\begin{definition}
+			Define the finite ordinals as such:
+			\begin{align*}
+				&k = ord(\{0,1,\ldots,k-1\}) = ord(I_{\N}(k)) \\
+				&ord(\emptyset) = 0
+			\end{align*}
+		\end{definition}
+	\begin{remark}	
+		We denote the ordinal of the natural numbers with the standard order
+		as:
+		\[
+			ord((\N,\le_{\mathrm{std}})) = \omega
+		\]
+	\end{remark}
+	By the comparability of wosets we can define an order on the ordinals 
+	as such:
+	\begin{align*}
+		ord(A) = ord(B) \iff A\cong B \\
+		ord(A) < ord(B) \iff A < B \\
+		ord(A) > ord(B) \iff A > B
+	\end{align*}
+	\noindent
+	Now we will define a new set function on ordinals $W(\alpha)$ which is
+	defined as:
+	\[
+		W(\alpha) = \{\beta \colon \beta < \alpha\}
+	\]
+	\begin{proposition}
+		The set $W(\alpha)$ is a well ordered set with ordinal comparison,
+		and its ordinal is $\alpha$.
+	\end{proposition}
+	\begin{proof}
+		The proof's idea is by constructing an isomorphism from a set $A$ 
+		with $ord(A)=\alpha$ as such:
+		\begin{align*}
+			&\phi \colon A \rightarrow W(\alpha) \\
+			&\phi(a) = W(ord(I_A(a)))	
+		\end{align*}
+		We get that $\phi$ is a bijection that preserves order and thus an
+		isomorphism. By definition we get that the ordinal of $W(\alpha)$
+		is $ord(A) = \alpha$ as wanted.
+	\end{proof}
 
-\subsection{Russell's Paradox}
-	Let $R$ be the set than contains all the sets that don't contain 
-	themselves. If $R$ contains itself, it must not contain itself.
-    If $R$ doesn't contain itself, then it must contain itself.
-\subsection{Kinds of Ordinals}
-    There are two kinds of ordinals:
-    \begin{definition}
-		\textbf{Successor Ordinals} - 
-		Ordinals that immediatly success another ordinal
-    \end{definition}
-    \begin{definition}
-		\textbf{Limit Ordinals} - All the rest of the oridinals.
-    \end{definition}
+	\begin{proposition}
+		$(ZFC)$ Every set of ordinals $X$ is well ordered.
+	\end{proposition}
+	\begin{proof}
+	Let $\emptyset \neq A \subseteq X$. Since it is not empty we can choose
+	$a \in A$. If $a$ is minimal we are done. Otherwise, exists $\beta \in A$
+	such that $\beta < \alpha$ and thus $\beta \in W(\alpha) \cap A$. Since
+	$W(\alpha) \cap A$ is a subset of a well ordered set $A$ it is also well
+	ordered and thus exists $\gamma \in W(\alpha) \cap A$ a first element.
+	It is clear that $\gamma$ is first in $A$ and thus we are done.
+	\end{proof}
+	
+	\subsection*{Cesare Burali-Forti Paradox}
+	The paradox states that the set of all ordinals it not well defined
+	in ZFC. Suppose by contradiction it were a set $\Omicron$, then as a set 
+	of ordinals by the previous proposition it will be well ordered.
+	Now denote $ord(\Omicron) = \alpha$ then $\alpha \in \Omicron$
+	which implies $W(\Omicron) \subseteq \Omicron$ thus an initial segment 
+	of the set is isomorphic to it which is a contradiction.
 
-\subsection{Ordinal Arthimetic}
-\subsubsection{addition}
-Let $(X,\le_x),(Y,\le_y)$ be two \textbf{disjoint} wosets such that 
-$(ord(A),ord(B)=(\alpha,\beta))$. 
-We denote $(X\bigcup Y,\le)$ as:
-\begin{center}
-	$a\le b \iff$ 
-	$\begin{Bmatrix}
-	a,b\in X & a\le_x b\\
-	a,b\in Y & a\le_y b\\
-	a\in X & b\in Y\\
-\end{Bmatrix}$
-\end{center}
-As $X\oplus Y$, and by definition $\alpha + \beta = ord(X\oplus Y)$.
-Oridnals are associative but not commutative with addition:
-\begin{itemize}
-	\item $n+\omega=\omega$
-	\item $\alpha+0=\alpha$
-	\item $\omega<\omega+1<\omega+2<\ldots<\omega+k<\ldots<2\omega$
-\end{itemize}
-\subsubsection{multiplication}
-Let $(X,\le_x),(Y,\le_y)$ be two \textbf{disjoint} wosets such that 
-$(ord(A),ord(B)=(\alpha,\beta))$. 
-We denote 
-\[
-	(X\times Y,\le_{dictionary})
-\]
-as $X \odot Y$, and by definition $\alpha * \beta = ord(X \odot Y)$.
-It is possible to show $\omega=k\omega$ by constructing an isomorphism
-\begin{align*}
-	&\phi \colon \N \rightarrow \{0, 1, \ldots, k-1\} \times \N \\
-	&\phi(n)=(\lfloor{n/k}\rfloor,n \bmod \ k)
-\end{align*}
+	\subsection*{Russell's Paradox}
+		Let $R$ be the set than contains all the sets that don't contain 
+		themselves. If $R$ contains itself, it must not contain itself.
+		If $R$ doesn't contain itself, then it must contain itself.
+	
+	\subsection{Types of Ordinals}
+		There are two kinds of ordinals:
+		\begin{definition}
+			\textbf{Successor Ordinals} - 
+			Ordinals that immediatly success another ordinal
+		\end{definition}
+		\begin{definition}
+			\textbf{Limit Ordinals} - 
+			Ordinals that don't immediatly success another ordinal
+		\end{definition}
 
-\begin{itemize}
-\item $\omega*0=0$
-\item $\alpha*1=\alpha$
-\item $2\omega=\omega<\omega 2=\omega+\omega<\omega 3 
-<\ldots<\omega k<\ldots<\omega^2$
-\end{itemize}
-Ordinals are left distribuitive but not right distributive. Why?
-\subsubsection{Powers}
-We define powers of ordinals as such:
-\[
-\alpha^\gamma = 
-\begin{pmatrix}
-	1 & \gamma=0\\
-	\alpha^{\gamma-1}\alpha & \gamma\text{ is a succesor ordinal}\\
-	min_{\delta<\gamma}\{\mu:\alpha^\delta<\mu\} & \gamma\text{ is a limit ordinal}\\
-\end{pmatrix}
-\]
-From that we can infer the biggest ordinal so far is $\omega^\omega$.
-Ordinals are usually expressed as polynomials of powers of $\omega$ with 
-natural coefficients. Also I lied earlier...
-\[
-	\omega^\omega<\omega^\omega+1<\omega^\omega+2
-	<\ldots<
-	\omega^{\omega^\omega}<\ldots
-\]
+	\subsection{Ordinal Arthimetic}
+	The following definitions are based on our motivation to extend enumeration
+	to infinite sets.
+	\subsubsection{addition}
+	Let $(X,\le_x),(Y,\le_y)$ be two \textbf{disjoint} well ordered sets such 
+	that $(ord(A),ord(B)) = (\alpha,\beta)$. 
+	We denote $\left(X \bigcup Y,\le \right)$ as:
+	\begin{center}
+		$a\le b \iff$ 
+		$\begin{Bmatrix}
+		a,b\in X & a\le_x b\\
+		a,b\in Y & a\le_y b\\
+		a\in X & b\in Y\\
+	\end{Bmatrix}$
+	\end{center}
+	As $X\oplus Y$, and by definition $\alpha + \beta = ord(X\oplus Y)$.
+	Notice that oridnals are associative but not commutative under addition:
+	\begin{itemize}
+		\item $n+\omega=\omega$
+		\item $\alpha+0=\alpha$
+		\item $\omega<\omega+1<\omega+2<\ldots<\omega+k<\ldots$
+	\end{itemize}
+	\subsubsection{multiplication}
+	Let $(X,\le_x),(Y,\le_y)$ be two \textbf{disjoint} wosets such that 
+	$(ord(A),ord(B)) = (\alpha,\beta)$. We denote:
+	\[
+		(X\times Y,\le_{dictionary})
+	\]
+	As $X \odot Y$, and by definition $\alpha * \beta = ord(X \odot Y)$.
+	It is possible to show $\omega = k\omega$ for $k \in \N$ by constructing 
+	an isomorphism:
+	\begin{align*}
+		&\phi \colon \N \rightarrow \{0, 1, \ldots, k-1\} \times \N \\
+		&\phi(n)=(\lfloor{n/k}\rfloor,n \bmod \ k)
+	\end{align*}
 
-\subsubsection{$2^\omega$ and $\omega^\omega$}
-By our previous definition we can conclude that $2^\omega$ is
-\begin{center}$min_{\delta<\omega}\{\mu:2^\delta<\mu\}$\end{center}
-\begin{center}$=min\{2^1,2^2,\ldots,2^k,\ldots\}$\end{center}
-Since this series doesn't have an upper bound the result is the smallest 
-infinite ordinal or $2^\omega=\omega$\\
-By our previous definition we can conclude that $\omega^\omega$ is
-\begin{center}$min_{\delta<\omega}\{\mu:\omega^\delta<\mu\}$\end{center}
-\begin{center}$=min\{\omega^1,\omega^2,\ldots,\omega^k,\ldots\}$\end{center}
-Let's consider\\
-\begin{center}$X=X_1\oplus X_2\oplus X_3\ldots 
-(\forall n\in\N \,,ord(X_n)=\omega^n)$\end{center}
-We see that this is what we looked for
-$\footnote[1]{Verify this is indeed what we looked for}$ thus 
-$ord(X)=\omega^\omega$ but also this is a sum of a countable amount of 
-groups of a countable size so \underline{surprisingly} $|X|=\aleph_0$ and 
-this is the case for sets of ordinals $\omega^{\omega^\omega}$ and so on...
+	\begin{itemize}
+	\item $\omega*0=0$
+	\item $\alpha*1=\alpha$
+	\item $k\omega=\omega<\omega 2=\omega+\omega<\omega 3 
+	<\ldots<\omega k<\ldots<\omega^2$
+	\end{itemize}
+	Notice that ordinals are left distribuitive but not right distributive.
+	\subsubsection{Powers}
+	We define powers of ordinals as such:
+	\[
+	\alpha^\gamma = 
+	\begin{pmatrix}
+		1 & \gamma=0\\
+		\alpha^{\gamma-1}*\alpha & \gamma\text{ is a succesor ordinal}\\
+		\min_{\delta<\gamma}\{\mu:\alpha^\delta<\mu\} & 
+		\gamma\text{ is a limit ordinal}\\
+	\end{pmatrix}
+	\]
+	Notice that ordinals are usually expressed as polynomials in $\omega$ with 
+	natural coefficients. We have that $p(\omega) < q(\omega)$ for polynomials
+	$p,q$ if and only if $\deg p < \deg q$ or $\deg p = \deg q$ and the
+	leading coefficient of $(q - p)(\omega)$ is strictly positive.
+
+	\subsubsection{The Ordinals $2^\omega$ and $\omega^\omega$}
+	By our previous definition we can conclude that $2^\omega$ is:
+	\begin{align*}
+		&\min_{\delta<\omega}\{\mu:2^\delta<\mu\} \\
+		=&\min\{2^1,2^2,\ldots,2^k,\ldots\}
+	\end{align*}
+	Since this sequence doesn't have an upper bound the result is the smallest 
+	infinite ordinal or $2^\omega=\omega$. \\
+	By our previous definition we can conclude that $\omega^\omega$ is:
+	\begin{align*}
+		&\min_{\delta<\omega}\{\mu:\omega^\delta<\mu\} \\
+		=&\min\{\omega^1,\omega^2,\ldots,\omega^k,\ldots\}
+	\end{align*}
+	Now consider the family of disjoint sets $\{X_n\}_{n \in \N}$ such that 
+	for any $n \in \N$ we have $ord(X_n) = \omega^n$. We define:
+	\[
+		X := \bigoplus_{n \in \N}{X_n}
+	\]
+	We can prove by definition that $ord(X)=\omega^\omega$ but also since 
+	this is a countable sum of countable sets we have that $|X| = \aleph_0$ 
+	and since we construct $\omega^{\omega^\omega}$ in the same way we
+	can see that this is the case for any sets with ordinals 
+	$\omega^{\omega^\omega}$ and so on...
+	\begin{remark}
+	Notice that:
+	\[
+		\omega^\omega<\omega^\omega+1<\omega^\omega+2
+		<\ldots<
+		\omega^{\omega^\omega}<\ldots
+	\]
+	A good way to think about $\omega^\omega$ for example is all finite 
+	sequences of natural numbers.
+	\end{remark}
+
 \newpage
 \section{The Well Ordering Theorem}
 The Well Ordering Theorem
@@ -836,25 +885,101 @@ elements in $E$ without assuming the axiom of choice itself, and
 thus is not a valid way to prove AC.
 
 \newpage
-\section{The Continuum Conjecture}
-Suppose $X$ is a set of cardinality $\aleph$, and consider the set of 
-all risha's with a cardinality greater then 
-$\aleph_0
-\footnote[1]{If it's empty define any one element to be maximal}$, 
-since X can be a woset, that set has a minimal element $m$ and we denote 
-$|m|=\aleph_1$. The conjecture is that $\aleph=\aleph_1$. 
-This was proven to be independent of ZFC.
-We can also define an $\aleph$ greater than all $\aleph$ of the 
-form $\aleph_n$ where $n\in\N$ by looking at sets $|A_n|=\aleph_n$ 
-and at $B=\bigcup_{\i\in\N}\aleph_i$. $|B|>\aleph_n (\forall n\in N) 
-\Rightarrow \exists x\in B:|I_B(x)|>\aleph_n(\forall n\in N)$. 
-We denote the minimal element of the set of all such $x$'s $M$, and 
-$|M|=\aleph_\omega=\sum_{i\in\N} \aleph_i$ and after all countable 
-ordinals we'll reach $\aleph_\Omega$, the $\aleph_1$-th ordinal, 
-and the fisrt uncountable one. The generalized Continuum Conjecture is:
-\[
-	2^{\aleph_\alpha}=\aleph_{\alpha+1}
-\]
+	
+	\section{The Continuum Conjecture and the Alephs}
+	\subsection{The Continuum Conjecture}
+	Let $X$ be a set of cardinality $\aleph$ endowed with a well order
+	from the well order theorem, and consider the set of all 
+	initial segments with cardinality greater than $\aleph_0$. 
+	If this set is empty we can move the first element in $X$ to the "end" 
+	of the set and make it nonempty. Since $X$ is well ordered, we know that 
+	exists a minimal element $a \in X$ such that $\aleph_0 < |I_X(a)|$. 
+	We denote $|I_A(a)| = \aleph_1$ and $ord(I_A(a)) = \Omega$, the first
+	uncountable ordinal. The conjecture is that $\aleph=\aleph_1$.
+	
+	\begin{remark}
+		This conjecture was proven to be independent of the axioms of ZFC.
+	\end{remark}
+	
+	\subsection{The Alephs}
+	Similarly we can construct a set $X$ with cardinality $2^{\aleph_1}$ with a
+	well order and choose the first element $a \in X$ with 
+	$|I_X(a)| > \aleph_1$ and denote $|I_X(a)| = \aleph_2$. In this
+	way we can define $\aleph_n$ for every $n \in \N$. To construct
+	$\aleph_\omega$ we can take the family of disjoint sets 
+	$\{X_n\}_{n \in \N}$ such that $|X_n| = \aleph_n$ and define:
+	\[
+		X := \bigcup_{n \in \N}{X_n}
+	\]
+	We can define on $X$ a well order such that exist elements $x \in X$
+	such that $I_X(x) > \aleph_n$ for all $n \in \N$. Let $a \in X$ be
+	the first element with this property. We denote $|a| = \aleph_\omega$ 
+	and we can see that:
+	\[
+		\aleph_\omega \le \sum_{n\in\N}{\aleph_n}
+	\]
+	As expected we can keep defining in this way 
+	$\aleph_{\omega+1}, \aleph_{\omega+2},\dots,\aleph_{\omega2},\dots,
+	\aleph_{\omega^2},\dots,\aleph_{\omega^\omega},\dots$ and after all 
+	countable ordinals we will reach $\aleph_\Omega$, the $\aleph_1$-th 
+	aleph, and the first one with an uncountable ordinal. This construction
+	allows to consider these cardinals as a subclass of ordinals with the
+	association rule $\alpha \to \aleph_\alpha$ from ordinals to cardinals.
+	This also implies that the set of these cardinals and the finite
+	cardinals is also well ordered.
+	
+	\begin{remark}
+		The generalized Continuum Conjecture is:
+		\[
+			2^{\aleph_\alpha}=\aleph_{\alpha+1}
+		\]
+	\end{remark}
+	
+	\newpage
+	
+	\section*{Results About Alephs}
+	\begin{proposition}
+		The cardinal $\aleph$ is not a countable sum of cardinals that are
+		smaller than itself.
+	\end{proposition}
+	\begin{proof}
+		Using König's inequalities for the family $\{a_n\}_{n \in \N}$ such
+		that $a_n < \aleph$ for every $n \in \N$ we get:
+		\[
+			\sum_{n\in\N}{a_n} < \prod_{n\in\N}{\aleph} = \aleph^{\aleph_0}
+			= \aleph
+		\]
+	\end{proof}
+	\begin{corollary}
+		$\aleph_\omega \neq \aleph$.
+	\end{corollary}
+	\begin{proof}
+		Assume by contradiction that $\aleph_\omega = \aleph$ then since
+		$\aleph_n < \aleph_\omega = \aleph $ for every $n \in \N$ we have 
+		that $\sum_{n\in\N}{\aleph_n} < \aleph = \aleph_\omega$ which is
+		a contradiction by the construction of $\aleph_\omega$ so the
+		assumption is false and we are done.
+	\end{proof}
+	\noindent Consider the inequlity:
+	\[
+		q < q^{\aleph_0}
+	\]
+	It is clear that every countable satisfies it, but cardinals like
+	$\aleph,2^\aleph$ don't. Let $c$ be a infinite cardinal. We define
+	the sequence:
+	\[
+		a_1 = c < \underbrace{2^c}_{a_2} < \underbrace{2^{c^c}}_{a_3} < \dots
+	\]
+	We see that:
+	\[
+		d := \sum_{n \in \N}{a_n} < \prod_{n \in \N}{c_n}
+	\]
+	For example by adding $0$ to the sum before the sequence. On the other
+	hand we have $c_n \le d$ for every $n \in \N$ so we have:
+	\[
+		\prod_{n \in \N}{c_n} \le d^{\aleph_0}
+	\]
+	And thus finally we have $d < d^{\aleph_0}$ as wanted.
 
 \newpage
 \section{Transfinite Induction}
