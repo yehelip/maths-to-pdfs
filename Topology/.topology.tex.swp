@@ -3,6 +3,8 @@
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 \usetikzlibrary{positioning}
 \geometry{margin=1in}
 \hypersetup{
@@ -11,14 +13,16 @@
     linkcolor=black,  %choose some color if you want links to stand out
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{remark}{Remark}[section]
 \newtheorem{example}{Example}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\idealin}{\triangleleft}
 \DeclareMathOperator{\im}{im}
@@ -37,6 +41,9 @@
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\Omicron}{O}
 \newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
