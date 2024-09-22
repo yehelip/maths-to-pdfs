@@ -32,6 +32,7 @@
 \DeclareMathOperator{\Out}{Out}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\Int}{Int}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\Z}{\mathbb{Z}}
@@ -44,11 +45,12 @@
 \newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{Introduction to Metric and Topological Spaces}}
-\author{yehelip}
+\author{heavily based on notes by Ariel Rapaport}
 \date{}
 \begin{document}
 	\maketitle
@@ -121,6 +123,234 @@
 		\end{cases}
 	\]
 	\end{example}
+	
+	\newpage
+	
+	\section{Topological Spaces}
+	\begin{definition}
+		Let $X$ be a nonempty set. A collection $\tau \subset P(X)$ is said to
+		be a topology on $X$ if it satisfies the following properties,
+		\begin{enumerate}
+			\item $X$, $\emptyset \in \tau$;
+			\item Any union of sets in $\tau$ is a set in $\tau$;
+			\item Any finite intersection of sets in $\tau$ is a set in $\tau$;
+		\end{enumerate}
+		The pair $(X,\tau)$ is said to be a topological space and $U \in \tau$
+		an open set of $(X,\tau)$. An element $x \in X$ is said to be a point
+		of $(X,\tau)$.
+	\end{definition}
+	\begin{example}
+		Every metric spaces can induce a topological space. Let $(X,d)$ be a
+		metric space. It can be verified that:
+		\[
+			\tau := \set{U \subset X}{\forall x \in U \quad \exists \epsilon > 0
+			\st B(x,\epsilon) \subset U}
+		\]
+		Is a topology on $X$.
+	\end{example}
+	\begin{definition}
+		We say that a topological space $(X,\tau)$ is metrizable if exists a 
+		metric $d$ on $X$, such that the topology that $d$ induces on $X$
+		is equal to $\tau$.
+	\end{definition}
+	\begin{example}
+		Let $X$ be a nonempty set and let $\tau := P(X)$. The topology $\tau$
+		is called the discrete topology and the space $(X,\tau)$ is called the 
+		discrete space. Is it metrizable?
+	\end{example}
+	\begin{example}
+		Let $X$ be a nonempty set and let $\tau := \{\emptyset,X\}$. The topology 
+		$\tau$ is called the trivial topology. Is it metrizable when $|X| = 1$?
+		Is it metrizable when $|X| > 1$?
+	\end{example}
+	\begin{example}
+		Let $X$ be any infinite set and let 
+		$\tau := \set{A \subset X}{\abs{X \setminus A} < \infty} \cup
+		\{\emptyset\}.$ 
+		The topology $\tau$ is called the finite complement topology. Is it 
+		metrizable?
+	\end{example}
+	\begin{definition}
+		A mapping $f \colon X \to Y$ is said to be continuous if for every open
+		set $U \subset Y$ the set $f^{-1}(U)$ is open.
+	\end{definition}
+	\begin{definition}
+		Given $x \in X$, an open $U \subset X$ containing $x$ is said to be a
+		neighbourhood of $x$.
+	\end{definition}
+	\begin{definition}
+		A mapping $f \colon X \to Y$ is said to be continuous at $x$ if for 
+		every neighbourhood $U$ of $f(x)$ there exists a neighbourhood $V$
+		of $x$ such that $f(V) \subset U$.
+	\end{definition}
+	\begin{definition}
+		A mapping $f \colon X \to Y$ is said to be open if $f(U)$ is open in $Y$
+		for every open $U \subset X$.
+	\end{definition}
+	\begin{definition}
+		A mapping $f \colon X \to Y$ is said to be a homeomorphism if it is
+		injective, surjective, continuous and open. If there exists such an $f$, 
+		then we say that $X$ and $Y$ are homeomorphic.
+	\end{definition}
+	\begin{remark}
+		We say that a property $P$ is a \emph{topological property} if for every
+		two homeomorphic spaces $X$ and $Y$, then $P$ holds for $X$ if and only
+		if it holds for $P$. The branch that deals with topological properties
+		is called topology.
+	\end{remark}
+	\begin{definition}
+		Let $(X,\tau_X)$ be a topological space and let $\emptyset \neq Y \subset 
+		X$. Define
+		\[
+			\tau_Y = \set{U \cap Y}{U \in \tau_X}
+		\]
+		We call $\tau_Y$ the subspace topology, induced by $\tau_X$ on $Y$.
+	\end{definition}
+	\begin{proposition}
+		\textnormal{\textbf{(Characteristic property of the subspace topology).}}
+		Let $(X, \tau_X)$
+		be a topological space, let $\emptyset \neq Y \subset X$, and write 
+		$\tau_Y$ for the subspace topology on $Y$. Then $\tau_Y$ is the unique 
+		topology on $Y$ which satisfies the following property. Let $Z$
+		be a topological space and let $f \colon Z \to X$ be with 
+		$f(Z) \subset Y$. Then $f$ is continuous as a map into $(X, \tau_X)$ if 
+		and only if it is continuous as a map into $(Y, \tau_Y)$.
+	\end{proposition}
+	Throughout this section let $X$ be a fixed topological space.
+	\begin{definition}
+		A subset $F$ of $X$ is said to be closed if $F^c = X \setminus F$ is open.
+	\end{definition}
+	\begin{proposition}
+		The following properties are always satisfied:
+		\begin{enumerate}
+			\item $X$, $\emptyset$ are closed;
+			\item Any intersection of closed sets is closed;
+			\item Any finite union of closed sets is closed;
+		\end{enumerate}
+	\end{proposition}
+	\begin{definition}
+		Given $A \subset X$ we denote $\overline{A}$ to be the intersection of
+		all $F \subset X$ such that $A \subset F$ and $F$ is closed. We call
+		$\overline{A}$ the closure of $A$.
+	\end{definition}
+	We can also define the closure of $A$ in an alternate way:
+	\[
+		\overline{A} = \set{x \in X}{A \cap U \neq \emptyset \,\,\text{for each 
+		neighbourhood $U$ of $x$}}.
+	\]
+	You may try to prove that both definitions are equivalent.
+	\begin{definition}
+		A subset $A$ of $X$ is said to be dense in $X$ if $\overline{A} = X$.
+	\end{definition}
+	Note that the second definition of closure we get that $A$ is dense in $X$
+	if and only if $A \cap U \neq \emptyset$ for every nonempty $U \subset X$.
+	\begin{definition}
+		We say that $X$ is seperable if it has a countable dense subset.
+	\end{definition}
+	\begin{definition}
+		Let $A \subset X$. We say that $x$ is an isolated point of $A$ if exists
+		$U$ open in $X$ such that $X \cap U = \{x\}$.
+	\end{definition}
+	This is exactly the same as saying that $x$ is an isolated point if and
+	only if the singleton $\{x\}$ is open in the subspace topology.
+	\begin{definition}
+		Let $A \subset X$. We say that $x$ is a limit point of $A$ if for every
+		neighourhood $U$ of $x$ there exists $a \in U \cap A$ with $a \neq x$.
+		The set of all limit points of $A$ is called the derived set of $A$
+		and is denoted by $D(A)$.
+	\end{definition}
+	\begin{proposition}
+		Let $A \subset X$ be given, then
+		\begin{enumerate}
+			\item $\overline{A} = A \cup D(A)$.
+			\item $A$ is closed if and only if $D(A) \subset A$.
+		\end{enumerate}
+	\end{proposition}
+	\begin{corollary}
+		Let $A \subset X$ be closed and write $I(A)$ for the set of all isolated
+		points of $A$. Then $A$ is the disjoint union of $D(A)$ and $I(A)$.
+	\end{corollary}
+	\begin{definition}
+		Let $A$ be a subset of $X$. The interior of $A$ is denoted by $\Int(A)$
+		and is defined to be the union of all open subsets $U$ of $X$ so that 
+		$U \subset A$. A point $x \in \Int(A)$ is said to be an interior point 
+		of $A$.
+	\end{definition}
+	\begin{proposition}
+		Let $A \subset X$ be given, then
+		\begin{enumerate}
+			\item $\Int{A} = X \setminus \overline{(X \setminus A)}$.
+			\item $\Int(A)$ is open and contained in $A$.
+			\item $A$ is open if and only if $A = \Int(A)$.
+		\end{enumerate}
+	\end{proposition}
+	\begin{definition}
+		Let $A \subset X$ be given. A point $x \in X$ is said to be a boundary
+		point of $A$ if for every neighbourhood $U$ of $x$ we have 
+		$U \cap A \neq \emptyset$ and $U \cap (X \setminus A) \neq \emptyset$.
+		The set of all boundary points of $A$ is called the boundary of $A$ and 
+		is denoted by $\partial A$.
+	\end{definition}
+	\begin{proposition}
+		For $A \subset X$ we have 
+		$\partial A = \overline{A} \cap \overline{X \setminus A}$ and in 
+		particular $\partial A$ is closed.
+	\end{proposition}
+	\begin{proposition}
+		Let $A \subset X$ be given, then $A$ is the disjoint union of $\Int(A)$
+		and $\partial A$.
+	\end{proposition}
+	\begin{definition}
+		A family $\mathcal{B}$ of subsets of $X$ is said to be an open base
+		for $X$ if for each open $U \subset X$ and $x \in U$ exists 
+		$B \in \mathcal{B}$ such that $x \in B \subset U$.
+	\end{definition}
+	It is easy to see that a family $\mathcal{B}$ of open subsets of $X$ is an 
+	open base for $X$ if and only if each open $U \subset X$ is a union of 
+	elements of $\mathcal{B}$.
+	\begin{definition}
+		We say that $X$ is second countable, or that it satisfies the second
+		axiom of countability, if it has a countable open base.
+	\end{definition}
+	\begin{proposition}
+		Suppose that $X$ is second countable, then $X$ is separable.
+	\end{proposition}
+	\begin{proof}
+		Let $\mathcal{B}$ be a countable open base for $X$. We have that 
+		$\mathcal{B} \setminus \{\emptyset\}$ is also an open base. Choose
+		an arbitrary $x_B \in B$ for each $B \in \mathcal{B}$. Since 
+		$\mathcal{B}$ is countable $\{x_B\}_{B \in \mathcal{B}}$ is also 
+		countable. Let $U$ be open in $X$. By defintion of an open base exists 
+		$B \in \mathcal{B}$ such that $x_B \in B$ and $B \subset U$ so 
+		$x_B \in U$. This shows that $\{x_B\}_{B \in \mathcal{B}}$ is dense
+		in $X$ and thus $X$ is seperable.
+	\end{proof}
+	\begin{remark}
+		In metric spaces, the property of being seperable and second countable
+		is equivalent. If we denote $(X,d)$ the metric space and $A$ the 
+		countable dense set, then
+		\[
+			\mathcal{B} = \set{B(a,q)}{a \in A \text{ and } q \in \Q \cap 
+			(0,\infty)}
+		\]
+		Will form a countable open base for $X$.
+	\end{remark}
+	\begin{example}
+		A classic example of a topological space that is seperable but not
+		second countable is the Sorgenfrey line, also known as the lower
+		limit topology, which we will discuss later.
+	\end{example}
+	\begin{theorem}
+		\tt{Lindelöf’s Theorem} Suppose that $X$ is second countable. Let
+		$\{U_i\}_{i \in I}$ be a family of open subsets of $X$. Then there
+		exists a countable $I_0 \subset I$ so that 
+		$\cup_{i \in I_{0}}{U_i} = \cup_{i \in I}{U_i}$
+	\end{theorem}
+	\begin{proof}
+		
+	\end{proof}
+	
+	
 	
 	\newpage
 	
@@ -496,11 +726,11 @@
 	\begin{definition}
 		A subset $F \subset C(X)$ is called \textbf{equicontinuous} if
 		for any $\varepsilon > 0$ exists a $\delta > 0$ such that
-		$|f(x) - f(y)| < \varepsilon$ for any $f \in F$ and $x,y \in X$ with
+		$\abs{f(x) - f(y)} < \varepsilon$ for any $f \in F$ and $x,y \in X$ with
 		$d(x,y) < \delta$.
 	\end{definition}
 	\begin{theorem}
-		(Arzelà–Ascoli theorem). Let $F$ be a nonempty closed subset of 
+		\tt{Arzelà–Ascoli theorem} Let $F$ be a nonempty closed subset of 
 		$C(X)$. Then $F$ is compact if and only if it is bounded and 
 		equicontinuous.
 	\end{theorem}
