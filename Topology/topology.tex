@@ -7,6 +7,9 @@
 \pagestyle{fancy}
 \usetikzlibrary{positioning}
 \geometry{margin=1in}
+\pgfplotsset{compat=1.18}
+\setlength{\headheight}{14.6pt}
+\addtolength{\topmargin}{-1.6pt}
 \hypersetup{
     colorlinks=false, %set true if you want colored links
     linktoc=all,   %set to all if you want both sections and subsections linked
@@ -465,11 +468,13 @@
 	\]
 	Now the product topology on $X$ is equal to the topology on $X$ generated
 	by $\mathcal{S}$ as a subbase. From this we can also deduce that
-	\[
+  {\small
+  \[
 		\mathcal{B} = \set{\prod_{i \in I}(U_i)}{\text{Exists a finite
-		$I_0 \subset I$ such that $U_i = X_i$ for $i \in I \setminus I_0$ and
+		$I_0 \subset I$ \st $U_i = X_i$ for $i \in I \setminus I_0$ and
 		$U_i$ is open in $X_i$ for $i \in I_0$}}
 	\]
+  }
 	Is an open base for the product topology.
 	\begin{proposition}
 		\tt{Characteristic property of the product topology}
@@ -484,7 +489,7 @@
 		of all bounded elements of $C(X)$. It has the a natural norm defined on
 		it, the supremum norm.
 	\end{definition}
-	More about algebras in the the analysis notes.
+	More about algebras in a later section.
 	
 	\newpage
 	
@@ -1081,7 +1086,7 @@
 		$X$ has a limit point in $X$.
 	\end{definition}
 	It is important to note that in metric spaces, sequential compactness and 
-	the Bolzano–Weierstrass property are both
+	the Bolzano Weierstrass property are both
 	equivalent to compactness. We will omit the proofs because there's not
 	enough time. Here are some more definitions without
 	motivation, and a lemma without a proof.
@@ -1340,6 +1345,7 @@
 		We say that $C_b(X)$ separates points if for every distinct 
 		$x, y \in X$ there exists $f \in C_b(X)$ with $f(x) \neq f(y)$.
 	\end{definition}
+  
 	
 	
 	
