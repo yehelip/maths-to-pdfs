@@ -1,2 +1,6 @@
-**markdown**
-These are my math notes.
+### Math Notes
+
+I'm writing these notes for fun, and for learning mathematics.
+
+
+
