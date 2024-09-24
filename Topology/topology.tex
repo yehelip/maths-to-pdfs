@@ -529,14 +529,14 @@
 	\end{lemma}
 	\begin{proof}
 		For each $n \geq 1$ choose $x_n \in F_n$. For each $n \geq m \geq 1$
-		we have that $x_n,x_m \in F_n$ and thus $d(x_n,x_m) \geq \diam(F_n)$.
+		we have that $x_n,x_m \in F_n$ and thus $d(x_n,x_m) \le \diam(F_n)$.
 		Since $\diam(F_n) \to 0$ we have that $\{x_n\}_{n \geq 1}$ is a Cauchy
 		sequence in $X$. Since $X$ is complete exists $x \in X$ such that 
 		$x_n \to x$ as $n \to \infty$. For each $n \geq 1$ we have that 
 		$\{x_m\}_{m \geq n} \subset F_n$ and since each $F_n$ is closed, we
 		have that $x \in F_n$. Thus $x \in \cap_{n \geq 1}{F_n}$ and in 
 		particular $\cap_{n \geq 1}{F_n} \neq \emptyset$. Let 
-		$x,y \in \cap_{n \geq 1}{F_n}$. We have that $d(x,y) \geq \diam(F_n)$
+		$x,y \in \cap_{n \geq 1}{F_n}$. We have that $d(x,y) \le \diam(F_n)$
 		for each $n \geq 1$. Since $\diam(F_n) \to 0$ as $n \to \infty$ we
 		have that $d(x,y) = 0$ and thus $x=y$. This implies that
 		$\cap_{n \geq 1}{F_n} = \{x\}$ which completes the proof.
