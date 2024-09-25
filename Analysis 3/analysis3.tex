@@ -7,6 +7,9 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usetikzlibrary{positioning}
+\pgfplotsset{compat=1.18}
+\setlength{\headheight}{14.6pt}
+\addtolength{\topmargin}{-1.6pt}
 \geometry{margin=1in}
 \hypersetup{
     colorlinks=false, %set true if you want colored links
@@ -46,7 +49,7 @@
 \newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -358,7 +361,7 @@
 	\section{Taylor's Theorem}
 	\subsection{Higher Order Partial Derivatives}
 	\begin{theorem}
-		\textnormal{\textbf{(Schwart'z Theorem).}}
+		\tt{Schwart'z Theorem}
 		A function $f \colon \Omega \to \R$ defined
 		on a set $\Omega \subset \R^n$, then if $p \in \Omega$ is a point
 		with some neighbourhood contained in $\Omega$, and $f$ has continuous
@@ -426,7 +429,7 @@
 		\partial _{n}^{\alpha _{n}},
 	\]
 	\subsection{Taylor's Theorem}
-	\textnormal{\textbf{(Multivariate Version of Taylor's Theorem).}}
+	\tt{Multivariate Version of Taylor's Theorem}
 	Let $f \colon \R^n \to \R$ be a $k$-times continuously differentiable 
 	function at the point $\boldsymbol{a} \in \R^n$. Then there exist functions 
 	$h_\alpha \colon \R^n \to \R$, where $|\alpha| = k$, such that:
@@ -587,7 +590,7 @@
 		subset of its domain.
 	\end{corollary}
 	\begin{theorem}
-	\textnormal{\textbf{(Inverse Function Theorem).}}
+	\tt{Inverse Function Theorem}
 	Let $U \subset \R^n$ be open,
 	$f \in C^1(U,\R^n)$, and $a \in U$. If $f'(a)$ is invertible then
 	exist open sets $a \in V \subset U$ and $f(a) \in W$ such that
@@ -619,9 +622,9 @@
 		$W \subset U$ then $f(W) \subset V$ is also open.
 	\end{definition}
 	\begin{theorem}
-		\textnormal{(\textbf{The Open Mapping Theorem).}} Let $U \subset \R^n$ 
-		be an open set, and let $f \in C^1(U,\R^m)$ be regular in $U$. 
-		Then $f$ is an open mapping.
+		\tt{The Open Mapping Theorem}
+		Let $U \subset \R^n$ be an open set, and let $f \in C^1(U,\R^m)$ be 
+		regular in $U$. Then $f$ is an open mapping.
 	\end{theorem}
 	\begin{proof}
 		In the case of $m = n$ the theorem follows directly from the inverse
@@ -827,7 +830,7 @@
 	Intuitively the function maps each $x \in V_1$ to its corresponding
 	unique $y$.
 	\begin{theorem}
-		\textnormal{\textbf{(The Implicit Function Theorem).}} 
+		\tt{The Open Mapping Theorem}
 		Let $U \subset \R^n \times \R^m$ be open, $f \in C^1(U,\R^m)$, $(a,b)$ 
 		a solution of $f(x,y) = 0$ and also assume that $\mathrm{det}
 		\frac{\partial(f_1,\dots,f_m)}{(x_1,\dots,x_m)}\vert_{(a,b)} \neq 0$.
@@ -839,7 +842,7 @@
 		And $g(a) = b$ and $f(x,g(x)) = 0$ for every $x$ near $a$.
 	\end{theorem}
 	\begin{theorem}
-		\textnormal{\textbf{(Implicit Function Differentiation).}}
+		\tt{Implicit Function Differentiation}
 		Let $U \subset \R^n \times \R^m$ be an open set, $f \in C^1(U,\R^m)$, 
 		$(a,b)$ a solution of $f(x,y) = 0$, and also assume that $\mathrm{det}
 		\frac{\partial(f_1,\dots,f_m)}{(x_1,\dots,x_m)}\vert_{(a,b)} \neq 0$.
@@ -1440,7 +1443,7 @@
 	\end{theorem}
 	The proof of this theorem is very direct and thus omitted.
 	\begin{theorem}
-		\textnormal{\textbf{((Lebesgue's Theorem).}} Let $R \subset \R^n$ be 
+		\tt{Lebesgue's Theorem} Let $R \subset \R^n$ be 
 		a box and let $f \colon R \to \R^n$ be bounded. Then $f$ is integrable
 		if and only if the set of discontinuity points of $f$ is of 
 		meausre zero.
