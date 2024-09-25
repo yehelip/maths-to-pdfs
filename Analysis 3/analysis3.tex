@@ -39,6 +39,7 @@
 \DeclareMathOperator{\Out}{Out}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\st}{\, s.t. \,}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
@@ -63,31 +64,27 @@
 	\newpage
 	\section{Introduction to Topology in Euclidean Spaces}
 	\subsection{Norms and Metrics}
-	In this course we are going to analyze functions of the form 
-	$f\colon \R^n\to\R^m$ which requires of course knowing analysis $2$ but
-	since will also be using linear analysis tools this course is in
-	some way a continuation of linear analysis as well. We will
-	start by giving basic topological definitions in the eclidean
-	space $\R^d$, first we define:
+  We will start by giving basic topological definitions in the eclidean
+	space $\R^d$. First we define
 	\[
-		\R^d = \set{(x_1,x_2,\dots,x_d)}{\substack{1 \le i \le d \\ x_i\in\R}}
+		\R^d := \set{(x_1,x_2,\dots,x_d)}{\substack{1 \le i \le d \\ x_i\in\R}}
 	\]
 	And now we can continue to define some more topological terms:
 	\begin{definition}
 	The \textbf{Eulidean norm} is defined as:
 	\[
-		\|x\| = \|x\|_2 = \sqrt{\sum_{i=1}^{d}{x_i^2}}
+		\|x\| = \|x\|_2 := \sqrt{\sum_{i=1}^{d}{x_i^2}}
 	\]
 	We can similarly define the $L_p$ norm as:
 	\[
-		\|x\| = \|x\|_p = \sqrt[p]{\sum_{i=1}^{d}{x_i^p}}
+		\|x\| = \|x\|_p := \sqrt[p]{\sum_{i=1}^{d}{x_i^p}}
 	\]
 	\end{definition}
 	\noindent Which satisfies all properties of the norm
 	\begin{definition}
 	The \textbf{Euclidean metric} is defined as:
 	\[
-		d_2(P_1,P_2) = \|P_1-P_2\|_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
+		d_2(P_1,P_2) := \|P_1-P_2\|_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
 	\]
 	\end{definition}
 	\noindent Notice that it is induced by the Euclidean norm and similarly
@@ -95,8 +92,9 @@
 	\subsection{Sequences}
 	Up until now we didn't have many problems using subscript for indexes
 	of sequences, but now since we have coordinates we must denote a sequence
-	in another similar way $^{\text{superscript}}$ as such 
-	$(x^n)_{n=1}^{\infty}$. To define convergence:
+	in another similar way called $^{\text{superscript}}$ as such 
+  $(x^n)_{n=1}^{\infty}$. We define convergence of such sequences in
+  the following way:
 	\[
 		\lim_{n\to\infty}{x^n} = x 
 		\quad \iff \quad
@@ -151,7 +149,7 @@
 	The \textbf{closure} of $E$ is defined as:
 	\[
 		\mathrm{Cl}(E) = \set{x}{\exists (x^n) \colon 
-		x^n \xrightarrow{n\to\infty} x}
+    x^n \xrightarrow{n\to\infty} x}
 	\]
 	\end{definition}
 	\begin{definition}
@@ -189,15 +187,15 @@
 	\end{definition}
 	\begin{definition}
 	A \textbf{connected} space is a topological space that cannot be 
-	represented as the union of two or more disjoint non-empty open subsets. 
+	represented as the union of two or more disjoint nonempty open subsets. 
 	\end{definition}
 	\begin{definition}
-	A \textbf{path} from $x\in X$ to $y\in X$ is a continuous function from 
-	the unit interval $[0,1]$ to $X$ such that $f(0) = 0$ and $f(1) = y$
+	A \textbf{path} from $x\in X$ to $y\in X$ is a continuous function 
+  $f \colon [0,1] \to X$ such that $f(0) = 0$ and $f(1) = y$.
 	\end{definition}
 	\begin{definition}
 	A \textbf{path connected} space $X$ is a topological space such that 
-	exists a path between any two points in $X$
+	exists a path between any two points in $X$.
 	\end{definition}
 	
 	\newpage
@@ -219,13 +217,13 @@
 	which shows that it is continuous and also has a maximum. \\
 	\textbf{Prove that a set $E$ is closed if and only if it's complement
 	$E^c$ is open} \\
-	\underline{$(\Rightarrow)$} \\
+	$(\Rightarrow)$ \\
 	Suppose that $E$ is closed, and $E^c$ is not open. Then exists
 	$x\notin E$ such that for all $r > 0$ we get $B_r(x) \cap E \neq 
 	\emptyset$ which means we can construct a sequence in $E$ that converges
 	to $x$ but $x\notin E$ in contradiction to the assumption that $E$ is 
 	close. \\
-	\underline{$(\Leftarrow)$} \\
+	$(\Leftarrow)$ \\
 	Suppose that $E^c$ is open and $E$ is not closed, then exists a sequence
 	$(x^n)_{n=1}^{\infty}$ that converges to some $x \in E^c$ which means
 	that for every $r > 0$ that $B_r(x) \cap E \neq \emptyset$ in 
@@ -607,7 +605,7 @@
 	
 	\newpage
 	
-	\section{Newton-Raphson Method}
+  \section{Newton\textendash{}Raphson Method}
 	
 	\newpage
 	
