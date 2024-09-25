@@ -1,9 +1,10 @@
 \documentclass[11pt,a4paper]{article}
+\setlength {\marginparwidth }{2cm}
 \usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
-\usepackage[disable]{todonotes}
+\usepackage{todonotes}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usetikzlibrary{positioning}
@@ -375,13 +376,14 @@
 	\end{theorem}
 	
 	\subsection{Multi-index Notation}
-	An $n$-dimensional multi-index is an $n$-tuple,
-	\[
-		\alpha =(\alpha _{1},\alpha _{2},\ldots ,\alpha _{n})
-	\]
+	An $n$-dimensional multi-index is an $n$-tuple
+  \[
+    \alpha = (\alpha_{1},\alpha_{2},\ldots,\alpha_{n})
+  \]
 	of non-negative integers. Define the following operations on some
 	multi-indices $\alpha ,\beta \in \N_{0}^{n}$ and a vector
-	$x=(x_{1},x_{2},\ldots ,x_{n})\in \mathbb {R} ^{n}$: \\\\
+	$x=(x_{1},x_{2},\ldots ,x_{n})\in \mathbb {R} ^{n}$: \\
+  \phantom{} \\
 	\textbf{Addition and Subtraction}
 	\[
 		\alpha \pm \beta =
@@ -1248,7 +1250,7 @@
 		We define the \textbf{length} of a curve to be the length
 		of the path it's defined by.
 	\end{definition}
-	Prove that definition $14.5$ is well defined. \\
+	Prove that definition $14.5$ is well defined.
 	\begin{definition}
 		A parametrization of a curve $g$ such that $\|g'(s)\| = 1$
 		is called an \textbf{arc length paramtrization}.
