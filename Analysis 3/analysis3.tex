@@ -4,7 +4,7 @@
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
-\usepackage{todonotes}
+\usepackage[disable]{todonotes}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usetikzlibrary{positioning}
@@ -56,7 +56,7 @@
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{Analysis Notes}}
-\author{yehelip}
+\author{}
 \date{}
 \usepackage{amsmath}
 \begin{document}
@@ -73,18 +73,18 @@
 	\begin{definition}
 	The \textbf{Eulidean norm} is defined as:
 	\[
-		\|x\| = \|x\|_2 := \sqrt{\sum_{i=1}^{d}{x_i^2}}
+    \norm{x} = \norm{x}_2 := \sqrt{\sum_{i=1}^{d}{x_i^2}}
 	\]
 	We can similarly define the $L_p$ norm as:
 	\[
-		\|x\| = \|x\|_p := \sqrt[p]{\sum_{i=1}^{d}{x_i^p}}
+    \norm{x} = \norm{x}_p := \sqrt[p]{\sum_{i=1}^{d}{x_i^p}}
 	\]
 	\end{definition}
 	\noindent Which satisfies all properties of the norm
 	\begin{definition}
 	The \textbf{Euclidean metric} is defined as:
 	\[
-		d_2(P_1,P_2) := \|P_1-P_2\|_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
+    d_2(P_1,P_2) := \norm{P_1-P_2}_2 = \sqrt{(x_1-x_2)^2 - (y_1-y_2)^2}
 	\]
 	\end{definition}
 	\noindent Notice that it is induced by the Euclidean norm and similarly
@@ -104,7 +104,7 @@
 	A sequence $(x^n)_{n=1}^{\infty}$ is called a Cauchy sequence if and only 
 	if:
 	\[
-		\lim_{n,m\to\infty}{\|x^n-x^m\|} = 0
+    \lim_{n,m \to \infty}{\norm{x^n - x^m}} = 0
 	\]
 	\end{definition}
 	
@@ -118,7 +118,7 @@
 	\begin{definition}
 	An \textbf{open set} in a Euclidean space is a subset $U$ such that
 	for any $x \in U$ exists $\varepsilon > 0$ such that any $y$ such that
-	any $y \in B_\varepsilon(x)$ satisfies $y\in U$
+	any $y \in B_\varepsilon(x)$ satisfies $y \in U$
 	\end{definition}
 	\begin{definition}
 	In a topological space $X$ a space a \textbf{neighborhood} of a point 
