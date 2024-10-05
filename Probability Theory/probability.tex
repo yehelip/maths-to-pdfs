@@ -1,0 +1,396 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+\pgfplotsset{compat=1.18}
+\setlength{\headheight}{14.6pt}
+\addtolength{\topmargin}{-1.6pt}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,   %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{paradox}{Paradox}[section]
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\idealin}{\triangleleft}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\diam}{diam}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Omicron}{O}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{}}
+\author{}
+\date{}
+\begin{document}
+	\maketitle
+	\newpage
+  \section{Probability Spaces}
+  Before diving in into the definition of a probability space, the main object
+  of this course, we must note that this course is an introductory course in 
+  probability theory, which means we don't have the tools from measure theory
+  to formalize probability. Thus, some proofs will be omitted, and we will
+  also need to formalize discrete and continuous probability theory seperately.
+
+  First, let us introduce a paradox.
+  \begin{paradox}
+    \tt{Bertrand's Paradox}
+    Consider an equilateral triangle inscribed in a circle. 
+    Suppose a chord of the circle is chosen at random. 
+    What is the probability that the chord is longer than a side of the 
+    triangle? 
+  \end{paradox}
+
+  We can ponder about this paradox for a while, but Bertrand himself came up
+  with three solutions, each with a different answer. The main difference in
+  his methods lies in the way in which we choose the chords.
+
+  \begin{definition}
+    The sample space of an experiment, is a set $\Omega$ which contains all
+    the possible outcomes of the experiment.
+  \end{definition}
+
+  A good thing to note, is that we can choose different sample spaces for the
+  same experiment. For example, if the experiment consists of rolling two
+  dice, and we want to check for the sum of the results, we can set either
+  $\Omega = \{1,2,3,4,5,6\}^2$, for the result of each dice, or 
+  $\Omega = \{1,2,\dots,11,12\}$ for the sum of the results of the dice. 
+
+  \begin{definition}[Probability theory, intuitive definition]
+    A discrete probability space is a pair $(\Omega, \mathbf P)$, where
+    $\Omega$ is a countable sample set, and $\mathbf P \colon \Omega \to 
+    [0,1]$ is a function such that 
+    $\sum_{\omega \in \Omega}{\mathbf P(\omega)} = 1$. 
+    Intuitively, we say that $\mathbf P(\omega)$ represents the probability
+    that $\omega$ will happen.
+  \end{definition}
+  \begin{definition}
+    A subset of the sample space $A \subseteq \Omega$ is called an event.
+    We also define:
+    \[
+      \mathbf P(A) := \sum_{\omega \in \Omega}{\mathbf P(\omega)}
+    \]
+  \end{definition}
+  
+  Here are a few properties of probability functions we can immediately 
+  verify:
+  \begin{enumerate}
+    \item $\mathbf P(\Omega) = 1$
+    \item $\mathbf P(\emptyset) = 0$
+    \item For $A \subset \Omega$ we have $\mathbf P(A^c) = 1 - \mathbf P(A)$
+    \item If $\{A_n\}_{n=1}^{N}$ are disjoint sets then 
+      \[
+        \mathbf P\left(\cup_{n=1}^{n}{A_n}\right) = 
+        \sum_{n=1}^{N}{\mathbf P(A_n)}.
+      \]
+    \item If $\{A_n\}_{n=1}^{\infty}$ is a sequence of pairwise disjoint sets 
+      then
+      \[
+        \mathbf P\left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\mathbf P(A_n)}.
+      \]
+  \end{enumerate}
+
+  In a finite probability space we say that the probability function is
+  continuous if for every $\omega \in \Omega$ we have 
+  $\mathbf P(\omega) = \frac{1}{|\Omega|}$.
+
+  We now proceed to consider an experiment in which we choose a direction in
+  $\R^2$ at random, on $S^1$ and write it. The sample space is:
+  \[
+    \Omega = S^1 = \set{e^{i \theta}}{\theta \in [0,2 \pi)}.
+  \]
+  A natural question to ask, is if we can define a uniform probability function
+  in the sense that for any arc $[a,b] \subset S^1$ we have 
+  $\mathbf P([a,b]) = b - a$. The answer is that with the definition we have
+  worked with so far, we can't. We see that $\mathbf P(\{a\}) = 0$ for 
+  any $a \in S^1$, and thus we have that
+  \[
+    \mathbf P(\Omega) = \sum_{\omega \in \Omega}{\mathbf P(\omega)} = 0.
+  \]
+  To solve this problem, we may try to define a new function $\mathbf P \colon 
+  2^\Omega \to [0,1]$ that will directly assign each event its probability,
+  but unfortunately for us, such a function, that satisfies the desired
+  properties of a probability function, does not exist. The proof for this
+  is in the course ``real valued function'', and will not be discussed here.
+  However, we can give a proof, under the assumption of the following lemma.
+
+  \begin{lemma}
+    Exists a set $E \subset S^1$ such that for any rational number 
+    $q \in (0, 2 \pi) \cap \Q$ we have $e^{i q}E \cap E = \emptyset$.
+  \end{lemma}
+
+  Indeed we see that
+
+  \[
+    1 = \mathbf P(\Omega) = 
+    \mathbf P\left(\bigcup_{q \in [0,2\pi] \cap \Q}{e^{i q} E}\right) = 
+    \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(e^{i q} E)} = 
+    \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(E)}
+  \]
+
+  And now we have a contradiction because if we set $\mathbf P(E) = a$ then
+  we get
+  \[ 1 = \sum_{q \in [0,2\pi) \cap \Q}{a} \]
+  and this equation has no solution.
+
+  The classical solution to this problem, is to only define the probability
+  function only on certain subsets of the sample space. Suppose we denote
+  this new domain as $\mathcal F \in 2^\Omega$. In order for the desired
+  properties to hold we must also accept that $\mathcal F$ holds certain
+  conditions.
+
+  \begin{definition}[$\sigma$-algebra]
+    Let $\Omega$ be a set. We say that $\mathcal \subset 2^\Omega$ is a
+    $\sigma$-algebra of sets (sometimes also called a $\sigma$-field), it
+    satisfies the following properties:
+    \begin{enumerate}
+      \item $\Omega \in \mathcal F$.
+      \item If $A \in \mathcal F$ then $A^c \in \mathcal F$.
+      \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$, then
+        $\cup_{n=1}^{\infty}{A_n} \in \mathcal F$.
+    \end{enumerate}
+  \end{definition}
+
+  We can now formally define a probability space.
+
+  \begin{definition}[Probability Space]
+    A probability space is a triplet $(\Omega, \mathcal F, \mathbf P)$ such
+    that $\Omega$ is a set, $\mathcal F$ is a $\sigma$-algebra of $\Omega$,
+    and $\mathbf P \colon \mathcal \to [0,1]$ is a probability function that
+    satisfies:
+    \begin{enumerate}
+      \item $\mathbf P(\Omega) = 1$
+      \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ are disjoint, then
+        $\mathbf P\left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\mathbf P(A_n)}$.
+    \end{enumerate}
+  \end{definition}
+
+  In this case we shall call elements of $\mathcal F$ events.
+
+  \begin{proposition}
+    Exists a $\sigma$-algebra $\mathfrak B$ of $\Omega = S^1$, and a unique
+    function $\mathbf P \colon \mathfrak \to [0,1]$ such that 
+    $(\Omega, \mathfrak B, \mathbf P)$ is a probability space and $\mathbf P$
+    is invariant to spinning on the sphere.
+  \end{proposition}
+
+  \begin{definition}[Algebra of Sets]
+    A set $\mathcal C \subset 2^\Omega$ is called an algebra of sets if it 
+    satisfies the following properties:
+    \begin{enumerate}
+      \item $\Omega \in \mathcal C$.
+      \item If $A \in \mathcal C$, then $A^c \in \mathcal C$.
+      \item if $A,B \in \mathcal C$, then $A \cup B \in \mathcal C$.
+    \end{enumerate}
+  \end{definition}
+
+  We can immediately verify that any algebra $\mathcal C$ is closed under
+  finite unions and finite intersections. We also notice that 
+  $\emptyset \in \mathcal C$, and that if $A,B \in \mathcal C$, then
+  $A \setminus B \in \mathcal C$. We can also notice that any 
+  $\sigma$-algebra is closed under countable intersections, and that
+  every $\sigma$-algebra is in particular also an algebra.
+
+  \begin{example}
+    If $\Omega$ is a set, and $A \subset \Omega$, then both $2^\Omega$ and 
+    $\{\emptyset, A, A^c, \Omega\}$ are $\sigma$-algebras.
+  \end{example}
+
+  \begin{example}
+    Given a set $\Omega$, the smallest $\sigma$-algebra of $\Omega$ is
+    $\{\emptyset, \Omega\}$ which is called the trivial $\sigma$-algebra.
+  \end{example}
+  
+  \begin{proposition}
+    Let $(\mathcal F_\alpha)_{\alpha \in I}$ be a family of $\sigma$-algebras,
+    then $\cap_{\alpha \in I}{\mathcal F_\alpha}$ is a $\sigma$-algebra.
+  \end{proposition}
+  \begin{proof}
+    Obvious.
+  \end{proof}
+
+  \begin{definition}[Minimal Sigma Algebra]
+    Let $\Omega$ be a set, and let $H \subset 2^\Omega$ be a family of its
+    subsets. Then we define the minimal sigma algebra that contains $H$,
+    denoted $\sigma(H)$, as the intersection of all the $\sigma$-algebras
+    that contains all the elements in $H$. Notice that the intersection is
+    never empty because $2^\Omega$ is a $\sigma$-algebra that will always
+    contain the elements of $H$.
+  \end{definition}
+
+  \begin{example}
+    \tt{Borel's $\sigma$-algebra}
+    One of the most important minimal $\sigma$-algebras, is Borel's 
+    $\sigma$-algebra defined on $\R$. It is defined as such:
+    \[
+      \mathfrak B = \mathfrak B(\R) := \sigma(\set{(a,b)}{a < b}).
+    \]
+    That is, the smallest $\sigma$-algebra that contains all the open 
+    intervals in $\R$. Similarly, we can define it on the space $\R^d$
+    as follows:
+    \[
+      \mathfrak B_d = \mathfrak B(\R^d) := 
+      \sigma\left(\set{\prod_{i=1}^{d}(a_i,b_i)}{a_i < b_i}\right).
+    \]
+    Note that in general, Borel's $\sigma$-algebra is defined to be
+    the smallest $\sigma$-algebra that contains all the open sets in a
+    general topological space. It can be showen that this definition is
+    equivalent to the definitions we just gave for $\mathfrak B$ and
+    $\mathfrak B_d$.
+  \end{example}
+
+  \begin{theorem}\label{thm:cath}
+    \tt{Carath\'eodory}
+    Let $\Omega$ be a set, let $\mathcal G$ be an algebra of sets of $\Omega$.
+    If $\widehat{P} c\colon \mathcal G \to [0,1]$ is a function that satisfies
+    $f(\Omega) = 1$, and for each sequence of pairwise disjoint sets
+    $\{A_n\}_{n=1}^{\infty}$ that
+      \[
+        \widehat{\mathbf P} \left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\widehat{\mathbf P}(A_n)},
+      \]
+    then exists a single extension 
+    $\mathbf P \colon \sigma(\mathcal G) \to [0,1]$ to 
+    $\widehat{\mathbf P} \colon \mathcal G \to [0,1]$, such that the triplet
+    $(\Omega, \sigma(\mathcal G), \mathbf P)$ is a probability space.
+  \end{theorem}
+
+  Now, if we consider again our previous problem, and let $\Omega = S^1$,
+  in order to find a uniform probabiliy function on it we can define the
+  set $\mathcal G$ to be the set of all finite unions of intervals on $S^1$.
+  As it is closed under union of pairs, and complements, it is an algebra.
+  Now define $\widehat{\mathbf P} \colon \mathcal G \to [0,1]$ as such:
+  \[
+    \widehat{\mathbf P}\left(\right)
+  \]
+  We can see that $\widehat{\mathbf P}$ satisfies the conditions in 
+  \autoref{thm:cath} and thus exists an extension $\mathbf P$ defined on
+  the sigma algebra $\mathcal B = \sigma(\mathcal G)$ which is also called
+  the Borel $\sigma$-algebra of $S^1$. We have that 
+  $(\Omega, \mathcal B, \mathbf P)$ is a probability space and we call 
+  $\mathbf P$ the uniform probability function on $S^1$.
+
+  Now we can more formally consider the properties of probability functions.
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    \begin{enumerate}
+      \item $\mathbf P(\emptyset) = 0$.
+      \item If $\{A_n\}_{n=1}^{N} \subset \mathcal F$ are disjoint sets then
+        $\cup_{n=1}^{n}{A_n} \in \mathcal F$ and
+        \[
+          \mathbf P\left(\cup_{n=1}^{n}{A_n}\right) = 
+          \sum_{n=1}^{N}{\mathbf P(A_n)}.
+        \]
+      \item For every $A \in \mathcal F$ we have 
+        $\mathbf P(A^c) = 1 - \mathbf P(A)$.
+      \item If $A, B \in \mathcal F$ and $A \subset B$, then 
+        $\mathbf(B \setminus A) = \mathbf P(B) - \mathbf P(A)$ and thus
+        $\mathbf P(A) \le \mathbf P(B)$.
+      \item If $A,B \in \mathcal F$, then
+        \[
+          \mathbf P(A \cup B) = 
+          \mathbf P(A) + \mathbf P(B) - \mathbf P(A \cap B)
+        \]
+    \end{enumerate}
+  \end{proposition}
+  
+  \begin{proposition}[Continuity of the Probability Function]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    \begin{enumerate}
+      \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ is an increasing
+        sequence of events, that is $A_1 \subset A_2 \subset A_3, \dots$,
+        then
+        \[
+          \mathbf P\left(\bigcup_{n=1}^{\infty}{A_n})\right) = 
+          \lim_{n \to \infty}{\mathbf (A_n)}.
+        \]
+      \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ is a decreasing
+        sequence of events, that is $A_1 \supset A_2 \supset A_3, \dots$,
+        then
+        \[
+          \mathbf P\left(\bigcap_{n=1}^{\infty}{A_n})\right) = 
+          \lim_{n \to \infty}{\mathbf (A_n)}.
+        \]
+    \end{enumerate}
+  \end{proposition}
+
+  In fact the last proposition is a not more than a case of the following
+  proposition.
+
+  \begin{proposition}
+    Let $(A_n)_{n=1}^{\infty}$ be a sequence of events in a probability space
+    $(\Omega, \mathcal F, \mathbf P)$. If the limit $\lim_{n \to \infty} A_n$
+    exists, then $\lim_{n \to \infty} A_n \in \mathcal F$, and
+    \[
+      \mathbf P(\lim_{n \to \infty}{A_n}) = 
+      \lim_{n \to \infty} \mathbf P(A_n)
+    \]
+  \end{proposition}
+  
+  Let us prove this theorem for the case $(A_n)_{n=1}^{\infty}$ is increasing.
+  Define the following sequence:
+  \begin{align*}
+    B_1 &= A_1 \\
+    B_n &= A_n \setminus A_{n-1}
+  \end{align*}
+  It is clear that:
+  \begin{enumerate}
+    \item The sets $(B_n)_{n=1}^{\infty}$ are disjoint.
+    \item For every $N \in \N$ we have: 
+      \[ \bigcup_{n=1}^{N} B_n = \bigcup_{n=1}^{N} A_n = A_N. \]
+    \item $\cup_{n=1}^{\infty} B_n = \cup_{n=1}^{\infty} A_n$.
+  \end{enumerate}
+  We now have:
+  \begin{align*}
+    \mathbf P \left(\bigcup_{n=1}^{\infty} A_n\right) &=
+    \mathbf P \left(\bigcup_{n=1}^{\infty} B_n\right) =
+    \sum_{n=1}^{\infty} \mathbf(B_n) =
+    \lim_{N \to \infty} \sum_{n=1}^{N} \mathbf P(B_n) =
+    \lim_{N \to \infty} \mathbf P\left(\bigcup_{n=1}^{N} B_n\right) \\ &=
+    \lim_{N \to \infty} \mathbf P(A_N).
+  \end{align*}
+
+  \newpage
+
+  \section{Conditional Probability}
+  
+
+\end{document}
