@@ -280,7 +280,7 @@
   \begin{theorem}\label{thm:cath}
     \tt{Carath\'eodory}
     Let $\Omega$ be a set, let $\mathcal G$ be an algebra of sets of $\Omega$.
-    If $\widehat{P} c\colon \mathcal G \to [0,1]$ is a function that satisfies
+    If $\widehat{P} \colon \mathcal G \to [0,1]$ is a function that satisfies
     $f(\Omega) = 1$, and for each sequence of pairwise disjoint sets
     $\{A_n\}_{n=1}^{\infty}$ that
       \[
@@ -532,7 +532,138 @@
   \newpage
 
   \section{Independance and Repeating Experiments}
+  Intuitively, when we say that the event $A$ is independent from $B$,
+  we mean something like
+  \[
+    \mathbf P(A \mid B) = \mathbf P(A).
+  \]
+  Thus we can use the definition of conditional probability to formally define
+  Independence.
+  \begin{definition}[Independence of Two Events]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, let 
+    $A,B \in \mathcal F$ be two events. We say that $A$ and $B$ are independent,
+    if
+    \[
+      \mathbf P(A \cap B) = \mathbf P(A) \mathbf P(B)
+    \]
+  \end{definition}
+  Notice that the interpretation that $A$ is independent of $B$ is only viable
+  if we know that $\mathbf P(B) > 0$.
+
+  % More examples of Independence.
+
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    let $A \in \mathcal F$. The following conditions are equivalent:
+    \begin{enumerate}
+      \item For each $B \in \mathcal F$ the events $A$ and $B$ are independent.
+      \item $A$ is independent of itself.
+      \item $\mathbf P(A) \in \{0, 1\}$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    Clear from the definitions.
+  \end{proof}
   
+  \begin{definition}[Independence]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    let $(A_n)_{n=1}^{N}$ be a finite sequence of events.
+    We say that $(A_n)_{n=1}^{N}$ are independent if for each 
+    $\emptyset \neq K \subset \{1,2,\dots,N\}$ we have
+    \[
+      \mathbf P\left(\bigcap_{n \in K} A_n\right) = 
+      \prod_{n \in K} \mathbf P(A_n).
+    \]
+  \end{definition}
+
+  \begin{definition}[Pairwise Independence]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    let $(A_n)_{n=1}^{N}$ be a finite sequence of events.
+    We say that $(A_n)_{n=1}^{N}$ are independent if for each 
+    $1 \le i < j \le N$ we have
+    \[
+      \mathbf P(A_i \cap A_j) = 
+      \mathbf P(A_i) \mathbf P(A_j).
+    \]
+  \end{definition}
+
+  \begin{definition}[Independence of Infinite Events]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    let $(A_n)_{n=1}^{\infty}$ be an infinite sequence of events.
+    We say that $(A_n)_{n=1}^{\infty}$ are (pairwise) independent if each
+    finite subset of them is (pairwise) independent.
+  \end{definition}
+
+  Note that we only require independence for finite subsets and not for
+  infinite subsets.
+
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    let $(A_n)_{n=1}^{\infty}$ be an infinite sequence of  (pairwise) 
+    independent events. Then define a new sequence 
+    $(\widetilde{A}_n)_{n=1}^{\infty}$ such that $\widetilde{A}_n = A_n$ or
+    $\widetilde{A}_n = A_n^c$ for each $n \in \N$. Then each choice of such
+    $(\widetilde{A}_n)_{n=1}^{\infty}$ is (pairwise) independent.
+  \end{proposition}
+  \begin{proof}
+    Using induction on the number of index such that we chose
+    $\widetilde{A}_n = A_n^c$. 
+    To be completed.
+  \end{proof}
+
+  Now, we have the tools to define probability spaces for repeating experiments.
+  We assume that the experiment is repeated in exactly the same way, and that
+  the results of each experiment are independent.
+
+  Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space for a certain
+  experiment. If we want to define a probability space for repeating the
+  the experiment a finite number of times, which we will denote $N$, it makes
+  sense to define it as such:
+  \begin{align*}
+    \Omega_N &= \Omega^N. \\
+    \mathcal F_N &= \sigma\left(\set{A_1 \times A_2 \times \cdots \times A_n}
+    {A_1,\dots,A_n \in \mathcal F}\right). \\
+    \mathbf P_N\left(A_1 \times A_2 \times \cdots A_N\right) &= 
+    \prod_{i=1}^{N} \mathbf P(A_i).
+  \end{align*}
+  The fact that $\mathbf P_N$ is a probability measure follows from 
+  \autoref{thm:cath}. This measure is called the product measure, and 
+  $\mathcal F_N$ is called the product $\sigma$-algebra.
+
+  Similarly, when $N=\infty$, we will define the space to be:
+  \begin{align*}
+    \Omega_N &= \Omega^{\N}. \\
+    \mathcal F_N &= \sigma\left(\set{\prod_{i=1}^{\infty}{A_i}}
+    {A_i \in \mathcal F, \, \forall i \geq 1 \text{and only for finitely many
+    $i$'s } A_i \neq \Omega}\right). \\
+    \mathbf P_N\left(\prod_{i=1}^{N}{A_i}\right) &= 
+    \prod_{i=1}^{N} \mathbf P(A_i).
+  \end{align*}
+  Notice that we defined the probability function only on finite products of
+  events. The extenstion to the rest of the sets will be done by 
+  \autoref{thm:cath}.
+
+  \begin{example}[Bernoulli Trial]
+    A Bernoulli trial, is a random experiment with only two possible outcomes,
+    ``success'' and ``failure'', in which the probability of success is the 
+    same every time the experiment is conducted. The probability space that
+    models these kind of experiments is defined as such:
+    \begin{align*}
+      \Omega &= \{0, 1\}. \\
+      \mathcal F &= \{\emptyset, \{0\}, \{1\}, \Omega\}. \\
+      \mathbf P(\omega) &=
+      \begin{cases}
+        p, &\omega = 1 \\
+        1-p, &\omega= 0
+      \end{cases}
+    \end{align*}
+    Now for $N \in \N \cup \{\infty\}$ we have
+    \[ \Omega_N = \{0, 1\}^N \]
+    which models repeating independent experiment with two results.
+    These kind of experiments are also called Bernoulli trials.
+
+
+  \end{example}
 
 
 \end{document}
