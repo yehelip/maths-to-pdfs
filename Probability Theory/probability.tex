@@ -299,7 +299,8 @@
   As it is closed under union of pairs, and complements, it is an algebra.
   Now define $\widehat{\mathbf P} \colon \mathcal G \to [0,1]$ as such:
   \[
-    \widehat{\mathbf P}\left(\right)
+    \widehat{\mathbf{P}}\left(\biguplus_{i=1}^{N}\left(a_{i},b_{i}\right)\right)
+    = \sum_{i=1}^{N}\frac{b_{i}-a_{i}}{2\pi},
   \]
   We can see that $\widehat{\mathbf P}$ satisfies the conditions in 
   \autoref{thm:cath} and thus exists an extension $\mathbf P$ defined on
@@ -391,6 +392,147 @@
   \newpage
 
   \section{Conditional Probability}
+  \begin{definition}[Conditional Probability]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, and let
+    $A,B \in \mathcal F$, such that $\mathbf P(B) > 0$. We define the
+    probability of $A$ given that $B$ already happened as:
+    \[
+      \mathbf P(A \mid B) := \frac{\mathbf P(A \cap B)}{\mathbf P(B)}
+    \]
+  \end{definition}
+
+  The intuition behind this definition should be clear. We calculate the 
+  probability of event $A$ ``inside'' event $B$.
+
+  Notice that we can also use conditional probability to calculate the
+  the probability of an intersection of two events.
+
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, let 
+    $B \in \mathcal F$ be an event such that $\mathbf P(B) > 0$. Then,
+    the map $A \mapsto \mathbf P(A \mid B)$ is a probability function.
+  \end{proposition}
+  The proof that the range of the function is $[0,1]$ and that 
+  $\mathbf (\Omega \mid B) = 0$ is clear from expanding the definitions,
+  so we will only prove sigma additivity.
+  \begin{proof}
+    Let $(A_n)_{n=1}^{\infty} \subset \mathcal F$ be disjoint sets, then
+    $(A_n \cap B)_{n=1}^{\infty} \subset \mathcal F$ are also disjoint sets
+    and we have:
+      \begin{align*}
+        \mathbf{P}\left( \bigcup_{n=1}^{\infty} A_n \mid B \right) 
+        & = \frac{\mathbf{P}\left( \left( \bigcup_{n=1}^{\infty} A_n \right) \cap B \right)}{\mathbf{P}(B)} \\
+        & = \frac{\mathbf{P}\left( \bigcup_{n=1}^{\infty} (A_n \cap B) \right)}{\mathbf{P}(B)} \\
+        & = \sum_{n=1}^{\infty} \frac{\mathbf{P}(A_n \cap B)}{\mathbf{P}(B)} \\
+        & = \sum_{n=1}^{\infty} \mathbf{P}(A_n \mid B)
+      \end{align*}
+  \end{proof}
+
+  \begin{proposition}[Law of Total Probability]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $N \in \N \cup \{\infty\}$, and $(A_n)_{n=1}^{N}$ be disjoint events
+    such that $\cup_{n=1}^{N} A_n = \Omega$. Then,
+    \[
+      \mathbf{P}(B)=\sum_{n=1}^{N}\mathbf{P}(A_{n})\mathbf{P}(B|A_{n}).
+    \]
+  \end{proposition}
+  \begin{proof}
+    \begin{align*}
+      \mathbf{P}(B) &= 
+      \mathbf{P}(B \cap \Omega) \\ &= 
+      \mathbf{P}\left( B \cap \bigcup_{n=1}^{N} A_n \right) \\ &= 
+      \mathbf{P}\left( \bigcup_{n=1}^{N} (A_n \cap B) \right) \\ &= 
+      \sum_{n=1}^{N} \mathbf{P}(A_n \cap B) \\ &= 
+      \sum_{n=1}^{N} \mathbf{P}(A_n) \mathbf{P}(B \mid A_n).
+      \end{align*}
+  \end{proof}
+
+  \begin{example}[P\'olya's urn, simplified]
+     Let there be $1$ white and $1$ black ball in an urn. 
+     At each step, one ball is drawn uniformly at random from the urn, 
+     and its color observed; 
+     it is then returned in the urn, 
+     and an additional ball of the same color is added to the urn.
+     What is the probability that there are $k$ black balls in the urn after
+     the $n$-th step?
+
+     First denote:
+     \begin{align*}
+       A_{n,k} &= \{\text{there are $k$ black balls after the $n$-th step.}\} \\
+       p_{n,k} &= \mathbf P(A_{n,k}).
+     \end{align*}
+     In order for there to be $k$ black balls after the $n$-th step, there must
+     either have been $k-1$ or $k$ black balls in the $n-1$-th step. Thus,
+     \begin{align*}
+       \mathbf{P}(A_{n,k}) &= 
+       \mathbf{P}(A_{n,k} \cap (A_{n-1,k-1} \cup A_{n-1,k})) \\ &= 
+       \mathbf{P}(A_{n-1,k-1}) \mathbf{P}(A_{n,k} \mid A_{n-1,k-1}) + 
+       \mathbf{P}(A_{n-1,k}) \mathbf{P}(A_{n,k} \mid A_{n-1,k}).
+     \end{align*}
+     This implies that
+     \[ p_{n,k}=\frac{k-1}{n+1}p_{n-1,k-1}+\frac{n+1-k}{n+1}p_{n-1,k}. \]
+     Coupled with the fact that $p_{0,1} = 1$ we can verify that the only
+     solution under these conditions is $p_{n,k} = \frac{1}{n+1}$.
+     In general, these problems are very hard to solve.
+  \end{example}
+
+  Another useful trick is Bayes' theorem.
+  In its simplified version it states that,
+  \[
+    {\bf P}(A \mid B)={\frac{{\bf P}(B \mid A){\bf P}(A)}{{\bf P}(B)}},
+  \]
+  and can be solved without much thought. Here's the general theoerm.
+
+  \begin{theorem}\tt{Bayes' Theorem}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $N \in \N \cup \{\infty\}$, and $(A_n)_{n=1}^{N}$ be disjoint events
+    such that $\cup_{n=1}^{N} A_n = \Omega$. Then,
+    \[
+      \mathbf{P}(A_i \mid B) = 
+      {\frac{\mathbf{P}(B \mid A_{i})\mathbf{P}(A_{i})}
+      {\sum_{n=1}^{N}\mathbf{P}(A_{n})\mathbf{P}(B \mid A_{n})}}.
+    \]
+  \end{theorem}
+  \begin{proof}
+    Left as an exercise to the reader.
+  \end{proof}
+
+  \begin{example}
+    Suppose we have a test for checking whether a person has the terrible 
+    the terrible ``cooties''.
+    It has a true positive rate of $0.98$, and a false positive rate of
+    $0.01$. Assume that $0.1\%$ of the population has the cooties,
+    what is the probability that a person who got a positive result
+    has the cooties?
+
+    Denote,
+    \begin{align*}
+      A &= \{\text{the person is healthy}\} \\
+      B &= \{\text{the answer is positive}\}.
+    \end{align*}
+    From Bayes' theorem we have:
+    \[
+      \mathbf{P}(A \mid B) = 
+      {\frac{\mathbf{P}(B \mid A)\mathbf{P}(A)}{\mathbf{P}(B)}} = 
+      {\frac{0.01\cdot0.999}{\mathrm{P}(B)}}.
+    \]
+    From the law of total probability we have
+    \begin{align*}
+      \mathbf{P}(B) &= 
+      \mathbf{P}(A)\mathbf{P}(B \mid A) + 
+      \mathbf{P}(A^{c})\mathbf{P}(B \mid A^{c}) \\ &= 
+      0.01\cdot0.999+0.98\cdot0.001=0.01097.
+    \end{align*}
+    And thus,
+    \[ \mathbf{P}(A \mid B)={\frac{0.01\cdot0.999}{0.01097}} \approx 0.91 \]
+  \end{example}
+
+  % There's another example here that might be useful
+
+  \newpage
+
+  \section{Independance and Repeating Experiments}
   
+
 
 \end{document}
