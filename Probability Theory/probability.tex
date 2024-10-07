@@ -1,5 +1,5 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
@@ -55,7 +55,7 @@
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{}}
+\title{\textbf{Introduction to Probability Theory}}
 \author{}
 \date{}
 \begin{document}
@@ -92,7 +92,7 @@
   $\Omega = \{1,2,3,4,5,6\}^2$, for the result of each dice, or 
   $\Omega = \{1,2,\dots,11,12\}$ for the sum of the results of the dice. 
 
-  \begin{definition}[Probability theory, intuitive definition]
+  \begin{definition}[Probability space, intuitive definition]
     A discrete probability space is a pair $(\Omega, \mathbf P)$, where
     $\Omega$ is a countable sample set, and $\mathbf P \colon \Omega \to 
     [0,1]$ is a function such that 
@@ -160,7 +160,7 @@
 
   \[
     1 = \mathbf P(\Omega) = 
-    \mathbf P\left(\bigcup_{q \in [0,2\pi] \cap \Q}{e^{i q} E}\right) = 
+    \mathbf P\left({\bigcup_{q \in [0,2\pi] \cap \Q}}{e^{i q} E}\right) = 
     \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(e^{i q} E)} = 
     \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(E)}
   \]
@@ -177,8 +177,8 @@
   conditions.
 
   \begin{definition}[$\sigma$-algebra]
-    Let $\Omega$ be a set. We say that $\mathcal \subset 2^\Omega$ is a
-    $\sigma$-algebra of sets (sometimes also called a $\sigma$-field), it
+    Let $\Omega$ be a set.\ We say that $\mathcal F \subset 2^\Omega$ is a
+    $\sigma$-algebra (sometimes called a $\sigma$-field) of sets, if it
     satisfies the following properties:
     \begin{enumerate}
       \item $\Omega \in \mathcal F$.
@@ -284,7 +284,7 @@
     $f(\Omega) = 1$, and for each sequence of pairwise disjoint sets
     $\{A_n\}_{n=1}^{\infty}$ that
       \[
-        \widehat{\mathbf P} \left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \widehat{\mathbf P} \left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
         \sum_{n=1}^{\infty}{\widehat{\mathbf P}(A_n)},
       \]
     then exists a single extension 
@@ -317,7 +317,7 @@
       \item If $\{A_n\}_{n=1}^{N} \subset \mathcal F$ are disjoint sets then
         $\cup_{n=1}^{n}{A_n} \in \mathcal F$ and
         \[
-          \mathbf P\left(\cup_{n=1}^{n}{A_n}\right) = 
+          \mathbf P\left(\bigcup_{n=1}^{n}{A_n}\right) = 
           \sum_{n=1}^{N}{\mathbf P(A_n)}.
         \]
       \item For every $A \in \mathcal F$ we have 
@@ -340,15 +340,15 @@
         sequence of events, that is $A_1 \subset A_2 \subset A_3, \dots$,
         then
         \[
-          \mathbf P\left(\bigcup_{n=1}^{\infty}{A_n})\right) = 
-          \lim_{n \to \infty}{\mathbf (A_n)}.
+          \mathbf P\left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
+          \lim_{n \to \infty}{\mathbf A_n}.
         \]
       \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ is a decreasing
         sequence of events, that is $A_1 \supset A_2 \supset A_3, \dots$,
         then
         \[
-          \mathbf P\left(\bigcap_{n=1}^{\infty}{A_n})\right) = 
-          \lim_{n \to \infty}{\mathbf (A_n)}.
+          \mathbf P\left(\bigcap_{n=1}^{\infty}{A_n}\right) = 
+          \lim_{n \to \infty}{\mathbf A_n}.
         \]
     \end{enumerate}
   \end{proposition}
@@ -597,7 +597,7 @@
   Note that we only require independence for finite subsets and not for
   infinite subsets.
 
-  \begin{proposition}
+  \begin{proposition}\label{prop:indp}
     Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
     let $(A_n)_{n=1}^{\infty}$ be an infinite sequence of  (pairwise) 
     independent events. Then define a new sequence 
@@ -620,10 +620,10 @@
   the experiment a finite number of times, which we will denote $N$, it makes
   sense to define it as such:
   \begin{align*}
-    \Omega_N &= \Omega^N. \\
-    \mathcal F_N &= \sigma\left(\set{A_1 \times A_2 \times \cdots \times A_n}
+    &\Omega_N = \Omega^N. \\
+    &\mathcal F_N = \sigma\left(\set{A_1 \times A_2 \times \cdots \times A_n}
     {A_1,\dots,A_n \in \mathcal F}\right). \\
-    \mathbf P_N\left(A_1 \times A_2 \times \cdots A_N\right) &= 
+    &\mathbf P_N\left(A_1 \times A_2 \times \cdots A_N\right) = 
     \prod_{i=1}^{N} \mathbf P(A_i).
   \end{align*}
   The fact that $\mathbf P_N$ is a probability measure follows from 
@@ -632,11 +632,11 @@
 
   Similarly, when $N=\infty$, we will define the space to be:
   \begin{align*}
-    \Omega_N &= \Omega^{\N}. \\
-    \mathcal F_N &= \sigma\left(\set{\prod_{i=1}^{\infty}{A_i}}
-    {A_i \in \mathcal F, \, \forall i \geq 1 \text{and only for finitely many
+    &\Omega_N = \Omega^{\N}. \\
+    &\mathcal F_N = \sigma\left(\set{\prod_{i=1}^{\infty}{A_i}}
+    {A_i \in \mathcal F, \, \forall i \geq 1 \text{ and only for finitely many
     $i$'s } A_i \neq \Omega}\right). \\
-    \mathbf P_N\left(\prod_{i=1}^{N}{A_i}\right) &= 
+    &\mathbf P_N\left(\prod_{i=1}^{N}{A_i}\right) = 
     \prod_{i=1}^{N} \mathbf P(A_i).
   \end{align*}
   Notice that we defined the probability function only on finite products of
@@ -662,8 +662,51 @@
     which models repeating independent experiment with two results.
     These kind of experiments are also called Bernoulli trials.
 
-
+    Now set $N \in \N$. We want to calculate the probability that the
+    experiment ends in $k$ successes. We set:
+    \begin{align*}
+      A_k &= \{\text{$k$ successes}\}. \\
+      H_i &= \{\omega_i = 1\}, \quad 1 \le i \le N.
+    \end{align*}
+    We now notice that if $\omega = (\omega_1,\dots,\omega_N) \in A_k$ then
+    \[
+      \{\omega\} = \bigcap_{i=1}^{N} \widehat{H}_i,
+    \]
+    where
+    \[
+      \widetilde{H}_{i} = 
+      \begin{cases}
+        H_{i}, &\omega_{i} = 1 \\ 
+        H_{i}^{c}, &\omega_{i} = 0
+      \end{cases}.
+    \]
+    From \autoref{prop:indp} and since the events are independent:
+    \[
+      \mathbf P_N\left(\{w\}\right) =
+      \mathbf P_N\left(\bigcap_{i=1}^{N} \widetilde{H}_i \right) = 
+      \prod_{i=1}^{N} \mathbf P_N(\widetilde{H}_i) =
+      p^k (1-p)^{N-k}
+    \]
+    Finally, we get
+    \[
+      P_N(A_k) = 
+      \abs{A_k} p^k (1-p)^{N-k} = 
+      \binom{N}{k} p^k (1-p)^{N-k}
+    \]
+    Also, because we know that $(A_k)_{k=1}^{N}$ are all disjoint and that
+    $\cup_{k=1}^{N} A_k = \Omega$ we get that:
+    \[
+      \sum_{k=0}^{N}\mathbf{P}_{N}\left(A_{k}\right) = 
+      \sum_{k=0}^{N}{\binom{N}{k}}p^{k}\left(1-p\right)^{N-k} = 
+      \left(p+\left(1-p\right)\right)^{N} = 1,
+    \]
+    just as expected.
   \end{example}
+
+  \begin{example}[Random Walks]
+    
+  \end{example}
+
 
 
 \end{document}
