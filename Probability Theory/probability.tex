@@ -704,8 +704,75 @@
   \end{example}
 
   \begin{example}[Random Walks]
-    
+    Let there be a cute cat on the $\Z$ number line. 
+    We know that each minute, the cat could move one step to the right with
+    a probability of $p$, or one step to the left with probability $1-p$.
+    We may wonder what are the chances the cat would be on the number $4$
+    after $8$ minutes.
+
+    It's not hard to see that this experiment is just like the previous
+    experiment, and indeed if we denote $A_k$ the number of step the cat
+    made to the right after in the product probability space 
+    $(\Omega_8, \mathcal F_8, \mathbf P_8)$, we would get that:
+    \[
+      \mathbf P_8(A_k) = \binom{8}{k} p^k (1-p)^{8-k}.
+    \]
+    The position of the cat after $k$ step to the right would be 
+    $k - (8 - k) = 2k - 8$. 
+    Since we wonder about the probability of it being on the number $4$,
+    we should calculate the probability of $A_6$, and we will get that:
+    \[
+      \mathbf{P}_{8}(A_{6}) = {\binom{8}{6}} p^{6} (1-p)^{8-6}.
+    \]
+    Notice that the result makes sense because as $P$ increases we get higher
+    results.
   \end{example}
+  \begin{example}[Infinite coin flips]
+    We now consider the probability space 
+    $(\Omega_{\infty}, \mathcal F_{\infty}, \mathbf P_{\infty})$
+    corresponding to the product space of infinite Bernoulli experiments.
+    We want to calculate the probability that the first success was in 
+    the $n$-th experiment. Denote:
+    \begin{align*}
+      H_i &= \{\text{the $i$-th experiment resulted in success}\} \\
+      R_n &= \{\text{first success was in the $n$-th experiment}\} = 
+      \left(\bigcap_{i=1}^{n-1} H_i^c\right) \cap H_n.
+    \end{align*}
+    Since all the Bernoulli experiments are independent, from 
+    \autoref{prop:indp} we get
+    \[
+      \mathbf{P}_{\infty}(R_{n}) = 
+      \mathbf{P}_{\infty} \left(\left(\bigcap_{i=1}^{n-1} H_i^c\right) \cap H_n\right) = 
+      \left(\prod_{i=1}^{n-1} \mathbf{P}_{\infty} \left(H_{i}^{c}\right)\right) \cdot \mathbf{P}_{\infty} \left(H_{n}\right) =
+      (1-p)^{n-1}p.
+    \]
+    We may notice that the events $(A_n)_{n=1}^{\infty}$ are all independent,
+    and also that
+    \[
+      \bigcup_{n=1}^{\infty} R_n = \Omega_\infty \setminus \{(0,0,0,\dots)\}.
+    \]
+    And as long as $p > 1$, we may assume that 
+    $\mathbf P_\infty(0,0,0,\dots) = 0$.
+    Using that assumption, we have that
+    \begin{align*}
+      \mathbf P_{\infty}(\{0,0,0,\dots\}) &= 
+      1 - \mathbf P_\infty(\Omega_\infty \setminus \{0,0,0,\dots\}) =
+      1 - \mathbf P_\infty(\bigcup_{n=1}^{\infty} R_n) \\ &=
+      1 - \sum_{n=1}^{\infty} \mathbf P_\infty(R_n) =
+      1 - p \sum_{n=1}^{\infty} (1-p)^{n-1} \\ &=
+      \begin{cases}
+        0, &p \in (0,1) \\
+        1, &p = 0 \\
+        0, &p = 1
+      \end{cases}.
+    \end{align*}
+  \end{example}
+
+  \newpage
+
+  \section{Random Variables}
+
+
 
 
 
