@@ -28,6 +28,7 @@
 \newtheorem{paradox}{Paradox}[section]
 
 \DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\idealin}{\triangleleft}
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\Aut}{Aut}
@@ -38,6 +39,9 @@
 \DeclareMathOperator{\std}{std}
 \DeclareMathOperator{\Int}{Int}
 \DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Poi}{Poi}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
@@ -771,9 +775,368 @@
   \newpage
 
   \section{Random Variables}
+  % Add introduction
+  (add introduction)
+  \begin{definition}[Random Variable]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    A function $X \colon \Omega \to \R$ is called a random variable if for
+    any open interval $(a,b) \subset \R$ we have
+    \[
+      X^{-1}\left((a,b)\right) = 
+      \set{\omega \in \Omega}{X(\omega) \in (a,b)} \in \mathcal F.
+    \]
+  \end{definition}
+  \begin{remark}
+    From now on we denote
+    \[
+      \{X \in A\} = \set{\omega \in \Omega}{X(\omega) \in A}
+    \]
+  \end{remark}
+  
+  Here are a couple of things we shuold notice:
+  \begin{enumerate}
+    \item If we have that $\Omega$ is countable then as we know 
+    $\mathcal F = 2^\Omega$ and thus every function $X \colon \Omega \to \R$
+    is a random variable.
+    \item If we denote 
+    \[
+      \mathcal G_X := \set{D \subset \R}{\{X \in D\} \in \mathcal F},
+    \]
+    we can notice that $\R \in \mathcal G_X$, and that $\mathcal G_X$ is
+    closed under countable unions, and complements. 
+    Thus, it is a $\sigma$-algebra of $\R$.
+    We also have that it contains all the open intervals in $\R$ so we
+    get that $\mathfrak B := \mathfrak B(\R) \subset \mathcal G_X$.
+  \end{enumerate}
+  
+  \begin{definition}[Distribution of a Random Variable]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, and 
+    $X \colon \Omega \to \R$ a random variable.
+    The distribution of $X$, denoted $P_X$ is the function 
+    $\mathbf P_X \colon \mathfrak B \to [0,1]$ defined as such:
+    \[
+      \mathbf P_X(A) = \mathbf P(X \in A).
+    \]
+  \end{definition}
+  \begin{remark}
+    The space $(\Omega, \mathfrak B, \mathbf P_X)$ is a probability space.
+  \end{remark}
+  \begin{remark}
+    Since a random variable $X$ gives us data about experiments, for events
+    $N \in \mathcal F$ such that $\mathbf P(N) = 0$ we don't care about the
+    value of $X(N)$. From now on we won't define random variables for events
+    with probability $0$.
+  \end{remark}
+  
+  \begin{example}
+    There are $20$ balls in a vase, numbered from $1-20$.
+    Three balls are taken out of a vase with a uniform probability.
+    What is the probability that one of the balls is numbered $17$ or above?
 
+    First we define our sample space
+    \[
+      \Omega = \set{(i,j,k)}{1 \le i \le j \le k \le 20}.
+    \]
+    Since the balls are taken out uniformly we have 
+    \[ \mathbf P\left((i,j,k)\right) = {\binom{20}{3}}^{-1}. \]
+    We now define the random variable:
+    \begin{align*}
+      &X \colon \Omega \to \R \\
+      &X\left((i,j,k)\right) = k
+    \end{align*}
+    and we notice that we want to calculate 
+    $\mathbf P\left(X \in \{17,18,19,20\}\right)$.
+    Since $\mathbf P_X$ is a probability function we can see that:
+    \begin{align*}
+      \mathbf P\left(X \in \{17,18,19,20\}\right) &= 
+      \mathbf P_X\left(\{17,18,19,20\}\right) \\ &=
+      \mathbf P_X\left(\{17\}\right) + 
+      \mathbf P_X\left(\{18\}\right) +
+      \mathbf P_X\left(\{19\}\right) +
+      \mathbf P_X\left(\{20\}\right) +
+    \end{align*}
+    We notice that:
+    \[
+      \mathbf P_X\left(\{k\}\right) = \frac{\binom{k-1}{2}}{\binom{20}{3}}
+    \]
+    So finally we have:
+    \[
+      \mathbf P\left(X \in \{17,18,19,20\}\right) = 
+      {\binom{20}{3}}^{-1} 
+      \left[
+        \binom{16}{2} + \binom{17}{2} + \binom{18}{2} + \binom{19}{2}
+      \right]
+      \approx 0.508
+    \]
+  \end{example}
 
+  \begin{example}[Coupon Collector]
+    There are $N$ types of coupons in a certain game, and we want to collect
+    them all. 
+    Thus, each day we buy a new coupon, such that the probability of getting
+    each one is the same.
+    The sample space is $\Omega = \{1,2,\dots,N\}^{\N}$.
+    We define a random variable $T \colon \Omega \to \R$ as such:
+    \[
+      T(\omega) = 
+      \inf\left\{\set{k \geq 1}{\abs{\{\omega_1,\dots,\omega_k\} = N}}\right\}.
+    \]
+    Notice that $T$ is undefined for $\omega \in \Omega$ that doesn't include
+    all the coupons, so we need to show that the probability of such events
+    is zero. It would be easier to do it later, so we will assume that for
+    now. For $j \geq N$ and $1 \le j \le N$ we define
+    \[
+      A_t(j) = \{\text{we didn't find a coupon of type $j$ up to day $t$}\}.
+    \]
+    Notice that:
+    \[
+      \{T > t\} = \bigcup_{j=1}^{N} A_t(j).
+    \]
+    Thus,
+    \[
+      \mathbf P_T\left((t,\infty)\right) =
+      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) =
+      \mathbf P\left(\bigcup_{j=1}^{N} A_t(j) \right)
+    \]
+    The events $A_t(j)$ are not disjoint but using the inclusion--exclusion
+    principle we get
+    \[
+      \mathbf P\left(\bigcup_{j=1}^{N} A_t(j) \right) =
+      \sum_{t=1}^{N}(-1)^{i+1} 
+      \sum_{\substack{J\subset\{1,2,..,N\} \\ \abs{J} = i}}
+      \mathbf{P}\left(\bigcap_{j\in J}A_{t}(j)\right).
+    \]
+    We can notice that
+    \[
+      \mathbf{P}\left(\bigcap_{j\in J}A_{t}(j)\right) = 
+      \left(\frac{N - \abs{J}}{N}\right)^t.
+    \]
+    Summing up the results so far gives
+    \[
+      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) =
+      \sum_{\substack{J\subset\{1,2,..,N\} \\ \abs{J} = i}}
+      \left(\frac{N - \abs{J}}{N}\right)^t =
+      \sum_{i=1}^{N} (-1)^{i+1} \binom{N}{i} \left(\frac{N-i}{N}\right)^{t}.
+    \]
+    Because the image of $T$ is $\N$ we can write
+    \begin{align*}
+      \mathbf P_T\left(\{t\}\right) &=
+      \mathbf P_T\left(\{t, t + 1, \dots\}\right) -
+      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) \\ &=
+      \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t-1} -
+      \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t} \\ &=
+      \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t}
+      \left(1 - \frac{N-i}{N}\right).
+    \end{align*}
+    Now all that's left to show is that the probability of events where we
+    didn't get all the coupons is zero. For $1 \le j \le N$ we define the
+    event $A(j) = \{\text{we didn't find the coupon of type $j$}\}$ and notice
+    that:
+    \[
+      A(j) = \bigcap_{t=1}^{\infty} A_t(j).
+    \]
+    Since $A_t(j)$ is a decreasing sequence of events (in $t$), it is clear
+    that $A(j) \in \mathcal F$. Since probability functions are continuous
+    we have that
+    \[
+      \mathbf{P}(A(j)) =
+      \mathbf{P}\left(\bigcap_{t=1}^{\infty}A_{t}(j)\right) =
+      \lim_{t\to\infty}\mathbf{P}\left(A_{t}(j)\right) =
+      \lim_{t\to\infty}\left({\frac{N-1}{N}}\right)^{t}=0.
+    \]
+    And so get
+    \[
+      \mathbf P(\text{we didn't find one of the coupons}) =
+      \mathbf{P}\left(\bigcup_{j=1}^{N} A(j)\right) \leq
+      \sum_{j=1}^{N} \mathbf{P}(A(j)) =
+      \sum_{j=1}^{N} 0 =
+      0.
+    \]
+  \end{example}
+  \begin{definition}[Support]
+    The support of a random variable $X \colon \Omega \to \R$ is the set of all $a \in \R$
+    such that for all $\varepsilon > 0$ we have 
+    $\mathbf P_X\left((a - \varepsilon, a + \varepsilon)\right) > 0$.
+    For a general function $f \colon A \to \R$ such that $X$ is a topological
+    space we have
+    \[
+      \operatorname {supp} (f) := 
+      \operatorname {cl}_{A} 
+      \left(\{x\in A\,:\,f(x)\neq 0\}\right) =
+      {\overline {f^{-1}\left(\{0\}^{\mathrm {c} }\right)}}.
+    \]
+  \end{definition}
+  \begin{definition}
+  [Cumulative Distribution Function]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    The cumulative distibution function (CDF) of $X$, denoted $F_X$ is
+    a function $F_X \colon \R \to [0,1]$ defined as such
+    \[
+      F_{X}(a) = \mathbf{P}_{X}((-\infty,a]) \equiv \mathbf{P}(X \leq a).
+    \]
+    \end{definition}
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    The function $F_X$ satisfies the following properties:
+    \begin{enumerate}
+      \item $F_X$ is a monotonically increasing function.
+      \item $\lim_{a \to \infty} F_X(a) = 1$.
+      \item $\lim_{a \to -\infty} F_X(a) = 0$.
+      \item $F_x$ is continuous from the right.
+    \end{enumerate}
+  \end{proposition}
+  The proofs of $1-3$ are derived from basic properties of probability
+  functions, and that they are continuous, so we will only prove the last
+  statement.
+  \begin{proof}
+    Let $a \in \R$.
+    Since $F_X$ is monotonically increasing, it suffices to show the continuity
+    for a single sequence, for example $a_n = a + \frac{1}{n}$. We see
+    that
+    \begin{align*}
+      \lim_{n\to\infty} F_{X} {\left(a+\frac{1}{n}\right)} &=
+      \lim_{n\to\infty} \mathbf P_{X}{\left((-\infty,a+1/n]\right)} =
+      \mathbf P_{X}{\left(\bigcap_{n=1}^{\infty}(-\infty,a+1/n)\right)} \\ &=
+      \mathbf P_{X}{\left((-\infty,a)\right)} =
+      F_{X}(a),
+    \end{align*}
+  \end{proof}
+  The following theorem will show that $F_X$ contains by itself all the
+  information from $P_X$, but we will not prove it in this course.
+  \begin{theorem}
+    Every CDF corresponds to a unique distribution. In other words, if
+    $(\Omega, \mathcal F, \mathbf P)$ and $(\Omega', \mathcal F', \mathbf P')$
+    are two probability spaces, and $X \colon \Omega \to \R$, 
+    $Y \colon \Omega' \to \R$ are two random variable, then
+    \[
+      F_X = F_Y \iff \mathbf P_X = \mathbf P_Y
+    \]
+  \end{theorem}
+  \begin{theorem}
+    Let $F \colon \R \to [0,1]$ be a function that satisfies all $4$ basic
+    properties of the CDF. Thus, exists a probability space 
+    $(\Omega, \mathcal F, \mathbf P)$ and a random variable 
+    $X \colon \Omega \to \R$ such that$F_X = F$.
+  \end{theorem}
+  We won't prove this theorem either, but using these two last theorems
+  we can conclude that exists a bijection between all random variables'
+  distributions and functions that satisfy the $4$ properties from above.
 
+  \begin{definition}
+    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    We say that $X$ is a discrete random variable if $\supp(X)$ is a 
+    countable set.
+  \end{definition}
+  \begin{remark}
+    Notice that if $X \colon \Omega \to \R$ is a random variable such
+    that $\Omega$ is countable, then it is necessarily a discrete random
+    variable.
+  \end{remark}
+  \begin{remark}
+    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a discrete random variable.
+    Denote $\supp(X) = \{a_i\}_{i=1}^{\infty}$ and $p_i := \mathbf P(\{a_i\})$.
+    By definition of the support we have that $\sum_{i=1}^{\infty} p_i = 1$,
+    and thus, since $\mathbf P_X$ is a probability function we have that
+    for any interval $(a,b) \subset \R$ we have
+    \[
+      \mathbf P_X \left((a,b)\right) = \sum_{i \colon a_i \in (a,b)} p_i.
+    \]
+    And that the CDF of $X$ is
+    \[
+      F_X(a)
+      \mathbf P_X \left((-\infty,a)\right) = \sum_{i \colon a_i \le a} p_i.
+    \]
+    This means that the CDF of a discrete random variable $X$ is an a step
+    function. In fact, a random variable $X$ is discrete if and only if
+    $F_X$ is a step function.
+  \end{remark}
+
+  \begin{definition}[Binomial Distribution]
+    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    We say that $X$ is a binomial random variable with parameters
+    $n \in \N$ and $p \in [0,1]$ if it's range is $\{0,1,2,\dots,n\}$ and
+    it's distribution satisfies
+    \[
+      \mathbf P_X(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad 
+      \forall k \in \{0,1,2,\dots,n\}.
+    \]
+    Alternatively, $X$ is a binomial random variable with parameters
+    $p$ and $n$ if
+    \[
+      F_X(a) = \sum_{\substack{k \le a \\ k \in \{0,1,2,\dots,n\}}}
+      \binom{n}{k} p^k (1-p)^{n-k}, \quad \forall a \in \R.
+    \]
+    In this case we denote $X \sim \Bin(n,p)$.
+  \end{definition}
+  When we talked about repeating Bernoulli experiments we saw that the number
+  of ``success'' results in $n$ experiments distributes $\Bin(n,p)$ where
+  $p$ is the probability of success in a single experiment.
+  
+  \begin{example}
+  For example, it is said that Hercules had a $90\%$ chance to complete each
+  one of his $12$ deadly labours. We all know that he eventually completed
+  all of them, and gained immortality. But how easier would it be, if he
+  was allowed to fail one or two?
+  \begin{align*}
+    \mathbf P_X(\{1,2\}) - \mathbf P_X(\{0\}) &=
+    \mathbf P_X(\{1\}) + \mathbf P_X(\{2\}) - \mathbf P_X(\{0\}) \\ &=
+    \sum_{k \in \{1,2\}}
+    \binom{12}{k} (0.1)^k (k - (0.1))^{12-k} +
+    \binom{12}{0} (0.1)^0 (1 - (0.1))^{12-0} \\ &\approx
+    0.325
+  \end{align*}
+  \end{example}
+  \begin{example}
+    Suppose we flip a fair coin $2000$ times. You may be able to convince
+    yuor friend it's safe to bet on the chances it falls on heads exactly
+    $1000$ times. After all, it's a fair coin, so flipping it a large number
+    of times means it's safe to assume it fell on head $50\%$ of the time
+    right? Let's find out. The amount of times we get head distributes
+    $\Bin(2000,0.5)$ so we have
+    \[
+      \mathbf{P}_{X}(1000) =
+      \binom{2000}{1000} \left(\frac{1}{2}\right)^{1000}
+      \left(\frac{1}{2}\right)^{1000} =
+      \frac{(2000)!}{(1000!)^{2}2^{2000}}.
+    \]
+    Using Stirling's approximation
+    \[
+      \lim_{n\rightarrow\infty}
+      {\frac{n!}{\sqrt{2\pi}n^{n+1/2}e^{-n}}}=1,
+    \]
+    we get that
+    \[
+      \mathbf{P}_{X}(1000) \approx
+      \frac{\sqrt{2\pi}(2000)^{2000+1/2}e^{-2000}}
+          {({\sqrt{2\pi}}1000^{1000+1/2}e^{-1000})^{2}2^{2000}} =
+      {\frac{1}{\sqrt{\pi 1000}}}.
+    \]
+    Turns out it wasn't such a good idea\dots
+  \end{example}
+
+  \begin{definition}[Geometric Distribution]
+    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    We say that $X$ is a geometric random variable with parameter
+    $p \in [0,1]$ if it's range is $\N$ and it's distribution satisfies
+    \[
+      \mathbf P_X(k) = (1-p)^{k-1} p, \quad 
+      \forall k \in \N.
+    \]
+    Alternatively, $X$ is a geometric random variable with parameter
+    $p$ if
+    \[
+      F_X(a) = \sum_{\substack{k \le a \\ k \in \N}}
+      (1-p)^{k-1} p, \quad \forall a \in \R.
+    \]
+    In this case we denote $X \sim \Geo(p)$.
+  \end{definition}
+  
 
 
 \end{document}
