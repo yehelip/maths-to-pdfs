@@ -1005,7 +1005,7 @@
   \end{proof}
   The following theorem will show that $F_X$ contains by itself all the
   information from $P_X$, but we will not prove it in this course.
-  \begin{theorem}
+  \begin{theorem}\label{thm:FcharacterizesP}
     Every CDF corresponds to a unique distribution. In other words, if
     $(\Omega, \mathcal F, \mathbf P)$ and $(\Omega', \mathcal F', \mathbf P')$
     are two probability spaces, and $X \colon \Omega \to \R$, 
@@ -1074,11 +1074,11 @@
     In this case we denote $X \sim \Bin(n,p)$.
   \end{definition}
   When we talked about repeating Bernoulli experiments we saw that the number
-  of ``success'' results in $n$ experiments distributes $\Bin(n,p)$ where
+  of ``success'' results in $n$ experiments follows $\Bin(n,p)$ where
   $p$ is the probability of success in a single experiment.
   
   \begin{example}
-  For example, it is said that Hercules had a $90\%$ chance to complete each
+  It is said that Hercules had a $90\%$ chance to complete each
   one of his $12$ deadly labours. We all know that he eventually completed
   all of them, and gained immortality. But how easier would it be, if he
   was allowed to fail one or two?
@@ -1096,7 +1096,7 @@
     yuor friend it's safe to bet on the chances it falls on heads exactly
     $1000$ times. After all, it's a fair coin, so flipping it a large number
     of times means it's safe to assume it fell on head $50\%$ of the time
-    right? Let's find out. The amount of times we get head distributes
+    right? Let's find out. The amount of times we get head follows
     $\Bin(2000,0.5)$ so we have
     \[
       \mathbf{P}_{X}(1000) =
@@ -1137,6 +1137,264 @@
     In this case we denote $X \sim \Geo(p)$.
   \end{definition}
   
+  \begin{example}
+    Suppose we had a Bernoulli experiment repeated indefininely, or until
+    we get a success. Let $p$ denote the probability of success.
+    The random variable the calculates the first repetition in which the
+    experiment succeeded follows $\Geo(p)$.
+  \end{example}
+
+  \begin{definition}
+    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    We say that $X$ is a Poisson random variable with parameter
+    $p > 0$ if it's range is $\N$ and it's distribution satisfies
+    \[
+      \mathbf P_X(k) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad 
+      \forall k \in \N.
+    \]
+    Alternatively, $X$ is a Poisson random variable with parameter
+    $p$ if
+    \[
+      F_X(a) = \sum_{\substack{k \le a \\ k \in \N}}
+      e^{-\lambda} \frac{\lambda^k}{k!}, \quad \forall a \in \R.
+    \]
+    In this case we denote $X \sim \Poi(p)$.
+  \end{definition}
+  
+  This is a rather odd distribution. It is mostly used to model rare events.
+  Suppose that an event happens at a rate of $\lambda$.
+  We can try to model this by thinking of repeating a lot of trials,
+  say $n$ of them, and in each there is a a probability $\lambda / n$ of 
+  succeeding. This bigger $n$ we choose, the more accurate the model will get.
+  As we take the limit $n \to \infty$, we obtain the Poisson distribution.
+  
+  We can also notice that the Poisson distribution is really similar to
+  the binomial distibution, in fact, it is exactly an approximation of it.
+
+  \begin{theorem}[Poisson approximation to binomial]
+    Suppose that $X \sim \Bin(n,k)$ and we have
+    $np = \lambda$. Then
+    \[
+      \mathbf P(X = k) = 
+      \binom{n}{k} p^{k} (1-p)^{n-k} \xrightarrow{n\to\infty}
+      \frac{\lambda^{k}}{k!} e^{-\lambda}.
+    \]
+  \end{theorem}
+  \begin{proof}
+    \begin{align*}
+      \mathbf {P}(X = k) &= 
+      {\binom{n}{k}}p^{k}(1 - p)^{n - k} \\ &= 
+      {\frac{n(n - 1) \cdots (n - k + 1)}{k!}} 
+      \left(\frac{\lambda}{n}\right)^k
+      \left(1 - {\frac{\lambda}{n}}\right)^{n-k} \\ &= 
+      \frac{\lambda^{k}}{k!} \left(1-{\frac{\lambda}{n}}\right)^{n} \cdot
+      \underbrace{
+      \left( {\frac{n}{n}} \cdot 
+      {\frac{n - 1}{n}} \cdots {\frac{n - k + 1}{n}} \right) \cdot 
+      \left(1 - {\frac{\lambda}{n}}\right)^{-k}}_{(*)}.
+    \end{align*}
+    As we take the limit $n \to \infty$ we have $(*) \to 1$ and thus
+    \[
+      \lim_{n\to\infty}\mathbf{P}(X=k)=e^{-\lambda}{\frac{\lambda^{k}}{k!}}.
+    \]
+  \end{proof}
+
+  Before moving on to continuous random variables, we will prove a theorem
+  from a very unexpected field.
+  \begin{theorem}[Divergence of the sum of the reciprocals of the primes]
+    \label{thm:drp}
+    We want to show that
+    \[
+      \sum _{p{\text{ prime}}}{\frac {1}{p}} =
+      {\frac {1}{2}}+
+      {\frac {1}{3}}+
+      {\frac {1}{5}}+
+      {\frac {1}{7}}+
+      \cdots = \infty.
+    \]
+  \end{theorem}
+  Before proving this theorem, we need cover some more things.
+  \begin{definition}[Riemann zeta function]
+    For any real number $s > 1$ the Riemann zeta function is defined
+    as such
+    \[
+      \zeta(s) = \sum_{n=1}^{\infty} n^{-s}.
+    \]
+  \end{definition}
+  \begin{lemma}[Euler's product formula]\label{lem:epf}
+    \[
+      \zeta (s) =
+      \sum _{n=1}^{\infty }{\frac {1}{n^{s}}} =
+      \prod _{p{\text{ prime}}}{\frac {1}{1-p^{-s}}}
+    \]
+    where $\zeta(s)$ is visibly the Riemann zeta function, and $s$
+    is a real number greater than $1$.
+  \end{lemma}
+  \begin{proof}
+    Let $s > 1$ be a real number. Define a discrete random variable $X$,
+    with range (support) $\{1,2,\dots\}$, with the following distribution
+    \[
+      \mathbf P_X(k) = \frac{k^{-s}}{\zeta(s)},
+    \]
+  where $\zeta(s)$ is the Riemann zeta function.
+  This assures us that $\mathbf P_X(\N) = 1$. 
+  For any natural number $m$ set
+  \[
+    A_m = 
+    \set{k \in \N}{\text{$k$ is divisible by $m$}} =
+    \set{nm}{n \in \N}.
+  \]
+  Since $\mathbf P_X$ is a probability function we get that for any $m \in N$
+  \begin{align*}
+    \mathbf{P}_{X}\left(A_{m}\right) 
+    &= \sum_{k \in A_{m}} \mathbf{P}_{X}\left(k\right)
+    = \sum_{n=1}^{\infty} \mathbf{P}_{X}\left(n m\right)
+    = {\frac{1}{\zeta(s)}} \sum_{n=1}^{\infty} \left(n m\right)^{-s} \\
+    &= {\frac{m^{-s}}{\zeta(s)}} \sum_{n=1}^{\infty} n^{-s}
+    = {\frac{m^{-s}}{\zeta(s)}} \zeta(s)
+    = m^{-s}.
+  \end{align*}
+  We can notice that for any two distinct primes $p \neq q$ that the events
+  $A_q$ and $A_p$ are independent. That is because $A_p \cap A_q = A_{pq}$,
+  and then
+  \[
+    \mathbf P_X(A_p \cap A_q) =
+    \mathbf P_X(A_{pq}) =
+    (pq)^{-s} =
+    p^{-s} q^{-s} =
+    \mathbf P_X(A_p) \mathbf P_X(A_q).
+  \]
+  Similarly, we can show that for any finite number of primes 
+  $\{p_i\}_{i=1}^{N}$ that the events $\{A_{p_i}\}_{i=1}^{N}$ are independent.
+
+  Finally, since every integer greater than $1$ is divisible by at least
+  one prime number
+  \[
+    \bigcap_{p\text{ prime}} A_p^c = \{1\},
+  \]
+  we get that
+  \[
+    {\frac{1}{\zeta(s)}} = 
+    \mathbf{P}_{X}\left(\left\{1\right\}\right) = 
+    \mathbf{P}_{X}\left(\bigcap_{p \ \mathrm{prime}} A_{p}^{c}\right) = 
+    \prod_{p \ \mathrm{prime}} \mathbf{P}_{X}\left(A_{p}^{c}\right) = 
+    \prod_{p \ \mathrm{prime}} \left(1 - \frac{1}{p^{s}}\right),
+  \]
+  which completes the proof.
+  \end{proof}
+  Now that we have Euler's product formula we can prove \autoref{thm:drp}.
+  \begin{proof}
+    Because we already know from analysis that 
+    $\sum_{n \in \N} \frac 1n = \infty$ we get that
+    \begin{align*}
+      \lim_{s \to 1^+}
+      \exp\left(\sum_{p \ \mathrm{prime}}
+      \ln \left(1 - \frac{1}{p^{s}}\right)\right) &=
+      \lim_{s \to 1^+}
+      \exp \left(\ln\left(\prod_{p \ \mathrm{prime}}
+      \left(1 - \frac{1}{p^{s}}\right)\right)\right) \\ &= 
+      \lim_{s \to 1^+} 
+      \prod_{p \ \mathrm{prime}} \left(1 - \frac{1}{p^{s}}\right) \\ &= 
+      \infty.
+    \end{align*}
+    Now from the exponent function properties we get that
+    \[
+      \lim_{s \to 1^+} 
+      \sum_{p \text{ prime}} \ln\left(1 - \frac{1}{p^{s}}\right) =
+      - \infty.
+    \]
+    Since for $0 < x < 0.6$ we have that $\ln(1-x) \geq -2x$ we get
+    \[
+      \lim_{s \to 1^+}
+      - \sum_{p \text{ prime}} \frac{1}{2 p^s} \le
+      \lim_{s \to 1^+}
+      \sum_{p \text{ prime}} \ln\left(1 - \frac{1}{p^{s}}\right) =
+      - \infty.
+    \]
+    Which proves that
+    \[
+      \sum_{p \text{ prime}} \frac{1}{p} = \infty,
+    \]
+    and completes the proof.
+  \end{proof}
+
+  \begin{definition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    We say that $X$ is a continuous random variable if $F_X$ is a
+    continuous function.
+  \end{definition}
+  \begin{remark}
+    If $X$ is a continuous random variable then for any $a \in \R$
+    \[
+      \mathbf P(a) = 
+      \lim_{n \to \infty}\left((a - 1/n, a]\right) =
+      \lim_{n \to \infty} F_X(a) - F_X(a - 1/n) =
+      0.
+    \]
+  \end{remark}
+  
+  Continuous random variables can get very weird, and in this course we
+  will only discuss a very specific subset of random variables.
+
+  \begin{definition}
+    A random variable $X$ is called absolutely continuous if exists an
+    integrable function $f_X \colon \R \to [0,\infty)$ such that for any
+    $a \in \R$
+    \[
+      F_X(a) = \int_{-\infty}^{a} f_X(y)\,dy.
+    \]
+    In this case, we call $f_X$ the probability density function of $X$,
+    or PDF for short.
+  \end{definition}
+  
+  A couple of good points to notice are
+  \begin{enumerate}
+    \item From \autoref{thm:FcharacterizesP} we know that $F$ characterizes $P$,
+    which means that we can use $f_X$ to calculate the probability of any
+    event. For example let $A \subset \mathfrak B$ then
+    \[
+      P_X(A) = \int_{A} f_X(y)\,dy,
+    \]
+    but proving this equality is beyond the scope of these notes.
+    \item We always know that
+    \[
+      1 = \mathbf P_X(\R) = \int_{-\infty}^{\infty} f_X(y)\,dy.
+    \]
+  \end{enumerate}
+
+  \begin{example}
+    Let $X$ be an absolutely continuous random variable with a probability
+    density function $f$ defined as such
+    \[
+      f_X(y) =
+      \begin{cases}
+        C(2y - y^2), &y \in [0,1] \\
+        0, &\text{otherwise}
+      \end{cases}.
+    \]
+    What is the value of $C$? What is the probability that $X > 1$?
+
+    To calculate $C$ we can use the second fact we mentioned earlier
+    \[
+      1 =
+      \int_{-\infty}^{\infty} f_X(y)\,dy =
+      C \int_{0}^{2} 2y - y^2\,dy =
+      C\left[y^2 - \frac{y^3}{3}\right]\biggr\vert_{0}^{2} =
+      \frac{4}{3} C,
+    \]
+    which implies that $C = \frac{3}{4}$. The probability that $X > 1$ is
+    \[
+      \mathbf P\left((1,\infty)\right) =
+      \mathbf P\left((1,2)\right) =
+      \frac{3}{4} \int_{1}^{2} 2y - y^2\,dy =
+      \frac{1}{2}.
+    \]
+  \end{example}
+
+
+
 
 
 \end{document}
