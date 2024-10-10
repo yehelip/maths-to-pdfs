@@ -42,6 +42,7 @@
 \DeclareMathOperator{\Bin}{Bin}
 \DeclareMathOperator{\Geo}{Geo}
 \DeclareMathOperator{\Poi}{Poi}
+\DeclareMathOperator{\Exp}{Exp}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
@@ -217,7 +218,7 @@
   \end{proposition}
 
   \begin{definition}[Algebra of Sets]
-    A set $\mathcal C \subset 2^\Omega$ is called an algebra of sets if it 
+    A set $\mathcal C \subset 2^\Omega$ is said to be an algebra of sets if it 
     satisfies the following properties:
     \begin{enumerate}
       \item $\Omega \in \mathcal C$.
@@ -779,7 +780,7 @@
   (add introduction)
   \begin{definition}[Random Variable]
     Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
-    A function $X \colon \Omega \to \R$ is called a random variable if for
+    A function $X \colon \Omega \to \R$ is said to be a random variable if for
     any open interval $(a,b) \subset \R$ we have
     \[
       X^{-1}\left((a,b)\right) = 
@@ -1339,7 +1340,7 @@
   will only discuss a very specific subset of random variables.
 
   \begin{definition}
-    A random variable $X$ is called absolutely continuous if exists an
+    A random variable $X$ is said to be absolutely continuous if exists an
     integrable function $f_X \colon \R \to [0,\infty)$ such that for any
     $a \in \R$
     \[
@@ -1393,8 +1394,266 @@
     \]
   \end{example}
 
+  \begin{definition}[Uniform Distribution]
+    Let $[a,b] \subset \R$ be a closed interval. We say that a random 
+    variable $X$ distributes uniformly on $[a,b]$ and denote $X \sim U([a,b])$
+    if it is absolutely continuous with a probability density function
+    \[
+      f_X(y) =
+      \begin{cases}
+        \frac{1}{b-a}, &y \in [a,b] \\
+        0, &\text{otherwise}
+      \end{cases}.
+    \]
+    Alternatively, $X$ distributes uniformly on $[a,b]$ if
+    \[
+      F_X(t) =
+      \begin{cases}
+        0, &t \le a \\
+        \frac{t-a}{b-a}, &a < t \le b \\
+        1, &b < t
+      \end{cases}.
+    \]
+  \end{definition}
 
+  \begin{example}
+    A bus reaches a train station every $15$ minutes starting from $5:00$.
+    A student reachs the station in uniform distribution somewhere between
+    $7:00$ and $7:30$. We describe the time the student reached the station
+    with a random variable $X$. We have that $X \sim U([a,b])$. What
+    is the probability that the student had to wait more than $5$ minutes
+    for the bus?
+    \[
+      \mathbf P_X((0,10] \cup (15,25]) =
+      \mathbf P_X((0,10]) + \mathbf P_X((15,25]) =
+      \int_{0}^{10} \frac{1}{30}\,dy + \int_{15}^{25} \frac{1}{30}\,dy =
+      \frac{2}{3}.
+    \]
+  \end{example}
 
+  \begin{definition}[Exponential Distribution]
+    We say that a random variable $X$ distributes exponentially with parameter
+    $\lambda > 0$, and denote $X \sim \Exp(\lambda)$
+    if it is absolutely continuous with a probability density function
+    \[
+      f_X(y) =
+      \begin{cases}
+        \lambda e^{-\lambda y}, &y \geq 0 \\
+        0, &\text{otherwise}
+      \end{cases}.
+    \]
+    Alternatively, $X$ distributes exponentially with parameter $\lambda$ if
+    \[
+      F_X(t) = \int_{0}{t} \lambda e^{-\lambda y}\,dy = 1 - e^{-\lambda t}
+    \]
+  \end{definition}
 
+  The exponential distribution is the continuous version of the geometric
+  distribution we saw in discrete random variables. An exponential random
+  variable is generally a good model of describing the time events happen
+  if the following conditions are satisfies
+  \begin{enumerate}
+    \item The events occur independently.
+    \item The rate of occurance is constant.
+    \item Two occurances can't happen at the same time.
+  \end{enumerate}
+  %note
+  We say that it is memoryless (elaborate later) %note
+  %note
+
+  \begin{definition}[Normal Distribution]
+    We say that a random variable $X$ distributes normally with parameters
+    $\mu \in \R$ and $\sigma^2 > 0$, and denote $X \sim N(\mu, \sigma^2)$
+    if it is absolutely continuous with a probability density function
+    \[
+      f_X(y) = 
+      \frac {1}{\sqrt {2\pi \sigma ^{2}}}
+      e^{-{\frac {(y-\mu)^{2}}{2\sigma ^{2}}}}\,.
+    \]
+    Alternatively, $X$ distributes normally with parameters $\mu \in \R$ and 
+    $\sigma^2 > 0$ if
+    \[
+      F_X(t) = 
+      \frac{1}{\sqrt{2\pi\sigma^{2}}}
+      \int_{-\infty}^{t}
+      \exp\left(-\frac{(y-\mu)^{2}}{2\sigma^{2}}\right)\,dy.
+    \]
+    In the case of $\mu = 0$ and $\sigma^2 = 1$ we say that it is the 
+    standard normal distribution.
+    Normal distribution is sometimes called Gaussian distribution.
+  \end{definition}
+
+  In all the distributions we have seen so far, it was neccessary to show
+  that $\int_{-\infty}^{\infty} f_X(y)\,dy = 1$. For most cases so far
+  it's quite trivial to show that, but in the case of normal distribution
+  we have some work to show. We will do that later. 
+  Also, the cumulative distribution function of normal distributions is so
+  hard to calculate in cases where $t \notin \{-\infty,\infty\}$ that
+  there is a special way to denote it, in the case of standard normal
+  distribution:
+  \[
+    \Phi (a) :=
+    \frac{1}{\sqrt{2 \pi}}
+    \int_{-\infty}^{a} e^{-t^{2}/2}\,dt\,.
+  \]
+  
+  \begin{theorem}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+    Then exists a distribution function of a discrete random variable
+    $F_X^d$, a distribution function of a continuous random variable
+    $F_X^c$, and a parameter $0 \le \alpha \le 1$ such that
+    \[
+      F_X = \alpha F_X^d + (1 - \alpha)F_X^c.
+    \]
+  \end{theorem}
+  \begin{proof}
+    To be added later.
+  \end{proof}
+
+  \begin{definition}[Mixed Random Variable]
+    A random variable $X$ that is not discrete or continuous, is called
+    a mixed random variable. By the last theorem, we see that we can
+    write it as a linear combination of a certain discrete and
+    a certain random variables.
+  \end{definition}
+  
+  \begin{remark}
+    In a classic measure theory course it is standard to prove that every
+    random variable can be written as a linear combination (with parameters
+    that sum to $1$) of a discrete variable, an absolutely continuous variable,
+    and a singular continuous variable. Since we don't have the tools to
+    discuss singular continuous variables yet we can ignore it in the bounds
+    of this course.
+  \end{remark}
+  
+  Ponder about the following: 
+  Let $X \sim U([0,1])$, and denote $Y = X^2$. Is the function a random
+  variable? What is its distribution? Is it also uniform?
+
+  \begin{definition}[Measurable Space]
+    Consider a set $X$ and a $\sigma$-algebra $\mathcal F$ on $X$.
+    Then the tuple $(X,{\mathcal {F}})$ is called a measurable space.
+  \end{definition}
+  \begin{definition}[Measurable function]
+    Let $(X, \Sigma)$ and $(Y, \mathrm{T})$ be measurable spaces. A fucntion
+    $f \colon X \to Y$ is said to be measurable if for every $E \in \mathrm{T}$
+    the pre-image of $E$ under $f$ is in $\Sigma$; that is, for all 
+    $E \in \mathrm{T}$
+    \[
+      f^{-1}(E):=\{x\in X\mid f(x)\in E\}\in \Sigma .
+    \]
+    That is, $\sigma(f) \subseteq \Sigma$, where $\sigma(f)$ is the
+    $\sigma$-algebra generated by $f$. If $f$ is a measurable function,
+    one also may write
+    \[
+      f \colon (X, \Sigma) \rightarrow (Y, \mathrm{T}).
+    \]
+  \end{definition}
+  
+  \begin{proposition}
+    Let $X \colon \Omega \to \R$ be a random variable, and $h \colon \R \to \R$
+    be Borel measurable, then $Y = h(X)$ is a random variable.
+  \end{proposition}
+  No proof yet.
+
+  \begin{theorem}[I don't remember who]
+    Let $h \colon \R \to \R$ be a function with a countable amount of 
+    discontinuities $\{a_i\}_{i \in \N}$. If $\{a_i\}_{i \in \N}$ has no
+    accumulation points in $\R$ then $h$ is measurable.
+  \end{theorem}
+  \begin{proof}
+    In the analysis notes maybe? In measure theory for sure.
+  \end{proof}
+
+  \begin{proposition}[Distribution of $Y = h(X)$]
+    Let $X$ be a random variable and $h$ a measurable function.
+    \begin{enumerate}
+      \item
+      If $h$ is a strictly increasing function then $F_Y(a) = F_X(h^{-1}(a))$,
+      where 
+      \[ h^{-1}(a) := \sup\set{b \in \R}{h(b) \le a} \] 
+      if $h$ is not
+      a surjection. Additionaly, if $X$ is an absolutely continuous variable
+      and $h$ is differentiable, 
+      then $Y$ is absolutely continuous and 
+      $f_Y(a) = f_X(h^{-1}(a)) \cdot (h^{-1})'(a)$.
+      \item
+      If $h$ is a strictly decreasing function then 
+      $F_Y(a) = 1 - \lim_{y \to h^{-1}(a)^-} F_X(y)$,
+      where
+      \[ h^{-1}(a) := \inf\set{b \in \R}{h(b) \geq a}. \]
+      Additionaly, if $X$ is an absolutely continuous variable
+      and $h$ is differentiable, then $Y$ is absolutely continuous,
+      and then $f_Y(a) = -f_X(h^{-1}(a)) \cdot (h^{-1})'(a)$. 
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    Not today.
+  \end{proof}
+
+  The last propostion gave us a way to calculate the distribution of
+  $Y = h(X)$ where $h$ is strictly monotonic. Here is an example:
+  \begin{example}
+    Not now.
+  \end{example}
+
+  \newpage
+
+  \section{Expectation, Variance and Moments}
+
+  The expectation of a random variable repesents the weighted ``average'' of 
+  its values.
+
+  \begin{definition}[Expectation]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    and let $X \colon \Omega \to \R$ be a random variable.
+
+    If $X$ is a discrete random variable with 
+    $\supp(A) = \{a_i\}_{i=1}^{\infty}$ then we define
+    \begin{align*}
+      \mathbf E_{+}[X] &=
+      \sum_{i \colon a_i \geq 0} a_i \mathbf P_X\left(\{a_i\}\right) \\
+      \mathbf E_{-}[X] &=
+      \sum_{i \colon a_i \le 0} a_i \mathbf P_X\left(\{a_i\}\right).
+    \end{align*}
+    If at least one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are finite, 
+    we define
+    \[
+      \mathbf E[X] = \mathbf E_{+}[X] + \mathbf E_{-}[X].
+    \]
+    If either one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are infinite,
+    we say that $\mathbf [X]$ is undefined.
+
+    If $X$ is an absolutely continuous variable with a probability density
+    function $f_X$ we define
+    \begin{align*}
+      \mathbf E_{+}[X] &=
+      \int_{0}^{\infty} y f_X(y)\,dy
+      \mathbf E_{-}[X] &=
+      \int_{-\infty}^{0} y f_X(y)\,dy
+    \end{align*}
+    If at least one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are finite, 
+    we define
+    \[
+      \mathbf E[X] = \mathbf E_{+}[X] + \mathbf E_{-}[X].
+    \]
+    If either one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are infinite,
+    we say that $\mathbf [X]$ is undefined.
+
+    If $X$ is a mixed random variable, such that 
+    $F_X = \alpha F_X^d + (1-\alpha)F_X^{ac}$ then
+    \[
+      \mathbf E[X] = 
+      \alpha (\mathbf E_{+}[X_d] + \mathbf E_{-}[X_d]) +
+      (1 - \alpha) (\mathbf E_{+}[X_{ac}] + \mathbf E_{-}[X_{ac}])
+    \]
+    Assuming either WILLADDLATER
+  \end{definition}
+  
+  Expect I will add expectations to all the random variables we discussed
+  so far hehe.
+
+  
 
 \end{document}
