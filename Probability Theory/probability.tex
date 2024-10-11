@@ -1,5 +1,5 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools,bbm}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{amsthm}
@@ -43,6 +43,7 @@
 \DeclareMathOperator{\Geo}{Geo}
 \DeclareMathOperator{\Poi}{Poi}
 \DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Var}{Var}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
@@ -1648,12 +1649,476 @@
       \alpha (\mathbf E_{+}[X_d] + \mathbf E_{-}[X_d]) +
       (1 - \alpha) (\mathbf E_{+}[X_{ac}] + \mathbf E_{-}[X_{ac}])
     \]
-    Assuming either WILLADDLATER
+    Assuming either $\mathbf E_+[X_{d}], \mathbf E_+[X_{ac}] < \infty$ or
+    $\mathbf E_-[X_{d}], \mathbf E_-[X_{ac}] < \infty$.
   \end{definition}
   
-  Expect I will add expectations to all the random variables we discussed
-  so far hehe.
+  \begin{example}
+    Let $X \sim \Bin(n,p)$. Then
+    \begin{align*}
+      \mathbf{E}[X] &= \sum_{k=0}^{n} k \mathbf{P}_{X}(k) \\
+      &= \sum_{k=1}^{n} k \binom{n}{k} p^k (1-p)^{n-k} \\
+      &= \sum_{k=1}^{n} \frac{n!}{(k-1)!(n-k)!} p^{k} (1-p)^{n-k} \\
+      &= n p \sum_{k=1}^{n} \frac{(n-1)!}{(k-1)!(n-k)!} p^{k-1} (1-p)^{n-k} \\
+      &= n p\sum_{k=0}^{n-1}{\binom{n-1}{k}}p^{k}(1-p)^{n-1-k} \\
+      &= n p(p+(1-p))^{n-1} \\
+      &= n p.
+    \end{align*}
+  \end{example}
 
+  Expect more examples of expectation to come later.
+
+  We will see later that the average of results in $n$ experiments as
+  $n \to \infty$ is exactly $\mathbf E[X]$.
+
+  \begin{proposition}
+    Let $X$ be a nonnegative random variable. Then
+    \[
+      \mathbf E[X] = \int_{0}^{\infty} 1 - F_X(t)\,dt.
+    \]
+    If $X$ is a general random variable with a well defined expectation
+    then
+    \[
+      \mathbf E[X] = \int_{0}^{\infty} 1 - F_X(t) - F_X(-t)\,dt.
+    \]
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  The following two propositions are known as the 
+  ``Law of the unconscious statistician'' or LOTUS for short.
+  \begin{proposition}[LOTUS, discrete case]
+    Let $X$ be a discrete random variable with $\supp(A) = \{a_i\}_{i \in \N}$,
+    and $h \colon \R \to \R$ be a measurable function. Then
+    \[
+      \mathbf E[h(X)] = \sum_{i \in \N} h(a_i) \mathbf P_X(b_i).
+    \]
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
   
+  \begin{proposition}[LOTUS, absolutely continuous case]
+    Let $X$ be an absolutely continuous random variable with a probability
+    density function $f_X$.
+    Suppose $h \colon \R \to \R$ is a piecewise monotonic function. Then
+    \[
+      \mathbf E[h(X)] = \int_{-\infty}^{\infty} h(x) f_X(x)\,dx.
+    \]
+    This case is also true for continuous random variables in general.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+  
+  \begin{example}
+    In a certain island, the population increases by $5\%$ each year.
+    In the first year, the popoulation of the island is $1000$ people,
+    but each year a coin is flipped (with probability $p$ to land on heads),
+    and if it lands on tails nothing happens. If it lands on heads, all
+    the people on the island die a painful death. What is the expectation
+    of the amount of people who are going to die?
+
+    We can notice that the number of years the population will survive
+    follows follows a geometric distribution so we denote $N \sim \Geo(p)$.
+    We know that the number of people on the island by the year is
+    \[
+      X = 1000 \cdot \left(1 + \frac{5}{100}\right)^N.
+    \]
+    Using the LOTUS formula for a discrete variable we get
+    \begin{align*}
+      \mathbf E[X] &= 
+      1000 \sum_{n=1}^{\infty} \left(1 + \frac{5}{100}\right)^n 
+      \mathbf P_N(n) =
+      1000 \sum_{n=1}^{\infty} \left(\frac{105}{100}\right)^n 
+      (1 - p)^{n - 1} p \\ &=
+      1000 \cdot \frac{105}{100} \cdot p 
+      \sum_{n=1}^{\infty} \left(\frac{105}{100}(1-p)\right)^{n-1}.
+    \end{align*}
+    And the final series is a geometric series so we get that
+    \[
+      \mathbf E[X] =
+      \begin{cases}
+        1050 p \cdot \frac{1}{1 - \frac{105}{100}(1 - p)},
+        &\frac{105}{100}(1-p) < 1 \\
+        \infty,
+        &\frac{105}{100}(1-p) \geq 1
+      \end{cases}
+    \]
+  \end{example}
+
+  \begin{example}
+    Suppose a random square has a side length that is uniform on $[0,1]$.
+    What is the expected area?
+
+    We denote $X \sim U([0,1])$, and then
+    \[
+      \mathbf{E}[X^{2}] =
+      \int_{-\infty}^{\infty} y^{2} f_{X}(y) =
+      \int_{0}^{1}y^{2}\,dy =
+      \frac{1}{3}.
+    \]
+  \end{example}
+
+  \begin{proposition}[Properties of Expectation]
+    Let $X$ be a random variable, $a \in \R$, and $h_1,h_2$ measurable
+    functions.
+    \begin{enumerate}
+      \item $\mathbf E[aX] = a \mathbf E[X]$.
+      \item $\mathbf E[h_1(X) + h_2(X)] = 
+          \mathbf E[h_1(X)] + \mathbf E[h_2(X)].$
+      \item If $\mathbf P(X=a) = 1$, then $\mathbf E[X] = a$.
+      \item If $\mathbf P(h_1(X) \geq a) = 1$, then 
+          $\mathbf E[h_1(X)] \geq 0$.
+    \end{enumerate}
+    Assuming all expectations are well defined and finite, from $2$ and $3$
+    we get that $\mathbf E[h_{1}(X)+a]=\mathbf E[h_{1}(X)] + a$.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{definition}[Variance and Standard Deviation]
+    Let $X$ be a random variable with finite expectation. The Variance of
+    $X$, denoted $\Var(X)$ is defined as
+    \[
+      \Var(X) = \mathbf E\left[ (X - \mathbf E[X])^2 \right].
+    \]
+    The standard deviation of $X$, denoted $\sigma_X$, is defined as
+    \[
+      \sigma_X = \sqrt{\Var(X)}.
+    \]
+  \end{definition}
+  
+  Intuitively, we say that $\Var(X)$ and $\sigma_X$ describe how distant $X$
+  is from its expectation. Another parameter that describes this is
+  $\mathbf E\left[ \abs{X - \mathbf E[X]} \right]$ but we don't use it
+  for a couple of reasons. Firstly, in many cases it's easier to caluclate
+  the variance and standard deviation, and secondly, the standard deviation
+  $\sigma_X$ is the probabilistic version of Euclidean distance, and the 
+  variance $\Var(X)$ describes that square of the Euclidean distance, which
+  are both very natural parameters.
+
+  \begin{example}
+    If we denote the result of a dice throw $X$, then we already know
+    that $\mathbf E[X] = 3.5$ so the variance is
+    \[
+      \Var(X) =
+      \mathbf E\left[ (X - 3.5)^2 \right] =
+      \sum_{i=1}^{6} (i - 3.5)^2 \cdot \frac{1}{6} =
+      \frac{35}{12}.
+    \]
+  \end{example}
+
+  Insert here a table of variance by type of random variable.
+
+  \begin{proposition}[Properties of Variance]
+    Let $X$ be a random variable with finite expectation and $a \in \R$. Then
+    \begin{enumerate}
+      \item $\Var(X) \geq 0$.
+      \item $\Var(X) = \mathbf E[X^2] - \mathbf E[X]^2$.
+      \item $\Var(X + a) = \Var(X)$.
+      \item $\Var(aX) = a^2 \Var(X)$.
+      \item $\Var(X) = 0$ if and only if $\mathbf P(X = \mathbf E[X])$.
+    \end{enumerate}
+    From $1$ and $2$ we get that $\mathbf E[X]^2 \le \mathbf E[X^2]$.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{definition}[Moments]
+    Let $X$ be a random variable.
+    \begin{enumerate}
+      \item The $n$-th moment of $X$ for $n \in \N$ is denoted $\mu_n(X)$ or
+      $m_n(X)$ and is defined as
+      \[
+        \mu_n(X) = \mathbf[X^n]
+      \]
+      under the assumption it is well defined.
+      \item If $X$ is a nonnegative random variable, then the $\alpha \in \R$
+      moment of $X$ is defined as
+      \[
+        \mu_\alpha(X) = \mathbf E[X^{\alpha}].
+      \]
+      \item The $n$-th central moment of $X$ for $n \in \N$ is denoted
+      $C_n(X)$ and is defined as
+      \[
+        C_n(X) = \mathbf E\left[(X - \mathbf E[X])^n\right].
+      \]
+      In particular $C_1(X) = 0$ and $C_2(X) = \Var(X)$.
+    \end{enumerate}
+  \end{definition}
+
+  \begin{example}
+    Let $X \sim U([a,b])$, then
+    \[
+      \mu_{n} \left(X\right) =
+      \mathbf{E}[X^{n}] =
+      \int_{a}^{b}{\frac{y^{n}}{b-a}}\,dy =
+      {\frac{b^{n+1}-a^{n+1}}{(n+1)(b-a)}}.
+    \]
+  \end{example}
+  
+  Add intuition and motivation for moments. Taylor expansion etc.
+
+  \begin{definition}[Moment generating function]
+    Let $X$ be a random variable. The moment generating function of $X$,
+    denoted $M_X \colon \R \to [0,\infty]$ is defined by
+    \[
+      M_X(t) = \mathbf E\left[e^{tX}\right].
+    \]
+    Notice that $M_X$ is always defined since $y \mapsto e^{ty}$ is a positive
+    function for all $t \in \R$.
+  \end{definition}
+
+  \begin{example}
+    Let $X \sim \Bin(n,p)$, then
+    \[
+      M_Z(t) =
+      \mathbf E\left[e^{tX}\right] =
+      \sum_{k=0}^{n}e^{t k}{\binom{n}{k}}p^{k}(1-p)^{n-k} =
+      \left(p e^{t}+1-p\right)^{n}.
+    \]
+  \end{example}
+
+  \begin{proposition}
+    Let $X$ be a random variable, and assume $M_X$ is finite in 
+    $[-\epsilon, \epsilon]$ for some $\epsilon > 0$. Then $M_X$ is a smooth
+    function and for each $k \geq 0$
+    \[
+      M_X^{(k)}(0) = \mathbf E\left[X^k\right]
+    \]
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{remark}
+    Sometimes it's easier to calculate the moment generating function than
+    the moments themselves. Using the previous proposition we can calculate
+    the moments by differentiating $M_X$.
+  \end{remark}
+
+  Moments have many uses, for example to find bounds for events of the
+  form $\{X > a\}$ or $\{\abs{X - \mathbf E[X]} > a\}$. The following
+  proposition suggest another use.
+
+  \begin{proposition}
+    Let $X$, $Y$ be random variables. If exists $\epsilon > 0$ such that 
+    $M_X$ and $M_Y$ are finite on $[0,\epsilon]$ and $M_X(t) = M_Y(t)$
+    for $t \in [0,\epsilon]$, then $\mathbf P_X = \mathbf P_Y$.
+  \end{proposition}
+
+  \newpage
+
+  \section{Inequalities}
+  \begin{proposition}
+    Let $X$ be a random variable, then
+    \[
+      \abs{\mathbf E[X]} \le \mathbf E[\abs{X}]
+    \]
+  \end{proposition}
+  \begin{proof}
+  In the case of a discrete random variable with 
+  $\supp(A) = \{a_i\}_{i \in \N}$ we get
+    \[
+      |\mathbf{E}[X]|=
+      \abs{\sum_{i=1}^{\infty} a_{i} P_{X}(a_{i})} \leq
+      \sum_{i=1}^{\infty} \abs{a_{i} P_{X}(a_{i})} =
+      \sum_{i=1}^{\infty} \abs{a_{i}} P_{X}(a_{i}) =
+      \mathbf{E}[|X|],
+    \]
+    Similarly, if $X$ is an absolutely continuous random variable with
+    a probability density function $f_X$ then
+    \[
+      \abs{\mathbf{E}[X]} =
+      \abs{\int_{\R}y f_{X}(y)\,du} \leq
+      \int_{\R} \abs{y f_{X}(y)}\,dy =
+      \int_{\R} \abs{y} f_{X}(y) =
+      \mathbf{E}[\abs{X}].
+    \]
+    The proof for a mixed random variable is very similar.
+  \end{proof}
+
+  Previously, we also saw that
+  \[
+    \mathbf{E}[X]^{2} \leq \mathbf{E}[X^{2}].
+  \]
+  The last two inequalities are of the form
+  \[
+    h(\mathbf{E}[X])\leq\mathbf{E}[h(X)],
+  \]
+  where $h$ is the function $h(y) = \abs{y}$ in the first inequality, and
+  $h(y) = y^2$ in the second.
+  We want to find for which functions $h$ the inequality is satisfied
+
+  \begin{theorem}[Jensen's inequality]
+    Let $X$ be a random variable with finite expectation and 
+    $h \colon \R \to \R$ a convex function. Then
+    \[
+      h(\mathbf{E}[X])\leq\mathbf{E}[h(X)].
+    \]
+  \end{theorem}
+
+  Some remarks may be good here.
+
+  Recall that a function $h \colon \R \to \R$ is said to be convex if for
+  every $x,y \in \R$ and any $0 \le t \le 1$ we have
+  \[
+    h(t x+(1-t)y)\leq t h(x)+(1-t)h(y).
+  \]
+
+  Some more discussion about convex functions is required, then a short
+  proof needs to be added.
+
+  \begin{example}
+    Let $X \sim U([3,7])$, and $h(y) = \frac{1}{y}$. Using Jensen's inequality
+    we get that
+    \[
+      \mathbf{E}\left[{\frac{1}{X}}\right]\geq{\frac{1}{\mathbf{E}[X]}}.
+    \]
+    Indeed,
+    \[
+      \mathbf{E} \left[{\frac{1}{X}}\right] =
+      \int_{3}^{7}{\frac{1}{y}}\cdot{\frac{1}{4}}\,dy =
+      \frac{1}{4} \log(7/3) \approx
+      0.212.
+    \]
+    While
+    \[
+      \frac{1}{\mathbf E[X]} = \frac{1}{5} = 0.2
+    \]
+  \end{example}
+  
+  \begin{corollary}
+    Let $X$ be a random variable and $0 < \alpha < \beta$. 
+    If $\abs{X}$ has a moment $\beta$, 
+    that is $\mathbf E[\abs{X}^{\beta}] < \infty$,
+    then $\mathbf E[\abs{X}^{\alpha}]$.
+  \end{corollary}
+  \begin{proof}
+    Since $0 < \frac{\alpha}{\beta} < 1$ the function 
+    $y \mapsto y^{\alpha/\beta}$ is convex on $[0,\infty)$, and thus from
+    Jensen's inequality
+    \[
+      \mathbf{E}[|X|^{\alpha}] =
+      \mathbf{E}[(|X|^{\beta})^{\alpha/\beta}] \leq
+      \mathbf{E}[|X|^{\beta}]^{\alpha/\beta} <
+      \infty
+    \]
+  \end{proof}
+
+  \begin{theorem}[Markov's inequality]
+    Let $X$ be a nonnegative random variable. For all $a > 0$ we have
+    \[
+      \mathbf{P}(X \geq a) \leq
+      \frac{\mathbf{E}[X]}{a}.
+    \]
+  \end{theorem}
+  \begin{proof}
+    Let $a > 0$. Define the functions $h(y) = y$ and
+    \[
+      g(y) =
+      a \cdot \mathbbm{1}_{(a,\infty)}(y) =
+      \begin{cases}
+        0, &y < a \\
+        a, &y \geq a
+      \end{cases}.
+    \]
+    Because $g(y) \le h(y)$ for any $y \geq 0$ and $X$ is a nonnegative
+    random variable ($\mathbf P(X \geq 0) = 1$), we get from properties
+    of expectation that
+    \[
+      \mathbf{E}[X] =
+      \mathbf{E}[h(X)] \geq
+      \mathbf{E}[g(X)] =
+      a \cdot \mathbf{P}(X \geq a),
+    \]
+    which completes the proof.
+  \end{proof}
+
+  \begin{corollary}
+    If $X$ is a random variable then for all $a > 0$
+    \[
+      \mathbf{P}(|X|\geq a) \leq
+      \frac{\mathbf{E}[|X|]}{a}
+    \]
+  \end{corollary}
+
+  More stuff
+
+  \begin{theorem}[Chebyshev's inequality]
+    Let $X$ be a random variable with finite expectation. Then for every
+    $a > 0$
+    \[
+      \mathbf P(\abs{X - \mathbf E[X]} \geq a) \le
+      \frac{\Var(X)}{a^2}.
+    \]
+  \end{theorem}
+  \begin{proof}
+    Using Markov's inequality on $\abs{X - \mathbf E[X]}$ with the function
+    $\varphi(y) = y^2$ we get
+    \[
+      \mathbf{P}(\abs{X-\mathbf{E}[X]} \geq a) =
+      \mathbf{P}(\abs{X-\mathbf{E}[X]}^{2} \geq a^{2}) \leq
+      \frac{\mathbf{E}\left[\abs{X-\mathbf{E}[X]}^{2}\right]}{a^{2}} =
+      \frac{\Var(X)}{a^2}.
+    \]
+  \end{proof}
+
+  \begin{example}
+    Let $X \sim U([0,2])$. Thus $\mathbf P\left(\abs{X - 1} \geq 0\right) = 0$.
+    From Chebyshev's inequality we get that
+    \[
+      \mathbf P\left(\abs{X - 1} \geq 1\right) \le
+      \frac{\Var(X)}{1^2} =
+      \frac{1}{3}.
+    \]
+  \end{example}
+
+  \begin{theorem}[Weak law of large numbers, binomial case]
+    Let $p \in [0,1]$. For all $n \in \N$ denote $X_n \sim \Bin(n,p)$.
+    Thus for any $\delta > 0$
+    \[
+      \lim_{n \to \infty}
+      \mathbf P\left(\abs{\frac{X_n}{n} - p} > \delta\right) =
+      0.
+    \]
+  \end{theorem}
+  \begin{proof}
+    There are multiple. To be added later.
+  \end{proof}
+
+  The intuition behind this theorem is that it shows that for any margin
+  $\delta > 0$ as we take $n \to \infty$ the number of successes divided
+  by $n$ is converges to $p$.
+
+  \begin{theorem}[Weierstrass approximation theorem]
+    Let $[a,b] \subset \R$ be a compact interval. Then, for every continuous
+    function $f \colon [a,b] \to \R$ exists a polynomial sequence $P_n$
+    that converges uniformly to $f$. In other words
+    \[
+      \lim_{n \to \infty}
+      \sup_{x \in [a,b]}
+      \abs{f(x) - P_n(x)} =
+      0.
+    \]
+  \end{theorem}
+  \begin{proof}
+    Better prove Stone-Weierstrass's theorem.
+  \end{proof}
+
+  \newpage
+
+  \section{Bertrand's Paradox}
+
+  \newpage
+
+  \section{Multivariate Random Variables}
+
+
+
 
 \end{document}
