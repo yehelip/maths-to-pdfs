@@ -16,6 +16,15 @@
     linkcolor=black,  %choose some color if you want links to stand out
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{circ/.style = {fill, circle, inner sep = 0, minimum size = 3}}
+\tikzset{scirc/.style = {fill, circle, inner sep = 0, minimum size = 1.5}}
+\tikzset{mstate/.style={circle, draw, blue, text=black, minimum width=0.7cm}}
+
+\definecolor{mblue}{rgb}{0.2, 0.3, 0.8}
+\definecolor{morange}{rgb}{1, 0.5, 0}
+\definecolor{mgreen}{rgb}{0.1, 0.4, 0.2}
+\definecolor{mred}{rgb}{0.5, 0, 0}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{remark}{Remark}[section]
@@ -44,6 +53,7 @@
 \DeclareMathOperator{\Poi}{Poi}
 \DeclareMathOperator{\Exp}{Exp}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Vol}{Vol}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
@@ -76,7 +86,7 @@
 
   First, let us introduce a paradox.
   \begin{paradox}
-    \tt{Bertrand's Paradox}
+    \tt{Bertrand's Paradox}\label{par:ber}
     Consider an equilateral triangle inscribed in a circle. 
     Suppose a chord of the circle is chosen at random. 
     What is the probability that the chord is longer than a side of the 
@@ -1026,7 +1036,7 @@
   we can conclude that exists a bijection between all random variables'
   distributions and functions that satisfy the $4$ properties from above.
 
-  \begin{definition}
+  \begin{definition}[Discrete random variable]
     Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a discrete random variable if $\supp(X)$ is a 
@@ -1340,7 +1350,7 @@
   Continuous random variables can get very weird, and in this course we
   will only discuss a very specific subset of random variables.
 
-  \begin{definition}
+  \begin{definition}[Absolutely continuous random variable]
     A random variable $X$ is said to be absolutely continuous if exists an
     integrable function $f_X \colon \R \to [0,\infty)$ such that for any
     $a \in \R$
@@ -1357,7 +1367,7 @@
     which means that we can use $f_X$ to calculate the probability of any
     event. For example let $A \subset \mathfrak B$ then
     \[
-      P_X(A) = \int_{A} f_X(y)\,dy,
+      \mathbf P_X(A) = \int_{A} f_X(y)\,dy,
     \]
     but proving this equality is beyond the scope of these notes.
     \item We always know that
@@ -1445,7 +1455,7 @@
     \]
     Alternatively, $X$ distributes exponentially with parameter $\lambda$ if
     \[
-      F_X(t) = \int_{0}{t} \lambda e^{-\lambda y}\,dy = 1 - e^{-\lambda t}
+      F_X(t) = \int_{0}^{t} \lambda e^{-\lambda y}\,dy = 1 - e^{-\lambda t}
     \]
   \end{definition}
 
@@ -2113,10 +2123,448 @@
   \newpage
 
   \section{Bertrand's Paradox}
+  Before continuing to multivariate random variables, let's discuss Bertrand's
+  paradox once again, and solve it. Recall the paradox:
+  \begin{quote}
+  ``Consider an equilateral triangle inscribed in a circle. 
+    Suppose a chord of the circle is chosen at random. 
+    What is the probability that the chord is longer than a side of the 
+    triangle?''
+  \end{quote}
+
+  The reason we get a different answer
+  each time is because we are choosing different probability
+  spaces to describe the problem.
+  \subsection{First Solution}
+    In this experiment we describe the chord by choosing an arbitrary angle
+    $\theta$, and a point $x$ on the radius at angle $\theta$. The chord
+    that passes through $x$ in perpendicular to the radius is unique.
+    \begin{center}
+        \begin{tikzpicture}
+          \draw circle [radius = 1];
+          \draw [mred] (0, 0) -- (0.707, 0.707);
+          \draw [mblue] (0, 1) -- (1, 0);
+          \draw [dashed] (0, 0) -- (1, 0);
+          \node [circ, fill=red] at (0, 0) {};
+          \node [circ, fill=black, scale=0.5] at (0.5, 0.5) {};
+          \node at (0.5, 0.5) [above] {{\tiny $x$}};
+          \draw[fill=gray!30] (0.2,0) 
+          arc[start angle=0, end angle=45, radius=0.2];
+          \node at (0.3, 0.1) {{\tiny$\theta$}};
+          \draw (0.55, 0.45) -- (0.6, 0.5) -- (0.55, 0.55);
+        \end{tikzpicture}
+    \end{center}
+    The corresponding sample space is
+    \[
+      \Omega = \set{(\theta, x)}{ \theta \in [0, 2 \pi),\, x \in [0,1]}.
+    \]
+    Because we choose the angle and radius uniformly on their respective
+    intervals, and independently, we see that for any 
+    $[a,b] \times [c,d] \subset [0, 2 \pi) \times [0,1]$ that
+    \[
+      \mathbf P([a,b] \times [c,d]) = \frac{b-a}{2 \pi} \cdot (d-c).
+    \]
+    Define a random variable
+    \[
+      X\left((\theta, x)\right) = \text{the length of the chord corresponding
+      to the pair $(\theta, x)$} = 2 \sqrt{1 - x^2}.
+    \]
+    Now we see that
+    \[
+      \mathbf P\left(X \geq \sqrt{3}\right) = 
+      \mathbf P([0,2 \pi] \times [0,1/2]) =
+      \frac{2 \pi-0}{2 \pi} \cdot (1/2-0) =
+      \frac{1}{2}
+    \]
+  
+  \subsection{Second Solution}
+    Now in order to choose a chord, we choose an arbitrary point inside
+    the circle, and consider the chord perpendicular to the radius that is
+    intersecting the with the point.
+    \begin{center}
+        \begin{tikzpicture}
+          \draw circle [radius = 1];
+          \draw [mred, rotate=-20] (0, 0) -- (0.707, 0.707);
+          \draw [mblue, rotate=-20] (0, 1) -- (1, 0);
+          \node [circ, fill=red] at (0, 0) {};
+          \node [circ, fill=black, scale=0.5] at 
+          ([rotate around={-20:(0, 0)}] 0.5, 0.5) {};
+          \node[rotate=-20] at ([rotate around={-20:(0, 0)}]0.5, 0.5) 
+          [above] {{\tiny $x$}};
+          \draw[rotate=-20] (0.55, 0.45) -- (0.6, 0.5) -- (0.55, 0.55);
+        \end{tikzpicture}
+    \end{center}
+    The corresponding sample space is
+    \[
+      \Omega = \set{(x, y)}{ x^2 + y^2 \le 1}.
+    \]
+    Because we choose the coordinates uniformly, and independently, 
+    we see that for any
+    $[a,b] \times [c,d] \subset \Omega$ that
+    \[
+      \mathbf P([a,b] \times [c,d]) = \frac{(b-a)(d-c)}{\pi},
+    \]
+    which is just the area of the rectangle divided by the area of the circle.
+    Define a random variable
+    \[
+      Y\left((x, y)\right) = \text{the length of the chord corresponding
+      to the pair $(x, y)$} = 2 \sqrt{1 - x^2 - y^2}.
+    \]
+    Now we see that
+    \[
+      \mathbf P\left(Y \geq \sqrt{3}\right) = 
+      \mathbf P\left(\set{(x,y)}{2 \sqrt{1 - x^2 - y^2} \geq \sqrt{3}}\right) =
+      \mathbf P\left(\set{(x,y)}{x^2 + y^2 \le \frac{1}{4}}\right) =
+      \frac{\frac{\pi}{4}}{\pi} =
+      \frac{1}{4}
+    \]
+  \subsection{Third Solution}
+    Now we simply choose a chord by choosing two points on the circle, and
+    connecting them.
+    \begin{center}
+          \begin{tikzpicture}
+            \draw circle [radius = 1];
+            \draw [mblue, rotate=-30] (0, -1) -- (-1, 0);
+            \node [circ, fill=black, scale=0.75] at ([rotate=-30]-1, 0) {};
+            \node [circ, fill=black, scale=0.75] at ([rotate=-30]0, -1) {};
+          \end{tikzpicture}
+    \end{center}
+    The corresponding sample space is
+    \[
+      \Omega = \set{(\theta_1, \theta_2)}{\theta_1, \theta_2 \in [0,2 \pi)}.
+    \]
+    Because we choose the angles uniformly, and independently,
+    we see that for any
+    $[a,b] \times [c,d] \subset \Omega$ that
+    \[
+      \mathbf P([a,b] \times [c,d]) =
+      \frac{b-a}{2 \pi} \cdot \frac{d-c}{2 \pi},
+    \]
+    Define a random variable
+    \[
+      Z\left((\theta_1, \theta_2)\right) = 
+      \text{the length of the chord corresponding to the pair $(x, y)$}
+    \]
+    As you should expect, calculating $Z$ directly this time requires
+    tedius geometric and trigonometric calculations.
+    In the end of these calculations, we use similar methods to the ones
+    shown in the first two solutions, and get
+    \[
+      \mathbf P\left(Z \geq \sqrt{3}\right) = 
+      \frac{1}{3}
+    \]
 
   \newpage
 
   \section{Multivariate Random Variables}
+  \begin{definition}[Multivariate random variable]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    The function $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ is said
+    to be a multivariate random variable if for all $a_i < b_i$ for 
+    $1 \le i \le N$ we have
+    \[
+      X^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
+      \set{\omega \in \Omega}
+      {a_i < X_i(\omega) < b_i,\, \forall 1 \le i \le N} \in
+      \mathcal F.
+    \]
+    A multivariate random variable is sometimes also called a random vector.
+  \end{definition}
+  
+  Notice that this definition also implies that $X^{-1}(A) \in \mathcal F$
+  for all $A \in \mathfrak B\left(\R^n\right)$.
+
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$. 
+    Then $X$ is a multivariate random variable if and only if 
+    $X_k \colon \Omega \to \R$ is a random variable for all $1 \le k \le N$.
+  \end{proposition}
+  \begin{proof}
+    Assume $X$ is a multivariate random variable and set some $1 \le k \le N$.
+    Then for all $a < b$ we have
+    \[
+      X_k^{-1}((a,b)) = 
+      X^{-1}\left(\R^{k-1} \times (a,b) \times \R^{n-k}\right) \in
+      \mathcal F.
+    \]
+    Now assume $X_1,\dots,X_N$ are random variables. Then for all $a_i < b_i$
+    for $1 \le i \le N$ we have
+    \[
+      X^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
+      \bigcap_{i=1}^{N}\set{\omega \in \Omega}{a_i < X_i(\omega) < b_i} \in
+      \mathcal F,
+    \]
+    where the last equality follows from the fact $\mathcal F$ is  sigma
+    algebra, and $X_1,\dots,X_N$ are all random variables.
+  \end{proof}
+
+  \begin{definition}[Distribution of a multivariate random variable]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a multivariate
+    random variable.
+    The distribution of $X$, denoted $\mathbf P_X$ is a probability function
+    on the measurable space $(\R^N, \mathfrak B_N)$ defined as
+    \[
+      \mathbf P_X(A) =
+      \mathbf P(X \in A), \quad
+      \forall A \in \mathfrak  BB_N.
+    \]
+  \end{definition}
+
+  \begin{remark}
+    The function $\mathbf P_{X_k}$ denotes the distribution of the random
+    variable $X_k$ and is called the partial distribution of $X_k$.
+    We see that the distribution $\mathbf P_X$ of a random vector uniquely
+    defines the partial distributions $\mathbf P_{X_1},\dots,\mathbf P_{X_N}$
+    because
+    \[
+      \mathbf P_{X_k} =
+      \mathbf P_{X}\left(\R^{k-1} \times A \times \R^{N-k}\right),
+      \quad \forall A \in \mathfrak B.
+    \]
+    The opposite, is not true.
+  \end{remark}
+
+  \begin{example}
+    There are $3$ red balls, $4$ white balls and $5$ blue balls in a vase.
+    Three balls are arbitrarily drawn out of the vase.
+    Denote the number of red balls drawn $X$, and the number of white
+    balls drawn $Y$. What is the probability of $(X,Y)$?
+
+    We see that
+    \[
+      \Omega = \set{(i,j)}{i,j \geq 0,\, i + j < 3},
+    \]
+    where $i$ denotes the number of red balls drawn, and $j$ the number
+    of white balls drawn. From combinatorial arguments we get
+    \[
+      \mathbf P_{(X,Y)}\left((i,j)\right) =
+      \frac{\binom{3}{i}\binom{4}{j}\binom{5}{3-i-j}}{\binom{12}{3}}.
+    \]
+  \end{example}
+
+  \begin{definition}[Cumulatice distribution function]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    The cumulative ditribution function of $X$, denoted $F_X$, is the function
+    $F_X \colon \R^N \to [0,1]$ defined as
+    \[
+      F_X(a_1,\dots,a_N) =
+      \mathbf P(X_i \le a_i,\, \forall 1 \le i \le N) =
+      \mathbf P_X\left(\prod_{i=1}^{N}(-\infty,a_i]\right).
+    \]
+  \end{definition}
+
+  \begin{proposition}[Properties of the CDF]
+    \begin{enumerate}
+      \item The function $F_X$ is increasing in each coordinate.
+      \item The function $F_X$ is continuous from the right in each 
+        coordinate.
+      \item For every choice $a_1,\dots,a_{k-1},a_{k+1},\dots,a_N \in \R$
+        we have $\lim_{a_k \to -\infty}{F_X(a_1,a_2,\dots,a_N)} = 0$
+      \item Denote $X^k = (X_1,\dots,X_{k-1},X_{k+1},\dots,X_N)$ the random 
+      vector with the $k$-th coordinate erased. 
+      Then for every choice $a_1,\dots,a_{k-1},a_{k+1},\dots,a_N \in \R$
+      we have
+      \[
+        \lim_{a_k \to \infty} F_X(a_1,a_2,\dots,a_N) =
+        F_{X^k}(a_1,\dots,a_{k-1},a_{k+1},\dots,a_N).
+      \]
+      In particular
+      \[
+        \lim_{a_1,\dots,a_N \to \infty} F_X(a_1,a_2,\dots,a_N) = 1.
+      \]
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{theorem}
+    Every CDF corresponds to a unique distribution. In other words, if
+    $(\Omega, \mathcal F, \mathbf P)$ and $(\Omega', \mathcal F', \mathbf P')$
+    are two probability spaces, and $X \colon \Omega \to \R^N$,
+    $Y \colon \Omega' \to \R^N$ are two random variable, then
+    \[
+      F_X = F_Y \iff \mathbf P_X = \mathbf P_Y
+    \]
+  \end{theorem}
+  \begin{theorem}
+    Let $F \colon \R^N \to [0,1]$ be a function that satisfies all $4$ basic
+    properties of the CDF. Thus, exists a probability space 
+    $(\Omega, \mathcal F, \mathbf P)$ and a random variable 
+    $X \colon \Omega \to \R^N$ such that$F_X = F$.
+  \end{theorem}
+  We won't prove this theorem either, but using these two last theorems
+  we can conclude that exists a bijection between all random variables'
+  distributions and functions that satisfy the $4$ properties from above.
+
+  \begin{definition}[Discrete random vector]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $X$ is said to be a discrete random vector if exists a countable
+    set $B \subset \R^\N$ such that $\mathbf P(X \in B) = 1$.
+  \end{definition}
+
+  \begin{proposition}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $X$ is a discrete random vector if and only if $X_k$ is a discrete
+    random variable for all $1 \le k \le N$.
+  \end{proposition}
+  \begin{proof}
+    Assume that $X = (X_1,\dots,X_N)$ is a discrete random vector.
+    Then exists a countable set $B \subset \R^N$ such that
+    \[
+      \mathbf P_X(B) = 1.
+    \]
+    Let $1 \le k \le N$. Consider the set $B_k = \pi_k(B)$ where $\pi_k$ is the
+    projection on the $k$-th coordinate. It is clear that $B_k$ is countable
+    and also
+    \[
+      1 \geq
+      \mathbf P(X_1 \in B_k) =
+      \mathbf P\left((X_1,X_2) \in B_k \times \R\right) \geq
+      \mathbf P(X \in B) =
+      1.
+    \]
+    Thus we got that for all $1 \le k \le N$ that $X_k$ is discrete.
+    Now suppose that $X_1,\dots,X_N$ are discrete random variables.
+    Then exist countable sets $B_1,\dots,B_N$ such that 
+    $\mathbf (X_k \in B_k) = 1$ for all $1 \le k \le N$.
+    Under the axiom of choice we have that the set 
+    $B = B_1 \times \cdots \times B_N$ is countable and it is clear that
+    $\mathbf P(X \in B) = 1$ as wanted which completes the proof.
+  \end{proof}
+  
+  \begin{remark}
+    Notice that the above proposition proves that given a discrete random
+    vector $X = (A_i)_{i=1}^{N}$, for any subsequence $\{i_j\}_{j=1}^{k}$ of 
+    $\{i\}_{i=1}^N$ that $X = (A_{i_j})_{j=1}^k$ is also a discrete random
+    vector.
+  \end{remark}
+
+  \begin{definition}[Continuous random vector]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $X$ is called an absolutely continuous random vector if $F_X$
+    is continuous.
+  \end{definition}
+  
+  \begin{remark}
+    As in the case of a random variable, if $X \colon \Omega \to \R^N$ is
+    an absolutely continuous random vector, 
+    then $\mathbf P(X = a) = 0$ for all $a \in \R^N$.
+  \end{remark}
+  
+  Similarly to general continuous random variables, we won't discuss
+  general continuous random vectors in this course, and only consider
+  absolutely continuous random vectors.
+
+  \begin{definition}[Absolutely continuous random vector]
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $X$ is said to be absolutely continuous if exists an integrable 
+    function $f \colon \R^N \to [0,\infty)$ such that 
+    \[
+      \int_{\R_N} f(x)\,dx = 1
+    \]
+    And for all $a \in \R^N$
+    \[
+      F_X(a) = 
+      \mathbf P_X\left(\prod_{i=1}^{N} (-\infty,a_i]\right) =
+      \int_{\prod_{i=1}^{N} (-\infty,a_i]} f(y_1,\dots,y_N)\,d(y_1,\dots,y_N)).
+    \]
+    In this case, we call $f_X$ the probability density function of $X$,
+    or PDF for short.
+  \end{definition}
+
+  \begin{remark}
+    Like in the case of random variables we konw that for any $A \subset \R^N$
+    such that $f \cdot \mathbbm{1}$ is an integrable function
+    \[
+      \mathbf P_X(X) = f(y_1,\dots,y_N)\,d(y_1,\dots,y_N)).
+      \int_{A}
+    \]
+  \end{remark}
+
+  \begin{theorem}[Fubini's theorem]
+    Let $f \colon A \times B \to \R$ be Riemann integrable, where 
+    $A,B \subset \R$ are closed sets.
+    For all $x \in A$ define the function $f_x \colon B \to \R$ by
+    $f_x(y) = f(x,y)$.
+    If for all $x \in A$ the function $f_x$ is Riemann integrable on $B$
+    then
+    \[
+      \int_{A \times B} f(x,y)\,d(x,y) =
+      \int_{A}\left(\int_{B} f_x(y)\,dy\right)
+    \]
+    Similarly, for each $y \in B$ we define the function 
+    $f^y \colon A \to \R$ by $f^y(x) = f(x,y)$.
+    If for all $y \in B$ the function $f^y$ is Riemann integrable on $A$
+    then
+    \[
+      \int_{A \times B} f(x,y)\,d(x,y) =
+      \int_{B}\left(\int_{A} f^y(x)\,dx\right)
+    \]
+  \end{theorem}
+  \begin{example}
+    Let $(X,Y)$ be a random vector with a probability density function
+    defined as
+    \[
+      f_{(X,Y)}(x,y) =
+      \begin{cases}
+        c(2x+y^2), & 0 \le x \le 1, 0 \le y \le 2 \\
+        0, &\text{otherwise}
+      \end{cases}.
+    \]
+    Find the value of $c$, and calculate $\mathbf P(X + Y \le 1)$.
+
+    To find $c$ we can use the fact that 
+    $\int_{\R^2} f_{(X,Y)}(x,y)\,d(x,y) = 1$.
+    From Fubini's thoerem
+    \begin{align*}
+      1 &= \int_{\R^2} f_{(X,Y)}(x,y)\,d(x,y) \\
+      &= \int_{0}^{1}\left(\int_{0}^{2} c(2x + y^2)\,dy\right)\,dx \\
+      &= c \int_{0}^{1} \left[2xy + \frac{y^3}{3}\right]\biggr\vert^2_0\,dx \\
+      &= c \int_{0}^{1} 4x + \frac{8}{3}\,dx \\
+      &= \frac{14}{3}c,
+    \end{align*}
+    which implies that $c = \frac{3}{14}$.
+
+    To find $\mathbf P(X + Y \le 1)$, we need to understand that the function
+    is only different than zero on $R = [0,1] \times [0,2]$. Which means that
+    we need to find the integral of $f_X$ on 
+    $T = R \cup \set{(x,y)}{x + y \le 1}$. 
+    Using Fubini's theorem we get
+    \begin{align*}
+      \mathbf P(X + Y \le 1) &= \int_{T}f_{(X,Y)}*(x,y)\,d(x,y) \\
+      &= \frac{3}{14} \int_{0}^{1} 
+      \left(\int_{0}^{1-x} 2x + y^2\,dy\right)\,dx \\
+      &= {\frac{3}{14}}\int_{0}^{1}2x(1-x)+{\frac{(1-x)^{3}}{3}}\,dx \\
+      &= {\frac{5}{56}}.
+    \end{align*}
+  \end{example}
+
+  \begin{theorem}
+    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
+    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be an absolutely
+    continuous random vector with a probability density function 
+    $f_X \colon \R^N \to [0,\infty)$.
+    Then $X_k$ is an absolutely continuous random variable for each
+    $1 \le k \le N$, with a probability density function
+    \[
+      f_{X_{k}}(a) = 
+      \int_{\R^{N-1}} 
+      f_{\mathbf{X}}(x_{1},\dots,x_{k-1},a,x_{k+1},\dots,x_{N})
+      d(x_{1},\ldots,x_{k-1},x_{k+1},\dots,x_{N}).
+    \]
+    And the same is true for other sub random vectors.
+  \end{theorem}
+  \begin{proof}
+    To be added.
+  \end{proof}
 
 
 
