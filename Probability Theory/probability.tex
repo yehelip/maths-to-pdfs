@@ -53,6 +53,7 @@
 \DeclareMathOperator{\Poi}{Poi}
 \DeclareMathOperator{\Exp}{Exp}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Vol}{Vol}
 
 \newcommand{\N}{\mathbb{N}}
@@ -63,10 +64,13 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\Omicron}{O}
+\newcommand{\E}{\mathbf{E}}
+\newcommand{\Prob}{\mathbf{P}}
 \newcommand{\ip}[2]{\langle #1, #2 \rangle}
 \newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 \renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
 \newcommand{\bigslant}[2]
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
@@ -109,43 +113,43 @@
   $\Omega = \{1,2,\dots,11,12\}$ for the sum of the results of the dice. 
 
   \begin{definition}[Probability space, intuitive definition]
-    A discrete probability space is a pair $(\Omega, \mathbf P)$, where
-    $\Omega$ is a countable sample set, and $\mathbf P \colon \Omega \to 
+    A discrete probability space is a pair $(\Omega, \Prob)$, where
+    $\Omega$ is a countable sample set, and $\Prob \colon \Omega \to 
     [0,1]$ is a function such that 
-    $\sum_{\omega \in \Omega}{\mathbf P(\omega)} = 1$. 
-    Intuitively, we say that $\mathbf P(\omega)$ represents the probability
+    $\sum_{\omega \in \Omega}{\Prob(\omega)} = 1$. 
+    Intuitively, we say that $\Prob(\omega)$ represents the probability
     that $\omega$ will happen.
   \end{definition}
   \begin{definition}
     A subset of the sample space $A \subseteq \Omega$ is called an event.
     We also define:
     \[
-      \mathbf P(A) := \sum_{\omega \in \Omega}{\mathbf P(\omega)}
+      \Prob(A) := \sum_{\omega \in \Omega}{\Prob(\omega)}
     \]
   \end{definition}
   
   Here are a few properties of probability functions we can immediately 
   verify:
   \begin{enumerate}
-    \item $\mathbf P(\Omega) = 1$
-    \item $\mathbf P(\emptyset) = 0$
-    \item For $A \subset \Omega$ we have $\mathbf P(A^c) = 1 - \mathbf P(A)$
+    \item $\Prob(\Omega) = 1$
+    \item $\Prob(\emptyset) = 0$
+    \item For $A \subset \Omega$ we have $\Prob(A^c) = 1 - \Prob(A)$
     \item If $\{A_n\}_{n=1}^{N}$ are disjoint sets then 
       \[
-        \mathbf P\left(\cup_{n=1}^{n}{A_n}\right) = 
-        \sum_{n=1}^{N}{\mathbf P(A_n)}.
+        \Prob\left(\cup_{n=1}^{n}{A_n}\right) = 
+        \sum_{n=1}^{N}{\Prob(A_n)}.
       \]
     \item If $\{A_n\}_{n=1}^{\infty}$ is a sequence of pairwise disjoint sets 
       then
       \[
-        \mathbf P\left(\cup_{n=1}^{\infty}{A_n}\right) = 
-        \sum_{n=1}^{\infty}{\mathbf P(A_n)}.
+        \Prob\left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\Prob(A_n)}.
       \]
   \end{enumerate}
 
   In a finite probability space we say that the probability function is
   continuous if for every $\omega \in \Omega$ we have 
-  $\mathbf P(\omega) = \frac{1}{|\Omega|}$.
+  $\Prob(\omega) = \frac{1}{|\Omega|}$.
 
   We now proceed to consider an experiment in which we choose a direction in
   $\R^2$ at random, on $S^1$ and write it. The sample space is:
@@ -154,13 +158,13 @@
   \]
   A natural question to ask, is if we can define a uniform probability function
   in the sense that for any arc $[a,b] \subset S^1$ we have 
-  $\mathbf P([a,b]) = b - a$. The answer is that with the definition we have
-  worked with so far, we can't. We see that $\mathbf P(\{a\}) = 0$ for 
+  $\Prob([a,b]) = b - a$. The answer is that with the definition we have
+  worked with so far, we can't. We see that $\Prob(\{a\}) = 0$ for 
   any $a \in S^1$, and thus we have that
   \[
-    \mathbf P(\Omega) = \sum_{\omega \in \Omega}{\mathbf P(\omega)} = 0.
+    \Prob(\Omega) = \sum_{\omega \in \Omega}{\Prob(\omega)} = 0.
   \]
-  To solve this problem, we may try to define a new function $\mathbf P \colon 
+  To solve this problem, we may try to define a new function $\Prob \colon 
   2^\Omega \to [0,1]$ that will directly assign each event its probability,
   but unfortunately for us, such a function, that satisfies the desired
   properties of a probability function, does not exist. The proof for this
@@ -175,13 +179,13 @@
   Indeed we see that
 
   \[
-    1 = \mathbf P(\Omega) = 
-    \mathbf P\left({\bigcup_{q \in [0,2\pi] \cap \Q}}{e^{i q} E}\right) = 
-    \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(e^{i q} E)} = 
-    \sum_{q \in [0,2\pi) \cap \Q}{\mathbf P(E)}
+    1 = \Prob(\Omega) = 
+    \Prob\left({\bigcup_{q \in [0,2\pi] \cap \Q}}{e^{i q} E}\right) = 
+    \sum_{q \in [0,2\pi) \cap \Q}{\Prob(e^{i q} E)} = 
+    \sum_{q \in [0,2\pi) \cap \Q}{\Prob(E)}
   \]
 
-  And now we have a contradiction because if we set $\mathbf P(E) = a$ then
+  And now we have a contradiction because if we set $\Prob(E) = a$ then
   we get
   \[ 1 = \sum_{q \in [0,2\pi) \cap \Q}{a} \]
   and this equation has no solution.
@@ -207,15 +211,15 @@
   We can now formally define a probability space.
 
   \begin{definition}[Probability Space]
-    A probability space is a triplet $(\Omega, \mathcal F, \mathbf P)$ such
+    A probability space is a triplet $(\Omega, \mathcal F, \Prob)$ such
     that $\Omega$ is a set, $\mathcal F$ is a $\sigma$-algebra of $\Omega$,
-    and $\mathbf P \colon \mathcal \to [0,1]$ is a probability function that
+    and $\Prob \colon \mathcal \to [0,1]$ is a probability function that
     satisfies:
     \begin{enumerate}
-      \item $\mathbf P(\Omega) = 1$
+      \item $\Prob(\Omega) = 1$
       \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ are disjoint, then
-        $\mathbf P\left(\cup_{n=1}^{\infty}{A_n}\right) = 
-        \sum_{n=1}^{\infty}{\mathbf P(A_n)}$.
+        $\Prob\left(\cup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\Prob(A_n)}$.
     \end{enumerate}
   \end{definition}
 
@@ -223,8 +227,8 @@
 
   \begin{proposition}
     Exists a $\sigma$-algebra $\mathfrak B$ of $\Omega = S^1$, and a unique
-    function $\mathbf P \colon \mathfrak \to [0,1]$ such that 
-    $(\Omega, \mathfrak B, \mathbf P)$ is a probability space and $\mathbf P$
+    function $\Prob \colon \mathfrak \to [0,1]$ such that 
+    $(\Omega, \mathfrak B, \Prob)$ is a probability space and $\Prob$
     is invariant to spinning on the sphere.
   \end{proposition}
 
@@ -300,85 +304,86 @@
     $f(\Omega) = 1$, and for each sequence of pairwise disjoint sets
     $\{A_n\}_{n=1}^{\infty}$ that
       \[
-        \widehat{\mathbf P} \left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
-        \sum_{n=1}^{\infty}{\widehat{\mathbf P}(A_n)},
+        \widehat{\Prob} \left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
+        \sum_{n=1}^{\infty}{\widehat{\Prob}(A_n)},
       \]
     then exists a single extension 
-    $\mathbf P \colon \sigma(\mathcal G) \to [0,1]$ to 
-    $\widehat{\mathbf P} \colon \mathcal G \to [0,1]$, such that the triplet
-    $(\Omega, \sigma(\mathcal G), \mathbf P)$ is a probability space.
+    $\Prob \colon \sigma(\mathcal G) \to [0,1]$ to 
+    $\widehat{\Prob} \colon \mathcal G \to [0,1]$, such that the triplet
+    $(\Omega, \sigma(\mathcal G), \Prob)$ is a probability space.
   \end{theorem}
 
   Now, if we consider again our previous problem, and let $\Omega = S^1$,
   in order to find a uniform probabiliy function on it we can define the
   set $\mathcal G$ to be the set of all finite unions of intervals on $S^1$.
   As it is closed under union of pairs, and complements, it is an algebra.
-  Now define $\widehat{\mathbf P} \colon \mathcal G \to [0,1]$ as such:
+  Now define $\widehat{\Prob} \colon \mathcal G \to [0,1]$ as such:
   \[
-    \widehat{\mathbf{P}}\left(\biguplus_{i=1}^{N}\left(a_{i},b_{i}\right)\right)
+    \widehat{\Prob}\left(\biguplus_{i=1}^{N}\left(a_{i},b_{i}\right)\right)
     = \sum_{i=1}^{N}\frac{b_{i}-a_{i}}{2\pi},
   \]
-  We can see that $\widehat{\mathbf P}$ satisfies the conditions in 
-  \autoref{thm:cath} and thus exists an extension $\mathbf P$ defined on
+  We can see that $\widehat{\Prob}$ satisfies the conditions in 
+  \autoref{thm:cath} and thus exists an extension $\Prob$ defined on
   the sigma algebra $\mathcal B = \sigma(\mathcal G)$ which is also called
   the Borel $\sigma$-algebra of $S^1$. We have that 
-  $(\Omega, \mathcal B, \mathbf P)$ is a probability space and we call 
-  $\mathbf P$ the uniform probability function on $S^1$.
+  $(\Omega, \mathcal B, \Prob)$ is a probability space and we call 
+  $\Prob$ the uniform probability function on $S^1$.
 
   Now we can more formally consider the properties of probability functions.
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
     \begin{enumerate}
-      \item $\mathbf P(\emptyset) = 0$.
+      \item $\Prob(\emptyset) = 0$.
       \item If $\{A_n\}_{n=1}^{N} \subset \mathcal F$ are disjoint sets then
         $\cup_{n=1}^{n}{A_n} \in \mathcal F$ and
         \[
-          \mathbf P\left(\bigcup_{n=1}^{n}{A_n}\right) = 
-          \sum_{n=1}^{N}{\mathbf P(A_n)}.
+          \Prob\left(\bigcup_{n=1}^{n}{A_n}\right) = 
+          \sum_{n=1}^{N}{\Prob(A_n)}.
         \]
       \item For every $A \in \mathcal F$ we have 
-        $\mathbf P(A^c) = 1 - \mathbf P(A)$.
+        $\Prob(A^c) = 1 - \Prob(A)$.
       \item If $A, B \in \mathcal F$ and $A \subset B$, then 
-        $\mathbf(B \setminus A) = \mathbf P(B) - \mathbf P(A)$ and thus
-        $\mathbf P(A) \le \mathbf P(B)$.
+        $\mathbf(B \setminus A) = \Prob(B) - \Prob(A)$ and thus
+        $\Prob(A) \le \Prob(B)$.
       \item If $A,B \in \mathcal F$, then
         \[
-          \mathbf P(A \cup B) = 
-          \mathbf P(A) + \mathbf P(B) - \mathbf P(A \cap B)
+          \Prob(A \cup B) = 
+          \Prob(A) + \Prob(B) - \Prob(A \cap B)
         \]
     \end{enumerate}
   \end{proposition}
   
-  \begin{proposition}[Continuity of the Probability Function]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+  \begin{theorem}[Continuity of the probability function]
+    \label{thm:continuity-base}
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
     \begin{enumerate}
       \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ is an increasing
         sequence of events, that is $A_1 \subset A_2 \subset A_3, \dots$,
         then
         \[
-          \mathbf P\left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
+          \Prob\left(\bigcup_{n=1}^{\infty}{A_n}\right) = 
           \lim_{n \to \infty}{\mathbf A_n}.
         \]
       \item If $(A_n)_{n=1}^{\infty} \subset \mathcal F$ is a decreasing
         sequence of events, that is $A_1 \supset A_2 \supset A_3, \dots$,
         then
         \[
-          \mathbf P\left(\bigcap_{n=1}^{\infty}{A_n}\right) = 
+          \Prob\left(\bigcap_{n=1}^{\infty}{A_n}\right) = 
           \lim_{n \to \infty}{\mathbf A_n}.
         \]
     \end{enumerate}
-  \end{proposition}
+  \end{theorem}
 
   In fact the last proposition is a not more than a case of the following
   proposition.
 
   \begin{proposition}
     Let $(A_n)_{n=1}^{\infty}$ be a sequence of events in a probability space
-    $(\Omega, \mathcal F, \mathbf P)$. If the limit $\lim_{n \to \infty} A_n$
+    $(\Omega, \mathcal F, \Prob)$. If the limit $\lim_{n \to \infty} A_n$
     exists, then $\lim_{n \to \infty} A_n \in \mathcal F$, and
     \[
-      \mathbf P(\lim_{n \to \infty}{A_n}) = 
-      \lim_{n \to \infty} \mathbf P(A_n)
+      \Prob(\lim_{n \to \infty}{A_n}) = 
+      \lim_{n \to \infty} \Prob(A_n)
     \]
   \end{proposition}
   
@@ -397,23 +402,23 @@
   \end{enumerate}
   We now have:
   \begin{align*}
-    \mathbf P \left(\bigcup_{n=1}^{\infty} A_n\right) &=
-    \mathbf P \left(\bigcup_{n=1}^{\infty} B_n\right) =
+    \Prob \left(\bigcup_{n=1}^{\infty} A_n\right) &=
+    \Prob \left(\bigcup_{n=1}^{\infty} B_n\right) =
     \sum_{n=1}^{\infty} \mathbf(B_n) =
-    \lim_{N \to \infty} \sum_{n=1}^{N} \mathbf P(B_n) =
-    \lim_{N \to \infty} \mathbf P\left(\bigcup_{n=1}^{N} B_n\right) \\ &=
-    \lim_{N \to \infty} \mathbf P(A_N).
+    \lim_{N \to \infty} \sum_{n=1}^{N} \Prob(B_n) =
+    \lim_{N \to \infty} \Prob\left(\bigcup_{n=1}^{N} B_n\right) \\ &=
+    \lim_{N \to \infty} \Prob(A_N).
   \end{align*}
 
   \newpage
 
   \section{Conditional Probability}
   \begin{definition}[Conditional Probability]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, and let
-    $A,B \in \mathcal F$, such that $\mathbf P(B) > 0$. We define the
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and let
+    $A,B \in \mathcal F$, such that $\Prob(B) > 0$. We define the
     probability of $A$ given that $B$ already happened as:
     \[
-      \mathbf P(A \mid B) := \frac{\mathbf P(A \cap B)}{\mathbf P(B)}
+      \Prob(A \mid B) := \frac{\Prob(A \cap B)}{\Prob(B)}
     \]
   \end{definition}
 
@@ -424,9 +429,9 @@
   the probability of an intersection of two events.
 
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, let 
-    $B \in \mathcal F$ be an event such that $\mathbf P(B) > 0$. Then,
-    the map $A \mapsto \mathbf P(A \mid B)$ is a probability function.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, let 
+    $B \in \mathcal F$ be an event such that $\Prob(B) > 0$. Then,
+    the map $A \mapsto \Prob(A \mid B)$ is a probability function.
   \end{proposition}
   The proof that the range of the function is $[0,1]$ and that 
   $\mathbf (\Omega \mid B) = 0$ is clear from expanding the definitions,
@@ -436,30 +441,30 @@
     $(A_n \cap B)_{n=1}^{\infty} \subset \mathcal F$ are also disjoint sets
     and we have:
       \begin{align*}
-        \mathbf{P}\left( \bigcup_{n=1}^{\infty} A_n \mid B \right) 
-        & = \frac{\mathbf{P}\left( \left( \bigcup_{n=1}^{\infty} A_n \right) \cap B \right)}{\mathbf{P}(B)} \\
-        & = \frac{\mathbf{P}\left( \bigcup_{n=1}^{\infty} (A_n \cap B) \right)}{\mathbf{P}(B)} \\
-        & = \sum_{n=1}^{\infty} \frac{\mathbf{P}(A_n \cap B)}{\mathbf{P}(B)} \\
-        & = \sum_{n=1}^{\infty} \mathbf{P}(A_n \mid B)
+        \Prob\left( \bigcup_{n=1}^{\infty} A_n \mid B \right) 
+        & = \frac{\Prob\left( \left( \bigcup_{n=1}^{\infty} A_n \right) \cap B \right)}{\Prob(B)} \\
+        & = \frac{\Prob\left( \bigcup_{n=1}^{\infty} (A_n \cap B) \right)}{\Prob(B)} \\
+        & = \sum_{n=1}^{\infty} \frac{\Prob(A_n \cap B)}{\Prob(B)} \\
+        & = \sum_{n=1}^{\infty} \Prob(A_n \mid B)
       \end{align*}
   \end{proof}
 
   \begin{proposition}[Law of Total Probability]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
     Let $N \in \N \cup \{\infty\}$, and $(A_n)_{n=1}^{N}$ be disjoint events
     such that $\cup_{n=1}^{N} A_n = \Omega$. Then,
     \[
-      \mathbf{P}(B)=\sum_{n=1}^{N}\mathbf{P}(A_{n})\mathbf{P}(B|A_{n}).
+      \Prob(B)=\sum_{n=1}^{N}\Prob(A_{n})\Prob(B|A_{n}).
     \]
   \end{proposition}
   \begin{proof}
     \begin{align*}
-      \mathbf{P}(B) &= 
-      \mathbf{P}(B \cap \Omega) \\ &= 
-      \mathbf{P}\left( B \cap \bigcup_{n=1}^{N} A_n \right) \\ &= 
-      \mathbf{P}\left( \bigcup_{n=1}^{N} (A_n \cap B) \right) \\ &= 
-      \sum_{n=1}^{N} \mathbf{P}(A_n \cap B) \\ &= 
-      \sum_{n=1}^{N} \mathbf{P}(A_n) \mathbf{P}(B \mid A_n).
+      \Prob(B) &= 
+      \Prob(B \cap \Omega) \\ &= 
+      \Prob\left( B \cap \bigcup_{n=1}^{N} A_n \right) \\ &= 
+      \Prob\left( \bigcup_{n=1}^{N} (A_n \cap B) \right) \\ &= 
+      \sum_{n=1}^{N} \Prob(A_n \cap B) \\ &= 
+      \sum_{n=1}^{N} \Prob(A_n) \Prob(B \mid A_n).
       \end{align*}
   \end{proof}
 
@@ -475,15 +480,15 @@
      First denote:
      \begin{align*}
        A_{n,k} &= \{\text{there are $k$ black balls after the $n$-th step.}\} \\
-       p_{n,k} &= \mathbf P(A_{n,k}).
+       p_{n,k} &= \Prob(A_{n,k}).
      \end{align*}
      In order for there to be $k$ black balls after the $n$-th step, there must
      either have been $k-1$ or $k$ black balls in the $n-1$-th step. Thus,
      \begin{align*}
-       \mathbf{P}(A_{n,k}) &= 
-       \mathbf{P}(A_{n,k} \cap (A_{n-1,k-1} \cup A_{n-1,k})) \\ &= 
-       \mathbf{P}(A_{n-1,k-1}) \mathbf{P}(A_{n,k} \mid A_{n-1,k-1}) + 
-       \mathbf{P}(A_{n-1,k}) \mathbf{P}(A_{n,k} \mid A_{n-1,k}).
+       \Prob(A_{n,k}) &= 
+       \Prob(A_{n,k} \cap (A_{n-1,k-1} \cup A_{n-1,k})) \\ &= 
+       \Prob(A_{n-1,k-1}) \Prob(A_{n,k} \mid A_{n-1,k-1}) + 
+       \Prob(A_{n-1,k}) \Prob(A_{n,k} \mid A_{n-1,k}).
      \end{align*}
      This implies that
      \[ p_{n,k}=\frac{k-1}{n+1}p_{n-1,k-1}+\frac{n+1-k}{n+1}p_{n-1,k}. \]
@@ -500,13 +505,13 @@
   and can be solved without much thought. Here's the general theoerm.
 
   \begin{theorem}\tt{Bayes' Theorem}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
     Let $N \in \N \cup \{\infty\}$, and $(A_n)_{n=1}^{N}$ be disjoint events
     such that $\cup_{n=1}^{N} A_n = \Omega$. Then,
     \[
-      \mathbf{P}(A_i \mid B) = 
-      {\frac{\mathbf{P}(B \mid A_{i})\mathbf{P}(A_{i})}
-      {\sum_{n=1}^{N}\mathbf{P}(A_{n})\mathbf{P}(B \mid A_{n})}}.
+      \Prob(A_i \mid B) = 
+      {\frac{\Prob(B \mid A_{i})\Prob(A_{i})}
+      {\sum_{n=1}^{N}\Prob(A_{n})\Prob(B \mid A_{n})}}.
     \]
   \end{theorem}
   \begin{proof}
@@ -528,19 +533,19 @@
     \end{align*}
     From Bayes' theorem we have:
     \[
-      \mathbf{P}(A \mid B) = 
-      {\frac{\mathbf{P}(B \mid A)\mathbf{P}(A)}{\mathbf{P}(B)}} = 
+      \Prob(A \mid B) = 
+      {\frac{\Prob(B \mid A)\Prob(A)}{\Prob(B)}} = 
       {\frac{0.01\cdot0.999}{\mathrm{P}(B)}}.
     \]
     From the law of total probability we have
     \begin{align*}
-      \mathbf{P}(B) &= 
-      \mathbf{P}(A)\mathbf{P}(B \mid A) + 
-      \mathbf{P}(A^{c})\mathbf{P}(B \mid A^{c}) \\ &= 
+      \Prob(B) &= 
+      \Prob(A)\Prob(B \mid A) + 
+      \Prob(A^{c})\Prob(B \mid A^{c}) \\ &= 
       0.01\cdot0.999+0.98\cdot0.001=0.01097.
     \end{align*}
     And thus,
-    \[ \mathbf{P}(A \mid B)={\frac{0.01\cdot0.999}{0.01097}} \approx 0.91 \]
+    \[ \Prob(A \mid B)={\frac{0.01\cdot0.999}{0.01097}} \approx 0.91 \]
   \end{example}
 
   % There's another example here that might be useful
@@ -551,30 +556,30 @@
   Intuitively, when we say that the event $A$ is independent from $B$,
   we mean something like
   \[
-    \mathbf P(A \mid B) = \mathbf P(A).
+    \Prob(A \mid B) = \Prob(A).
   \]
   Thus we can use the definition of conditional probability to formally define
   Independence.
   \begin{definition}[Independence of Two Events]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, let 
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, let 
     $A,B \in \mathcal F$ be two events. We say that $A$ and $B$ are independent,
     if
     \[
-      \mathbf P(A \cap B) = \mathbf P(A) \mathbf P(B)
+      \Prob(A \cap B) = \Prob(A) \Prob(B)
     \]
   \end{definition}
   Notice that the interpretation that $A$ is independent of $B$ is only viable
-  if we know that $\mathbf P(B) > 0$.
+  if we know that $\Prob(B) > 0$.
 
   % More examples of Independence.
 
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     let $A \in \mathcal F$. The following conditions are equivalent:
     \begin{enumerate}
       \item For each $B \in \mathcal F$ the events $A$ and $B$ are independent.
       \item $A$ is independent of itself.
-      \item $\mathbf P(A) \in \{0, 1\}$.
+      \item $\Prob(A) \in \{0, 1\}$.
     \end{enumerate}
   \end{proposition}
   \begin{proof}
@@ -582,29 +587,29 @@
   \end{proof}
   
   \begin{definition}[Independence]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     let $(A_n)_{n=1}^{N}$ be a finite sequence of events.
     We say that $(A_n)_{n=1}^{N}$ are independent if for each 
     $\emptyset \neq K \subset \{1,2,\dots,N\}$ we have
     \[
-      \mathbf P\left(\bigcap_{n \in K} A_n\right) = 
-      \prod_{n \in K} \mathbf P(A_n).
+      \Prob\left(\bigcap_{n \in K} A_n\right) = 
+      \prod_{n \in K} \Prob(A_n).
     \]
   \end{definition}
 
   \begin{definition}[Pairwise Independence]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     let $(A_n)_{n=1}^{N}$ be a finite sequence of events.
     We say that $(A_n)_{n=1}^{N}$ are independent if for each 
     $1 \le i < j \le N$ we have
     \[
-      \mathbf P(A_i \cap A_j) = 
-      \mathbf P(A_i) \mathbf P(A_j).
+      \Prob(A_i \cap A_j) = 
+      \Prob(A_i) \Prob(A_j).
     \]
   \end{definition}
 
   \begin{definition}[Independence of Infinite Events]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     let $(A_n)_{n=1}^{\infty}$ be an infinite sequence of events.
     We say that $(A_n)_{n=1}^{\infty}$ are (pairwise) independent if each
     finite subset of them is (pairwise) independent.
@@ -614,7 +619,7 @@
   infinite subsets.
 
   \begin{proposition}\label{prop:indp}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     let $(A_n)_{n=1}^{\infty}$ be an infinite sequence of  (pairwise) 
     independent events. Then define a new sequence 
     $(\widetilde{A}_n)_{n=1}^{\infty}$ such that $\widetilde{A}_n = A_n$ or
@@ -631,7 +636,7 @@
   We assume that the experiment is repeated in exactly the same way, and that
   the results of each experiment are independent.
 
-  Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space for a certain
+  Let $(\Omega, \mathcal F, \Prob)$ be a probability space for a certain
   experiment. If we want to define a probability space for repeating the
   the experiment a finite number of times, which we will denote $N$, it makes
   sense to define it as such:
@@ -639,10 +644,10 @@
     &\Omega_N = \Omega^N. \\
     &\mathcal F_N = \sigma\left(\set{A_1 \times A_2 \times \cdots \times A_n}
     {A_1,\dots,A_n \in \mathcal F}\right). \\
-    &\mathbf P_N\left(A_1 \times A_2 \times \cdots A_N\right) = 
-    \prod_{i=1}^{N} \mathbf P(A_i).
+    &\Prob_N\left(A_1 \times A_2 \times \cdots A_N\right) = 
+    \prod_{i=1}^{N} \Prob(A_i).
   \end{align*}
-  The fact that $\mathbf P_N$ is a probability measure follows from 
+  The fact that $\Prob_N$ is a probability measure follows from 
   \autoref{thm:cath}. This measure is called the product measure, and 
   $\mathcal F_N$ is called the product $\sigma$-algebra.
 
@@ -652,8 +657,8 @@
     &\mathcal F_N = \sigma\left(\set{\prod_{i=1}^{\infty}{A_i}}
     {A_i \in \mathcal F, \, \forall i \geq 1 \text{ and only for finitely many
     $i$'s } A_i \neq \Omega}\right). \\
-    &\mathbf P_N\left(\prod_{i=1}^{N}{A_i}\right) = 
-    \prod_{i=1}^{N} \mathbf P(A_i).
+    &\Prob_N\left(\prod_{i=1}^{N}{A_i}\right) = 
+    \prod_{i=1}^{N} \Prob(A_i).
   \end{align*}
   Notice that we defined the probability function only on finite products of
   events. The extenstion to the rest of the sets will be done by 
@@ -667,7 +672,7 @@
     \begin{align*}
       \Omega &= \{0, 1\}. \\
       \mathcal F &= \{\emptyset, \{0\}, \{1\}, \Omega\}. \\
-      \mathbf P(\omega) &=
+      \Prob(\omega) &=
       \begin{cases}
         p, &\omega = 1 \\
         1-p, &\omega= 0
@@ -698,9 +703,9 @@
     \]
     From \autoref{prop:indp} and since the events are independent:
     \[
-      \mathbf P_N\left(\{w\}\right) =
-      \mathbf P_N\left(\bigcap_{i=1}^{N} \widetilde{H}_i \right) = 
-      \prod_{i=1}^{N} \mathbf P_N(\widetilde{H}_i) =
+      \Prob_N\left(\{w\}\right) =
+      \Prob_N\left(\bigcap_{i=1}^{N} \widetilde{H}_i \right) = 
+      \prod_{i=1}^{N} \Prob_N(\widetilde{H}_i) =
       p^k (1-p)^{N-k}
     \]
     Finally, we get
@@ -712,7 +717,7 @@
     Also, because we know that $(A_k)_{k=1}^{N}$ are all disjoint and that
     $\cup_{k=1}^{N} A_k = \Omega$ we get that:
     \[
-      \sum_{k=0}^{N}\mathbf{P}_{N}\left(A_{k}\right) = 
+      \sum_{k=0}^{N}\P_{N}\left(A_{k}\right) = 
       \sum_{k=0}^{N}{\binom{N}{k}}p^{k}\left(1-p\right)^{N-k} = 
       \left(p+\left(1-p\right)\right)^{N} = 1,
     \]
@@ -729,23 +734,23 @@
     It's not hard to see that this experiment is just like the previous
     experiment, and indeed if we denote $A_k$ the number of step the cat
     made to the right after in the product probability space 
-    $(\Omega_8, \mathcal F_8, \mathbf P_8)$, we would get that:
+    $(\Omega_8, \mathcal F_8, \Prob_8)$, we would get that:
     \[
-      \mathbf P_8(A_k) = \binom{8}{k} p^k (1-p)^{8-k}.
+      \Prob_8(A_k) = \binom{8}{k} p^k (1-p)^{8-k}.
     \]
     The position of the cat after $k$ step to the right would be 
     $k - (8 - k) = 2k - 8$. 
     Since we wonder about the probability of it being on the number $4$,
     we should calculate the probability of $A_6$, and we will get that:
     \[
-      \mathbf{P}_{8}(A_{6}) = {\binom{8}{6}} p^{6} (1-p)^{8-6}.
+      \Prob_{8}(A_{6}) = {\binom{8}{6}} p^{6} (1-p)^{8-6}.
     \]
     Notice that the result makes sense because as $P$ increases we get higher
     results.
   \end{example}
   \begin{example}[Infinite coin flips]
     We now consider the probability space 
-    $(\Omega_{\infty}, \mathcal F_{\infty}, \mathbf P_{\infty})$
+    $(\Omega_{\infty}, \mathcal F_{\infty}, \Prob_{\infty})$
     corresponding to the product space of infinite Bernoulli experiments.
     We want to calculate the probability that the first success was in 
     the $n$-th experiment. Denote:
@@ -757,9 +762,9 @@
     Since all the Bernoulli experiments are independent, from 
     \autoref{prop:indp} we get
     \[
-      \mathbf{P}_{\infty}(R_{n}) = 
-      \mathbf{P}_{\infty} \left(\left(\bigcap_{i=1}^{n-1} H_i^c\right) \cap H_n\right) = 
-      \left(\prod_{i=1}^{n-1} \mathbf{P}_{\infty} \left(H_{i}^{c}\right)\right) \cdot \mathbf{P}_{\infty} \left(H_{n}\right) =
+      \Prob_{\infty}(R_{n}) = 
+      \Prob_{\infty} \left(\left(\bigcap_{i=1}^{n-1} H_i^c\right) \cap H_n\right) = 
+      \left(\prod_{i=1}^{n-1} \Prob_{\infty} \left(H_{i}^{c}\right)\right) \cdot \Prob_{\infty} \left(H_{n}\right) =
       (1-p)^{n-1}p.
     \]
     We may notice that the events $(A_n)_{n=1}^{\infty}$ are all independent,
@@ -768,13 +773,13 @@
       \bigcup_{n=1}^{\infty} R_n = \Omega_\infty \setminus \{(0,0,0,\dots)\}.
     \]
     And as long as $p > 1$, we may assume that 
-    $\mathbf P_\infty(0,0,0,\dots) = 0$.
+    $\Prob_\infty(0,0,0,\dots) = 0$.
     Using that assumption, we have that
     \begin{align*}
-      \mathbf P_{\infty}(\{0,0,0,\dots\}) &= 
-      1 - \mathbf P_\infty(\Omega_\infty \setminus \{0,0,0,\dots\}) =
-      1 - \mathbf P_\infty(\bigcup_{n=1}^{\infty} R_n) \\ &=
-      1 - \sum_{n=1}^{\infty} \mathbf P_\infty(R_n) =
+      \Prob_{\infty}(\{0,0,0,\dots\}) &= 
+      1 - \Prob_\infty(\Omega_\infty \setminus \{0,0,0,\dots\}) =
+      1 - \Prob_\infty(\bigcup_{n=1}^{\infty} R_n) \\ &=
+      1 - \sum_{n=1}^{\infty} \Prob_\infty(R_n) =
       1 - p \sum_{n=1}^{\infty} (1-p)^{n-1} \\ &=
       \begin{cases}
         0, &p \in (0,1) \\
@@ -790,7 +795,7 @@
   % Add introduction
   (add introduction)
   \begin{definition}[Random Variable]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
     A function $X \colon \Omega \to \R$ is said to be a random variable if for
     any open interval $(a,b) \subset \R$ we have
     \[
@@ -822,20 +827,20 @@
   \end{enumerate}
   
   \begin{definition}[Distribution of a Random Variable]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, and 
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and 
     $X \colon \Omega \to \R$ a random variable.
     The distribution of $X$, denoted $P_X$ is the function 
-    $\mathbf P_X \colon \mathfrak B \to [0,1]$ defined as such:
+    $\Prob_X \colon \mathfrak B \to [0,1]$ defined as such:
     \[
-      \mathbf P_X(A) = \mathbf P(X \in A).
+      \Prob_X(A) = \Prob(X \in A).
     \]
   \end{definition}
   \begin{remark}
-    The space $(\Omega, \mathfrak B, \mathbf P_X)$ is a probability space.
+    The space $(\Omega, \mathfrak B, \Prob_X)$ is a probability space.
   \end{remark}
   \begin{remark}
     Since a random variable $X$ gives us data about experiments, for events
-    $N \in \mathcal F$ such that $\mathbf P(N) = 0$ we don't care about the
+    $N \in \mathcal F$ such that $\Prob(N) = 0$ we don't care about the
     value of $X(N)$. From now on we won't define random variables for events
     with probability $0$.
   \end{remark}
@@ -850,30 +855,30 @@
       \Omega = \set{(i,j,k)}{1 \le i \le j \le k \le 20}.
     \]
     Since the balls are taken out uniformly we have 
-    \[ \mathbf P\left((i,j,k)\right) = {\binom{20}{3}}^{-1}. \]
+    \[ \Prob\left((i,j,k)\right) = {\binom{20}{3}}^{-1}. \]
     We now define the random variable:
     \begin{align*}
       &X \colon \Omega \to \R \\
       &X\left((i,j,k)\right) = k
     \end{align*}
     and we notice that we want to calculate 
-    $\mathbf P\left(X \in \{17,18,19,20\}\right)$.
-    Since $\mathbf P_X$ is a probability function we can see that:
+    $\Prob\left(X \in \{17,18,19,20\}\right)$.
+    Since $\Prob_X$ is a probability function we can see that:
     \begin{align*}
-      \mathbf P\left(X \in \{17,18,19,20\}\right) &= 
-      \mathbf P_X\left(\{17,18,19,20\}\right) \\ &=
-      \mathbf P_X\left(\{17\}\right) + 
-      \mathbf P_X\left(\{18\}\right) +
-      \mathbf P_X\left(\{19\}\right) +
-      \mathbf P_X\left(\{20\}\right) +
+      \Prob\left(X \in \{17,18,19,20\}\right) &= 
+      \Prob_X\left(\{17,18,19,20\}\right) \\ &=
+      \Prob_X\left(\{17\}\right) + 
+      \Prob_X\left(\{18\}\right) +
+      \Prob_X\left(\{19\}\right) +
+      \Prob_X\left(\{20\}\right) +
     \end{align*}
     We notice that:
     \[
-      \mathbf P_X\left(\{k\}\right) = \frac{\binom{k-1}{2}}{\binom{20}{3}}
+      \Prob_X\left(\{k\}\right) = \frac{\binom{k-1}{2}}{\binom{20}{3}}
     \]
     So finally we have:
     \[
-      \mathbf P\left(X \in \{17,18,19,20\}\right) = 
+      \Prob\left(X \in \{17,18,19,20\}\right) = 
       {\binom{20}{3}}^{-1} 
       \left[
         \binom{16}{2} + \binom{17}{2} + \binom{18}{2} + \binom{19}{2}
@@ -906,35 +911,35 @@
     \]
     Thus,
     \[
-      \mathbf P_T\left((t,\infty)\right) =
-      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) =
-      \mathbf P\left(\bigcup_{j=1}^{N} A_t(j) \right)
+      \Prob_T\left((t,\infty)\right) =
+      \Prob_T\left(\{t + 1, t + 2, \dots\}\right) =
+      \Prob\left(\bigcup_{j=1}^{N} A_t(j) \right)
     \]
     The events $A_t(j)$ are not disjoint but using the inclusion--exclusion
     principle we get
     \[
-      \mathbf P\left(\bigcup_{j=1}^{N} A_t(j) \right) =
+      \Prob\left(\bigcup_{j=1}^{N} A_t(j) \right) =
       \sum_{t=1}^{N}(-1)^{i+1} 
       \sum_{\substack{J\subset\{1,2,..,N\} \\ \abs{J} = i}}
-      \mathbf{P}\left(\bigcap_{j\in J}A_{t}(j)\right).
+      \Prob\left(\bigcap_{j\in J}A_{t}(j)\right).
     \]
     We can notice that
     \[
-      \mathbf{P}\left(\bigcap_{j\in J}A_{t}(j)\right) = 
+      \Prob\left(\bigcap_{j\in J}A_{t}(j)\right) = 
       \left(\frac{N - \abs{J}}{N}\right)^t.
     \]
     Summing up the results so far gives
     \[
-      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) =
+      \Prob_T\left(\{t + 1, t + 2, \dots\}\right) =
       \sum_{\substack{J\subset\{1,2,..,N\} \\ \abs{J} = i}}
       \left(\frac{N - \abs{J}}{N}\right)^t =
       \sum_{i=1}^{N} (-1)^{i+1} \binom{N}{i} \left(\frac{N-i}{N}\right)^{t}.
     \]
     Because the image of $T$ is $\N$ we can write
     \begin{align*}
-      \mathbf P_T\left(\{t\}\right) &=
-      \mathbf P_T\left(\{t, t + 1, \dots\}\right) -
-      \mathbf P_T\left(\{t + 1, t + 2, \dots\}\right) \\ &=
+      \Prob_T\left(\{t\}\right) &=
+      \Prob_T\left(\{t, t + 1, \dots\}\right) -
+      \Prob_T\left(\{t + 1, t + 2, \dots\}\right) \\ &=
       \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t-1} -
       \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t} \\ &=
       \sum_{i=1}^{N}(-1)^{i+1}\binom{N}{i}\left(\frac{N-i}{N}\right)^{t}
@@ -951,16 +956,16 @@
     that $A(j) \in \mathcal F$. Since probability functions are continuous
     we have that
     \[
-      \mathbf{P}(A(j)) =
-      \mathbf{P}\left(\bigcap_{t=1}^{\infty}A_{t}(j)\right) =
-      \lim_{t\to\infty}\mathbf{P}\left(A_{t}(j)\right) =
+      \Prob(A(j)) =
+      \Prob\left(\bigcap_{t=1}^{\infty}A_{t}(j)\right) =
+      \lim_{t\to\infty}\Prob\left(A_{t}(j)\right) =
       \lim_{t\to\infty}\left({\frac{N-1}{N}}\right)^{t}=0.
     \]
     And so get
     \[
-      \mathbf P(\text{we didn't find one of the coupons}) =
-      \mathbf{P}\left(\bigcup_{j=1}^{N} A(j)\right) \leq
-      \sum_{j=1}^{N} \mathbf{P}(A(j)) =
+      \Prob(\text{we didn't find one of the coupons}) =
+      \Prob\left(\bigcup_{j=1}^{N} A(j)\right) \leq
+      \sum_{j=1}^{N} \Prob(A(j)) =
       \sum_{j=1}^{N} 0 =
       0.
     \]
@@ -968,7 +973,7 @@
   \begin{definition}[Support]
     The support of a random variable $X \colon \Omega \to \R$ is the set of all $a \in \R$
     such that for all $\varepsilon > 0$ we have 
-    $\mathbf P_X\left((a - \varepsilon, a + \varepsilon)\right) > 0$.
+    $\Prob_X\left((a - \varepsilon, a + \varepsilon)\right) > 0$.
     For a general function $f \colon A \to \R$ such that $X$ is a topological
     space we have
     \[
@@ -980,16 +985,16 @@
   \end{definition}
   \begin{definition}
   [Cumulative Distribution Function]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     The cumulative distibution function (CDF) of $X$, denoted $F_X$ is
     a function $F_X \colon \R \to [0,1]$ defined as such
     \[
-      F_{X}(a) = \mathbf{P}_{X}((-\infty,a]) \equiv \mathbf{P}(X \leq a).
+      F_{X}(a) = \Prob_{X}((-\infty,a]) \equiv \Prob(X \leq a).
     \]
     \end{definition}
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     The function $F_X$ satisfies the following properties:
     \begin{enumerate}
@@ -1009,9 +1014,9 @@
     that
     \begin{align*}
       \lim_{n\to\infty} F_{X} {\left(a+\frac{1}{n}\right)} &=
-      \lim_{n\to\infty} \mathbf P_{X}{\left((-\infty,a+1/n]\right)} =
-      \mathbf P_{X}{\left(\bigcap_{n=1}^{\infty}(-\infty,a+1/n)\right)} \\ &=
-      \mathbf P_{X}{\left((-\infty,a)\right)} =
+      \lim_{n\to\infty} \Prob_{X}{\left((-\infty,a+1/n]\right)} =
+      \Prob_{X}{\left(\bigcap_{n=1}^{\infty}(-\infty,a+1/n)\right)} \\ &=
+      \Prob_{X}{\left((-\infty,a)\right)} =
       F_{X}(a),
     \end{align*}
   \end{proof}
@@ -1019,17 +1024,17 @@
   information from $P_X$, but we will not prove it in this course.
   \begin{theorem}\label{thm:FcharacterizesP}
     Every CDF corresponds to a unique distribution. In other words, if
-    $(\Omega, \mathcal F, \mathbf P)$ and $(\Omega', \mathcal F', \mathbf P')$
+    $(\Omega, \mathcal F, \Prob)$ and $(\Omega', \mathcal F', \Prob')$
     are two probability spaces, and $X \colon \Omega \to \R$, 
     $Y \colon \Omega' \to \R$ are two random variable, then
     \[
-      F_X = F_Y \iff \mathbf P_X = \mathbf P_Y
+      F_X = F_Y \iff \Prob_X = \Prob_Y
     \]
   \end{theorem}
   \begin{theorem}
     Let $F \colon \R \to [0,1]$ be a function that satisfies all $4$ basic
     properties of the CDF. Thus, exists a probability space 
-    $(\Omega, \mathcal F, \mathbf P)$ and a random variable 
+    $(\Omega, \mathcal F, \Prob)$ and a random variable 
     $X \colon \Omega \to \R$ such that$F_X = F$.
   \end{theorem}
   We won't prove this theorem either, but using these two last theorems
@@ -1037,7 +1042,7 @@
   distributions and functions that satisfy the $4$ properties from above.
 
   \begin{definition}[Discrete random variable]
-    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega ,\mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a discrete random variable if $\supp(X)$ is a 
     countable set.
@@ -1048,19 +1053,19 @@
     variable.
   \end{remark}
   \begin{remark}
-    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega ,\mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a discrete random variable.
-    Denote $\supp(X) = \{a_i\}_{i=1}^{\infty}$ and $p_i := \mathbf P(\{a_i\})$.
+    Denote $\supp(X) = \{a_i\}_{i=1}^{\infty}$ and $p_i := \Prob(\{a_i\})$.
     By definition of the support we have that $\sum_{i=1}^{\infty} p_i = 1$,
-    and thus, since $\mathbf P_X$ is a probability function we have that
+    and thus, since $\Prob_X$ is a probability function we have that
     for any interval $(a,b) \subset \R$ we have
     \[
-      \mathbf P_X \left((a,b)\right) = \sum_{i \colon a_i \in (a,b)} p_i.
+      \Prob_X \left((a,b)\right) = \sum_{i \colon a_i \in (a,b)} p_i.
     \]
     And that the CDF of $X$ is
     \[
       F_X(a)
-      \mathbf P_X \left((-\infty,a)\right) = \sum_{i \colon a_i \le a} p_i.
+      \Prob_X \left((-\infty,a)\right) = \sum_{i \colon a_i \le a} p_i.
     \]
     This means that the CDF of a discrete random variable $X$ is an a step
     function. In fact, a random variable $X$ is discrete if and only if
@@ -1068,13 +1073,13 @@
   \end{remark}
 
   \begin{definition}[Binomial Distribution]
-    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega ,\mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a binomial random variable with parameters
     $n \in \N$ and $p \in [0,1]$ if it's range is $\{0,1,2,\dots,n\}$ and
     it's distribution satisfies
     \[
-      \mathbf P_X(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad 
+      \Prob_X(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad 
       \forall k \in \{0,1,2,\dots,n\}.
     \]
     Alternatively, $X$ is a binomial random variable with parameters
@@ -1095,8 +1100,8 @@
   all of them, and gained immortality. But how easier would it be, if he
   was allowed to fail one or two?
   \begin{align*}
-    \mathbf P_X(\{1,2\}) - \mathbf P_X(\{0\}) &=
-    \mathbf P_X(\{1\}) + \mathbf P_X(\{2\}) - \mathbf P_X(\{0\}) \\ &=
+    \Prob_X(\{1,2\}) - \Prob_X(\{0\}) &=
+    \Prob_X(\{1\}) + \Prob_X(\{2\}) - \Prob_X(\{0\}) \\ &=
     \sum_{k \in \{1,2\}}
     \binom{12}{k} (0.1)^k (k - (0.1))^{12-k} +
     \binom{12}{0} (0.1)^0 (1 - (0.1))^{12-0} \\ &\approx
@@ -1111,7 +1116,7 @@
     right? Let's find out. The amount of times we get head follows
     $\Bin(2000,0.5)$ so we have
     \[
-      \mathbf{P}_{X}(1000) =
+      \Prob_{X}(1000) =
       \binom{2000}{1000} \left(\frac{1}{2}\right)^{1000}
       \left(\frac{1}{2}\right)^{1000} =
       \frac{(2000)!}{(1000!)^{2}2^{2000}}.
@@ -1123,7 +1128,7 @@
     \]
     we get that
     \[
-      \mathbf{P}_{X}(1000) \approx
+      \Prob_{X}(1000) \approx
       \frac{\sqrt{2\pi}(2000)^{2000+1/2}e^{-2000}}
           {({\sqrt{2\pi}}1000^{1000+1/2}e^{-1000})^{2}2^{2000}} =
       {\frac{1}{\sqrt{\pi 1000}}}.
@@ -1132,12 +1137,12 @@
   \end{example}
 
   \begin{definition}[Geometric Distribution]
-    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega ,\mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a geometric random variable with parameter
     $p \in [0,1]$ if it's range is $\N$ and it's distribution satisfies
     \[
-      \mathbf P_X(k) = (1-p)^{k-1} p, \quad 
+      \Prob_X(k) = (1-p)^{k-1} p, \quad 
       \forall k \in \N.
     \]
     Alternatively, $X$ is a geometric random variable with parameter
@@ -1157,12 +1162,12 @@
   \end{example}
 
   \begin{definition}
-    Let $(\Omega ,\mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega ,\mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a Poisson random variable with parameter
     $p > 0$ if it's range is $\N$ and it's distribution satisfies
     \[
-      \mathbf P_X(k) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad 
+      \Prob_X(k) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad 
       \forall k \in \N.
     \]
     Alternatively, $X$ is a Poisson random variable with parameter
@@ -1188,7 +1193,7 @@
     Suppose that $X \sim \Bin(n,k)$ and we have
     $np = \lambda$. Then
     \[
-      \mathbf P(X = k) = 
+      \Prob(X = k) = 
       \binom{n}{k} p^{k} (1-p)^{n-k} \xrightarrow{n\to\infty}
       \frac{\lambda^{k}}{k!} e^{-\lambda}.
     \]
@@ -1208,7 +1213,7 @@
     \end{align*}
     As we take the limit $n \to \infty$ we have $(*) \to 1$ and thus
     \[
-      \lim_{n\to\infty}\mathbf{P}(X=k)=e^{-\lambda}{\frac{\lambda^{k}}{k!}}.
+      \lim_{n\to\infty}\P(X=k)=e^{-\lambda}{\frac{\lambda^{k}}{k!}}.
     \]
   \end{proof}
 
@@ -1247,21 +1252,21 @@
     Let $s > 1$ be a real number. Define a discrete random variable $X$,
     with range (support) $\{1,2,\dots\}$, with the following distribution
     \[
-      \mathbf P_X(k) = \frac{k^{-s}}{\zeta(s)},
+      \Prob_X(k) = \frac{k^{-s}}{\zeta(s)},
     \]
   where $\zeta(s)$ is the Riemann zeta function.
-  This assures us that $\mathbf P_X(\N) = 1$. 
+  This assures us that $\Prob_X(\N) = 1$. 
   For any natural number $m$ set
   \[
     A_m = 
     \set{k \in \N}{\text{$k$ is divisible by $m$}} =
     \set{nm}{n \in \N}.
   \]
-  Since $\mathbf P_X$ is a probability function we get that for any $m \in N$
+  Since $\Prob_X$ is a probability function we get that for any $m \in N$
   \begin{align*}
-    \mathbf{P}_{X}\left(A_{m}\right) 
-    &= \sum_{k \in A_{m}} \mathbf{P}_{X}\left(k\right)
-    = \sum_{n=1}^{\infty} \mathbf{P}_{X}\left(n m\right)
+    \Prob_{X}\left(A_{m}\right) 
+    &= \sum_{k \in A_{m}} \Prob_{X}\left(k\right)
+    = \sum_{n=1}^{\infty} \Prob_{X}\left(n m\right)
     = {\frac{1}{\zeta(s)}} \sum_{n=1}^{\infty} \left(n m\right)^{-s} \\
     &= {\frac{m^{-s}}{\zeta(s)}} \sum_{n=1}^{\infty} n^{-s}
     = {\frac{m^{-s}}{\zeta(s)}} \zeta(s)
@@ -1271,11 +1276,11 @@
   $A_q$ and $A_p$ are independent. That is because $A_p \cap A_q = A_{pq}$,
   and then
   \[
-    \mathbf P_X(A_p \cap A_q) =
-    \mathbf P_X(A_{pq}) =
+    \Prob_X(A_p \cap A_q) =
+    \Prob_X(A_{pq}) =
     (pq)^{-s} =
     p^{-s} q^{-s} =
-    \mathbf P_X(A_p) \mathbf P_X(A_q).
+    \Prob_X(A_p) \Prob_X(A_q).
   \]
   Similarly, we can show that for any finite number of primes 
   $\{p_i\}_{i=1}^{N}$ that the events $\{A_{p_i}\}_{i=1}^{N}$ are independent.
@@ -1288,9 +1293,9 @@
   we get that
   \[
     {\frac{1}{\zeta(s)}} = 
-    \mathbf{P}_{X}\left(\left\{1\right\}\right) = 
-    \mathbf{P}_{X}\left(\bigcap_{p \ \mathrm{prime}} A_{p}^{c}\right) = 
-    \prod_{p \ \mathrm{prime}} \mathbf{P}_{X}\left(A_{p}^{c}\right) = 
+    \Prob_{X}\left(\left\{1\right\}\right) = 
+    \Prob_{X}\left(\bigcap_{p \ \mathrm{prime}} A_{p}^{c}\right) = 
+    \prod_{p \ \mathrm{prime}} \Prob_{X}\left(A_{p}^{c}\right) = 
     \prod_{p \ \mathrm{prime}} \left(1 - \frac{1}{p^{s}}\right),
   \]
   which completes the proof.
@@ -1332,7 +1337,7 @@
   \end{proof}
 
   \begin{definition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     We say that $X$ is a continuous random variable if $F_X$ is a
     continuous function.
@@ -1340,7 +1345,7 @@
   \begin{remark}
     If $X$ is a continuous random variable then for any $a \in \R$
     \[
-      \mathbf P(a) = 
+      \Prob(a) = 
       \lim_{n \to \infty}\left((a - 1/n, a]\right) =
       \lim_{n \to \infty} F_X(a) - F_X(a - 1/n) =
       0.
@@ -1367,12 +1372,12 @@
     which means that we can use $f_X$ to calculate the probability of any
     event. For example let $A \subset \mathfrak B$ then
     \[
-      \mathbf P_X(A) = \int_{A} f_X(y)\,dy,
+      \Prob_X(A) = \int_{A} f_X(y)\,dy,
     \]
     but proving this equality is beyond the scope of these notes.
     \item We always know that
     \[
-      1 = \mathbf P_X(\R) = \int_{-\infty}^{\infty} f_X(y)\,dy.
+      1 = \Prob_X(\R) = \int_{-\infty}^{\infty} f_X(y)\,dy.
     \]
   \end{enumerate}
 
@@ -1398,8 +1403,8 @@
     \]
     which implies that $C = \frac{3}{4}$. The probability that $X > 1$ is
     \[
-      \mathbf P\left((1,\infty)\right) =
-      \mathbf P\left((1,2)\right) =
+      \Prob\left((1,\infty)\right) =
+      \Prob\left((1,2)\right) =
       \frac{3}{4} \int_{1}^{2} 2y - y^2\,dy =
       \frac{1}{2}.
     \]
@@ -1435,8 +1440,8 @@
     is the probability that the student had to wait more than $5$ minutes
     for the bus?
     \[
-      \mathbf P_X((0,10] \cup (15,25]) =
-      \mathbf P_X((0,10]) + \mathbf P_X((15,25]) =
+      \Prob_X((0,10] \cup (15,25]) =
+      \Prob_X((0,10]) + \Prob_X((15,25]) =
       \int_{0}^{10} \frac{1}{30}\,dy + \int_{15}^{25} \frac{1}{30}\,dy =
       \frac{2}{3}.
     \]
@@ -1509,7 +1514,7 @@
   \]
   
   \begin{theorem}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
     Then exists a distribution function of a discrete random variable
     $F_X^d$, a distribution function of a continuous random variable
@@ -1617,56 +1622,56 @@
   its values.
 
   \begin{definition}[Expectation]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space,
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space,
     and let $X \colon \Omega \to \R$ be a random variable.
 
     If $X$ is a discrete random variable with 
     $\supp(A) = \{a_i\}_{i=1}^{\infty}$ then we define
     \begin{align*}
-      \mathbf E_{+}[X] &=
-      \sum_{i \colon a_i \geq 0} a_i \mathbf P_X\left(\{a_i\}\right) \\
-      \mathbf E_{-}[X] &=
-      \sum_{i \colon a_i \le 0} a_i \mathbf P_X\left(\{a_i\}\right).
+      \E_{+}[X] &=
+      \sum_{i \colon a_i \geq 0} a_i \Prob_X\left(\{a_i\}\right) \\
+      \E_{-}[X] &=
+      \sum_{i \colon a_i \le 0} a_i \Prob_X\left(\{a_i\}\right).
     \end{align*}
-    If at least one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are finite, 
+    If at least one of $\E_{+}[X]$, $\E_{-}[X]$ are finite, 
     we define
     \[
-      \mathbf E[X] = \mathbf E_{+}[X] + \mathbf E_{-}[X].
+      \E[X] = \E_{+}[X] + \E_{-}[X].
     \]
-    If either one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are infinite,
+    If either one of $\E_{+}[X]$, $\E_{-}[X]$ are infinite,
     we say that $\mathbf [X]$ is undefined.
 
     If $X$ is an absolutely continuous variable with a probability density
     function $f_X$ we define
     \begin{align*}
-      \mathbf E_{+}[X] &=
+      \E_{+}[X] &=
       \int_{0}^{\infty} y f_X(y)\,dy
-      \mathbf E_{-}[X] &=
+      \E_{-}[X] &=
       \int_{-\infty}^{0} y f_X(y)\,dy
     \end{align*}
-    If at least one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are finite, 
+    If at least one of $\E_{+}[X]$, $\E_{-}[X]$ are finite, 
     we define
     \[
-      \mathbf E[X] = \mathbf E_{+}[X] + \mathbf E_{-}[X].
+      \E[X] = \E_{+}[X] + \E_{-}[X].
     \]
-    If either one of $\mathbf E_{+}[X]$, $\mathbf E_{-}[X]$ are infinite,
+    If either one of $\E_{+}[X]$, $\E_{-}[X]$ are infinite,
     we say that $\mathbf [X]$ is undefined.
 
     If $X$ is a mixed random variable, such that 
     $F_X = \alpha F_X^d + (1-\alpha)F_X^{ac}$ then
     \[
-      \mathbf E[X] = 
-      \alpha (\mathbf E_{+}[X_d] + \mathbf E_{-}[X_d]) +
-      (1 - \alpha) (\mathbf E_{+}[X_{ac}] + \mathbf E_{-}[X_{ac}])
+      \E[X] = 
+      \alpha (\E_{+}[X_d] + \E_{-}[X_d]) +
+      (1 - \alpha) (\E_{+}[X_{ac}] + \E_{-}[X_{ac}])
     \]
-    Assuming either $\mathbf E_+[X_{d}], \mathbf E_+[X_{ac}] < \infty$ or
-    $\mathbf E_-[X_{d}], \mathbf E_-[X_{ac}] < \infty$.
+    Assuming either $\E_+[X_{d}], \E_+[X_{ac}] < \infty$ or
+    $\E_-[X_{d}], \E_-[X_{ac}] < \infty$.
   \end{definition}
   
   \begin{example}
     Let $X \sim \Bin(n,p)$. Then
     \begin{align*}
-      \mathbf{E}[X] &= \sum_{k=0}^{n} k \mathbf{P}_{X}(k) \\
+      \E[X] &= \sum_{k=0}^{n} k \Prob_{X}(k) \\
       &= \sum_{k=1}^{n} k \binom{n}{k} p^k (1-p)^{n-k} \\
       &= \sum_{k=1}^{n} \frac{n!}{(k-1)!(n-k)!} p^{k} (1-p)^{n-k} \\
       &= n p \sum_{k=1}^{n} \frac{(n-1)!}{(k-1)!(n-k)!} p^{k-1} (1-p)^{n-k} \\
@@ -1679,17 +1684,17 @@
   Expect more examples of expectation to come later.
 
   We will see later that the average of results in $n$ experiments as
-  $n \to \infty$ is exactly $\mathbf E[X]$.
+  $n \to \infty$ is exactly $\E[X]$.
 
   \begin{proposition}
     Let $X$ be a nonnegative random variable. Then
     \[
-      \mathbf E[X] = \int_{0}^{\infty} 1 - F_X(t)\,dt.
+      \E[X] = \int_{0}^{\infty} 1 - F_X(t)\,dt.
     \]
     If $X$ is a general random variable with a well defined expectation
     then
     \[
-      \mathbf E[X] = \int_{0}^{\infty} 1 - F_X(t) - F_X(-t)\,dt.
+      \E[X] = \int_{0}^{\infty} 1 - F_X(t) - F_X(-t)\,dt.
     \]
   \end{proposition}
   \begin{proof}
@@ -1702,7 +1707,7 @@
     Let $X$ be a discrete random variable with $\supp(A) = \{a_i\}_{i \in \N}$,
     and $h \colon \R \to \R$ be a measurable function. Then
     \[
-      \mathbf E[h(X)] = \sum_{i \in \N} h(a_i) \mathbf P_X(b_i).
+      \E[h(X)] = \sum_{i \in \N} h(a_i) \Prob_X(b_i).
     \]
   \end{proposition}
   \begin{proof}
@@ -1714,7 +1719,7 @@
     density function $f_X$.
     Suppose $h \colon \R \to \R$ is a piecewise monotonic function. Then
     \[
-      \mathbf E[h(X)] = \int_{-\infty}^{\infty} h(x) f_X(x)\,dx.
+      \E[h(X)] = \int_{-\infty}^{\infty} h(x) f_X(x)\,dx.
     \]
     This case is also true for continuous random variables in general.
   \end{proposition}
@@ -1738,9 +1743,9 @@
     \]
     Using the LOTUS formula for a discrete variable we get
     \begin{align*}
-      \mathbf E[X] &= 
+      \E[X] &= 
       1000 \sum_{n=1}^{\infty} \left(1 + \frac{5}{100}\right)^n 
-      \mathbf P_N(n) =
+      \Prob_N(n) =
       1000 \sum_{n=1}^{\infty} \left(\frac{105}{100}\right)^n 
       (1 - p)^{n - 1} p \\ &=
       1000 \cdot \frac{105}{100} \cdot p 
@@ -1748,7 +1753,7 @@
     \end{align*}
     And the final series is a geometric series so we get that
     \[
-      \mathbf E[X] =
+      \E[X] =
       \begin{cases}
         1050 p \cdot \frac{1}{1 - \frac{105}{100}(1 - p)},
         &\frac{105}{100}(1-p) < 1 \\
@@ -1764,7 +1769,7 @@
 
     We denote $X \sim U([0,1])$, and then
     \[
-      \mathbf{E}[X^{2}] =
+      \E[X^{2}] =
       \int_{-\infty}^{\infty} y^{2} f_{X}(y) =
       \int_{0}^{1}y^{2}\,dy =
       \frac{1}{3}.
@@ -1775,15 +1780,15 @@
     Let $X$ be a random variable, $a \in \R$, and $h_1,h_2$ measurable
     functions.
     \begin{enumerate}
-      \item $\mathbf E[aX] = a \mathbf E[X]$.
-      \item $\mathbf E[h_1(X) + h_2(X)] = 
-          \mathbf E[h_1(X)] + \mathbf E[h_2(X)].$
-      \item If $\mathbf P(X=a) = 1$, then $\mathbf E[X] = a$.
-      \item If $\mathbf P(h_1(X) \geq a) = 1$, then 
-          $\mathbf E[h_1(X)] \geq 0$.
+      \item $\E[aX] = a \E[X]$.
+      \item $\E[h_1(X) + h_2(X)] = 
+          \E[h_1(X)] + \E[h_2(X)].$
+      \item If $\Prob(X=a) = 1$, then $\E[X] = a$.
+      \item If $\Prob(h_1(X) \geq a) = 1$, then 
+          $\E[h_1(X)] \geq 0$.
     \end{enumerate}
     Assuming all expectations are well defined and finite, from $2$ and $3$
-    we get that $\mathbf E[h_{1}(X)+a]=\mathbf E[h_{1}(X)] + a$.
+    we get that $\E[h_{1}(X)+a]=\E[h_{1}(X)] + a$.
   \end{proposition}
   \begin{proof}
     To be added.
@@ -1793,7 +1798,7 @@
     Let $X$ be a random variable with finite expectation. The Variance of
     $X$, denoted $\Var(X)$ is defined as
     \[
-      \Var(X) = \mathbf E\left[ (X - \mathbf E[X])^2 \right].
+      \Var(X) = \E\left[ (X - \E[X])^2 \right].
     \]
     The standard deviation of $X$, denoted $\sigma_X$, is defined as
     \[
@@ -1803,7 +1808,7 @@
   
   Intuitively, we say that $\Var(X)$ and $\sigma_X$ describe how distant $X$
   is from its expectation. Another parameter that describes this is
-  $\mathbf E\left[ \abs{X - \mathbf E[X]} \right]$ but we don't use it
+  $\E\left[ \abs{X - \E[X]} \right]$ but we don't use it
   for a couple of reasons. Firstly, in many cases it's easier to caluclate
   the variance and standard deviation, and secondly, the standard deviation
   $\sigma_X$ is the probabilistic version of Euclidean distance, and the 
@@ -1812,10 +1817,10 @@
 
   \begin{example}
     If we denote the result of a dice throw $X$, then we already know
-    that $\mathbf E[X] = 3.5$ so the variance is
+    that $\E[X] = 3.5$ so the variance is
     \[
       \Var(X) =
-      \mathbf E\left[ (X - 3.5)^2 \right] =
+      \E\left[ (X - 3.5)^2 \right] =
       \sum_{i=1}^{6} (i - 3.5)^2 \cdot \frac{1}{6} =
       \frac{35}{12}.
     \]
@@ -1827,12 +1832,12 @@
     Let $X$ be a random variable with finite expectation and $a \in \R$. Then
     \begin{enumerate}
       \item $\Var(X) \geq 0$.
-      \item $\Var(X) = \mathbf E[X^2] - \mathbf E[X]^2$.
+      \item $\Var(X) = \E[X^2] - \E[X]^2$.
       \item $\Var(X + a) = \Var(X)$.
       \item $\Var(aX) = a^2 \Var(X)$.
-      \item $\Var(X) = 0$ if and only if $\mathbf P(X = \mathbf E[X])$.
+      \item $\Var(X) = 0$ if and only if $\Prob(X = \E[X])$.
     \end{enumerate}
-    From $1$ and $2$ we get that $\mathbf E[X]^2 \le \mathbf E[X^2]$.
+    From $1$ and $2$ we get that $\E[X]^2 \le \E[X^2]$.
   \end{proposition}
   \begin{proof}
     To be added.
@@ -1850,12 +1855,12 @@
       \item If $X$ is a nonnegative random variable, then the $\alpha \in \R$
       moment of $X$ is defined as
       \[
-        \mu_\alpha(X) = \mathbf E[X^{\alpha}].
+        \mu_\alpha(X) = \E[X^{\alpha}].
       \]
       \item The $n$-th central moment of $X$ for $n \in \N$ is denoted
       $C_n(X)$ and is defined as
       \[
-        C_n(X) = \mathbf E\left[(X - \mathbf E[X])^n\right].
+        C_n(X) = \E\left[(X - \E[X])^n\right].
       \]
       In particular $C_1(X) = 0$ and $C_2(X) = \Var(X)$.
     \end{enumerate}
@@ -1865,7 +1870,7 @@
     Let $X \sim U([a,b])$, then
     \[
       \mu_{n} \left(X\right) =
-      \mathbf{E}[X^{n}] =
+      \E[X^{n}] =
       \int_{a}^{b}{\frac{y^{n}}{b-a}}\,dy =
       {\frac{b^{n+1}-a^{n+1}}{(n+1)(b-a)}}.
     \]
@@ -1877,7 +1882,7 @@
     Let $X$ be a random variable. The moment generating function of $X$,
     denoted $M_X \colon \R \to [0,\infty]$ is defined by
     \[
-      M_X(t) = \mathbf E\left[e^{tX}\right].
+      M_X(t) = \E\left[e^{tX}\right].
     \]
     Notice that $M_X$ is always defined since $y \mapsto e^{ty}$ is a positive
     function for all $t \in \R$.
@@ -1887,7 +1892,7 @@
     Let $X \sim \Bin(n,p)$, then
     \[
       M_Z(t) =
-      \mathbf E\left[e^{tX}\right] =
+      \E\left[e^{tX}\right] =
       \sum_{k=0}^{n}e^{t k}{\binom{n}{k}}p^{k}(1-p)^{n-k} =
       \left(p e^{t}+1-p\right)^{n}.
     \]
@@ -1898,7 +1903,7 @@
     $[-\epsilon, \epsilon]$ for some $\epsilon > 0$. Then $M_X$ is a smooth
     function and for each $k \geq 0$
     \[
-      M_X^{(k)}(0) = \mathbf E\left[X^k\right]
+      M_X^{(k)}(0) = \E\left[X^k\right]
     \]
   \end{proposition}
   \begin{proof}
@@ -1912,13 +1917,13 @@
   \end{remark}
 
   Moments have many uses, for example to find bounds for events of the
-  form $\{X > a\}$ or $\{\abs{X - \mathbf E[X]} > a\}$. The following
+  form $\{X > a\}$ or $\{\abs{X - \E[X]} > a\}$. The following
   proposition suggest another use.
 
   \begin{proposition}
     Let $X$, $Y$ be random variables. If exists $\epsilon > 0$ such that 
     $M_X$ and $M_Y$ are finite on $[0,\epsilon]$ and $M_X(t) = M_Y(t)$
-    for $t \in [0,\epsilon]$, then $\mathbf P_X = \mathbf P_Y$.
+    for $t \in [0,\epsilon]$, then $\Prob_X = \Prob_Y$.
   \end{proposition}
 
   \newpage
@@ -1927,38 +1932,38 @@
   \begin{proposition}
     Let $X$ be a random variable, then
     \[
-      \abs{\mathbf E[X]} \le \mathbf E[\abs{X}]
+      \abs{\E[X]} \le \E[\abs{X}]
     \]
   \end{proposition}
   \begin{proof}
   In the case of a discrete random variable with 
   $\supp(A) = \{a_i\}_{i \in \N}$ we get
     \[
-      |\mathbf{E}[X]|=
+      |\E[X]|=
       \abs{\sum_{i=1}^{\infty} a_{i} P_{X}(a_{i})} \leq
       \sum_{i=1}^{\infty} \abs{a_{i} P_{X}(a_{i})} =
       \sum_{i=1}^{\infty} \abs{a_{i}} P_{X}(a_{i}) =
-      \mathbf{E}[|X|],
+      \E[|X|],
     \]
     Similarly, if $X$ is an absolutely continuous random variable with
     a probability density function $f_X$ then
     \[
-      \abs{\mathbf{E}[X]} =
+      \abs{\E[X]} =
       \abs{\int_{\R}y f_{X}(y)\,du} \leq
       \int_{\R} \abs{y f_{X}(y)}\,dy =
       \int_{\R} \abs{y} f_{X}(y) =
-      \mathbf{E}[\abs{X}].
+      \E[\abs{X}].
     \]
     The proof for a mixed random variable is very similar.
   \end{proof}
 
   Previously, we also saw that
   \[
-    \mathbf{E}[X]^{2} \leq \mathbf{E}[X^{2}].
+    \E[X]^{2} \leq \E[X^{2}].
   \]
   The last two inequalities are of the form
   \[
-    h(\mathbf{E}[X])\leq\mathbf{E}[h(X)],
+    h(\E[X])\leq\E[h(X)],
   \]
   where $h$ is the function $h(y) = \abs{y}$ in the first inequality, and
   $h(y) = y^2$ in the second.
@@ -1968,7 +1973,7 @@
     Let $X$ be a random variable with finite expectation and 
     $h \colon \R \to \R$ a convex function. Then
     \[
-      h(\mathbf{E}[X])\leq\mathbf{E}[h(X)].
+      h(\E[X])\leq\E[h(X)].
     \]
   \end{theorem}
 
@@ -1987,35 +1992,35 @@
     Let $X \sim U([3,7])$, and $h(y) = \frac{1}{y}$. Using Jensen's inequality
     we get that
     \[
-      \mathbf{E}\left[{\frac{1}{X}}\right]\geq{\frac{1}{\mathbf{E}[X]}}.
+      \E\left[{\frac{1}{X}}\right]\geq{\frac{1}{\E[X]}}.
     \]
     Indeed,
     \[
-      \mathbf{E} \left[{\frac{1}{X}}\right] =
+      \E \left[{\frac{1}{X}}\right] =
       \int_{3}^{7}{\frac{1}{y}}\cdot{\frac{1}{4}}\,dy =
       \frac{1}{4} \log(7/3) \approx
       0.212.
     \]
     While
     \[
-      \frac{1}{\mathbf E[X]} = \frac{1}{5} = 0.2
+      \frac{1}{\E[X]} = \frac{1}{5} = 0.2
     \]
   \end{example}
   
   \begin{corollary}
     Let $X$ be a random variable and $0 < \alpha < \beta$. 
     If $\abs{X}$ has a moment $\beta$, 
-    that is $\mathbf E[\abs{X}^{\beta}] < \infty$,
-    then $\mathbf E[\abs{X}^{\alpha}]$.
+    that is $\E[\abs{X}^{\beta}] < \infty$,
+    then $\E[\abs{X}^{\alpha}]$.
   \end{corollary}
   \begin{proof}
     Since $0 < \frac{\alpha}{\beta} < 1$ the function 
     $y \mapsto y^{\alpha/\beta}$ is convex on $[0,\infty)$, and thus from
     Jensen's inequality
     \[
-      \mathbf{E}[|X|^{\alpha}] =
-      \mathbf{E}[(|X|^{\beta})^{\alpha/\beta}] \leq
-      \mathbf{E}[|X|^{\beta}]^{\alpha/\beta} <
+      \E[|X|^{\alpha}] =
+      \E[(|X|^{\beta})^{\alpha/\beta}] \leq
+      \E[|X|^{\beta}]^{\alpha/\beta} <
       \infty
     \]
   \end{proof}
@@ -2023,8 +2028,8 @@
   \begin{theorem}[Markov's inequality]
     Let $X$ be a nonnegative random variable. For all $a > 0$ we have
     \[
-      \mathbf{P}(X \geq a) \leq
-      \frac{\mathbf{E}[X]}{a}.
+      \Prob(X \geq a) \leq
+      \frac{\E[X]}{a}.
     \]
   \end{theorem}
   \begin{proof}
@@ -2038,13 +2043,13 @@
       \end{cases}.
     \]
     Because $g(y) \le h(y)$ for any $y \geq 0$ and $X$ is a nonnegative
-    random variable ($\mathbf P(X \geq 0) = 1$), we get from properties
+    random variable ($\Prob(X \geq 0) = 1$), we get from properties
     of expectation that
     \[
-      \mathbf{E}[X] =
-      \mathbf{E}[h(X)] \geq
-      \mathbf{E}[g(X)] =
-      a \cdot \mathbf{P}(X \geq a),
+      \E[X] =
+      \E[h(X)] \geq
+      \E[g(X)] =
+      a \cdot \Prob(X \geq a),
     \]
     which completes the proof.
   \end{proof}
@@ -2052,8 +2057,8 @@
   \begin{corollary}
     If $X$ is a random variable then for all $a > 0$
     \[
-      \mathbf{P}(|X|\geq a) \leq
-      \frac{\mathbf{E}[|X|]}{a}
+      \Prob(|X|\geq a) \leq
+      \frac{\E[|X|]}{a}
     \]
   \end{corollary}
 
@@ -2063,26 +2068,26 @@
     Let $X$ be a random variable with finite expectation. Then for every
     $a > 0$
     \[
-      \mathbf P(\abs{X - \mathbf E[X]} \geq a) \le
+      \Prob(\abs{X - \E[X]} \geq a) \le
       \frac{\Var(X)}{a^2}.
     \]
   \end{theorem}
   \begin{proof}
-    Using Markov's inequality on $\abs{X - \mathbf E[X]}$ with the function
+    Using Markov's inequality on $\abs{X - \E[X]}$ with the function
     $\varphi(y) = y^2$ we get
     \[
-      \mathbf{P}(\abs{X-\mathbf{E}[X]} \geq a) =
-      \mathbf{P}(\abs{X-\mathbf{E}[X]}^{2} \geq a^{2}) \leq
-      \frac{\mathbf{E}\left[\abs{X-\mathbf{E}[X]}^{2}\right]}{a^{2}} =
+      \Prob(\abs{X-\E[X]} \geq a) =
+      \Prob(\abs{X-\E[X]}^{2} \geq a^{2}) \leq
+      \frac{\E\left[\abs{X-\E[X]}^{2}\right]}{a^{2}} =
       \frac{\Var(X)}{a^2}.
     \]
   \end{proof}
 
   \begin{example}
-    Let $X \sim U([0,2])$. Thus $\mathbf P\left(\abs{X - 1} \geq 0\right) = 0$.
+    Let $X \sim U([0,2])$. Thus $\Prob\left(\abs{X - 1} \geq 0\right) = 0$.
     From Chebyshev's inequality we get that
     \[
-      \mathbf P\left(\abs{X - 1} \geq 1\right) \le
+      \Prob\left(\abs{X - 1} \geq 1\right) \le
       \frac{\Var(X)}{1^2} =
       \frac{1}{3}.
     \]
@@ -2093,7 +2098,7 @@
     Thus for any $\delta > 0$
     \[
       \lim_{n \to \infty}
-      \mathbf P\left(\abs{\frac{X_n}{n} - p} > \delta\right) =
+      \Prob\left(\abs{\frac{X_n}{n} - p} > \delta\right) =
       0.
     \]
   \end{theorem}
@@ -2162,7 +2167,7 @@
     intervals, and independently, we see that for any 
     $[a,b] \times [c,d] \subset [0, 2 \pi) \times [0,1]$ that
     \[
-      \mathbf P([a,b] \times [c,d]) = \frac{b-a}{2 \pi} \cdot (d-c).
+      \Prob([a,b] \times [c,d]) = \frac{b-a}{2 \pi} \cdot (d-c).
     \]
     Define a random variable
     \[
@@ -2171,8 +2176,8 @@
     \]
     Now we see that
     \[
-      \mathbf P\left(X \geq \sqrt{3}\right) = 
-      \mathbf P([0,2 \pi] \times [0,1/2]) =
+      \Prob\left(X \geq \sqrt{3}\right) = 
+      \Prob([0,2 \pi] \times [0,1/2]) =
       \frac{2 \pi-0}{2 \pi} \cdot (1/2-0) =
       \frac{1}{2}
     \]
@@ -2202,7 +2207,7 @@
     we see that for any
     $[a,b] \times [c,d] \subset \Omega$ that
     \[
-      \mathbf P([a,b] \times [c,d]) = \frac{(b-a)(d-c)}{\pi},
+      \Prob([a,b] \times [c,d]) = \frac{(b-a)(d-c)}{\pi},
     \]
     which is just the area of the rectangle divided by the area of the circle.
     Define a random variable
@@ -2212,9 +2217,9 @@
     \]
     Now we see that
     \[
-      \mathbf P\left(Y \geq \sqrt{3}\right) = 
-      \mathbf P\left(\set{(x,y)}{2 \sqrt{1 - x^2 - y^2} \geq \sqrt{3}}\right) =
-      \mathbf P\left(\set{(x,y)}{x^2 + y^2 \le \frac{1}{4}}\right) =
+      \Prob\left(Y \geq \sqrt{3}\right) = 
+      \Prob\left(\set{(x,y)}{2 \sqrt{1 - x^2 - y^2} \geq \sqrt{3}}\right) =
+      \Prob\left(\set{(x,y)}{x^2 + y^2 \le \frac{1}{4}}\right) =
       \frac{\frac{\pi}{4}}{\pi} =
       \frac{1}{4}
     \]
@@ -2237,7 +2242,7 @@
     we see that for any
     $[a,b] \times [c,d] \subset \Omega$ that
     \[
-      \mathbf P([a,b] \times [c,d]) =
+      \Prob([a,b] \times [c,d]) =
       \frac{b-a}{2 \pi} \cdot \frac{d-c}{2 \pi},
     \]
     Define a random variable
@@ -2250,7 +2255,7 @@
     In the end of these calculations, we use similar methods to the ones
     shown in the first two solutions, and get
     \[
-      \mathbf P\left(Z \geq \sqrt{3}\right) = 
+      \Prob\left(Z \geq \sqrt{3}\right) = 
       \frac{1}{3}
     \]
 
@@ -2258,12 +2263,12 @@
 
   \section{Multivariate Random Variables}
   \begin{definition}[Multivariate random variable]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space.
-    The function $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ is said
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space.
+    The function $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ is said
     to be a multivariate random variable if for all $a_i < b_i$ for 
     $1 \le i \le N$ we have
     \[
-      X^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
+      \vec{X}^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
       \set{\omega \in \Omega}
       {a_i < X_i(\omega) < b_i,\, \forall 1 \le i \le N} \in
       \mathcal F.
@@ -2275,23 +2280,23 @@
   for all $A \in \mathfrak B\left(\R^n\right)$.
 
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$. 
-    Then $X$ is a multivariate random variable if and only if 
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$. 
+    Then $\vec{X}$ is a multivariate random variable if and only if 
     $X_k \colon \Omega \to \R$ is a random variable for all $1 \le k \le N$.
   \end{proposition}
   \begin{proof}
-    Assume $X$ is a multivariate random variable and set some $1 \le k \le N$.
+    Assume $\vec{X}$ is a multivariate random variable and set some $1 \le k \le N$.
     Then for all $a < b$ we have
     \[
       X_k^{-1}((a,b)) = 
-      X^{-1}\left(\R^{k-1} \times (a,b) \times \R^{n-k}\right) \in
+      \vec{X}^{-1}\left(\R^{k-1} \times (a,b) \times \R^{n-k}\right) \in
       \mathcal F.
     \]
     Now assume $X_1,\dots,X_N$ are random variables. Then for all $a_i < b_i$
     for $1 \le i \le N$ we have
     \[
-      X^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
+      \vec{X}^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
       \bigcap_{i=1}^{N}\set{\omega \in \Omega}{a_i < X_i(\omega) < b_i} \in
       \mathcal F,
     \]
@@ -2300,27 +2305,27 @@
   \end{proof}
 
   \begin{definition}[Distribution of a multivariate random variable]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a multivariate
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a multivariate
     random variable.
-    The distribution of $X$, denoted $\mathbf P_X$ is a probability function
+    The distribution of $\vec{X}$, denoted $\Prob_{\vec{X}}$ is a probability function
     on the measurable space $(\R^N, \mathfrak B_N)$ defined as
     \[
-      \mathbf P_X(A) =
-      \mathbf P(X \in A), \quad
-      \forall A \in \mathfrak  BB_N.
+      \Prob_{\vec{X}}(A) =
+      \Prob(\vec{X} \in A), \quad
+      \forall A \in \mathfrak  B_N.
     \]
   \end{definition}
 
   \begin{remark}
-    The function $\mathbf P_{X_k}$ denotes the distribution of the random
+    The function $\Prob_{X_k}$ denotes the distribution of the random
     variable $X_k$ and is called the partial distribution of $X_k$.
-    We see that the distribution $\mathbf P_X$ of a random vector uniquely
-    defines the partial distributions $\mathbf P_{X_1},\dots,\mathbf P_{X_N}$
+    We see that the distribution $\Prob_{\vec{X}}$ of a random vector uniquely
+    defines the partial distributions $\Prob_{X_1},\dots,\Prob_{X_N}$
     because
     \[
-      \mathbf P_{X_k} =
-      \mathbf P_{X}\left(\R^{k-1} \times A \times \R^{N-k}\right),
+      \Prob_{X_k} =
+      \Prob_{\vec{X}}\left(\R^{k-1} \times A \times \R^{N-k}\right),
       \quad \forall A \in \mathfrak B.
     \]
     The opposite, is not true.
@@ -2339,27 +2344,27 @@
     where $i$ denotes the number of red balls drawn, and $j$ the number
     of white balls drawn. From combinatorial arguments we get
     \[
-      \mathbf P_{(X,Y)}\left((i,j)\right) =
+      \Prob_{(X,Y)}\left((i,j)\right) =
       \frac{\binom{3}{i}\binom{4}{j}\binom{5}{3-i-j}}{\binom{12}{3}}.
     \]
   \end{example}
 
   \begin{definition}[Cumulatice distribution function]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
-    The cumulative ditribution function of $X$, denoted $F_X$, is the function
-    $F_X \colon \R^N \to [0,1]$ defined as
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    The cumulative ditribution function of $\vec{X}$, denoted $F_{\vec{X}}$, 
+    is the function $F_{\vec{X}} \colon \R^N \to [0,1]$ defined as
     \[
-      F_X(a_1,\dots,a_N) =
-      \mathbf P(X_i \le a_i,\, \forall 1 \le i \le N) =
-      \mathbf P_X\left(\prod_{i=1}^{N}(-\infty,a_i]\right).
+      F_{\vec{X}}(a_1,\dots,a_N) =
+      \Prob(X_i \le a_i,\, \forall 1 \le i \le N) =
+      \Prob_{\vec{X}}\left(\prod_{i=1}^{N}(-\infty,a_i]\right).
     \]
   \end{definition}
 
   \begin{proposition}[Properties of the CDF]
     \begin{enumerate}
-      \item The function $F_X$ is increasing in each coordinate.
-      \item The function $F_X$ is continuous from the right in each 
+      \item The function $F_{\vec{X}}$ is increasing in each coordinate.
+      \item The function $F_{\vec{X}}$ is continuous from the right in each 
         coordinate.
       \item For every choice $a_1,\dots,a_{k-1},a_{k+1},\dots,a_N \in \R$
         we have $\lim_{a_k \to -\infty}{F_X(a_1,a_2,\dots,a_N)} = 0$
@@ -2368,12 +2373,12 @@
       Then for every choice $a_1,\dots,a_{k-1},a_{k+1},\dots,a_N \in \R$
       we have
       \[
-        \lim_{a_k \to \infty} F_X(a_1,a_2,\dots,a_N) =
+        \lim_{a_k \to \infty} F_{\vec{X}}(a_1,a_2,\dots,a_N) =
         F_{X^k}(a_1,\dots,a_{k-1},a_{k+1},\dots,a_N).
       \]
       In particular
       \[
-        \lim_{a_1,\dots,a_N \to \infty} F_X(a_1,a_2,\dots,a_N) = 1.
+        \lim_{a_1,\dots,a_N \to \infty} F_{\vec{X}}(a_1,a_2,\dots,a_N) = 1.
       \]
     \end{enumerate}
   \end{proposition}
@@ -2383,50 +2388,51 @@
 
   \begin{theorem}
     Every CDF corresponds to a unique distribution. In other words, if
-    $(\Omega, \mathcal F, \mathbf P)$ and $(\Omega', \mathcal F', \mathbf P')$
-    are two probability spaces, and $X \colon \Omega \to \R^N$,
-    $Y \colon \Omega' \to \R^N$ are two random variable, then
+    $(\Omega, \mathcal F, \Prob)$ and $(\Omega', \mathcal F', \Prob')$
+    are two probability spaces, and $\vec{X} \colon \Omega \to \R^N$,
+    $\vec{Y} \colon \Omega' \to \R^N$ are two random variable, then
     \[
-      F_X = F_Y \iff \mathbf P_X = \mathbf P_Y
+      F_{\vec{X}} = F_{\vec{Y}} \iff 
+      \Prob_{\vec{X}} = \Prob_{\vec{Y}}
     \]
   \end{theorem}
   \begin{theorem}
     Let $F \colon \R^N \to [0,1]$ be a function that satisfies all $4$ basic
     properties of the CDF. Thus, exists a probability space 
-    $(\Omega, \mathcal F, \mathbf P)$ and a random variable 
-    $X \colon \Omega \to \R^N$ such that$F_X = F$.
+    $(\Omega, \mathcal F, \Prob)$ and a random variable 
+    $\vec{X} \colon \Omega \to \R^N$ such that $F_{\vec{X}} = F$.
   \end{theorem}
   We won't prove this theorem either, but using these two last theorems
   we can conclude that exists a bijection between all random variables'
   distributions and functions that satisfy the $4$ properties from above.
 
   \begin{definition}[Discrete random vector]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
-    Then $X$ is said to be a discrete random vector if exists a countable
-    set $B \subset \R^\N$ such that $\mathbf P(X \in B) = 1$.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $\vec{X}$ is said to be a discrete random vector if exists a countable
+    set $B \subset \R^\N$ such that $\Prob(\vec{X} \in B) = 1$.
   \end{definition}
 
   \begin{proposition}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
-    Then $X$ is a discrete random vector if and only if $X_k$ is a discrete
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $\vec{X}$ is a discrete random vector if and only if $X_k$ is a discrete
     random variable for all $1 \le k \le N$.
   \end{proposition}
   \begin{proof}
-    Assume that $X = (X_1,\dots,X_N)$ is a discrete random vector.
+    Assume that $\vec{X} = (X_1,\dots,X_N)$ is a discrete random vector.
     Then exists a countable set $B \subset \R^N$ such that
     \[
-      \mathbf P_X(B) = 1.
+      \Prob_{\vec{X}}(B) = 1.
     \]
     Let $1 \le k \le N$. Consider the set $B_k = \pi_k(B)$ where $\pi_k$ is the
     projection on the $k$-th coordinate. It is clear that $B_k$ is countable
     and also
     \[
       1 \geq
-      \mathbf P(X_1 \in B_k) =
-      \mathbf P\left((X_1,X_2) \in B_k \times \R\right) \geq
-      \mathbf P(X \in B) =
+      \Prob(X_1 \in B_k) =
+      \Prob\left((X_1,X_2) \in B_k \times \R\right) \geq
+      \Prob(\vec{X} \in B) =
       1.
     \]
     Thus we got that for all $1 \le k \le N$ that $X_k$ is discrete.
@@ -2435,27 +2441,27 @@
     $\mathbf (X_k \in B_k) = 1$ for all $1 \le k \le N$.
     Under the axiom of choice we have that the set 
     $B = B_1 \times \cdots \times B_N$ is countable and it is clear that
-    $\mathbf P(X \in B) = 1$ as wanted which completes the proof.
+    $\Prob(\vec{X} \in B) = 1$ as wanted which completes the proof.
   \end{proof}
   
   \begin{remark}
     Notice that the above proposition proves that given a discrete random
-    vector $X = (A_i)_{i=1}^{N}$, for any subsequence $\{i_j\}_{j=1}^{k}$ of 
-    $\{i\}_{i=1}^N$ that $X = (A_{i_j})_{j=1}^k$ is also a discrete random
+    vector $\vec{X} = (A_i)_{i=1}^{N}$, for any subsequence $\{i_j\}_{j=1}^{k}$ of 
+    $\{i\}_{i=1}^N$ that $\vec{X} = (A_{i_j})_{j=1}^k$ is also a discrete random
     vector.
   \end{remark}
 
   \begin{definition}[Continuous random vector]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
-    Then $X$ is called an absolutely continuous random vector if $F_X$
-    is continuous.
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $\vec{X}$ is called an absolutely continuous random vector if 
+    $F_{\vec{X}}$ is continuous.
   \end{definition}
   
   \begin{remark}
-    As in the case of a random variable, if $X \colon \Omega \to \R^N$ is
+    As in the case of a random variable, if $\vec{X} \colon \Omega \to \R^N$ is
     an absolutely continuous random vector, 
-    then $\mathbf P(X = a) = 0$ for all $a \in \R^N$.
+    then $\Prob(\vec{X} = a) = 0$ for all $a \in \R^N$.
   \end{remark}
   
   Similarly to general continuous random variables, we won't discuss
@@ -2463,29 +2469,29 @@
   absolutely continuous random vectors.
 
   \begin{definition}[Absolutely continuous random vector]
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
-    Then $X$ is said to be absolutely continuous if exists an integrable 
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be a random vector.
+    Then $\vec{X}$ is said to be absolutely continuous if exists an integrable 
     function $f \colon \R^N \to [0,\infty)$ such that 
     \[
       \int_{\R_N} f(x)\,dx = 1
     \]
     And for all $a \in \R^N$
     \[
-      F_X(a) = 
-      \mathbf P_X\left(\prod_{i=1}^{N} (-\infty,a_i]\right) =
+      F_{\vec{X}}(a) = 
+      \Prob_{\vec{X}}\left(\prod_{i=1}^{N} (-\infty,a_i]\right) =
       \int_{\prod_{i=1}^{N} (-\infty,a_i]} f(y_1,\dots,y_N)\,d(y_1,\dots,y_N)).
     \]
-    In this case, we call $f_X$ the probability density function of $X$,
-    or PDF for short.
+    In this case, we call $f_{\vec{X}}$ the probability density function of 
+    $\vec{X}$, or PDF for short.
   \end{definition}
 
   \begin{remark}
     Like in the case of random variables we konw that for any $A \subset \R^N$
     such that $f \cdot \mathbbm{1}$ is an integrable function
     \[
-      \mathbf P_X(X) = f(y_1,\dots,y_N)\,d(y_1,\dots,y_N)).
-      \int_{A}
+      \Prob_{\vec{X}}(A) = 
+      \int_{A} f(y_1,\dots,y_N)\,d(y_1,\dots,y_N)).
     \]
   \end{remark}
 
@@ -2519,7 +2525,7 @@
         0, &\text{otherwise}
       \end{cases}.
     \]
-    Find the value of $c$, and calculate $\mathbf P(X + Y \le 1)$.
+    Find the value of $c$, and calculate $\Prob(X + Y \le 1)$.
 
     To find $c$ we can use the fact that 
     $\int_{\R^2} f_{(X,Y)}(x,y)\,d(x,y) = 1$.
@@ -2533,13 +2539,13 @@
     \end{align*}
     which implies that $c = \frac{3}{14}$.
 
-    To find $\mathbf P(X + Y \le 1)$, we need to understand that the function
+    To find $\Prob(X + Y \le 1)$, we need to understand that the function
     is only different than zero on $R = [0,1] \times [0,2]$. Which means that
     we need to find the integral of $f_X$ on 
     $T = R \cup \set{(x,y)}{x + y \le 1}$. 
     Using Fubini's theorem we get
     \begin{align*}
-      \mathbf P(X + Y \le 1) &= \int_{T}f_{(X,Y)}*(x,y)\,d(x,y) \\
+      \Prob(X + Y \le 1) &= \int_{T}f_{(X,Y)}*(x,y)\,d(x,y) \\
       &= \frac{3}{14} \int_{0}^{1} 
       \left(\int_{0}^{1-x} 2x + y^2\,dy\right)\,dx \\
       &= {\frac{3}{14}}\int_{0}^{1}2x(1-x)+{\frac{(1-x)^{3}}{3}}\,dx \\
@@ -2547,17 +2553,17 @@
     \end{align*}
   \end{example}
 
-  \begin{theorem}
-    Let $(\Omega, \mathcal F, \mathbf P)$ be a probability space, 
-    and let $X = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be an absolutely
+  \begin{theorem}\label{thm:randvec}
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, 
+    and let $\vec{X} = (X_1,\dots,X_N) \colon \Omega \to \R^N$ be an absolutely
     continuous random vector with a probability density function 
-    $f_X \colon \R^N \to [0,\infty)$.
+    $f_{\vec{X}} \colon \R^N \to [0,\infty)$.
     Then $X_k$ is an absolutely continuous random variable for each
     $1 \le k \le N$, with a probability density function
     \[
       f_{X_{k}}(a) = 
       \int_{\R^{N-1}} 
-      f_{\mathbf{X}}(x_{1},\dots,x_{k-1},a,x_{k+1},\dots,x_{N})
+      f_{\vec{X}}(x_{1},\dots,x_{k-1},a,x_{k+1},\dots,x_{N})
       d(x_{1},\ldots,x_{k-1},x_{k+1},\dots,x_{N}).
     \]
     And the same is true for other sub random vectors.
@@ -2565,8 +2571,602 @@
   \begin{proof}
     To be added.
   \end{proof}
+  
+  \begin{definition}[Volume]
+    Let $A \subset \R^N$ be a set. We define the volume of $A$ as such
+    \[
+      \Vol(B) = \int_{\R^N} \mathbbm{1}_B(x)\,dx
+    \]
+  \end{definition}
+  
+  \begin{definition}[Uniform distribution]
+    Let $\vec{X} \colon \Omega \to \R^N$ be a random vector, 
+    and $B \subset \R^N$ an open or closed set with a well defined, finite volume.
+    The random vector $\vec{X}$ is said to distribute uniformly on $B$, and
+    denote $\vec{X} \sim U(B)$ if $\vec{X}$ is absolutely continuous with a 
+    density function
+    \[
+      f_{\vec{X}}(x) =
+      \begin{cases}
+        \frac{1}{\Vol(B)}, &x \in B \\
+        0, &\text{otherwise}
+      \end{cases}.
+    \]
+  \end{definition}
 
+  A theorem needs to be here.
 
+  \begin{definition}[Independence]
+    Let $X_1,\dots,X_N \colon \Omega \to \R$ be random variables.
+    The variables $X_1,\dots,X_N$ are said to be independent if
+    for all $A_1,\dots,A_N \in \mathfrak B$ we have
+    \[
+      \Prob(X_1 \in A_1, \dots, X_N \in A_N) =
+      \prod_{i=1}^{N} \Prob(X_i \in A_i).
+    \]
+  \end{definition}
+
+  Notes and Examples
+  
+  \begin{definition}[Measure]
+    Let $(X, \Sigma)$ be a measurable space.
+    A set function $\mu \to [0,\infty]$ is called a measure if the following
+    conditions hold
+    \begin{enumerate}
+      \item $\mu(\emptyset) = 0$;
+      \item For all countable collections $\{E_{k}\}_{k=1}^{\infty }$ of
+            pairwise disjoint sets in $\Sigma$
+            \[ \mu \left(\bigcup _{k=1}^{\infty }E_{k}\right) =
+               \sum _{k=1}^{\infty }\mu (E_{k}). \]
+    \end{enumerate}
+    The second condition is called $\sigma$-additivity.
+  \end{definition}
+  \begin{definition}[Atom]
+    Given a measurable space $(X, \Sigma)$, and a measure $\mu$ on that
+    space, a set $A \subset X$ in $\Sigma$ is called an atom if
+    $\mu (A)>0$ and if for any measurable subset $B \subset A$ then
+    $0\in \{\mu (B),\mu (A\setminus B)\}.$
+  \end{definition}
+  
+  Mixed random vectors.
+
+  \begin{definition}[Convolution]
+    Let $f,g \colon \R \to [0,\infty)$. (In fact we can also use this 
+    definition for $f,g \colon \R \to \R$ such that $\abs{f},\abs{g}$
+    are integrable). The convolution of $f$ and $g$, denoted
+    $f * g \colon \R \to [0,\infty)$ is the function
+    \[
+      (f * g)(a) = \int_{\R}f(x)g(a-x)\,dx.
+    \]
+  \end{definition}
+  This is still missing a proof but
+  \[
+    F_{X+Y} = f_X * F_Y = f_Y * F_X.
+  \]
+  And
+  \[
+    f_{X+Y} = f_X * f_Y.
+  \]
+
+  \newpage
+
+  \section{Expectation, Covariance and Correlation}
+  A natural extension of expectation to random vectors is to set
+  \[
+    \E[\vec{X}] =
+    \int_{\R^N} y f_{\vec{X}}(y)dy =
+    \int_{\mathbb{R}^{N}} 
+    \left(y_{1},\cdots,y_{N}\right)
+    f_{\vec{X}} (y_{1},\cdot\cdot\cdot,y_{N})
+    d(y_{1},\cdot\cdot\cdot\cdot,y_{N}).
+  \]
+  Recall that an intergal of vectors is defined as the vector of the
+  integrals
+  \[
+    \E[\vec{X}] =
+    \left(
+    \int_{\mathbb{R}^{N}} 
+    y_1 f_{\vec{X}} (y_{1},\cdot\cdot\cdot,y_{N})
+    d(y_{1},\cdot\cdot\cdot\cdot,y_{N})
+    ,\dots,
+    \int_{\mathbb{R}^{N}} 
+    y_N f_{\vec{X}} (y_{1},\cdot\cdot\cdot,y_{N})
+    d(y_{1},\cdot\cdot\cdot\cdot,y_{N})
+    \right).
+  \]
+  Now we can consider the first coordinate and using Fubini's theorem we
+  get
+  \begin{align*}
+    \int_{\mathbb{R}^{N}} 
+    y_1 f_{\vec{X}} (y_{1},\cdot\cdot\cdot,y_{N})
+    d(y_{1},\cdot\cdot\cdot\cdot,y_{N}) &=
+    \int_{\mathbb{R}}
+    \left[\int_{\mathbb{R}^{N-1}}
+    y_{1}f_{\vec{X}}(y_{1},\dots,y_{N}) d(y_{2},\dots, y_{N})\right]\,dy_{1} \\
+    &= \int_{\mathbb{R}} y_1
+    \left[\int_{\mathbb{R}^{N-1}}
+    f_{\vec{X}}(y_{1},\dots,y_{N}) d(y_{2},\dots, y_{N})\right]\,dy_{1} \\
+    &= \int_{\mathbb{R}} y_1
+    f_{X_1}(y_1)\,dy_1 \\
+    &= \E[X_1],
+  \end{align*}
+  where the last equality is from \autoref{thm:randvec}.
+  This leads us to the following definition.
+  \begin{definition}
+    Let $\vec{X} \colon \Omega \to \R^N$ be a random vector such
+    that $\E[X_i]$ is well defined and finite for all $1 \le i \le N$.
+    Then we define
+    \[
+      \E[X] = (\E[X_1],\dots,\E[X_n]).
+    \]
+  \end{definition}
+
+  \begin{proposition}
+    Let $\vec{X} \colon \Omega \to \R^N$ be a random vector, and let
+    $h \colon \R^N \to \R$ be a measurable function such that the
+    random variable $\abs{h(\vec{X})}$ has a finite expectation.
+    Then if $\vec{X}$ is absolutely continuous with a probability density
+    function $f_{\vec{X}}$, then
+    \[
+      \E[h(\vec{X})] =
+      \int_{\R^N} h(\vec{y}) f_{\vec{X}}(\vec{y})\,d\vec{y}.
+    \]
+    And if $\vec{X}$ is a discrete random vector with
+    $\supp(\vec{X}) = (\vec{a}^i)_{i \geq 1}$, then
+    \[
+      \E[h(\vec{X})] =
+      \sum_{i=1}^{\infty} h(\vec{a}^i) \Prob_{\vec{X}}(\vec{a}^i).
+    \]
+  \end{proposition}
+  \begin{proof}
+    To be added, possibly.
+  \end{proof}
+
+  \begin{corollary}[Linearity of Expectation]
+    Let $X,Y \colon \Omega \to \R$ be two random variables and $a,b \in \R$.
+    Then
+    \[
+      \E[aX + bY] = a \E[X] + b \E[Y].
+    \]
+  \end{corollary}
+
+  \begin{corollary}
+    Let $X,Y \colon \Omega \to \R$ be two random variables.
+    If $X$ and $Y$ are independent then
+    \[
+      \E[XY] = \E[X] \E[Y].
+    \]
+    This implies
+    \[
+      \Var(X + Y) = \Var(X) + \Var(Y).
+    \]
+    But the converse is not always true.
+  \end{corollary}
+
+  For now, we won't write the proofs but here's a counter example to
+  the previous direction of the above corollary.
+
+  \begin{example}
+    Let $X \sim U([-1,1])$ and $Y = X^2$. It is clear that $X$ and $Y$
+    are not independent, but we have
+    \[
+      \E[XY] =
+      \E[X^3] =
+      \int_{-1}^{1} \frac{1}{2} x^3\,dx =
+      0,
+    \]
+    but since $\E[X] = 0$, we get that
+    \[
+      \E[XY] = \E[X] \E[Y].
+    \]
+    and thus immediately
+    \[
+      \Var(X + Y) = \Var(X) + \Var(Y).
+    \]
+  \end{example}
+
+  \begin{definition}[Uncorrelatedness]
+    Two random vectors $X,Y \colon \Omega \to \R$ are said to be
+    uncorrelated if $\E[XY] = \E[X] \E[Y]$.
+  \end{definition}
+
+  It is clear that if $X$, $Y$ are two independent random variables, then
+  they are uncorrelated, but as we saw, the converse is not always true.
+
+  A general formula that follows directely from the definition of variance
+  and the linearity of expectation is
+  \[
+    \Var(X + Y) =
+    \Var(X) + 
+    2 \E \left[ (X - \E[X])(Y - \E[Y]) \right] +
+    \Var(Y).
+  \]
+  Another such formula is
+  \[
+    \E \left[(X - \E[X])(Y - \E[Y])\right] =
+    \E[XY] - \E[X] - \E[Y].
+  \]
+
+  Intuitively, the last value represents how dependent $X$, and $Y$ are.
+  The farther it is from zero, the variables are less independent.
+  Because it has multiple uses, we give it a special name.
+
+  \begin{definition}(Covariance)
+    Let $X,Y \colon \Omega \to \R$ be two random variables.
+    The covariance of $X$ and $Y$, denoted $\Cov(X,Y)$ is defined
+    as
+    \[
+      \Cov(X,Y) =
+      \E \left[(X - \E[X])(Y - \E[Y])\right] =
+      \E[XY] - \E[X] - \E[Y].
+    \]
+  \end{definition}
+  
+  From the definition of covariance we get the following convenient formula:
+  \[
+    \Var(X + Y) = \Var(X) + 2 \Cov(X,Y) + \Var(Y).
+  \]
+  Additionaly, the variables $X$, $Y$ are uncorrelated if and only if
+  $\Cov(X,Y) = 0$.
+
+  \begin{definition}[Correlation]
+    The correlation of $X$, $Y$ is denoted $\rho_{X,Y}$, and defined
+    as such
+    \[
+      \rho_{X,Y} =
+      \frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}}.
+    \]
+  \end{definition}
+
+  \begin{example}
+    Suppose we made $n \geq 2$ experiments such that the probability to
+    get $1$ in the experiment is $p_1$, the probability to get $2$ it
+    $p_2$, and the probability to get $3$ is $p_3 = 1 - p_1 - p_2$.
+    We denote $X$ the number of times we got $1$, and $Y$ the number
+    of times we got $2$ in the experiments. Intuitively, since as $X$
+    increases there are less experiments to get $2$ in $Y$ should decrease.
+    This should result in the covariance and correlation of $X$ and $Y$
+    to be negative. Indeed, since $X \sim \Bin(n,p_1)$ and 
+    $Y \sim \Bin(n,p_2)$ we get that
+    \[
+      \mathbf [X] = np_1 \quad \text{and} \quad
+      \mathbf [Y] = np_2.
+    \]
+    We notice that
+    \begin{align*}
+      X &= \sum_{i=1}^{n} \mathbbm{1}_{\{\text{the result is $1$}\}} \\
+      Y &= \sum_{i=1}^{n} \mathbbm{1}_{\{\text{the result is $2$}\}},
+    \end{align*}
+    so we get
+    \begin{align*}
+      \E[XY] &=
+      \E\left[
+      \left(\sum_{i=1}^{n} \mathbbm{1}_{\{\text{the result is $1$}\}}\right)
+      \left(\sum_{i=1}^{n} \mathbbm{1}_{\{\text{the result is $2$}\}}\right)
+      \right] \\
+      &= \sum_{i,j=1}^{n} \E\left[
+      \mathbbm{1}_{\{\text{the result is $1$}\}}
+      \mathbbm{1}_{\{\text{the result is $2$}\}}
+      \right].
+    \end{align*}
+    We see that if $i = j$ the result can't be $1$ and $2$ so the
+    expression inside the expectancy is zero, and thus the expectancy
+    is also zero. If $i \neq j$ then the events are independent and
+    we get
+    \begin{align*}
+      \E\left[
+      \mathbbm{1}_{\{\text{the $i$ result is $1$}\}}
+      \mathbbm{1}_{\{\text{the $j$ result is $2$}\}}
+      \right] &=
+      \E\left[
+      \mathbbm{1}_{\{\text{the $i$ result is $1$}\}}
+      \right]
+      \E\left[
+      \mathbbm{1}_{\{\text{the $j$ result is $2$}\}}
+      \right] \\
+      &= 
+      \Prob(\text{the $i$ result is $1$})
+      \Prob(\text{the $j$ result is $2$}) = p_1p_2
+    \end{align*}
+    Since there are $n(n-1)$ pairs $(i,j)$ such that $i \neq j$ we get
+    \[
+      \E[XY] = n(n-1) p_1 p_2
+    \]
+    Thus
+    \[
+      \Cov(X,Y) =
+      \E[XY] - \E[X] \E[Y] =
+      n(n-1) p_1 p_2 - n p_1 \cdot n p_2 = -n p_1 p_2.
+    \]
+    Finally, because the variance of a binomial random variable is
+    $np(1-p)$ we have that
+    \[
+      \rho_{X,Y} =
+      \frac{\Cov(X,Y)}{\sqrt{\Var(X) \cdot \Var(Y)}} =
+      \frac{-n p_1 p_2}{\sqrt{np_1(1-p_1)np_2(1-p_2)}} =
+      - \sqrt{\frac{p_1 p_2}{(1 - p_1)(1 - p_2)}}.
+    \]
+  \end{example}
+
+  \begin{proposition}[Properties of Covariance]
+    Let $X,X_1,X_2,Y \colon \Omega \to \R$ be random variables and 
+    $a, b \in \R$. Then
+    \begin{enumerate}
+      \item $\Cov(X,Y) = \Cov(Y,X)$.
+      \item $\Cov(aX,Y) = a \Cov(X,Y)$.
+      \item $\Cov(X_1 + X_2,Y) = \Cov(X_1,Y) + \Cov(X_2,Y)$.
+      \item $\Cov(X,X) \geq 0$.
+      \item $\Cov(X,X) = 0 \iff \Var(X) = 0 \iff 
+              \Prob(X = \E[X]) = 1$ ($X$ is constant).
+      \item $\Cov(X + a, Y + b) = \Cov(X,Y)$.1
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    The proofs for all of these properties follow from the definitions
+    of variance, covariance, or the linearity of expectation.
+  \end{proof}
+
+  Notice that all random variables on a certain probability space
+  $(\Omega, \mathcal F, \Prob)$ forms a vector space. We can also
+  notice that the only things that's preventing the map 
+  $(X,Y) \mapsto \Cov(X,Y)$ from defining an inner product, is that
+  exist random variables $X \neq 0$ such that $\Cov(X,X) = 0$.
+  Notably, all the constant random variables that are different than
+  $0$. There is a way to fix this, by requiring the expectations on
+  all random variables to be $0$. Now we can define the space
+  \[
+    L_2(\Omega, \mathcal F, \Prob) =
+    \set{X \colon \Omega \to \R}
+    {X\text{ is a random variable}, \E[X] = 0, \Var(X) < \infty}
+  \]
+  coupled with the bilinear form $\ip{X}{Y} := \Cov(X,Y)$.
+  Then, the space 
+  $\left(L_2(\Omega, \mathcal F, \Prob), \ip{\cdot}{\cdot}\right)$
+  is an inner product space, and moreover, it is a Hilbert space.
+  By the Cauchy--Schwarz inequality we get that
+  \[
+    \abs{\Cov(X,Y)} =
+    \abs{\ip{X}{Y}} \le
+    \sqrt{\ip{X}{X}} \cdot \sqrt{\ip{Y}{Y}} =
+    \sqrt{\Var(X)} \cdot \sqrt{\Var(Y)}
+  \]
+  for all $X,Y \in L_2(\Omega, \mathcal F, \Prob)$.
+  In fact, this inequality holds for any two random variables.
+  If $\Var(X) = \infty$ or $\Var(Y) = \infty$ it holds very triviallly,
+  so we may assume $\Var(X),\Var(Y) < \infty$.
+  In this case, we know that $X - \E[X]$ and $Y - \E[Y]$ are both
+  vectors in $L_2(\Omega, \mathcal F, \Prob)$ and thus
+  \begin{align*}
+    \abs{\Cov(X,Y)} &= \abs{\Cov{X - \E[X]}{Y - \E[Y]}} \\
+    &\le \sqrt{\Var(X - \E[X])} \cdot \sqrt{\Var(Y - \E[Y])} \\
+    &= \sqrt{\Var(X)} \cdot \sqrt{\Var(Y)}
+  \end{align*}
+
+  \begin{remark}
+    The lasts proposition shows that the correlation of two random variables
+    gives values in the interval $[0,1]$. 
+    That is, for any $X,Y \colon \Omega \to \R$ we have 
+    $-1 \le \rho_{X,Y} \le 1$.
+  \end{remark}
+  
+  \begin{proposition}
+    Let $X,Y \colon \Omega \to \R$ be two random variables.
+    Then $X$ and $Y$ are independent if and only if for all measurable
+    $f,g \colon \R \to \R$ such that $f(X)$, $g(Y)$, $f(X)g(Y)$ are
+    integrable
+    \[
+      \E[f(X)g(Y)] = \E[f(X)] \E[g(Y)].
+    \]
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+  
+  \begin{example}
+    Let $X \sim \Bin(n,p)$. Since all the experiments are independent
+    we get that $X = \sum_{i=1}^{n} X_i$ for $X_i \sim \Bin(1,p)$ for
+    $1 \le i \le n$. From the linearity of expectation we have
+    \[
+      \E[X] =
+      \E\left[\sum_{i=1}^{n} X_i\right] =
+      \sum_{i=1}^{n} \E[X_i] =
+      \sum_{i=1}^{n} p =
+      np.
+    \]
+    Since the variables are independent we can also easily calculate
+    the variance:
+    \[
+      \Var(X) =
+      \Var\left(\sum_{i=1}^{n} X_i\right) =
+      \sum_{i=1}^{n} \Var(X_i) =
+      \sum_{i=1}^{n} p(1-p) =
+      n p(1-p)
+    \]
+  \end{example}
+  
+  \begin{example}
+    Let $\sigma \colon [n] \to [n]$ be a random permutation from $S_n$.
+    Denote $X$ the number of permutations of $\sigma$. Find $\E[X]$.
+
+    First we notice that
+    \[
+      X = \sum_{i=1}^{n} \mathbbm{1}_{i \text{ is a fixed point}}
+    \]
+    and thus
+    \begin{align*}
+      \E[X] &=
+      \E\left[\sum_{i=1}^{n} \mathbbm{1}_{i \text{ is a fixed point}}\right] \\
+      &= \sum_{i=1}^{n} \E[\mathbbm{1}_{i \text{ is a fixed point}}] \\
+      &= \sum_{i=1}^{n} \Prob(i \text{ is a fixed point}) \\
+      &= \sum_{i=1}^{n} \frac{(n-1)!}{n!} \\
+      &= \sum_{i=1}^{n} \frac{1}{n} \\
+      &= 1.
+    \end{align*}
+    This method of using indicators to find the expectation is very useful
+    and is sometimes called the ``method of indicator''.
+  \end{example}
+  
+  \newpage
+
+  \section{Conditional Probability Function and Expectation}
+
+  \begin{definition}[Conditional probability function]
+    Let $X,Y \colon \Omega \to \R$ be two random variables and $a \in \R$
+    such that $\Prob_X(a) > 0$. The conditional probability of $Y$ given
+    that $X = a$ is denoted 
+    $\Prob_{Y \mid X}(\cdot \mid a) \colon \mathfrak B \to \R$ and defined as
+    \[
+      \Prob_{Y \mid X}(B \mid a) =
+      \Prob(Y \in B \mid X = a) =
+      \frac{\Prob(Y \in B, X = a)}{\Prob(X = a)}
+    \]
+  \end{definition}
+  
+  Here are some properties of the conditional probability function
+  \begin{enumerate}
+    \item $\Prob_{Y \mid X}(\cdot \mid a)$ is a probability function.
+    \item $\Prob_Y(b) = \sum_{a} \Prob_X(a) \Prob_{Y \mid X}(b \mid a)$
+      for all $b \in \R$.
+    \item If $\Prob_Y(b) > 0$, then
+    \[
+      \Prob_{Y \mid X}(a \mid b) =
+      \frac{\Prob_{Y \mid X}(b \mid a) \Prob_X(a)}{\Prob_Y(b)}.
+    \]
+  \end{enumerate}
+  
+  \begin{example}
+    Let $X$ be the number of successes in $N$ independent Bernoulli experiments
+    with probability $p$ of success, such that $N \sim \Poi(\lambda)$.
+    Find the distribution of $X$.
+
+    We get that for $k \geq 0$
+    \begin{align*}
+      \Prob_X(k) &= \sum_{n=0}^{\infty} \Prob_N(n) \Prob_{X \mid N}(k \mid n) =
+      \sum_{n=k}^{\infty} \Prob_N(n) \Prob_{X \mid N}(k \mid n) \\
+      &= \sum_{n=k}^{\infty} e^{-\lambda} \frac{\lambda^n}{n!} \cdot
+        \binom{n}{k} p^k (1-p)^{n-k} \\
+      &= \frac{e^{-\lambda}}{k!} p^k \lambda^k 
+        \sum_{n=k}^{\infty} \frac{\lambda^{n-k}}{(n-k)!}(1-p)^{n-k} \\
+      &= \frac{e^{-\lambda}}{k!} p^k \lambda^k 
+        \sum_{n=0}^{\infty} \frac{\lambda^{n}}{(n)!}(1-p)^{n}
+      = \frac{e^{-\lambda}}{k!} p^k \lambda^k e^{\lambda(1-p)}
+      = e^{-\lambda p} \frac{(\lambda p)^{k}}{k!}.
+    \end{align*}
+  \end{example}
+
+  Add discussion about more than one variable
+
+  \begin{definition}[Conditional expectation for an event]
+    Let $X,Y \colon \Omega \to \R$ be two discrete random variables and
+    $a \in \R$ such that $\Prob_X(a) > 0$. The condition expectation of
+    $Y$ given that $X = a$ is
+    \[
+      \E[Y \mid X = a] = \sum_{b} b \Prob_{Y \mid X}(b \mid a).
+    \]
+  \end{definition}
+
+  \begin{example}
+    To be added.
+  \end{example}
+
+  \begin{definition}[Conditional expectation, discrete variables]
+    Let $X,Y \colon \Omega \to \R$ be two discrete random variables.
+    Suppose that $\supp(X) = \{a_i\}_{i \geq 1}$.
+    The conditional expectation of $Y$ given $X$ is a random variable
+    $\E[Y \mid X] \colon \Omega \to \R$ defined as
+    \[
+      \E[Y \mid X](\omega) =
+      \begin{cases}
+        \E[Y \mid X = a_1], &\text{if } X(\omega) = a_1 \\
+        \E[Y \mid X = a_2], &\text{if } X(\omega) = a_2 \\
+        \E[Y \mid X = a_3], &\text{if } X(\omega) = a_3 \\
+        \vdots
+      \end{cases}
+    \]
+  \end{definition}
+
+  Here are some properties of conditional expectation
+  \begin{enumerate}
+    \item To be added
+  \end{enumerate}
+
+  More stuff
+
+  \begin{definition}[Conditional PDF]
+    a
+  \end{definition}
+  \begin{definition}[Conditional expectation, absolutely continuous variables]
+    Let. 
+  \end{definition}
+
+  \newpage
+
+  \section{Borel--Cantelli Lemmas}
+
+  Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and 
+  $(A_n)_{n \geq 1}$ an event sequence in $\mathcal F$.
+  We denote
+  \[
+    \limsup_{n \to \infty} A_n =
+    \{\omega \in A_n\text{ infinitely often}\} =
+    \{\omega \in A_n\text{ i.o.}\}.
+  \]
+  Similarly,
+  \[
+    \liminf_{n \to \infty} A_n =
+    \{\omega \in A_n \text{ eventually}\}.
+  \]
+  It is clear that
+  \[
+    \liminf_{n \to \infty} A_n \subset \limsup_{n \to \infty} A_n.
+  \]
+  \begin{definition}
+    Let $(A_n)_{n \geq 1}$ be an event sequence.
+    Then $A_n$ is said to have a limit if
+    \[
+      \liminf_{n \to \infty} A_n = \limsup_{n \to \infty} A_n.
+    \]
+    In this case, we denote
+    \[
+      \lim_{n \to \infty} A_n =
+      \liminf_{n \to \infty} A_n = \limsup_{n \to \infty} A_n.
+    \]
+  \end{definition}
+
+  Here add examples.
+
+  Using this definition can now generalize \autoref{thm:continuity-base}.
+  \begin{theorem}[Continuity of the probability function]
+  \label{thm:continuity}
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space and
+    $(A_n)_{n \geq 1}$ an event sequence in $\mathcal F$ such that
+    $\lim_{n \to \infty} A_n$ exists. Then,
+    \[
+      \lim_{n \to \infty} \Prob(A_n) =
+      \Prob\left(\lim_{n \to \infty} A_n\right).
+    \]
+  \end{theorem}
+  
+  To prove this theorem, we need the following lemma
+  \begin{lemma}[Fatou's lemma]
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space and
+    $(A_n)_{n \geq 1}$ an event sequence in $\mathcal F$. Then
+    \begin{enumerate}
+      \item $\Prob(\liminf_{n \to \infty} A_n) \le
+            \liminf_{n \to \infty} \Prob(A_n)$
+      \item $\Prob(\limsup_{n \to \infty} A_n) \geq
+            \limsup_{n \to \infty} \Prob(A_n)$
+    \end{enumerate}
+  \end{lemma}
+  \begin{proof}
+    later
+  \end{proof}
+  We will know prove \autoref{thm:continuity}.
+  \begin{proof}
+    later
+  \end{proof}
+
+  
 
 
 \end{document}
