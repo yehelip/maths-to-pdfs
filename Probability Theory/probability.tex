@@ -124,7 +124,7 @@
     A subset of the sample space $A \subseteq \Omega$ is called an event.
     We also define:
     \[
-      \Prob(A) := \sum_{\omega \in \Omega}{\Prob(\omega)}
+      \Prob(A) := \sum_{\omega \in A}{\Prob(\omega)}
     \]
   \end{definition}
   
@@ -3148,13 +3148,13 @@
   \end{theorem}
   
   To prove this theorem, we need the following lemma
-  \begin{lemma}[Fatou's lemma]
+  \begin{lemma}[Fatou's lemma]\label{lem:fatou}
     Let $(\Omega, \mathcal F, \Prob)$ be a probability space and
     $(A_n)_{n \geq 1}$ an event sequence in $\mathcal F$. Then
     \begin{enumerate}
-      \item $\Prob(\liminf_{n \to \infty} A_n) \le
+      \item $\Prob\left(\liminf_{n \to \infty} A_n\right) \le
             \liminf_{n \to \infty} \Prob(A_n)$
-      \item $\Prob(\limsup_{n \to \infty} A_n) \geq
+      \item $\Prob\left(\limsup_{n \to \infty} A_n\right) \geq
             \limsup_{n \to \infty} \Prob(A_n)$
     \end{enumerate}
   \end{lemma}
@@ -3163,10 +3163,142 @@
   \end{proof}
   We will know prove \autoref{thm:continuity}.
   \begin{proof}
-    later
+    Suppose that $\lim_{n \to \infty} A_n$ exists.
+    In this case we get from Fatou's lemma that
+    \[
+      \limsup_{n \to \infty} \Prob(A_n) \le
+      \Prob\left(\limsup_{n \to \infty} A_n\right) =
+      \Prob\left(\lim_{n \to \infty} A_n\right) =
+      \Prob\left(\liminf_{n \to \infty} A_n\right) \le
+      \liminf_{n \to \infty} \Prob(A_n)
+    \]
+    As we know that $\left(\Prob(A_n)\right)_{n \geq 1}$ is a sequence of
+    numbers such that
+    \[
+      \limsup_{n \to \infty} \Prob(A_n) \le \liminf_{n \to \infty} \Prob(A_n)
+    \]
+    we know that it must converge and from the squeeze theorem we get that
+    \[
+      \lim_{n \to \infty} \Prob(A_n) =
+      \Prob\left(\lim_{n \to \infty} A_n\right).
+    \]
+    Which completes the proof.
   \end{proof}
 
+  The lemmas of Borel and Cantelli discuss the probability of the
+  event $\limsup_{n \to \infty} A_n$. First we notice that
+  \[
+    \left( \limsup_{n \to \infty} A_n \right)^c =
+    \left(\bigcap_{k=1}^{\infty} \bigcup_{n=k}^{\infty} A_n\right)^c =
+    \bigcup_{k=1}^{\infty} \bigcap_{n=k}^{\infty} A_n^c =
+    \liminf_{n \to \infty} A_n^c,
+  \]
+  which implies that any results about $\limsup_{n \to \infty} A_n$ could
+  be translated into results about $\liminf_{n \to \infty} A_n^c$.
+
+  \begin{lemma}[Borel--Cantelli lemma]
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and let 
+    $(A_n)_{n \geq 1}$ be a sequence of events in $\mathcal F$. Then
+    \[
+      \sum_{n=1}^{\infty} \Prob(A_n) < \infty \implies
+      \Prob(\limsup_{n \to \infty} A_n) = 0.
+    \]
+  \end{lemma}
+  \begin{proof}
+    For $k \geq 1$ we define the event
+    \[
+      G_k := \bigcup_{n=k}^{\infty} A_n.
+    \]
+    It is clear that the sequence $(G_k)_{k=1}^{\infty}$ is decreasing.
+    We also notice that
+    \[
+      \bigcap_{k=1}^{\infty} G_k =
+      \bigcap_{k=1}^{\infty} \bigcup_{n=k}^{\infty} A_n =
+      \limsup_{n \to \infty} A_n.
+    \]
+    This implies that
+    \[
+      \Prob\left(\limsup_{n \to \infty} A_n\right) =
+      \Prob\left(\bigcap_{k=1}^{\infty} G_k\right) =
+      \lim_{k \to \infty} \Prob(G_k).
+    \]
+    By definition we have that
+    \[
+      \Prob(G_k) =
+      \Prob\left(\bigcup_{n=k}^{\infty} A_n\right) \le
+      \sum_{n=k}^{\infty} \Prob(A_n)
+    \]
+    Finally, we get that
+    \[
+      \Prob\left(\limsup_{n \to \infty} A_n\right) =
+      \lim_{k \to \infty} \Prob(G_k) \le
+      \lim_{k \to \infty} \sum_{n=k}^{\infty} \Prob(A_n) =
+      0.
+    \]
+    Where the last equality follows from the assumption that
+    $\sum_{n=1}^{\infty} \Prob(A_n) < \infty$.
+    Because the probability of any event is nonnegative we get that
+    \[
+      \Prob\left(\limsup_{n \to \infty} A_n\right) = 0,
+    \]
+    which completes the proof.
+  \end{proof}
+
+  \begin{example}
+    
+  \end{example}
+
+  \begin{lemma}[Second Borel-Cantelli lemma]
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and let
+    $(A_n)_{n \geq 1}$ be a sequence of independent events in $\mathcal F$.
+    Then
+    \[
+      \sum_{n=1}^{\infty} \Prob(A_n) = \infty \implies
+      \Prob\left(\limsup_{n \to \infty} A_n\right) = 1.
+    \]
+  \end{lemma}
   
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \newpage
+  
+  \section{Convergence of Random Variables}
+  We have always known that random variables are functions,
+  and we already know what convergence could mean in terms of functions.
+  Here are a few definitions for convergence of random variables.
+
+  \begin{definition}[Convergence in probability]
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and let
+    $X,X_1,X_2,\dots \colon \Omega \to \R$ be random variables.
+    The sequence $X_n$ is said to converge in probability to $X$ if
+    for all $\epsilon > 0$ we have
+    \[
+      \lim_{n \to \infty}
+      \Prob\left(\{\abs{X_n - X} > \epsilon\}\right) = 0.
+    \]
+    In this case we denote $X_n \xrightarrow{p} X$.
+  \end{definition}
+
+  \begin{definition}[Convergence in $L^p$]
+    Let $(\Omega, \mathcal F, \Prob)$ be a probability space, and let
+    $X$ and $(A_n)_{n \geq 1}n \geq 1$ be random variables in that space.
+    Given $p \geq 1$, the sequence $X_n$ is said to converge in $L^p$
+    if
+    \[
+      \lim_{n \to \infty} \E\left[\abs{X_n - X}^p\right] = 0.
+    \]
+    In this case we denote $X_n \xrightarrow{L^p} X$.
+    We sometimes say that $X_n$ converges to $X$ in the $r$-th mean.
+  \end{definition}
+  
+
+
+
+  \section{The Law of Large Numbers}
+
+  \section{The Central Limit Theorem}
 
 
 \end{document}
