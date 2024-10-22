@@ -37,6 +37,7 @@
 \DeclareMathOperator{\std}{std}
 \DeclareMathOperator{\Int}{Int}
 \DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\id}{id}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\Z}{\mathbb{Z}}
@@ -2319,6 +2320,22 @@
     so that $f(a) = 0$ for $a \in A$ and $f(b) = 1$ for $b \in B$.
   \end{lemma}
 
+  In order to prove Urysohn's lemma, we need another characterization of
+  for normal spaces.
+
+  \begin{lemma}
+    Let $X$ be a $T_1$-space. Then $X$ is a normal space if and only if
+    for every closed $F \subset X$ and open $U \subset X$ such that
+    $F \subset U$ there exists an open $V \subset X$ such that
+    $F \subset V \subset \overline{V} \subset F$.
+  \end{lemma}
+
+  We can now proceed to prove Urysohn's lemma.
+
+  \begin{proof}
+    To be added.
+  \end{proof}
+
   \begin{corollary}
     Let $X$ be a normal topological space, let $A$ and $B$ be disjoint closed 
     subsets of $X$, and let $\alpha, \beta \in \R$ be with $\alpha < \beta$.
@@ -2326,8 +2343,19 @@
     so that $f(a) = \alpha$ for $a \in A$ and $f(b) = \beta$ for $b \in B$.
   \end{corollary}
 
+  \begin{proof}
+    From Urysohn's lemma we know that exists a continuous function 
+    $f \colon X \to [0,1]$ such that $f(a) = 0$ for $a \in A$ and
+    $f(b) = 1$ for $b \in B$. We can define the function
+    \begin{align*}
+      &g \colon [0,1] \to \R \\
+      &g(x) = (\beta - \alpha)x + \alpha.
+    \end{align*}
+    It is clear that the function $\varphi := f \circ g$ satisfies the
+    conditions of the corollary and completes the proof.
+  \end{proof}
 
-  \begin{theorem}\tt{the Tietze extension theorem}
+  \begin{theorem}\label{thm:tietze}\tt{the Tietze extension theorem}
     Let $X$ be a normal space and let $F$ be a closed nonempty subset of $X$.
     Equip $F$ with the subspace topology
     and let $f \colon F \to [\alpha, \beta]$ be continuous,
@@ -2346,11 +2374,200 @@
     that $f$ cannot be extended continuously to a function on $X$.
   \end{example}
 
+  To prove \autoref{thm:tietze} we need to prove the generalized form
+  of the Weierstrass $M$-test we saw in analysis.
+
+  \begin{lemma}[Weierstrass $M$-test]\label{lem:m-test}
+    Let $X$ be a topological space. Let $\{f_k\}_{k \geq 1} \subset C_b(X)$,
+    and let $\{M_k\}_{k \geq 1} \subset (0,\infty)$ such that
+    $\sum_{k \geq 1}^{\infty} M_k < \infty$ and
+    $\abs{f_k(x)} \le M_k$ for all $k \geq 1$ and all $x \in X$.
+    Then there exists a function $f \in C_b(x)$ such that
+    $\sum_{i=1}^{k} f_i \xrightarrow{k \to \infty} f$ uniformly, and
+    $\abs{f(x)} \le \sum_{k \geq 1}^{\infty} M_k$ for all $x \in X$.
+  \end{lemma}
+  \begin{proof}
+    Given $\epsilon > 0$ there exists some $N \geq 1$ such that
+    $\sum_{k \geq N} M_k < \epsilon$. Therefore, for all $n > m > N$
+    we have that
+    \[
+      \norm{\sum_{i=1}^{n} f_i - \sum_{i=1}^{m} f_i}_{\infty} \le
+      \norm{\sum_{i=m+1}^{n} f_i}_{\infty} \le
+      \sum_{k \geq N} M_k <
+      \epsilon,
+    \]
+    which shows that $\{f_k\}_{k \geq 1}$ is a Cauchy space in $C_b(X)$.
+    Since $C_b(X)$ is complete, this means that $\{f_k\}_{k \geq 1}$ converges
+    uniformly to some $f \in C_b(X)$ which completes the proof.
+  \end{proof}
+  
+  We can now go back to the proof of $\autoref{thm:tietze}$.
+  \begin{proof}
+    To be added.
+  \end{proof}
+
   \begin{definition}[Embedding]
       Let $X$ and $Y$ be topological spaces. A mapping $f \colon X \to Y$
       is said to be an embedding if it is a homeomorphism onto $f(X)$,
       where $f(X)$ is equipped with the subspace topology.
   \end{definition}
+
+  The following lemma is very useful when trying to prove a topological space
+  is metrizable.
+
+  \begin{proposition}
+    Let $(X, \tau)$ be a topological space, let $(Y, d)$ be a metric space,
+    and suppose that there exists an embedding $f \colon X \to Y$.
+    Then $X$ is metrizble.
+  \end{proposition}
+  \begin{proof}
+    Denote $Z := f(X)$, and let $d_Z$ be the metric on $Z \subset Y$ induced
+    by $d_Y$. Also let $g \colon Z \to X$ be the function such that
+    $f \circ g = \id_X$. Define the function$d_X$ such that for all 
+    $x_1, x_2 \in X$ we have
+    \[
+      d_X(x_1, x_2) = d_Z(f(x_1), f(x_2)).
+    \]
+    It is clear that $d_X$ is a metric on $X$, and that $f$ is an isometry
+    from $(X,d_X)$ onto $(Z,d_Z)$ which also makes it a homeomorphism.
+    Since $f$ is a homeomorphism from $(X, \tau)$ to $(Z, d_Z)$, and
+    the composition of homoemorphisms is a homeomorphism, we have that
+    $\id_X = g \circ f$ is a homeomorphism from $(X, \tau)$ to $(X, d_X)$.
+    This implies that $\tau$ is equal to the topology induced by $d_X$
+    which shows that $X$ is metrizable and completes the proof.
+  \end{proof}
+
+  \begin{definition}[$\ell^1$ space]
+    We define the normed space $\ell^1$ with the norm $N$ as such:
+    \[
+      \ell^1 := \set{x \in \R^{\N}}{\sum_{i=1}^{\infty} \abs{x_i} < \infty}
+      \quad \text{with} \quad
+      N(x) := \sum_{i=1}^{\infty} \abs{x_i}.
+    \]
+    More generally, we define the normed space $\ell^p$ for $0 < p < \infty$ as
+    \[
+      \ell^p := \set{x \in \R^{\N}}{\sum_{i=1}^{\infty} \abs{x_i}^p < \infty}
+      \quad \text{with} \quad
+      N(x) := \left(\sum_{i=1}^{\infty} \abs{x_i}^p\right)^{\frac{1}{p}}.
+    \]
+    And we can even define spaces like $\ell^{\infty}$, and see that
+    $\ell^2$ is a Hilbert space, but that is done in a functional analysis
+    and will not be discussed in these notes.
+  \end{definition}
+
+  \begin{theorem}\tt{the Urysohn embedding theorem}
+    Let $X$ be a second countable normal topological space.
+    Then there exists an embedding $f \colon X \to \ell^1$.
+  \end{theorem}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  A very useful corollary of the Urysohn embedding theorem, coupled with
+  the previous proposition, is the following corollary.
+
+  \begin{corollary}
+    Let $X$ be a second countable normal topological space.
+    Then $X$ is metrizable.
+  \end{corollary}
+
+  \begin{theorem}[Stone–-\v{C}ech compactification]
+    Let $X$ be a completely regular space.
+    Then there exists a compact Hausdorff space $\beta(X)$ and an embedding
+    $\varphi \colon X \to \beta(X)$, such that
+    \begin{enumerate}
+      \item[(1)] $\varphi(X)$ is dense in $\beta(X)$.
+      \item[(2)] for each $f \in C_b(X)$ there exists a unique 
+        $\tilde f \in C_b(\beta(X))$ such that $f = \tilde f \circ \varphi$.
+    \end{enumerate}
+  \end{theorem}
+
+  \begin{remark}
+    The space $\beta(X)$ is called the Stone--\v{C}ech compactification of
+    $X$. It is also customary to identify the space $X$ with the space
+    $\varphi(X)$. With this identification property $(2)$ gives that
+    every element of $C_b(X)$ extends uniquly to an element of $C_b(\beta(X))$.
+  \end{remark}
+
+  To prove the theorem we will need the following lemma.
+
+  \begin{lemma}
+    Let $X$ be a completely regular space, and write $\tau$ for the given
+    topology of $X$.
+    Then $\tau$ is equal to the weak topology generated by $C_b(X)$.
+  \end{lemma}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  Let $X$ be a topological space and let $\infty$ be an object outside of $X$.
+  Write $X_{\infty} := X \cup \{\infty\}$. Then the collection
+  \[
+    \tau :=
+    \set{U}{\text{$U \subset X$ is open}} \cup
+    \set{X_{\infty} \setminus K}{\text{$K \subset X$ is compact}}
+  \]
+  is a topology on $X_{\infty}$.
+
+  \begin{remark}
+    The space $X_{\infty}$ is called the one-point compactification of $X$.
+    The point $\infty$ is called the point at infinity.
+  \end{remark}
+
+  Notice that $\infty$ is an isolated point of $X_{\infty}$ if and only if
+  $X$ is compact.
+
+  \begin{proposition}
+    For any topological space $X$, the space $X_{\infty}$ is a compact
+    Hausdorff space.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+  
+  \begin{corollary}
+    Any locally compact Hausdorff space is completely regular.
+  \end{corollary}
+  
+  As an application of the one point compactification,
+  we also have the following stronger version of the previous corollary.
+  It is an important tool in the theory of measure and integration on 
+  locally compact Hausdorff spaces.
+
+  \begin{proposition}
+    Let $K$ be a compact subset of $X$, and let $U$ be an open subset
+    of $X$ with $K \subset U$.
+    Then there exists a continuous $f \colon X \to [0, 1]$ so that 
+    $f(x) = 0$ for $x \in K$ and $f(x) = 1$ for $x \in X \setminus U$.
+  \end{proposition}
+  \begin{proof}
+    Since $K$ and $X_{\infty} \setminus U$ are disjoint closed sets in the
+    normal space $X_{\infty}$, it follows from Urysohn's lemma that
+    exists a continuous function $g \colon X_{\infty} \to [0,1]$ such that 
+    $g(x) = 0$ for $x \in K$ and $f(x) = 1$ for $x \in X_{\infty} \setminus U$.
+    The proposition now follows from taking $f$ to be the restriction of
+    $g$ on $X$.
+  \end{proof}
+
+  Write $\R^2_\infty := \R^2 \cup \{\infty\}$.
+  We will show that the unit sphere $S^2$ equipped with the topology
+  induced on it by $\R^3$ is homeomorphic to $\R^2_\infty$.
+  First, note that by the Heine--Borel theorem $S^2$ is compact.
+  Now, set $N := (0,0,1)$ and let $\sigma \colon S^2 \to \R^2_\infty$ be
+  with $\sigma(N) = \infty$ and
+  \[
+    \sigma(x_1,x_2,x_3) =
+    \left(\frac{x_1}{1 - x_3}, \frac{x_2}{1 - x_3}\right) \quad
+    \text{for $(x_1,x_2,x_3) \in S^2 \setminus \{N\}$}.
+  \]
+  The restriction of $\sigma$ to $S^2 \setminus \{N\}$ is called the
+  stereographic projection.
+  It is easy to see that $\sigma$ is a continuous bijection.
+  From this, since $S^2$ is compact,
+  since $\R^2_\infty$ is Hausdorff,
+  and by a previous proposition we have that a continuous bijection from
+  a compact space to a Hausdorff space is a homeomorphism,
+  so it follows that $\sigma$ is a homeomorphism.
   
   
 \end{document}
