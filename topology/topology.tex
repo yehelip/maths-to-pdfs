@@ -1088,11 +1088,12 @@
   Preperation for Baire's theorem
   
   \begin{definition}[Nowhere dense subset]
-    A subset $A$ of $X$ is said to be nowhere dense if $\Int(A) = \emptyset$.
+    A subset $A$ of $X$ is said to be nowhere dense if 
+    $\Int\left(\overline A\right) = \emptyset$.
   \end{definition}
   
   \begin{remark}
-    Note that a closed $A \subset X$ is nowhere dense if and only if 
+    Note that a closed subset $A \subset X$ is nowhere dense if and only if 
     $\Int(A) = \emptyset$.
   \end{remark}
   
@@ -2568,6 +2569,392 @@
   and by a previous proposition we have that a continuous bijection from
   a compact space to a Hausdorff space is a homeomorphism,
   so it follows that $\sigma$ is a homeomorphism.
+
+  \newpage
+
+  \section{Connectednes}
+  \begin{definition}[Connectedness]
+    The space $X$ is said to be connected if there does not exist disjoint
+    nonempty open subsets $U$ and $V$ of $X$ so that $X = U \cup V$.
+    If $X$ is not connected then we say that it is disconnected.
+    A nonempty subset of $X$ is said to be connected 
+    (respectively disconnected) if it is connected (respectively disconnected) 
+    as a topological subspace of $X$
+    (i.e. when it is equipped with the subspace topology).
+  \end{definition}
+
+  Notice that by the above definition, we can also characterize a connected
+  space by having two disjoint nonempty closed sets $U$ and $V$ such that
+  $X = U \cup V$, or be having a subset $U \subset X$ such that $U \neq X$
+  and $U \neq \emptyset$ and $X$ is both open and closed.
+
+  \begin{remark}
+    It should be clear that for every $x \in X$ the subspace $\{x\}$ is
+    connected.
+  \end{remark}
+
+  \begin{proposition}\label{prp:R-connected-interval}
+    Let $Y$ be a nonempty subset of $\R$.
+    Then $Y$ is connected if and only if $Y$ is an interval.
+  \end{proposition}
+  \begin{proof}
+    First suppose that $Y$ is not an interval. Then exist $a,b,t \in \R$
+    such that $a,b \in Y$ and $t \notin Y$ and $a < t < b$.
+    Now set
+    \[
+      U := (-\infty,t) \cap Y \tand V := (t,\infty) \cap Y.
+    \]
+    It is clear that $U$ and $Y$ are two disjoint nonempty open subsets of $Y$
+    such that $U \cap V = Y$. This shows that $Y$ is disconnected.
+
+    Next suppose that $Y$ is an interval.
+    Assume by contradiction that $Y$ is disconnected, then exist nonempty
+    disjoint closed subsets $A$ and $B$ of $Y$ such that $Y = A \cup B$.
+    Choose arbitrary $a \in A$ and $b \in B$.
+    Since $A \cap B = \emptyset$ we can assume without loss of generality
+    that $a < b$. Denote $s := \sup([a,b] \cap A)$.
+    Since $A$ is closed in $Y$, it is sequencially compact and thus we have 
+    $s \in A$.
+    Since $b \in B$ and $A \cap B = \emptyset$ we have that $s < b$.
+    From this, and since $Y$ is an interval we have $(s,b] \subset B$.
+    However, since $B$ is also sequencially compact in $Y$ this means
+    that $s \in B$, and thus $s \in A \cap B = \emptyset$.
+    This contradiction shows that $Y$ must be connected
+    which completes the proof.
+  \end{proof}
+
+  \begin{proposition}\label{prp:connected-continuous}
+    Suppose that $X$ is connected,
+    let $Y$ be a topological space,
+    and let $f \colon X \to Y$ be continuous.
+    Then $f(X)$ is connected.
+  \end{proposition}
+  \begin{proof}
+    Assume by contradiction that $f(X)$ is connected.
+    This means that exist $U$ and $V$ open subsets of $Y$ such that
+    \[
+      \underbrace{f(X) \subset U \cup V}_{(1)} \tand
+      \underbrace{f(X) \cap U \neq \emptyset}_{(2)} \tand
+      \underbrace{f(X) \cap V \neq \emptyset}_{(3)} \tand
+      \underbrace{f(X) \cap U \cap V \neq \emptyset}_{(4)}.
+    \]
+    Since $f$ is continuous we have that $U^{-1} := f^{-1}(U)$ and
+    $V^{-1} := f^{-1}(V)$ are open.
+    From $(1)$ we get that $X = U^{-1} \cup V^{-1}$.
+    From $(2)$ and $(3)$ we get that $U^{-1}$ and $V^{-1}$ are nonempty.
+    From $(4)$ we have
+    \begin{align*}
+      U^{-1} \cap V^{-1} &=
+      f^{-1}(U) \cap f^{-1}(V) \cap f^{-1}(f(X)) \\
+                         &= f^{-1}(U \cap V \cap f(X))
+                          = f^{-1}(\emptyset) = \emptyset
+    \end{align*}
+    which implies that $X$ is disconnected.
+    This contradicts our initial assumption,
+    which shows that $f(X)$ must be connected and completes the proof.
+  \end{proof}
+
+  The following corollary is very useful, because it is a generalization
+  of the mean value theorem from analysis.
+
+  \begin{corollary}
+    Suppose that $X$ is connected and let $f \in C(X)$ be given.
+    Then $f(X)$ is an interval. In particular, for every $x, y \in X$ and 
+    $t \in \R$ with $f(x) < t < f(y)$ there exists $z \in X$ so that $f(z) = t$.
+  \end{corollary}
+
+  In the following proposition we consider the space $\{0, 1\}$ as a topological
+  subspace of $\R$. It is clear that it is disconnected.
+
+  \begin{proposition}
+    The space $X$ is disconnected if and only if there exists a continuous 
+    mapping from $X$ onto $\{0, 1\}$.
+  \end{proposition}
+  \begin{proof}
+    Suppose first that $X$ is disconnected.
+    Then exist disjoint closed nonempty set $U$ and $V$ such that
+    $X = U \cup V$.
+    Define the function $f \colon X \to \{0, 1\}$ as such
+    \[
+      f(x) =
+      \begin{cases}
+        0, &x \in U \\
+        1, &x \in V
+      \end{cases}.
+    \]
+    It is clear that $f$ is continuous which completes the first side
+    of this proposition.
+
+    Suppose next that there exists a continuous mapping from $X$ onto 
+    $\{0, 1\}$.
+    If $X$ were connected, it would follow that $\{0,1\}$ is also connected
+    by Proposition \ref{prp:connected-continuous}.
+    Since we know that $\{0,1\}$ is disconnected, it follows that $X$
+    must be disconnected which completes the proof of this proposition.
+  \end{proof}
+
+  \begin{proposition}\label{prp:product-connected}
+    Let $\{Y_i\}_{i \in I}$ be a nonempty family of connected topological 
+    spaces. Then the product space $Y := \prod_{i \in I} Y_i$ is also connected.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{corollary}
+    Let $n \geq 1$ and equip $\R^n$ with its standard Euclidean topology.
+    Then $\R^n$ is connected.
+  \end{corollary}
+  \begin{proof}
+    Since $n$ is a finite number, we know that the standard topology on
+    $\R^n$ is equal to its product topology.
+    As we saw in Proposition \ref{prp:R-connected-interval} we have that
+    $\R$ is connected.
+    The corollary now immediately follows from Proposition 
+    \ref{prp:product-connected}.
+  \end{proof}
+
+  \begin{proposition}
+    Let $A$ be a connected subset of $X$, and let $B \subset X$ be with
+    $A \subset B \subset \overline A$.
+    Then $B$ is connected.
+    In particular $\overline A$ is connected.
+  \end{proposition}
+  \begin{proof}
+    Assume by contradiction that $B$ is disconnected.
+    The exist nonempty disjoint open subsets $U$ and $V$ such that
+    \[
+      \underbrace{B \subset U \cup V}_{(1)} \tand
+      \underbrace{B \cap U \neq \emptyset}_{(2)} \tand
+      \underbrace{B \cap V \neq \emptyset}_{(3)} \tand
+      \underbrace{B \cap U \cap V \neq \emptyset}_{(4)}.
+    \]
+    From $(1)$ and $(4)$ and $A \subset B$ we get that
+    $A \subset U \cup V$ and $A \cap U \cap V \neq \emptyset$.
+    Since $U$ and $V$ are open, and since we have $(2)$ and $(3)$ and
+    $B \subset \overline A$ we get that $A \cap U \neq \emptyset$ and
+    $A \cap V \neq \emptyset$.
+    It follows that $A$ is disconnected which contradicts our initial
+    assumption and completes the proof of the proposition.
+  \end{proof}
+
+  \begin{definition}[Path]
+    Let $X$ be a fixed topological space.
+    Let $x, y \in X$ be given.
+    A path in $X$ from $x$ to $y$ is a continuous map
+    $\gamma \colon I \to X$ with $\gamma(0) = x$ and $\gamma(1) = y$.
+  \end{definition}
+  
+  \begin{definition}
+    We say that $X$ is path connected if for every $x, y \in X$ there exists
+    a path in $X$ from $x$ to $y$.
+    A nonempty subset of $X$ is said to be path connected if it is
+    path connected as a topological subspace of $X$
+    (i.e. when it is equipped with the subspace topology).
+  \end{definition}
+
+  \begin{proposition}
+    Assume that $X$ is path connected. Then it is also connected.
+  \end{proposition}
+  \begin{proof}
+    Assume by contradiction that $X$ is disconnected.
+    Then there exist nonempty disjoint open subsets $U$ and $V$ of $X$
+    such that $X = U \cup V$.
+    Choose arbitrary $u \in U$ and $v \in V$.
+    Since $X$ is path connected there exists a continuous function
+    $\gamma \colon [0,1] \to X$ such that $\gamma(0) = u$ and $\gamma(1) = v$.
+    However, since $[0,1]$ is an interval it follows from proposition
+    \ref{prp:R-connected-interval} that $\gamma([0,1])$ is connected.
+    On the other hand, since $\gamma([0,1]) \subset X = U \cup V$
+    and $u \in \gamma([0,1]) \cap U$ and $v \in \gamma([0,1]) \cap V$
+    and $U \cap V = \emptyset$ it follows that $\gamma([0,1])$ is connected.
+    This contradiction shows that X must be connected,
+    which completes the proof.
+  \end{proof}
+
+  One good pratice exercise is to prove that given a normed space
+  $(Y,\norm{\cdot})$ and a nonempty convex $C \subset Y$, then $C$
+  is path connected, and in particular, from the above proposition, connected.
+
+  \begin{definition}[Topologist's sine curve]
+    The topologist sine curve is defined as the set
+    \[
+      T := \set{\left(x,\sin {\tfrac {1}{x}}\right)}{x\in (0,1]} \cup \{(0,0)\}.
+    \]
+    The closed topologist's curve is defined as the closure of $T$ and
+    we get
+    \[
+      \overline T = T \cup \set{(0,y)}{y \in [-1,1]}.
+    \]
+  \end{definition}
+
+  \begin{proposition}
+    The topologist's sine curve is connected but not path connected.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{definition}[Connected component]
+    Let $C$ be a connected subset of $X$.
+    We say that $C$ is a connected component of $X$ 
+    if it is not properly contained in any connected subset of $X$.
+  \end{definition}
+
+  \begin{example}
+    We have seen that $\R$ is connected, thus it has only one component
+    that is itself.
+  \end{example}
+
+  \begin{example}
+    Equip $\Q$ with the subspace topology induced by $\R$.
+    Let $E \subset \Q$ such that $|E| \geq 2$.
+    Choose aribirary $a,b \in E$ such that $a < b$.
+    Let $x \in (a,b) \setminus \Q$. Set
+    \[
+      U := \set{q \in \Q}{q < x} \tand
+      V := \set{q \in \Q}{q > x}.
+    \]
+    We have that $E \subset U \cup V$ and $a \in E \cap U$ and
+    $b \in E \cap V$ and $U \cap V = \emptyset$ which implies that
+    the set $E$ is disconnected.
+    We thus have that $\set{\{q\}}{q \in \Q}$ are the only connected
+    components in $\Q$.
+  \end{example}
+
+  \begin{proposition}
+    Let $\mathcal C$ be the collection of all connected components of $X$.
+    For each $x \in X$ denote by $C_x$ the union of all connected subsets 
+    of $X$ containing $x$.
+    We have the following properties,
+    \begin{enumerate}
+      \item[(1)] $x \in C_x$ and $C_x \in \mathcal C$;
+      \item[(2)] $X = \cup_{C \in \mathcal C} C$ and $C_1 \cap C_2 = \emptyset$
+        for all $C_1,C_2 \in \mathcal C$;
+      \item[(3)] $A \in \mathcal C$ for every $A \subset X$ which is connected,
+        open, and closed;
+      \item[(4)] $C$ is closed for all $C \in \mathcal C$.
+    \end{enumerate}
+  \end{proposition}
+
+  \begin{definition}[Totally disconnected space]
+    We say that $X$ is totally disconnected if its connected components
+    are its points.
+    That is, $X$ is totally disconnected if each connected component $C$
+    of $X$ is of the form $C = \{x\}$ for some $x \in X$.
+  \end{definition}
+
+  \begin{definition}[Totally seperated space]
+    We say that $X$ is totally separated if for all distinct $x, y \in X$
+    there exist disjoint open subsets $U$ and $V$ of $X$ so that 
+    $x \in U$, $y \in V$ and $X = U \cup V$.
+  \end{definition}
+
+  \begin{remark}
+    It is clear that every totally seperated space is a Hausdorff space.
+  \end{remark}
+
+  \begin{proposition}
+    Suppose that $X$ is totally separated, then it is totally disconnected.
+  \end{proposition}
+  \begin{proof}
+    Suppose that exists $Y \subset X$ such that $|Y| > 2$ and
+    $Y$ is a connected component of $X$.
+    Since $X$ is totally seperated, for any distinct $x, y \in Y$ there
+    exist disjoint open subsets $U$ and $V$ of $X$ so that 
+    $x \in U$, $y \in V$ and $X = U \cup V$.
+    This clearly shows that $Y$ is disconnected, which implies that $X$ is
+    totally disconnected.
+  \end{proof}
+
+  \begin{example}
+    As we saw in the previous example, we can show that $\Q$ equipped with the
+    topology induced by $\R$ is totally seperated.
+  \end{example}
+  \begin{example}
+    Any discrete space is totally separated.
+  \end{example}
+
+  The following is an example of a totally disconnected space that is not
+  totally seperated.
+
+  \begin{example}
+    Let $\infty$ and $-\infty$ be two objects outside of $\N$ and set
+    $X = \N \cup\{\pm \infty\}$. Let $\tau$ be the topology on $\N$
+    generated by
+    \[
+      \set{\{n\}}{n \in \N} \cup \set{\{\eta\} \cup (\N \setminus F)}
+      {n \in \{\pm \infty\} \text{ and $F \subset \N$ is finite}}.
+    \]
+    It is easy to show that $(X, \tau)$ is totally disconnected but not
+    totally seperated. 
+  \end{example}
+
+  \begin{proposition}
+    Suppose that $X$ is a $T_1$-space.
+    Assume moreover that $X$ has an open base $\mathcal B$ whose elements 
+    are also closed. Then X is totally separated.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{proposition}
+    Suppose that $X$ is compact and totally separated.
+    Then $X$ has an open base whose elements are also closed.
+  \end{proposition}
+  \begin{proof}
+    To be added.
+  \end{proof}
+  
+  \begin{definition}[Locally connected space]
+    We say that a topological space $X$ is locally connected if for every
+    $x \in X$ and every neighbourhood $U$ of $x$ there exists a connected
+    neighbourhood $V$ of $x$ with $V \subset U$.
+  \end{definition}
+
+  \begin{example}
+    Let $X$ be a normed space, and let $Y$ be a nonempty open subset of
+    $X$. Then equip $Y$ with the metric induced by the norm of $Y$.
+    It is clear that any open ball in $Y$ is convex, and as we saw
+    previously, any convex subset of $Y$ is connected.
+    From this it follows directly that $V$ is locally connected.
+  \end{example}
+
+  The following is an example of a locally connected space that is not
+  connected.
+
+  \begin{example}
+    Set $V = (0, 1) \cup (2, 3)$ and equip $V$ with the subspace topology
+    induced by $\R$.
+    It is easy to verify that $V$ is locally connected but not connected.
+  \end{example}
+
+  The following is an example of a connected space that is not locally 
+  connected.
+  
+  \begin{example}
+    Let $T$ be the closed topologist's sine curve equipped with the subspace
+    topology as a subspace of $\R$. It is connected, but it can be shown that
+    it is not locally connected.
+  \end{example}
+
+  \begin{proposition}
+    Let $X$ be a locally connected topological space.
+    Then the connected components of $X$ are open sets.
+  \end{proposition}
+  \begin{proof}
+    Let $C$ be a connected component of $X$, and let $x \in C$ be given.
+    Because $X$ is locally connected there exists a connected neighbourhood
+    $U$ of $x$.
+    Because $C$ is a connected component, it is the union of all connected
+    subspaces $E \subset X$ such that $x \in E$.
+    In particular $U \subset C$.
+    We proved that for any $x \in C$ there exists a neighbourhood $U$ of
+    $x$ such that $x \subset U \subset C$.
+    This means that $C$ is open which completes the proof.
+  \end{proof}
+
   
   
 \end{document}
