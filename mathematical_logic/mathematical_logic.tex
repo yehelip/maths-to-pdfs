@@ -1048,8 +1048,8 @@
   \end{remark}
 
   \begin{definition}[Elementary equivalence]
-    We say that two structures $\M_1$, $\M_2$ are elementary equivalent
-    if $\Theory(\M_1) = \Theory(\M_2)$.
+    We say that two structures $\M_1$, $\M_2$ are said to be elementary 
+    equivalent if $\Theory(\M_1) = \Theory(\M_2)$.
   \end{definition}
 
   \begin{definition}[Isomorphism of structures]
@@ -1096,6 +1096,12 @@
     free instance of $x$ in $\alpha$ by $t$.
   \end{definition}
 
+  \begin{definition}[Partial free substitution]
+    Given a formula $\alpha$, a variable $x$, and a term $t$,
+    a partial free substitution of $t$ for $x$ is a substitution of some
+    free instances of $x$ in $\alpha$ by $t$.
+  \end{definition}
+
   \begin{definition}[Collision-free substitution]
     A free substitution of $t$ for $x$ in $\alpha$ is said to collide 
     if there exists a variable $y$ such that:
@@ -1130,6 +1136,323 @@
     which has two bound instances of $y$.
   \end{example}
 
+  \begin{proposition}
+    Let $\alpha$ be a formula, $x$ a variable, and $t$ a term.
+    Let $\alpha(t)$ be the free substitution of $t$ for $x$.
+    Then if the substitution is collision-free,
+    then $\models (\forall x) \alpha \implies \alpha(t)$.
+  \end{proposition}
+
+  This proposition is pretty much like saying ``if the formula is true
+  for the free variable $x$, we can change all instances of $x$ for
+  any term $t$ and it will still be true.''
+
+  Now let $\alpha$ be a formula, and denote $\alpha(t)$ the formula after
+  partially substituting $x$ for $t$ without collisions.
+  Is $\forall(x) \alpha \implies \alpha(t)$ true?
+
+  It turns out that the answer is no.
+  Let $\alpha$ be the formula $x = x$.
+  We can substitute $x$ for $y$ in the first instance such that
+  $\alpha(t)$ is the formula $y = x$ and now it is clear that
+  $\forall(x) x = x \implies y=x$ is not true,
+  because it is not true in any model with more than one element,
+  and any substitution such that $S(x) \neq S(y)$.
+
+  Notice that just like we saw earlier that any proposition in
+  propositional logic is logically equivlent to a proposition that
+  only uses the connectives $\{\implies, \neg\}$,
+  from the definition of logical equivallency above, we have that
+  $\exists \alpha$ is logically equivalent to $\neg \forall \neg \alpha$.
+  Thus, we can reduce all formulas formulas using $\{\implies, \neg\}$
+  and the quantifier $\forall$.
+
+  We can now talk about the proof system for predicate logic.
+  
+  \begin{definition}[Predicate logic proof system]
+    A predicate logic system is comprised of
+    \begin{enumerate}
+      \item[(1)] A set of formulas called axioms.
+      \item[(2)] A set of rules of inference that allow us to deduce
+        formulas from previous formulas.
+    \end{enumerate}
+  \end{definition}
+  
+  The definition for a proof in predicate logic is very similar to a
+  proof in propositional logic, and we denote $\vdash \alpha$ and
+  $\Sigma \vdash \alpha$ correspondingly.
+
+  \begin{definition}[Standard predicate logic proof system]
+    The standrad predicate logic proof system is comprised of the
+    following three connective axiom schemes:
+    \begin{enumerate}
+      \item[(1)] $p\to (q\to p)$;
+      \item[(2)] $(p\to (q\to r))\to ((p\to q)\to (p\to r))$;
+      \item[(3)] $(\neg p\to \neg q)\to (q\to p)$;
+    \end{enumerate}
+    where $p,q,r$ are formulas.
+    The following two quantifier axiom schemes:
+    \begin{enumerate}
+      \item[(4)] $((\forall x) \alpha) \implies a(t)$ (where $\alpha(t)$
+        is a collision-free substitution of $x$ for $t$ in $\alpha$);
+      \item[(5)] $(\forall x)(\alpha \implies \beta) \implies
+        (\alpha \implies (\forall x)\beta)$ (for $x \notin FV(\alpha)$);
+    \end{enumerate}
+    The following two equality axioms:
+    \begin{enumerate}
+      \item[(6)] $(\forall x)(x = x)$;
+      \item[(7)] $(x = y) \implies (\alpha \implies \alpha(y))$ (where
+        $\alpha(y)$ is a partiall collision-free substitution of $x$
+        for $y$ in $\alpha$);
+    \end{enumerate}
+    and the following two rules of inference
+    \[
+      \begin{array}{c@{\,}l@{}}
+                  & \alpha         \\
+                  & \alpha \to \beta   \\ \cline{2-2}
+      \therefore  & \beta
+      \end{array} \tand
+      \begin{array}{c@{\,}l@{}}
+                  & \\
+                  & \alpha         \\ \cline{2-2}
+      \therefore  & (\forall x)\alpha
+      \end{array}
+    \]
+    which are called Modus Ponens (MP) and Universal Introduction (GEN)
+    correspondingly.
+  \end{definition}
+
+  \begin{remark}
+    Notice that the axioms are true in any language.
+  \end{remark}
+
+  Here are some examples for proofs in predicate logic.
+
+  \begin{proposition}
+    $(\forall x)(\forall y) \alpha \vdash (\forall y)(\forall x) \alpha$.
+  \end{proposition}
+  \begin{proof}
+    \begin{enumerate}
+      \item $(\forall x)(\forall y) \alpha \implies (\forall y) \alpha$ 
+        ($A_4$)
+      \item $(\forall x)(\forall y) \alpha$ (hypothesis)
+      \item $(\forall y) \alpha$ (MP)
+      \item $(\forall y) \alpha \implies \alpha$ ($A_4$)
+      \item $\alpha$ (MP)
+      \item $(\forall x) \alpha$ (GEN)
+      \item $(\forall y)(\forall x) \alpha$ (GEN)
+    \end{enumerate}
+  \end{proof}
+
+  \begin{definition}[Weak soundness]
+    A proof system of predicate logic is called sound if every provable 
+    formula is true.
+  \end{definition}
+
+  \begin{definition}[Strong soundness]
+    A proof system of predicate logic is called strongly sound if every 
+    set of formulas $\Sigma$, if $\Sigma \vdash \alpha$ then
+    $\alpha$ is true in every model of $\Sigma$.
+  \end{definition}
+
+  \begin{definition}[Weak completeness]
+    A proof system is called complete if every true formula is provable.
+  \end{definition}
+
+  \begin{definition}[Weak completeness]
+    A proof system is called complete if for every $\Sigma$, any formula 
+    $\alpha$ that is true in every model of $\Sigma$, then 
+    $\Sigma \vdash \alpha$.
+  \end{definition}
+
+
+  \begin{theorem}\tt{Weak Soundness Theorem}
+    The standrad proof system is strongly sound.
+  \end{theorem}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \begin{theorem}\tt{Strong Completeness Theorem / Gödel's Theorem}
+    The standrad proof system is strongly complete.
+  \end{theorem}
+
+  \begin{theorem}\tt{Compactness theorem}
+    Let $\Sigma$ be a set of formulas.
+    Then there exists a model for $\Sigma$ if and only if
+    there exists a model for any finite subset of $\Sigma$.
+  \end{theorem}
+
+  The previous theorems were almost identical in propositional logic,
+  however, we can see by example that the deduction theorem is not
+  true in predicate logic.
+
+  \begin{example}
+    We notice that $\{\alpha\} \vdash (\forall x) \alpha$ immediately
+    from the inference rule GEN.
+    Next assume that $\vdash \alpha \implies (\forall x) \alpha$.
+    From soundness, we have that $\alpha \implies (\forall x) \alpha$
+    must be a tautology.
+    However, for a model $\M$ with $U^\M = \{0,1\}$ and 
+    $\alpha \colon x = y$ and a substitution $S(x) = 0 = S(y)$ we get
+    $\M \nmodels_S (x = y) \implies (\forall x)(x = y)$.
+    This contradiction serves as a counterexample for the deduction theorem
+    in predicate logic.
+  \end{example}
+
+  \begin{definition}[Consistency of formulas]
+    A collection of formulas $\Sigma$ is called inconsistent if there 
+    exists a formula $\alpha$ such that $\Sigma \vdash \alpha$ and
+    $\Sigma \vdash \neg \alpha$.
+    A collection of formulas is called consistent if it is not inconsistent.
+  \end{definition}
+  
+  \begin{proposition}
+    A set of formulas $\Sigma$ is inconsistent if and only if for every 
+    formula $\alpha$, we have $\Sigma \vdash \alpha$.
+  \end{proposition}
+
+  \begin{proposition}
+    Let $\Sigma$ be a collection of formulas.
+    Then $\Sigma$ has a model if and only if $\Sigma$ is consistent.
+  \end{proposition}
+
+  \begin{theorem}\label{thm:all-finite-models-implies-infinite-model}
+    Let $\Sigma$ be a set of formulas in the language $\L$.
+    Suppose that for each natural $n$ there exists a model $\M_n$ of 
+    $\Sigma$ such that $|\M_n| \geq n$, 
+    then for any infinite cardinal $\kappa$, there exists a model 
+    $\M$ of $\Sigma$ such that $|W^\M| \geq \kappa$.
+  \end{theorem}
+  \begin{proof}
+    To be added.
+  \end{proof}
+
+  \section{Infinitesimals}
+  Consider the set of real number $\R$.
+  We define a language $\L$ that comprises of the following:
+  \begin{itemize}
+    \item for each $r \in \R$ we define a constant symbol $c_r$ to
+      represent it.
+    \item for each real valued function $g \colon \R^k \to \R$ we define
+      a function symbol $f_g$ to represent it.
+    \item for each order relation $\Q \subset \R^k$ we define a relation
+      symbol $R_Q$ to represent it.
+  \end{itemize}
+  
+  In this way, we constructed a language that contains all the information
+  on $\R$ that can be encoded using first order logic.
+
+  It is clear that $\L$ is a language for the structure $\R$.
+
+  Now we can consider $\Theory(\R)$ which is the set of all formulas
+  which are true in $\R$.
+
+  We now extend the language $\L$ to a new language $\L'$ be adding
+  a constant symbol $c_\infty$. We also extend $\Theory(\R)$ be adding
+  all the formulas $\{c_\infty > c_n\}_{n \in \N}$. We denote this
+  new theory by $\Theory_\infty(\R)$. We will try showing that 
+  $\Theory_\infty(\R)$ has a model.
+
+  Suppose $\Theory_\infty(\R)$ had a model, then that model must contain
+  a subset that is isomorphic to $\R$.
+  It must also have an interpretation for $c_\infty$ which will denote 
+  as $\infty$.
+  This makes $\frac{1}{\infty}$ an infinitesimal.
+
+  We will show that $\Theory_\infty(\R)$ has a model using the compactness
+  theorem.
+  Let $T \subset \Theory_\infty(\R)$ be finite.
+  We see that $\R$ is a model for $T$ since $T$ finite,
+  and therefore there must exist a finite $A \subset \N$ such that
+  $T = \{c_\infty > c_n\}_{n \in A} \cup T'$ such that 
+  $T' \subset \Theory(\R)$.
+  We can interpret $c_\infty$ as $r := 1 + \max A$, and now it is
+  clear that $\R$ is a model for $T$.
+  From compactness it follows that $\Theory_\infty(\R)$ has a model
+  as wanted.
+
+  \section{Definablility}
+  Recall that two structures $\M_1$, $\M_2$ are said to be elementary 
+  equivalent if $\Theory(\M_1) = \Theory(\M_2)$.
+
+  \begin{definition}[Equivalency of theoreies]
+    Two theories $\Sigma_1$, $\Sigma_2$ are said to be equivalent if
+    $\MOD(\Sigma_1) = \MOD(\Sigma_2)$.
+  \end{definition}
+
+  \begin{definition}[Definability of structures]
+    A collection of structures $\mathfrak M$ is said to be definable
+    if there exists a theory $\Sigma$ such that $\MOD(\Sigma) = \mathfrak M$.
+  \end{definition}
+
+  \begin{example}
+    For a language $\L$ with a single constant symbol $c$ we have
+    \[
+      \MOD(\{\(\forall x)(\forall y)(x = y)\}) =
+      \set{\M}{|W^\M| = 1}.
+    \]
+    which shows that $\set{\M}{|W^\M| = 1}$ is definable.
+  \end{example}
+
+  \begin{example}
+    The structure collection
+    \[ \mathfrak M := \set{\M}{\text{$\M$ is a finite field}} \]
+    is not definable.
+    Assume by contradiction that existed $\Sigma$ such that 
+    $\MOD(\Sigma) = \mathfrak M$, then from 
+    \autoref{thm:all-finite-models-implies-infinite-model}
+    we have that exists an infinite model $\M_\infty$ for $\Sigma$.
+    This shows that $\M_\infty \in \MOD(\Sigma)$, but by definition
+    $\M_\infty \notin \mathfrak M$.
+    This contradicts our assumption and completes the proof.
+  \end{example}
+
+  % \begin{example}
+  %   The set $\mathfrak M := \{\M^\R\}$ such that $\M^\R$ is a model for $\R$
+  %   is not definable.
+  %   Assume by contradiction that exists $\Sigma$ such that 
+  %   $\MOD(\Sigma) = \mathfrak M$, then we can consider the structure
+  %   $\M^\R_\infty$ of the infinitesimals.
+  %   We have that $\M_\R^\infty \in \MOD(\Sigma)$ and since
+  %   $\$
+
+  \begin{proposition}
+    Let $\Sigma$ be a theory. Then exists a theory $\Sigma'$ that only contains
+    sentences that is equivalent to $\Sigma$.
+  \end{proposition}
+
+  \begin{theorem}\tt{Löwenheim-Skolem}
+    Let $\Sigma$ be a consistent collection of formulas over a language $\L$,
+    that has a finite model. Thus, for an cardinality $\kappa$ satisfying
+    $\kappa \geq |L|$ there exists a model $\M$ of $\Sigma$ such that
+    $|W^\M| = \kappa$.
+  \end{theorem}
+
+  \begin{proposition}
+    Let $\mathfrak M_1$, $\mathfrak M_2$ be definable collections of structures
+    over the language $\L$ such that 
+    $\mathfrak M_1 \cap \mathfrak M_2 = \emptyset$.
+    Then exists a formula that is true in all models in $\mathfrak M_1$
+    and false in all models in $\mathfrak M_2$.
+  \end{proposition}
+  \begin{proof}
+    Let $\Sigma_1$, $\Sigma_2$ be the collections of formulas that define
+    $\mathfrak M_1$, $\mathfrak M_2$.
+    It follows that
+    \[
+      \MOD(\Sigma_1 \cup \Sigma_2) =
+      \mathfrak M_1 \cap \mathfrak M_2 =
+      \emptyset.
+    \]
+    By a previous proposition this means that $\Sigma_1 \cup \Sigma_2$ is
+    inconsistent, therefore exists a formula $\alpha$ such that
+    $\Sigma_1 \cup \Sigma_2 \vdash \alpha$ and
+    $\Sigma_1 \cup \Sigma_2 \vdash \neg \alpha$.
+  \end{proof}
+
+
+  
 
 
 
