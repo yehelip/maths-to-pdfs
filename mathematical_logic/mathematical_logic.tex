@@ -1273,7 +1273,7 @@
     To be added.
   \end{proof}
 
-  \begin{theorem}\tt{Strong Completeness Theorem / Gödel's Theorem}
+  \begin{theorem}\tt{Strong Completeness Theorem}
     The standrad proof system is strongly complete.
   \end{theorem}
 
@@ -1449,7 +1449,119 @@
     inconsistent, therefore exists a formula $\alpha$ such that
     $\Sigma_1 \cup \Sigma_2 \vdash \alpha$ and
     $\Sigma_1 \cup \Sigma_2 \vdash \neg \alpha$.
+    TO BE CONTINUED
   \end{proof}
+
+  \begin{definition}[Definable relation]
+    Let $\L$ be a language, let $\M$ be a model for $\L$.
+    An $n$-ary relation $P \subset (W^\M)^n$ is said to be definable if there
+    exists a formula $\alpha(x_1,\dots,x_n)$ with $n$ free variables 
+    $x_1,\dots,x_n$ such that for any substitution $V$ we have
+    \[
+      \M \models_V \alpha(x_1,\dots,x_n) \iff
+      (V(x_1),\dots,V(x_n)) \in P.
+    \]
+  \end{definition}
+
+  \begin{example}[Definable number]
+    Consider a language with addition and multiplication and the structure
+    of $(\R,+,*)$ equipped with standard addition and multiplication.
+    We say that $r \in \R$ is definable when there exists a formula
+    $\alpha(x)$ with a single free variable $x$ such that
+    \[
+      \M \models_V \alpha(x) \iff
+      V(x) = r.
+    \]
+  \end{example}
+
+  \begin{itemize}
+    \item the number $0$ is definable by the formula 
+      $\alpha_0(x) \colon (\forall y)(y + x = y)$.
+    \item the number $1$ is definable by the formula
+      $\alpha_1(x) \colon (\forall y)(y * x = y)$.
+    \item the set of definable numbers must be finite or countable since the
+      number of formulas in a language is always countable.
+      This shows that most real numbers are not definable.
+    \item the set of nonnegative real numbers is definable by the formula
+      $\alpha_{\geq 0}(x) \colon (\exists y)(x = y * y)$.
+    \item the relation $\le$ on $\R$ is definable by the formula
+      $\alpha_{x < y}(x,y) \colon (\exists c)(x + c * c = y)$.
+    \item the number $\sqrt{2}$ is definable by the formula
+      $\alpha_{\sqrt 2}(x) \colon (\exists z)(\alpha_1(z) \land (x * x = z + z)
+      \land \alpha_{\geq 0}(x))$.
+  \end{itemize}
+
+  \begin{proposition}
+    The set of definable numbers is a subfield of $(\R,+,*)$.
+  \end{proposition}
+  \begin{proof}
+    We need to show that
+    \begin{enumerate}
+      \item[(1)] $0$ and $1$ are definable.
+      \item[(2)] closure under addition and multiplication.
+      \item[(3)] closure under the additive and multiplicative 
+        inverse operations.
+    \end{enumerate}
+    As we saw earlier $0$ and $1$ are definable. Let $a,b \in \R$ be definable
+    with formulas $\alpha_a(x)$ and $\alpha_b(x)$. We can see that
+    \begin{align*}
+      &\alpha_{a+b}(x) \colon (\exists x_1)(\exists x_2)
+        (\alpha_a(x_1) \land \alpha_b(x_2) \land x = x_1 + x_2); \\
+      &\alpha_{a*b}(x) \colon (\exists x_1)(\exists x_2)
+        (\alpha_a(x_1) \land \alpha_b(x_2) \land x = x_1 * x_2);
+    \end{align*}
+    which proves condition $(2)$.
+    Similarly, we have
+    \begin{align*}
+      &\alpha_{a^{1}}(x) \colon (\exists x_1)(\exists x_2)
+        (\alpha_a(x_1) \land \alpha_1(x_2) \land x * x_1 = x_2); \\
+      &\alpha_{-a}(x) \colon (\exists x_1)(\exists x_2)
+        (\alpha_a(x_1) \land \alpha_0(x_2) \land x + x_1 = x_2);
+    \end{align*}
+    which proves condition $(3)$ and completes the proof.
+  \end{proof}
+
+  \section{Gödel's theorem}
+  \begin{definition}[Complete theory]
+    A theory $\phi$ is said to be complete if for every sentence $\alpha$
+    in $\phi$ either $\phi \vdash \alpha$ or $\phi \vdash \neg \alpha$.
+  \end{definition}
+
+  \begin{definition}[Computable theory]
+    A theory $\phi$ is said to be computable (or recursive) if there 
+    exists an algorithm that determines whether a sentence is 
+    a member of $\phi$.
+  \end{definition}
+
+  \begin{theorem}[Gödel's theorem]
+    There exists a formula such that $\N \models \alpha$ but 
+    $\mathrm{Peano} \nvdash \alpha$.
+    In particular Peano theory is not complete.
+    Moreover, if $\phi$ is a theory that satisfies
+    \begin{enumerate}
+      \item[(1)] $\N$ is a model of $\phi$;
+      \item[(2)] $\phi$ is computable;
+      \item[(3)] $\phi$ is consistent;
+    \end{enumerate}
+    then $\phi$ is not complete.
+    More generally, any theory that satisfies $(2)$ and $(3)$ and is
+    arithmetical is not complete.
+  \end{theorem}
+  \begin{remark}
+    It can be shown that Peano theory is not complete because
+    we have $\mathrm{Peano} \vdash \neg \alpha$ and then from
+    soundness we have that $\M \models \neg \alpha$ in contradiction
+    to $\N \models \alpha$.
+  \end{remark}
+
+  Recall that $\Theory(\N) = \set{\alpha}{\N \models \alpha}$.
+  \begin{proposition}
+    There is no algorithm that determines whether a sentence is a member
+    of $\Theory(\N)$.
+  \end{proposition}
+
+  The idea of the proof behind Godel's theorem:
+
 
 
   
