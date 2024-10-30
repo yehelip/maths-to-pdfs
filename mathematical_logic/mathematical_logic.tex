@@ -1317,7 +1317,7 @@
     Then $\Sigma$ has a model if and only if $\Sigma$ is consistent.
   \end{proposition}
 
-  \begin{theorem}\label{thm:all-finite-models-implies-infinite-model}
+  \begin{theorem}\label{thm:finite-infinite}
     Let $\Sigma$ be a set of formulas in the language $\L$.
     Suppose that for each natural $n$ there exists a model $\M_n$ of 
     $\Sigma$ such that $|\M_n| \geq n$, 
@@ -1389,7 +1389,7 @@
   \begin{example}
     For a language $\L$ with a single constant symbol $c$ we have
     \[
-      \MOD(\{\(\forall x)(\forall y)(x = y)\}) =
+      \MOD(\{(\forall x)(\forall y)(x = y)\}) =
       \set{\M}{|W^\M| = 1}.
     \]
     which shows that $\set{\M}{|W^\M| = 1}$ is definable.
@@ -1401,7 +1401,7 @@
     is not definable.
     Assume by contradiction that existed $\Sigma$ such that 
     $\MOD(\Sigma) = \mathfrak M$, then from 
-    \autoref{thm:all-finite-models-implies-infinite-model}
+    \autoref{thm:finite-infinite}
     we have that exists an infinite model $\M_\infty$ for $\Sigma$.
     This shows that $\M_\infty \in \MOD(\Sigma)$, but by definition
     $\M_\infty \notin \mathfrak M$.
