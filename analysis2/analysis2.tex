@@ -1,285 +1,395 @@
-\documentclass{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,geometry}
-\usepackage[symbol]{footmisc}
+\documentclass[11pt,a4paper]{article}
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usetikzlibrary{positioning}
+\geometry{margin=1in}
+\pgfplotsset{compat=1.18}
+\setlength{\headheight}{14.6pt}
+\addtolength{\topmargin}{-1.6pt}
 \hypersetup{
     colorlinks=false, %set true if you want colored links
-    linktoc=all,     %set to all if you want both sections and subsections linked
+    linktoc=all,   %set to all if you want both sections and subsections linked
     linkcolor=black,  %choose some color if you want links to stand out
 }
-\geometry{margin=1in}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{solution}{Solution}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\idealin}{\triangleleft}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\diam}{diam}
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
 \newcommand{\Omicron}{O}
-
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\tand}{\quad \text{and} \quad}
+\newcommand{\tor}{\quad \text{or} \quad}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{Analysis 2}}
-\author{yehelip}
+\author{}
 \date{}
-
-\usepackage{amsmath}
 \begin{document}
 	\maketitle
-	
 	\newpage
-	
-	\tableofcontents
-	
-	\newpage
-	
-	\section{Getting Used to Integrals}
-	\subsection{Suppose $f$ is Riemann integrable then $f^2$ is also Riemann integrable}
-	First recall the definition of a Riemann integrable function. 
-	A function $f$ is Riemann integrable on $[a,b]$ iff 
-	exists $I\in\R$ such that for all $\varepsilon>0$ exists $\delta>0$ such that 
-	for any partition $X = (x_0,x_1,\ldots,x_n)$ with $\lambda(X)<\delta$ any sequence 
-	$(c_1,c_2,\ldots,c_n)$ such that $c_i\in[x_{i-1},x_i] \text{ also satisfies}:$
-	\[
-		\left|\sum_{i=1}^{n}{f(c_i)\Delta X_i}-I\right|<\varepsilon
-	\]
-	And we denote $I = \int_{a}^{b} f(x)dx$. Consider $f^2$:
-	\begin{align*}
-		&U(f,P) - D(f,P) < \varepsilon \\
-		&\Rightarrow U(f,P) < D(f,P) + \varepsilon \\
-		&\Rightarrow U(f,P)^2<D(f,P)^2 + 2\varepsilon D(f,P) + \varepsilon^2 \\
-		&\Rightarrow U(f,P)^2 - D(f,P)^2 < \varepsilon (2D(f,P) + \varepsilon)
-	\end{align*}	
-	Since $f$ is integrable we know $2D(f,P) + \varepsilon$ is bounded.
-	Denote the bound $M$.
-	Let $\varepsilon > 0.$ Choosing the $\delta$ that matches $\varepsilon_{\delta} = \min(\frac{\varepsilon}{2M+1},1)$ under $f$'s integrability we get:
-		\begin{align*}
-		&U(f,P) - D(f,P) < \varepsilon_{\delta} \\
-		&\Rightarrow U(f,P)^2 - D(f,P)^2 < \varepsilon_{\delta} (2D(f,P) + \varepsilon_{\delta})\\
-		&\Rightarrow U(f,P)^2 - D(f,P)^2 <  \frac{\varepsilon}{2M+1} (2M + 1)=\varepsilon \\
-		&\Rightarrow U(f^2,P) - D(f^2,P) < \varepsilon
-		\end{align*}	
-	Since Darboux integrablily implies Riemann integrability we finished.
+  \section{Integrals}
+  \begin{definition}[Riemann integrability]
+    A function $f \colon \R \to \R$ is said to be Riemann integrable on the 
+    interval $[a,b]$ if there exists $I \in \R$ such that for all 
+    $\varepsilon > 0$ there exists a $\delta > 0$ such that 
+    for any partition $X = (x_0,x_1,\dots,x_n)$ with $\lambda(X) < \delta$, 
+    any sequence $(c_1,c_2,\ldots,c_n)$ such that $c_i \in[x_{i-1},x_i]$ for
+    all $1 \le i \le n$ also satisfies:
+    \[
+      \abs{\sum_{i=1}^{n}{f(c_i)\Delta X_i} - I} < \varepsilon.
+	  \]
+    We also denote $I = \int_{a}^{b} f(x)\,dx$.
+  \end{definition}
+  \begin{proposition}
+	  Suppose $f$ is a Riemann integrable function,
+    then $f^2$ is also Riemann integrable.
+  \end{proposition}
+  \begin{proof}
+    We can notice that
+    \begin{align*}
+      &U(f,P) - D(f,P) < \varepsilon \\
+      \Rightarrow &U(f,P) < D(f,P) + \varepsilon \\
+      \Rightarrow &U(f,P)^2<D(f,P)^2 + 2\varepsilon D(f,P) + \varepsilon^2 \\
+      \Rightarrow &U(f,P)^2 - D(f,P)^2 < \varepsilon (2D(f,P) + \varepsilon)
+    \end{align*}	
+    Since $f$ is integrable we know $2D(f,P) + \varepsilon$ is bounded.
+    Denote the bound $M$.
+    Let $\varepsilon > 0$.
+    Choose the $\delta$ that matches 
+    $\varepsilon_{\delta} = \min(\frac{\varepsilon}{2M+1},1)$ 
+    under $f$'s integrability.
+    We get:
+      \begin{align*}
+        &U(f,P) - D(f,P) < \varepsilon_{\delta} \\
+        \Rightarrow &U(f,P)^2 - D(f,P)^2 <
+          \varepsilon_{\delta} (2D(f,P) + \varepsilon_{\delta}) \\
+        \Rightarrow &U(f,P)^2 - D(f,P)^2 <
+          \frac{\varepsilon}{2M+1} (2M + 1) = \varepsilon \\
+        \Rightarrow &U(f^2,P) - D(f^2,P) < \varepsilon
+      \end{align*}	
+    This shows that $f^2$ is Darboux integrable, which implies
+    it is Riemann integrable, which completes the proof.
+  \end{proof}
 
-	\subsection{If $f$ is Continuous Then $f$ is Integrable}
-	Let $f$ be continuous on $[a,b]$\footnote{Think about the case $(a,b)$}. 
-	By Cantor-Heine it is uniformally continuous.
-	\begin{align*}
-		U(f,P) - L(f,P) = \sum_{i=1}^{n}(M_i-m_i)\Delta X_i 
-		<^{*} \sum_{i=1}^n\varepsilon\Delta X_i = \varepsilon(b-a)
-	\end{align*}
-	(*) This is becuase by definition
-	\[
-		\forall \varepsilon > 0 \colon \exists \delta > 0 \colon 
-		d(x,y)<\delta \rightarrow d(f(x),f(y))<\varepsilon
-	\]
-	And that delta is exactly what we wanted.
+  \begin{definition}
+    If $f$ is continuous, then $f$ is integrable.
+  \end{definition}
+  \begin{proof}
+    Let $f$ be continuous on $[a,b]$.
+    By the Cantor--Heine theorem it is uniformally continuous.
+    We have
+    \[
+      U(f,P) - L(f,P) =
+      \sum_{i=1}^{n}(M_i-m_i)\Delta X_i <^{*}
+      \sum_{i=1}^n\varepsilon\Delta X_i = \varepsilon(b-a)
+    \]
+    $(*)$ This is becuase by definition we have that for all $\varepsilon > 0$
+    there exists $\delta > 0$ such that $d(x,y) < \delta$. 
+    This implies that $d(f(x),f(y)) < \varepsilon$
+    and that delta is exactly what we wanted, which completes the proof.
+  \end{proof}
+
+  \begin{proposition}[Intermediate Value Theorem for Integrals]
+    Let $f$ be a continuous funtion on $[a,b]$ then exists $x_0 \in [a,b]$
+    such that: 
+    \[
+      \int_a^b f(x)\,dx = f(x_0)(b - a).
+    \]
+  \end{proposition}
+  \begin{proof}
+    Since $f$ is continuous it is Riemann integrable. 
+    From Weierstrass's theorem $f$ has a minimum and maximum in $[a,b]$ 
+    which we will denote $m$ and $M$.
+    We know have
+    \[
+      m (b - a) \le \int_a^b f(x)\,dx \le M (b - a).
+    \]
+    From this follows that
+    \[
+      m \le \frac{\int_{a}^{b} f(x)\,dx}{b - a} \le M.
+    \]
+    Denote $c := \frac{\int_{a}^{b} f(x)\,dx}{b - a}$.
+    By the intermediate value theorem we know that exists $x_0 \in (a,b)$
+    such that $f(x_0) = c$ and thus:
+    \[
+      \int_{a}^{b} f(x)\,dx = f(x_0)(b - a)
+    \]
+  \end{proof}
+
+  \newpage
+
+  \section{The Fundamental Theorem of Calculus}
+  \begin{theorem}\tt{Fundamental theorem of calculus, part one}
+    Let $f$ be a continuous real-valued function
+    defined on a closed interval $[a, b]$. 
+    Let $F$ be the function defined as:
+    \[
+      F(x) = \int_{a}^{x} f(t)\,dt
+    \]
+    for all $x \in [a, b]$.
+    Then $F$ is uniformly continuous on $[a, b]$ and 
+    differentiable on the open interval $(a, b)$, and
+    \[
+      F'(x) = f(x) \quad \forall x \in (a, b).
+    \]
+  \end{theorem}
+  \begin{theorem}\tt{Fundamental theorem of calculus, part two}
+    Under the conditions of part one, if $f$ is Riemann integrable on $[a,b]$.
+    Then:
+    \[
+      \int_{a}^{b} f(x)\,dx = F(b) - F(a).
+    \]
+  \end{theorem}
+  \begin{proof}
+  \textbf{Part One}
+  For any $x_1, x_1+\Delta x\in [a,b]$ we get:
+  \[
+    F(x_1 + \Delta x) - F(x_1) = 
+    \int_{a}^{x_1 + \Delta x}{f(t)\,dt} - \int_{a}^{x_1}{f(t)\,dt} = 
+    \int_{x_1}^{x_1 + \Delta x}{f(t)\,dt}
+  \]
+  According to the mean value theorem for integration 
+  we get that for $c \in [x_1, x_1+\Delta x]$:
+  \begin{align*}
+    &\int_{x_1}^{x_1 + \Delta x}{f(t)\,dt} = f(c)\Delta x \\
+    &\lim_{\Delta x\to 0}{\frac{F(x_1+\Delta x) - F(x_1)}{\Delta x}}
+    = \lim_{\Delta x\to 0}{f(c)}
+    = f(x_1)
+  \end{align*}
+  And thus from the squeeze theorem and $f$'s continuity 
+  we get $F'(x_1) = f(x_1)$.
+  \end{proof}
+  \begin{proof}
+  \textbf{Part Two}
+  Let $P = (x_0, x_1, \ldots, x_n)$ be a partition of $[a,b]$ such 
+  that $(x_0,x_n) = (a,b)$.
+  Then we have:
+  \begin{align*}
+    F(b) - F(a) &= F(x_n) + \left[F(x_{n-1})-F(x_{n-1})\right] 
+    + \cdots + \left[F(x_{1})-F(x_{1})\right] - F(x_0) \\
+    &= \left[F(x_n)-F(x_{n-1})\right] + \left[F(x_{n-1})-F(x_{n-2})\right] 
+    + \cdots + \left[F(x_1)-F(x_{0})\right] \\
+    &= \sum_{i=1}^n{\left[F(x_{i})-F(x_{i-1})\right]}.
+  \end{align*}
+  Because $F$ is continuous on $[a,b]$ and differentiable on $(a,b)$, we can
+  use Lagrange's theorem on $[x_i,x_{i-1}]$.
+  Thus, there exists $c_i \in [x_i,x_{i-1}]$ such that
+  \[
+    \sum_{i=1}^n{\left[F(x_{i})-F(x_{i-1})\right]} 
+    = \sum_{i=1}^n{\left[F'(c_i)(x_i-x_{i-1})\right]}.
+  \]
+  
+  According to part one we get that $F'(c_i) = f(c_i)$ and so
+  \begin{align*}
+    F(b) - F(a) &= \sum_{i=1}^{n}{\left[f(c_i)(\Delta x_i)\right]} \\
+    &\iff \\
+    \lim_{\|\Delta x_i\|\to 0}{\left(F(b)-F(a)\right)} &= 
+    \lim_{\|\Delta x_i\|\to 0}
+    {\left(\sum_{i=1}^n{\left[f(c_i)(\Delta x_i)\right]}\right)} \\
+    &\iff \\
+    F(b)-F(a) &= \int_{a}^{b} f(x)\,dx.
+  \end{align*}
+  \end{proof}
+  
+  \subsection{Length of a curve}
+  Using integrals, we can actually find a formula for the length of a 
+  continuous graph.
+  Approximating the length of a graph using the pythagorian theorem for 
+  partition $X = (x_0,x_1,\dots,x_n)$ we get:
+  \[
+    \sum_{i=1}^{n}{\sqrt{d(x_{i-1}, x_i)^2 + d(f(x_{i-1}), f(x)_i)^2}}.
+  \]
+  Assuming $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$ 
+  from Lagrange's theorem we get:
+  \begin{align*}
+    \sum_{i=1}^{n}{\sqrt{d(x_{i-1}, x_i)^2 + d(f(x_{i-1}), f(x)_i)^2}}
+    &= \sum_{i=1}^{n}{\sqrt{(x_i - x_{i-1})^2 + (f'(c_i)(x_{i} - x_{i-1}))^2}}\\
+    &= \sum_{i=1}^{n}{\sqrt{(x_i - x_{i-1})^2(1 + (f'(c_i))^2)}} \\
+    &= \sum_{i=1}^{n}{\sqrt{1 + (f'(c_i))^2} \Delta X_i}.
+  \end{align*}
+  We can see that this summation is matching the integral
+  \[
+    \lim_{\norm{\Delta x_i} \to 0}{\sum_{i=1}^{n}
+    {\sqrt{1 + (f'(c_i))^2}\Delta X_i}} = 
+    \int_a^b{\sqrt{1 + (f'(x))^2}\,dx}
+  \]
+  The result of this integral will give us the length of any continuous graph.
 
 	\newpage
 	
-	\section{Intermediate Value Theorem for Integrals}
-	Let $f$ be a continuous funtion on $[a,b]$ then exists $x_0\in[a,b]$ such that: 
-	\[
-		\int_a^b{f(x)dx}=f(x_0)(b-a)
-	\]
-	We know $f$ is continuous so it is Riemann integrable. 
-	We know by Weierstrass's theorem that since $f$ is continuous 
-	it has a minimum and maximum in $[a,b]$ which we'll denote $m, M$.
-	\begin{align*}
-	m(b-a) &\le \int_a^b{f(x)\,dx} \le M(b-a) \\
-	&\Rightarrow m \le \frac{\int_{a}^{b}{f(x)\,dx}}{b-a} \le M
-	\end{align*}
-	Let $c = \frac{\int_{a}^{b}{f(x)\,dx}}{b-a}$. 
-	By the intermediate value theorem we know that an $x_0 \in (a,b)$ exists such that 
-	$f(x_0) = c$ and thus:
-	\[
-		\int_{a}^{b}{f(x)\,dx} = f(x_0)(b-a)
-	\]
-
-	\newpage
-	
-	\section{Fundamental Theorem of Calculus}
-	Let $f$ be a continuous real-valued function defined on a closed interval $[a, b]$. 
-	Let $F$ be the function defined as:
-	\[
-		F(x) = \int_{a}^{x}{f(t)\,dt} \quad \forall x \in [a, b]
-	\]
-	Then $F$ is uniformly continuous on $[a, b]$ and 
-	differentiable on the open interval $(a, b)$, and
-	\[
-		F'(x) = f(x) \quad \forall x \in (a, b)
-	\]
-	If $f$ is Riemann integrable on $[a, b]$ then:
-	\[
-		\int_{a}^{b}{f(x)\,dx} = F(b)-F(a)
-	\]
-	
-	\subsection{Part One}
-	For any $x_1, x_1+\Delta x\in [a,b]$ we get:
-	\[
-		F(x_1 + \Delta x) - F(x_1) = 
-		\int_{a}^{x_1 + \Delta x}{f(t)\,dt} - \int_{a}^{x_1}{f(t)\,dt} = 
-		\int_{x_1}^{x_1 + \Delta x}{f(t)\,dt}
-	\]
-	According to the mean value theorem for integration 
-	we get that for $c \in [x_1, x_1+\Delta x]$:
-	\begin{align*}
-		&\int_{x_1}^{x_1 + \Delta x}{f(t)\,dt} = f(c)\Delta x \\
-		&\lim_{\Delta x\to 0}{\frac{F(x_1+\Delta x) - F(x_1)}{\Delta x}}
-		= \lim_{\Delta x\to 0}{f(c)}
-		= f(x_1)
-	\end{align*}
-	And thus according to the squeeze theorem and $f$'s continuity $F'(x_1) = f(x_1)$
-	\subsection{Part Two}
-	Let $P = (x_0, x_1, \ldots, x_n)$ be a partition of $[a, b]$ such that $(x_0,x_n)=(a,b)$
-	\begin{align*}
-		F(b) - F(a) &= F(x_n) + \left[F(x_{n-1})-F(x_{n-1})\right] 
-		+ \cdots + \left[F(x_{1})-F(x_{1})\right] - F(x_0) \\
-		&= \left[F(x_n)-F(x_{n-1})\right] + \left[F(x_{n-1})-F(x_{n-2})\right] 
-		+ \cdots + \left[F(x_1)-F(x_{0})\right] \\
-	&= \sum_{i=1}^n{\left[F(x_{i})-F(x_{i-1})\right]}
-	\end{align*}
-	Since $F$ is continuous on $[a,b]$ and differentiable on $(a,b)$ 
-	according to Lagrange's theorem on $[x_i,x_{i-1}]$ where $c_i\in [x_i,x_{i-1}]$ we get
-	\[
-		\sum_{i=1}^n{\left[F(x_{i})-F(x_{i-1})\right]} 
-		= \sum_{i=1}^n{\left[F'(c_i)(x_i-x_{i-1})\right]}
-	\]
-	\newpage
-	According to part one we get that $F'(c_i) = f(c_i)$ and so
-	\begin{align*}
-		F(b) - F(a) &= \sum_{i=1}^{n}{\left[f(c_i)(\Delta x_i)\right]} \\
-		&\iff \\
-		\lim_{\|\Delta x_i\|\to 0}{\left(F(b)-F(a)\right)} &= 
-		\lim_{\|\Delta x_i\|\to 0}{\left(\sum_{i=1}^n{\left[f(c_i)(\Delta x_i)\right]}\right)} \\
-		&\iff \\
-	F(b)-F(a) &= \int_a^b{f(x)\,dx}
-	\end{align*}
-	
-	\newpage
-	
-	\section{Find Formula For Length of Continuous Graph}
-	Approximating the length of a graph using the pythagorian theorem for partition
-	$X=(x_0,x_1,\ldots,x_n)$ we get:
-	\[
-		\sum_{i=1}^{n}{\sqrt{d(x_{i-1}, x_i)^2 + d(f(x_{i-1}), f(x)_i)^2}}
-	\]
-	Assuming $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$ by Lagrange's theorem we get:
-	\begin{align*}
-		\sum_{i=1}^{n}{\sqrt{d(x_{i-1}, x_i)^2 + d(f(x_{i-1}), f(x)_i)^2}}
-		&= \sum_{i=1}^{n}{\sqrt{(x_i - x_{i-1})^2 + (f'(c_i)(x_{i} - x_{i-1}))^2}}\\
-		&= \sum_{i=1}^{n}{\sqrt{(x_i - x_{i-1})^2(1 + (f'(c_i))^2)}} \\
-		&= \sum_{i=1}^{n}{\sqrt{1 + (f'(c_i))^2}\Delta X_i}
-	\end{align*}
-	We can see that this summation is matching the integral
-	\[
-		\lim_{\|\Delta x_i\|\to 0}{\sum_{i=1}^{n}
-		{\sqrt{1 + (f'(c_i))^2}\Delta X_i}} = 
-		\int_a^b{\sqrt{1 + (f'(x))^2}\,dx}
-	\]
-	The result of this integral will give us the length of any continuous graph.
-	
-	\newpage
-	
-	\section{The Limit Comparison Test}
-	Let $f, g$ be two integrable positive functions on $[a,M]$ for any $M \in \R$. 
-	Suppose:
-	\[
-		\lim_{x\to\infty}{\frac{f(x)}{g(x)}} = c
-	\]
-	If $c \in (0,\infty)$ then either both series converge or both series diverge.
-	And if $c=0$ the converganve of $f$ implies the convergance of $g$.
-	If $c=\infty$ the opposite is true.
-	
-	\subsection{Proof}
-	Let $\varepsilon > 0$ we know that $\exists x_0 \in \R \colon \forall x_0 < x$:
-	\[
-		g(x)(c-\varepsilon) < f(x) < g(x)(c+\varepsilon)
-	\]
-	Then if $g(x)$ converges then $f(x)$ converges by the squeeze theorem. 
-	Similarly if $g$ diverges we know that
-	\[
-		g(x)(c-\varepsilon) < f(x)
-	\]
-	So from a certain point onwards $f$ will meet the requirments of the 
-	direct comparison test and so will diverge.
-	
+  \begin{proposition}[Limit comparison test]
+    Let $f$, $g$ be two integrable positive functions on $[a,M]$ for any 
+    $M \in \R$. Suppose that
+    \[
+      \lim_{x\to\infty} \frac{f(x)}{g(x)} = c.
+    \]
+    Then
+    \begin{itemize}
+      \item If $c \in (0,\infty)$ then either both series converge or both 
+        series diverge.
+      \item If $c = 0$ the converganve of $f$ implies the convergance of $g$.
+      \item If $c = \infty$ the converganve of $g$ implies the convergance 
+        of $f$.
+    \end{itemize}
+  \end{proposition}
+  \begin{proof}
+    Assume $c \in (0,\infty)$.
+    Let $\varepsilon > 0$ we know that exists $x_0 \in \R$ such that for all 
+    $x_0 < x$ we have:
+    \[
+      g(x)(c - \varepsilon) < f(x) < g(x)(c + \varepsilon).
+    \]
+    If $g(x)$ converges then $f(x)$ converges by the squeeze theorem.
+    Similarly if $g$ diverges we know that
+    \[
+      g(x)(c - \varepsilon) < f(x),
+    \]
+    So from a certain point onwards $f$ will meet the requirments of the 
+    direct comparison test and will diverge which completes the proof.
+  \end{proof}
 	\newpage
 	
 	\section{Some Practise}
-	\subsection{Limits With Series: Find 
-	$\lim_{n\to\infty}
-	{\left(\frac 1{n+1} + \frac 1{n+2} + \cdots + \frac {1}{2n}\right)}$}
+  \begin{exercise}
+    Find the value of
+    \[
+      \lim_{n\to\infty}
+      \left(\frac 1{n+1} + \frac 1{n+2} + \cdots + \frac {1}{2n}\right).
+    \]
+  \end{exercise}
+  \begin{solution}
+    By direct calculation we have:
+    \begin{align*}
+    \lim_{n\to\infty}
+    {\left(\frac {1}{n+1} + \frac {1}{n+2} + \cdots + \frac {1}{2n}\right)} 
+    &= \lim_{n\to\infty}
+    {\sum_{k=1}^{n}{\frac {1}{n+k}}} 
+    \\
+    &= \lim_{n\to\infty}
+    {\sum_{k=1}^{n}{\frac {1}{1 + \frac {k}{n}}\frac {1}{n}}} 
+    \\
+    &= \lim_{n\to\infty}
+    {\sum_{k=1}^{n} {f(\frac {k}{n})\frac {1}{n}}} 
+    \\
+    &= \int_{0}^{1}{\frac{1}{1+x}}
+    \end{align*}
+  \end{solution}
 	
-	\begin{align*}
-	\lim_{n\to\infty}
-	{\left(\frac {1}{n+1} + \frac {1}{n+2} + \cdots + \frac {1}{2n}\right)} 
-	&= \lim_{n\to\infty}
-	{\sum_{k=1}^{n}{\frac {1}{n+k}}} 
-	\\
-	&= \lim_{n\to\infty}
-	{\sum_{k=1}^{n}{\frac {1}{1 + \frac {k}{n}}\frac {1}{n}}} 
-	\\
-	&= \lim_{n\to\infty}
-	{\sum_{k=1}^{n} {f(\frac {k}{n})\frac {1}{n}}} 
-	\\
-	&= \int_{0}^{1}{\frac{1}{1+x}}
-	\end{align*}
-	
-	\subsection{Check convergion: $\int_{\frac {1}{2}}^{1}{\frac{1}{x\sqrt{1-x}}}$}
-	This function seems to behave a lot like $\frac{1}{\sqrt{1-x}}$ near $1$ 
-	so let's compare them using the limit comparison test
-	\[
-		\lim_{x\to 1^-}{\cfrac{\cfrac{1}{x\sqrt{1-x}}}{\frac{1}{\sqrt{1-x}}}}
-		= \lim_{x\to 1^-}{\frac{1}{x}} = 1
-	\]
-	So by the limit comparison test we know that the integral converges.
-	
-	\newpage
-	
-	\section{Absolute Convergance Implies Conditional Convergance}
-	\[
-		\int_a^\infty|f(x)|\,dx \quad\mathrm{converges}\quad
-		\Rightarrow
-	    \int_a^\infty {f(x)}\,dx \quad\mathrm{converges}\quad
-	\]
-	The first condition is called \textbf{"absolute convergence"}. 
-	We will prove it implies the second condition \textbf{"conditional convergance"}. 
-	Suppose $f$ converges absolutely. Consider:
-	\begin{align*}
-		f^+&=
-		\begin{cases}
-  			f(x)  & f(x) > 0 \\
-  			0  & f(x) \le 0
-	\end{cases}
-	\\
-		f^-&=
-		\begin{cases}
-  			-f(x)  & f(x) < 0 \\
-  			0  & f(x) \ge 0
-		\end{cases}
-	\end{align*}
-	We know that $|f|=f^++f^-$ convereges and so by the direct comparison test we get that 
-	$\int_a^\infty f^+,\int_a^\infty f^-$ converge and since 
-	$f = f^+ - f^-$ we also get that $\int_a^\infty f$ converges as well.
+  \begin{exercise}
+    Check if the following integral converges or diverges:
+    \[
+      \int_{\frac{1}{2}}^{1} \frac{1}{x \sqrt{1-x}}.
+    \]
+  \end{exercise}
+  \begin{solution}
+    This function seems to behave like $\frac{1}{\sqrt{1-x}}$ near $1$
+    so let's compare them using the limit comparison test:
+    \[
+      \lim_{x\to 1^-} \frac{\frac{1}{x\sqrt{1-x}}}{\frac{1}{\sqrt{1-x}}}
+      = \lim_{x\to 1^-}{\frac{1}{x}} = 1.
+    \]
+    By the limit comparison test we get that the integral converges.
+  \end{solution}
 	
 	\newpage
 	
-	\section{Convergence Tests}
-	\subsection{Dirichlet's Test}
-	If $a_n$ is a monotonic sequence and $\lim_{n\to\infty}{a_n}=0$ and 
-	$\sum b_n$ is bounded by $M$ then
-	\[
-		\sum_{n=1}^\infty a_nb_n \text{ converges}
-	\]
-	\subsubsection{Proof}
+  \begin{definition}[Absolute convergence]
+    An improper integral of a function $f$ is said to converge absolutely 
+    if the integral of the absolute value of the integrand is finite---that is,
+    if $\int_a^\infty \abs{f(x)}\,dx = L$ for some finite $L \in \R$.
+  \end{definition}
+  \begin{remark}
+    An improper integral of a function $f$ that converges, but does not
+    converge absolutely, is said to converge conditionally.
+  \end{remark}
+
+  \begin{proposition}
+    Let $\int_a^\infty f(x)\,dx$ be an improper integral that 
+    converge absolutely, then it also converges.
+    In other words:
+    \[
+      \int_a^\infty \abs{f(x)}\,dx \quad\mathrm{converges}\quad
+      \implies
+      \int_a^\infty {f(x)}\,dx \quad\mathrm{converges}.
+    \]
+  \end{proposition}
+  \begin{proof}
+    Suppose $f$ converges absolutely. Consider:
+    \begin{align*}
+      f^+&=
+      \begin{cases}
+          f(x),  & f(x) > 0 \\
+          0,  & f(x) \le 0
+      \end{cases} \\
+      f^-&=
+      \begin{cases}
+          -f(x),  & f(x) < 0 \\
+          0,  & f(x) \ge 0
+      \end{cases}
+    \end{align*}
+    We know that $\abs{f} = f^+ + f^-$ convereges and so by the direct 
+    comparison test we get that  $\int_{a}^{\infty} f^+$ and 
+    $\int_{a}^{\infty} f^-$ converge.
+    Since $f = f^+ - f^-$ we also get that $\int_{a}^{\infty} f$ converges 
+    as well which completes the proof.
+  \end{proof}
+
+  \begin{proposition}[Dirichlet's Test]
+    If $a_n$ is a monotonic sequence and $\lim_{n\to\infty} a_n = 0$ and 
+    $\sum b_n$ is bounded by $M$ then
+    \[
+      \sum_{n=1}^{\infty} a_n b_n \quad\mathrm{ converges}.
+    \]
+  \end{proposition}
+  \begin{proof}
 		Denote $B_{n} = \sum_{k=1}^{n}{b_{n}}$ and by summation by parts we see that
 		\[
-			\sum_{k=1}^{n}{a_{n}b_{n}} = a_{n}B_{n} - \sum_{k=1}^{n-1}{(a_{k+1}-a_{k})B_k}
+			\sum_{k=1}^{n}{a_{n}b_{n}} =
+      a_{n}B_{n} - \sum_{k=1}^{n-1}{(a_{k+1}-a_{k})B_k}.
 		\]
 		Since $a_{n}$ converges to $0$ and $B_{n}$ is bounded 
 		$\lim_{n\to\infty}{a_nB_n}$ exists.
 		WLOG assume $a_n$ is increasing, we can also see that
 		\[
-			\sum_{k=1}^{n-1}{|(a_{k+1}-a_{k})B_k|} \le
-		    \sum_{k=1}^{n-1}{M|(a_{k+1}-a_{k})|} \le
+    \sum_{k=1}^{n-1} \abs{(a_{k+1}-a_{k})B_k} \le
+    \sum_{k=1}^{n-1} M\abs{(a_{k+1}-a_{k})} \le
 			M \sum_{k=1}^{n-1}{(a_{k+1}-a_{k})}
 		\] 
 		And
@@ -295,22 +405,23 @@
 		converges. And by additivity of limits we know 
 		$\lim_{n\to\infty}\sum_{k=1}^{n}{a_{n}b_{n}}$ exists so 
 		$\sum_{n=1}^\infty a_nb_n$ converges.
+  \end{proof}
 	
-	\newpage
-	
-	\subsection{Abel's Test}
+  \begin{proposition}[Abel's test]
 	Suppose $\sum_{1}^{\infty}{a_n}$ converges, and $b_n$ is monotone and bounded.
     Then $\sum_{1}^{\infty}{a_nb_n}$ also converges.
-	\subsubsection{Proof}
+  \end{proposition}
+	\begin{proof}
 		We know $b_n$ is monotone and bounded so it has a limit $\lim_{n\to\infty}{b_n}=b$
 		This implies $\lim_{n\to\infty}{b_n-b}=0$. 
 		Since $b_n-b$ is also monotonic we know by Dirichle's test that 
 		$\sum_{1}^{\infty}{a_n(b_n-b)}$ converges. And by homogenity of series we know that
 		 $\sum_{n=1}^{\infty}{a_n b}$ converges as well.
 		That means $\sum_{n=1}^{\infty}{(a_n b)+a_n(b_n-b)}$ converges.
-		So $\sum_{n=1}^{\infty}{(a_n b)+a_n(b_n-b)} = 
-		    \sum_{n=1}^{\infty}{a_nb_n}$ converges.
-		
+		So $\sum_{n=1}^{\infty}{(a_n b)+a_n(b_n-b)} = \sum_{n=1}^{\infty}{a_nb_n}$
+    converges.
+	\end{proof}
+
 	\subsection{Root And Quotient Test}
 	Let $a_n$ be asequence and suppose
 	\[
@@ -667,13 +778,18 @@
 	\]
 	\subsection{Lemma}
 	Lemma: if $f(x,y)$ is continuous on $[a,b]\times[c,d]$ then 
-	$F(y) = \int_a^b{f(x,y)\,dx}$ is uniforamlly contiuous on $[c,d]$.\\\\
-	We know $f$ is contiuous on a compact space so it is uniformally continuous there:
+	$F(y) = \int_a^b{f(x,y)\,dx}$ is uniforamlly contiuous on $[c,d]$.
+
+	We know $f$ is contiuous on a compact space so it is uniformally continuous 
+  there. This means that for any $\varepsilon > 0$ there exists $\delta > 0$
+  such that for any $p_1 = (x_1,y_2)$, $p_2 = (x_2,y_2)$ such that 
+  $d(p_1,p_2) < \delta$ we have
 	\[
-		\forall\varepsilon>0\,\exists\delta>0\,(\forall(p_1=(x_1,y_1),p_2=(x_2,y_2)):
-		d(p_1,p_2)<\delta \rightarrow |f(p_1)-f(p_2)|<\varepsilon)
+    \abs{f(p_1) - f(p_2)} < \varepsilon.
 	\]
-	Now consider $y_1,y_2\in[c,d]$. such that $d(y_1,y_2)<\delta$ we know that $\forall x\in[a,b]$ that $d((x,y_1),(x,y_2))>\delta$ and then we can see that
+	Now consider $y_1, y_2 \in[c,d]$ such that $d(y_1,y_2) < \delta$.
+  We know that for all $x \in [a,b]$ that $d((x,y_1),(x,y_2)) > \delta$
+  and then we can see that
 	\begin{align*}
 		|F(y_1)-F(y_2)| 
 		= \left|\int_a^b{f(x,y_1)\,dx} - \int_a^b{f(x,y_2)\,dx}\right|
@@ -812,7 +928,9 @@
 		\frac{\partial y}{\partial v}
 	\end{bmatrix} \neq 0 \;\;\;\forall (u,v)\in E
 	\]
-	*It can be equal to $0$ in the domain if the measure of the set of those points is $0$.\\\\
+	*It can be equal to $0$ in the domain if the measure of the set of those points is $0$.
+
+
 	Then
 	\[
 		\iint\limits_D f(x,y) \, dx \, dy =   \iint\limits_E f(x(u,v),y(u,v))|\mathbb{J}| \, du \, dv
@@ -820,15 +938,18 @@
 
 
 	\newpage
-	\section{Calculate $\iint_{-\infty}^\infty{e^{-x^2}}$}
-
+  \begin{exercise}
+    Calculate the value of the following Gaussian integral:
+    \[
+      \iint_{-\infty}^{\infty} e^{-x^2}.
+    \]
+  \end{exercise}
+  \begin{solution}
 	\[
 		\left(\int_{-\infty}^\infty{e^{-x^2}}\, dx\right)^2 = 
 		\left(\int_{-\infty}^\infty{e^{-x^2}}\, dx\right) \left(\int_{-\infty}^\infty{e^{-y^2}}\, dy\right) = \int_{-\infty}^\infty\int_{-\infty}^\infty{e^{-(x^2+y^2)}}\, dx\, dy
 	\]
 	Now consider the integral in polar coordinates.
-
-
 
 	\begin{align*}
 		\int_{-\infty}^\infty\int_{-\infty}^\infty{e^{-(x^2+y^2)}}\, dx\, dy &= 
@@ -846,6 +967,9 @@
 		&\Rightarrow \left(\int_{-\infty}^\infty{e^{-x^2}}\, dx\right)^2 = \pi\\
 		&\Rightarrow \int_{-\infty}^\infty{e^{-x^2}}\, dx = \sqrt\pi
 	\end{align*}
+  \end{solution}
+  
+
 
 
 \end{document}
