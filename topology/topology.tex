@@ -26,6 +26,11 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 
+\newcommand\dx    {\,\mathrm{d}x}
+\newcommand\dt    {\,\mathrm{d}t}
+\newcommand\du    {\,\mathrm{d}u}
+\newcommand\dv    {\,\mathrm{d}v}
+
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\idealin}{\triangleleft}
 \DeclareMathOperator{\im}{im}
@@ -57,7 +62,7 @@
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{Introduction to Metric and Topological Spaces}}
-\author{heavily based on notes by Ariel Rapaport}
+\author{based on notes by Ariel Rapaport}
 \date{}
 \begin{document}
   \maketitle
@@ -104,16 +109,16 @@
   The pair $(C\left([0,1]\right), d)$ such that $C([0,1])$ is the space of 
   all continuous functions on $[0,1]$ paired with the metric:
   \[
-    d(f,g) = \int_{0}^{1}{\abs{f(x) - g(x)}\,dx}
+    d(f,g) = \int_{0}^{1}{\abs{f(x) - g(x)}\dx}
   \]
   is also a metric space. This metric is called the $L^1$ metric.
   \end{example}
   
   \begin{remark}
     In general, the $p$-metrics are induced by the $p$-norms, defined
-    on $C\left([0,1]\right)$ as such for every $1 \le p < \infty$:
+    on $C\left([0,1]\right)$ for every $1 \le p < \infty$ as such:
     \[
-      d(f,g) = \int_{0}^{1}{\abs{f(x) - g(x)}^p}.
+      d(f,g) = \int_{0}^{1}{\abs{f(x) - g(x)}^p}\dx.
     \]
   \end{remark}
   Similarly we can define the $L^\infty$ space on $C\left([0,1]\right)$
