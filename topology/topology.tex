@@ -5,6 +5,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
 \usepackage{fancyhdr}
+\usepackage{bookmark}
 \pagestyle{fancy}
 \usetikzlibrary{positioning}
 \geometry{margin=1in}
@@ -31,7 +32,7 @@ These notes are not endorsed by the lecturers.
 I have revised them outside lectures to incorporate supplementary explanations,
 clarifications, and material for fun.
 While I have strived for accuracy, any errors or misinterpretations 
-probability mine.
+are probability mine.
 \end{minipage}\end{center}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{definition}
@@ -86,6 +87,16 @@ probability mine.
 \fancyhead[R]{Topology}
 \begin{document}
   \maketitle
+  \vspace{5cm}
+  \begin{center}
+\begin{tikzpicture}[x=5cm, scale=2.5]
+    % \draw[xstep=.2,ystep=.5,lightgray,ultra thin] (-0.1,-1.5) grid (1.1,1.5);
+    \draw[->] (0,0) -- (1.1,0);
+    \draw[->] (0,-1) -- (0,1.1);
+  \draw[blue,domain=0.01:1,samples=5000] plot (\x, {sin((1/\x)r)});
+\end{tikzpicture}
+  \end{center}
+
   \newpage
   \tableofcontents
   \newpage
@@ -101,6 +112,9 @@ probability mine.
     \item[(3)] $d(x,z) \le d(x,y) + d(y,z)$ (triangle inequality);
   \end{enumerate}
   The pair $(X,d)$ is said to be a metric space.
+
+  \subsection{Standard examples}
+
   \begin{example}
   Let $X$ be a non-empty set. Let $d \colon X \times X \to [0,\infty)$ be
   the function such that for $x,y \in X$,
@@ -121,6 +135,7 @@ probability mine.
   where $\abs{\cdot} \colon \R \to \R$ is the Eclidean norm function. 
   Then the pair $(X, d)$ forms a metric space.
   \end{example}
+
   \begin{example}
   Let $(X, N)$ be an arbitrary normed space and define the function:
   \[
@@ -128,6 +143,9 @@ probability mine.
   \] 
   Then the pair $(X, d)$ forms a metric space.
   \end{example}
+
+  \subsubsection{The \texorpdfstring{$L^p$}{} metric}
+
   \begin{example}
   The pair $(C\left([0,1]\right), d)$ such that $C([0,1])$ is the space of 
   all continuous functions on $[0,1]$ paired with the metric:
@@ -175,7 +193,9 @@ probability mine.
     The pair $(Y,d_Y)$ where $d_Y$ is the metric $d$ constrained to $Y$
     is also a metric space, and it is called a metric subspace of $X$.
   \end{example}
-  
+
+  \subsection{Open sets}
+
   \begin{definition}[Open ball]
     Let $(X,d)$ be a metric space. For $x \in X$ and $r > 0$ write:
     \[
@@ -274,6 +294,8 @@ probability mine.
     \]
     which completes the proof.
   \end{proof}
+  
+  \subsection{Sequences}
 
   \begin{definition}[Convergence]
     Let $\{x_n\}_{n \geq 1}$ be a sequence in $X$, and let $x \in X$.
@@ -299,6 +321,8 @@ probability mine.
     as wanted.
   \end{proof}
   
+  \subsection{Closed sets}
+
   \begin{definition}[Closed subset]
     We say that $F \subset X$ is a closed subset of $X$ if for every
     sequence $\{x_n\}_{n \geq 1} \subset F$ and $x \in X$ such that
@@ -356,7 +380,8 @@ probability mine.
   \begin{proof}
     It suffices to show that $X \setminus \overline B(x,r)$ is open.
   \end{proof}
-  
+
+  \subsubsection{The middle third Cantor set}
 
   \begin{example}[The middle third Cantor set]
     Set $C_0 := [0,1]$. Let $C_1$ be the set obtained by deleting the
@@ -378,6 +403,8 @@ probability mine.
     follows that the set $C := \cap_{n \in \N} C_n$ is also closed.
     The set $C$ is called the middle third Cantor set.
   \end{example}
+
+  \subsection{Functions}
 
   \begin{definition}[Continuity]
     Let $f \colon X \to Y$ be a function between two metric spaces.
@@ -423,6 +450,8 @@ probability mine.
     of $(X,\tau)$.
   \end{definition}
 
+  \subsection{Standard examples}
+
   \begin{example}[Topology induced by metric]
     Every metric spaces can induce a topological space. Let $(X,d)$ be a
     metric space. Define
@@ -460,6 +489,8 @@ probability mine.
     The topology $\tau$ is called the finite complement topology. Is it 
     metrizable?
   \end{example}
+  
+  \subsection{Continuous functions}
 
   \begin{definition}[Continuity]
     A mapping $f \colon X \to Y$ is said to be continuous if for every open
@@ -485,6 +516,8 @@ probability mine.
     A mapping $f \colon X \to Y$ is said to be open if $f(U)$ is open in $Y$
     for every open $U \subset X$.
   \end{definition}
+  
+  \subsection{Homeomorphisms}
 
   \begin{definition}[Homeomorphism]
     A mapping $f \colon X \to Y$ is said to be a homeomorphism if it is
@@ -504,6 +537,8 @@ probability mine.
     is called topology.
   \end{remark}
 
+  \subsection{Subspace topology}
+
   \begin{definition}[Subspace topology]
     Let $(X,\tau_X)$ be a topological space and let $\emptyset \neq Y \subset 
     X$. Define
@@ -512,6 +547,8 @@ probability mine.
     \]
     We call $\tau_Y$ the subspace topology, induced by $\tau_X$ on $Y$.
   \end{definition}
+  
+  \subsubsection{Characteristic property of the subspace topology}
 
   \begin{theorem}
     \tt{Characteristic property of the subspace topology}
@@ -525,6 +562,8 @@ probability mine.
   \end{theorem}
 
   Throughout this section let $X$ be a fixed topological space.
+  
+  \subsection{Closed sets}
 
   \begin{definition}[Closed set]
     A subset $F$ of $X$ is said to be closed if $F^c = X \setminus F$ is open.
@@ -569,6 +608,8 @@ probability mine.
     We know that $\Q$ is dense in $\R$. Since $\Q$ is countable, it follows
     that $\R$ is seperable.
   \end{example}
+
+  \subsection{Isolated points and limit points}
 
   \begin{definition}[Isolated point]
     Let $A \subset X$. We say that $x$ is an isolated point of $A$ if exists
@@ -631,11 +672,13 @@ probability mine.
     that $I(A)$ and $D(A)$ are disjoint too.
   \end{proof}
 
+  \subsection{The interior and boundary of a topological space}
+
   \begin{definition}[Interior]
     Let $A$ be a subset of $X$. The interior of $A$ is denoted by $\Int(A)$
     and is defined to be the union of all open subsets $U$ of $X$ so that 
     $U \subset A$. A point $x \in \Int(A)$ is said to be an interior point 
-    of $A$.
+    of $A$ of a topological space.
   \end{definition}
 
   \begin{proposition}
@@ -687,6 +730,8 @@ probability mine.
     Let $A \subset X$ be given, then $\overline A$ is the disjoint union of 
     $\Int(A)$ and $\partial A$.
   \end{proposition}
+  
+  \subsection{Open bases}
 
   \begin{definition}[Open base]
     A family $\mathcal{B}$ of subsets of $X$ is said to be an open base
@@ -706,6 +751,8 @@ probability mine.
     Suppose that $f^{-1}(B)$ is open for all $B \in \mathcal B$,
     then $f$ is continuous.
   \end{proposition}
+
+  \subsubsection{Countability}
 
   \begin{definition}[Second countability]
     We say that $X$ is second countable, or that it satisfies the second
@@ -811,6 +858,8 @@ probability mine.
     Thus every metric space is first countable.
   \end{example}
 
+  \subsection{Open subbases}
+
   \begin{definition}[Open subbase]
     Let $X$ be a topological space. A family $\mathcal{S}$ of open subsets 
     of $X$ is said to be an open subbase for $X$ if the collection of all 
@@ -881,6 +930,8 @@ probability mine.
     topology generated by $\cup_{\tau \in \mathcal T_0} \tau$.
   \end{remark}
 
+  \subsection{Topology generated by functions}
+
   \begin{definition}[Topology generated by functions]
     Let $\{Y_i\}_{i \in I}$ be a family of topological spaces. For each
     $i \in I$ let $f_i \colon X \to Y_i$. Write $\mathcal{T}_0 \subset 
@@ -904,6 +955,8 @@ probability mine.
     for $z \in Z$. It is easy to show that the weak topology generated by $f$ 
     is equal to the subspace topology induced by $Y$ on $Z$.
   \end{example}
+
+  \subsection{The product topology}
 
   \begin{definition}[Product topology]
     The product topology on a cartesian product of topological spaces
@@ -967,6 +1020,8 @@ probability mine.
   \section{Complete Metric Spaces}\label{sec:complete-metric-spaces}
   Let $(X,d)$ be a fixed metric space.
 
+  \subsection{Definitions}
+
   \begin{definition}[Cauchy sequence]
     We say that a sequence $\{a_n\}_{n \geq 1} \subset X$ is a Cauchy
     sequence if for all $\epsilon > 0$ exists $N \geq 1$ such that 
@@ -989,6 +1044,10 @@ probability mine.
     $(-1,1)$ and $\R$, and $\R$ is complete which shows that completeness
     is not a topological property.
   \end{remark}
+
+  \subsection{Examples of complete metric spaces}
+
+  \subsubsection{Banach spaces}
 
   \begin{definition}[Banach space]
     A complete normed space is said to be a Banach space.
@@ -1015,6 +1074,8 @@ probability mine.
     which completes the theorem.
   \end{example}
 
+  \subsubsection{Subspace of a complete metric space}
+
   \begin{proposition}
     Suppose that $X$ is complete and let $Y$ be a nonempty subset of $X$. 
     Then $Y$ is complete (with respect to the metric induced by $X$) if and 
@@ -1033,6 +1094,8 @@ probability mine.
     $\{y_n\}_{n \geq 1}$ must also have a limit in $Y$. From the uniqueness
     of the limit we have that $x \in Y$. It follows that $Y$ is closed.
   \end{proof}
+
+  \section{Cantor’s intersection lemma}
   
   \begin{definition}[Diameter]
     Given a nonempty subset $A$ of $X$ we write
@@ -1069,6 +1132,8 @@ probability mine.
     $\cap_{n \geq 1}{F_n} = \{x\}$ which completes the proof.
   \end{proof}
   
+  \subsection{The completion theorem}
+
   \begin{definition}[Isometry]
     Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces. A map $f \colon X \to Y$ 
     is said to be an isometry if $d_X(x_1,x_2) = d_Y(f(x_1),f(x_2))$ for all 
@@ -1113,7 +1178,7 @@ probability mine.
   
   \end{proposition}
   
-  Preperation for Baire's theorem
+  \subsection{Baire's theorem}
   
   \begin{definition}[Nowhere dense subset]
     A subset $A$ of $X$ is said to be nowhere dense if 
@@ -1260,6 +1325,8 @@ probability mine.
     This completes the proof.
   \end{proof}
 
+  \subsection{The Banach fixed-point theorem}
+
   \begin{definition}[Contraction]
     A mapping $f \colon X \to X$ is called a contraction of $X$ if there 
     exists $c \in [0, 1)$ so that $d(f(x),f(y)) \le cd(x,y)$ for all 
@@ -1310,6 +1377,8 @@ probability mine.
   Notice that the proof of the theorem also gives an explicit way to 
   approximate the fixed point of $f$.
 
+  \subsection{A glimpse of Picard’s theorem}
+
   The following is a simplified version of the Picard–Lindelöf theorem 
   regarding the existence and uniqueness of solutions for ordinary 
   differential equations, which is also sometimes called the existence and 
@@ -1342,6 +1411,9 @@ probability mine.
   \newpage
 
   \section{Compactness}\label{sec:compactness}
+
+  \subsection{Definitions}
+
   Let $X$ be a fixed topological space.
   \begin{definition}[Open cover]
     A class $\mathcal{U} := \{U_i\}_{i \in I}$ of open subsets of a
@@ -1475,6 +1547,8 @@ probability mine.
     is finite, and by construction we have $\cup_{i \in I_f} U_i = X$.
   \end{proof}
 
+  \subsection{Closed bases}
+
   \begin{definition}[Closed base]
     A family $\mathcal{B}$ of closed subsets of $X$ is called a 
     closed base for $X$ if the collection
@@ -1495,6 +1569,8 @@ probability mine.
     base. We call $\mathcal B$ the closed base generated by 
     $\mathcal S$.
   \end{remark}
+
+  \subsection{The Alexander subbase theorem}
 
   \begin{proposition}\label{prp:alexander}
     Let $\mathcal{B}$ be a closed base for $X$. Suppose that for every 
@@ -1653,8 +1729,12 @@ probability mine.
     $\{S \cap Y \mid S \in \mathcal{S}\}$ is an open subbase as wanted.
   \end{proof}
 
+  \subsection{The Heine--Borel theorem}
+
+  \subsubsection{The Heine--Borel theorem in \texorpdfstring{$\R$}{R}}
+
   \begin{theorem}
-    \tt{Heine–Borel theorem in $\R$}
+    \tt{Heine--Borel theorem in $\R$}
     Every closed and bounded set in $\R$ is compact.
   \end{theorem}
   \begin{proof}
@@ -1693,6 +1773,8 @@ probability mine.
     completes the proof.
   \end{proof}
 
+  \subsubsection{Tychonoff's theorem}
+
   \begin{theorem}
     \tt{Tychonoff’s theorem}
     Let $\{X_i\}_{i \in I}$ be a nonempty family of compact topological 
@@ -1729,6 +1811,8 @@ probability mine.
     that $\{\tilde{x_i}\}_{i \in I} \in \cap_{j \in J}{{S}_j}$, which
     completes the proof of the theorem.
   \end{proof}
+
+  \subsubsection{The general case}
 
   We can now prove the following classic result.
 
@@ -1810,6 +1894,8 @@ probability mine.
     proof of the lemma.
   \end{proof}
 
+  \subsection{Lebesgue’s covering lemma}
+
   \begin{definition}[Local compactness]
     A topological space $X$ is called locally compact if for
     any $x \in X$ exists a neighbourhood $U \subset X$ of $x$ so that
@@ -1869,6 +1955,8 @@ probability mine.
     that $x \in A_n \subset B(x,\epsilon) \subset U_{i_0}$, which shows
     that our assumption must be false, which completes the proof.
   \end{proof}
+
+  \subsection{Total boundedness}
 
   \begin{definition}[$\epsilon$-net]
     Let $\epsilon > 0$ be given. A nonempty subset $A$ of $X$ is 
@@ -1942,6 +2030,9 @@ probability mine.
   \newpage
 
   \section{The Arzelà–Ascoli theorem}\label{sec:the-AA-theorem}
+
+  \subsection{Algebras}
+
   \begin{definition}[Algebra]
     Let $K$ be a field and $A$ a vector 
     space. Let $\abs{\cdot} \colon A \times A \to A$ be a binary operation.
@@ -2012,6 +2103,9 @@ probability mine.
   a metric space with the metric induced on it by $|\cdot|_\infty$.
   We will soon establish a useful characterisation of the compact sets
   in $C(X)$.
+
+  \subsection{Arzelà–Ascoli theorem}
+
   \begin{definition}[Equicontinuity]
     A subset $F \subset C(X)$ is called equicontinuous if
     for any $\varepsilon > 0$ exists a $\delta > 0$ such that
@@ -2120,9 +2214,14 @@ probability mine.
   \newpage
 
   \section{Seperation}
-  Let $X$ be a fixed topological space.
 
-  \begin{definition}[$T_1$-space]
+  Let $X$ be a fixed topological space.
+  
+  \subsection{Definitions}
+
+  \subsubsection{\texorpdfstring{$T_1$}{}-spaces}
+
+  \begin{definition}[$T_1$-spaces]
     We say that $X$ is a $T_1$-space if and only if for every
     $x_1, x_2 \in X$ exist neighbourhoods $U_1$ of $x_1$ and $U_2$ of
     $x_2$ such that $x_1 \notin U_2$ and $x_2 \notin U_1$.
@@ -2146,6 +2245,8 @@ probability mine.
     $U_2 := X \setminus \{x_2\}$ neighbourhood of $x_2$ such that
     $x_1 \notin U_2$ and $x_2 \notin U_1$.
   \end{proof}
+  
+  \subsubsection{Hausdorff spaces}
   
   \begin{definition}[Hausdorff space]
     We say that $X$ is a Hausdorff space if for all distinct 
@@ -2239,7 +2340,10 @@ probability mine.
 
   \newpage
 
-  \section{Completely regular spaces and normal spaces.}
+  \section{Completely regular spaces and normal spaces}
+
+  \subsection{Completely regular spaces}
+
   \begin{definition}[Seperating set]
     We say that $C_b(X)$ separates points if for every distinct 
     $x, y \in X$ there exists $f \in C_b(X)$ with $f(x) \neq f(y)$.
@@ -2292,6 +2396,8 @@ probability mine.
   Hausdorff space, except that it applies to disjoint closed sets instead
   of points.
 
+  \subsection{Normal spaces}
+
   \begin{definition}[Normal space]
     We say that $X$ is a normal space if,
     \begin{itemize}
@@ -2341,6 +2447,7 @@ probability mine.
     Suppose that $X$ is a compact Hausdorff space. Then $X$ is normal.
   \end{proposition}
 
+  \subsubsection{Urysohn’s lemma}
 
   \begin{lemma}[Urysohn’s lemma]\label{lem:urysohn}
     Let $X$ be a normal topological space, 
@@ -2384,7 +2491,9 @@ probability mine.
     conditions of the corollary and completes the proof.
   \end{proof}
 
-  \begin{theorem}\label{thm:tietze}\tt{the Tietze extension theorem}
+  \subsubsection{The Tietze extension theorem}
+
+  \begin{theorem}\label{thm:tietze}\tt{The Tietze extension theorem}
     Let $X$ be a normal space and let $F$ be a closed nonempty subset of $X$.
     Equip $F$ with the subspace topology
     and let $f \colon F \to [\alpha, \beta]$ be continuous,
@@ -2434,6 +2543,8 @@ probability mine.
   \begin{proof}
     To be added.
   \end{proof}
+  
+  \subsection{Embeddings}
 
   \begin{definition}[Embedding]
       Let $X$ and $Y$ be topological spaces. A mapping $f \colon X \to Y$
@@ -2465,6 +2576,8 @@ probability mine.
     This implies that $\tau$ is equal to the topology induced by $d_X$
     which shows that $X$ is metrizable and completes the proof.
   \end{proof}
+  
+  \subsubsection{\texorpdfstring{$\ell^p$}{l} spaces}
 
   \begin{definition}[$\ell^1$ space]
     We define the normed space $\ell^1$ with the norm $N$ as such:
@@ -2484,6 +2597,8 @@ probability mine.
     and will not be discussed in these notes.
   \end{definition}
 
+  \subsubsection{The Uryshon embedding theorem}
+
   \begin{theorem}\tt{the Urysohn embedding theorem}
     Let $X$ be a second countable normal topological space.
     Then there exists an embedding $f \colon X \to \ell^1$.
@@ -2499,6 +2614,10 @@ probability mine.
     Let $X$ be a second countable normal topological space.
     Then $X$ is metrizable.
   \end{corollary}
+
+  \subsection{Compactifications}
+
+  \subsubsection{The Stone–-\v{C}ech compactification}
 
   \begin{theorem}[Stone–-\v{C}ech compactification]
     Let $X$ be a completely regular space.
@@ -2529,6 +2648,8 @@ probability mine.
     To be added.
   \end{proof}
 
+  \subsubsection{One-point compactification}
+
   Let $X$ be a topological space and let $\infty$ be an object outside of $X$.
   Write $X_{\infty} := X \cup \{\infty\}$. Then the collection
   \[
@@ -2558,7 +2679,7 @@ probability mine.
     Any locally compact Hausdorff space is completely regular.
   \end{corollary}
   
-  As an application of the one point compactification,
+  As an application of the one-point compactification,
   we also have the following stronger version of the previous corollary.
   It is an important tool in the theory of measure and integration on 
   locally compact Hausdorff spaces.
@@ -2601,6 +2722,9 @@ probability mine.
   \newpage
 
   \section{Connectednes}
+
+  \subsection{Connectedness}
+
   \begin{definition}[Connectedness]
     The space $X$ is said to be connected if there does not exist disjoint
     nonempty open subsets $U$ and $V$ of $X$ so that $X = U \cup V$.
@@ -2766,6 +2890,8 @@ probability mine.
     assumption and completes the proof of the proposition.
   \end{proof}
 
+  \subsection{Path connectedness}
+
   \begin{definition}[Path]
     Let $X$ be a fixed topological space.
     Let $x, y \in X$ be given.
@@ -2804,6 +2930,8 @@ probability mine.
   $(Y,\norm{\cdot})$ and a nonempty convex $C \subset Y$, then $C$
   is path connected, and in particular, from the above proposition, connected.
 
+  \subsubsection{the Topologist's sine curve}
+
   \begin{definition}[Topologist's sine curve]
     The topologist sine curve is defined as the set
     \[
@@ -2822,6 +2950,8 @@ probability mine.
   \begin{proof}
     To be added.
   \end{proof}
+
+  \subsection{Connected components}
 
   \begin{definition}[Connected component]
     Let $C$ be a connected subset of $X$.
@@ -2935,6 +3065,8 @@ probability mine.
     To be added.
   \end{proof}
   
+  \subsection{Local connectedness}
+
   \begin{definition}[Locally connected space]
     We say that a topological space $X$ is locally connected if for every
     $x \in X$ and every neighbourhood $U$ of $x$ there exists a connected
@@ -2960,7 +3092,7 @@ probability mine.
 
   The following is an example of a connected space that is not locally 
   connected.
-  
+
   \begin{example}
     Let $T$ be the closed topologist's sine curve equipped with the subspace
     topology as a subspace of $\R$. It is connected, but it can be shown that
@@ -2981,8 +3113,6 @@ probability mine.
     We proved that for any $x \in C$ there exists a neighbourhood $U$ of
     $x$ such that $x \subset U \subset C$.
     This means that $C$ is open which completes the proof.
-  \end{proof}
+\end{proof}
 
-  
-  
 \end{document}
