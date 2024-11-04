@@ -1,7 +1,8 @@
+\makeatletter
 \documentclass[11pt,a4paper]{article}
 \usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
 \usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{amsthm}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -11,10 +12,27 @@
 \setlength{\headheight}{14.6pt}
 \addtolength{\topmargin}{-1.6pt}
 \hypersetup{
+    linktocpage,
     colorlinks=false, %set true if you want colored links
-    linktoc=all,   %set to all if you want both sections and subsections linked
+    linktoc=section,   %set to all if you want both sections and subsections linked
     linkcolor=black,  %choose some color if you want links to stand out
 }
+\ifx \nauthor\undefined
+  \def\nauthor{yehelip}
+\else
+\fi
+\def\nlecturer {Ariel Rapaport}
+\def\nterm {Spring}
+\def\nyear {2024}
+\let\@real@maketitle\maketitle
+\renewcommand{\maketitle}{\@real@maketitle\begin{center}
+\begin{minipage}[c]{0.9\textwidth}\centering\footnotesize
+These notes are not endorsed by the lecturers.
+I have revised them outside lectures to incorporate supplementary explanations,
+clarifications, and material for fun.
+While I have strived for accuracy, any errors or misinterpretations 
+probability mine.
+\end{minipage}\end{center}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -62,10 +80,14 @@
 {{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{Introduction to Metric and Topological Spaces}}
-\author{based on notes by Ariel Rapaport}
-\date{}
+\author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
+\date{\nterm\ \nyear}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{Topology}
 \begin{document}
   \maketitle
+  \newpage
+  \tableofcontents
   \newpage
   \section{Metric Spaces}\label{sec:metric-spaces}
   First we will begin with metric spaces.
@@ -95,6 +117,7 @@
   \[
     d(x - y) := \abs{x - y},
   \]
+
   where $\abs{\cdot} \colon \R \to \R$ is the Eclidean norm function. 
   Then the pair $(X, d)$ forms a metric space.
   \end{example}
