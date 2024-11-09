@@ -1,73 +1,27 @@
 \documentclass[11pt,a4paper]{article}
-\setlength {\marginparwidth }{2cm}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
-\usepackage{amsthm}
-\usepackage[disable]{todonotes}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usetikzlibrary{positioning}
-\pgfplotsset{compat=1.18}
-\setlength{\headheight}{14.6pt}
-\addtolength{\topmargin}{-1.6pt}
-\geometry{margin=1in}
-\hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,   %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Analysis 3}
 
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
+\input{../header.tex}
 
-\DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Aut}{Aut}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
-\DeclareMathOperator{\Mat}{Mat}
-\DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\st}{\, s.t. \,}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\Omicron}{O}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Analysis Notes}}
-\author{}
-\date{}
-\usepackage{amsmath}
 \begin{document}
 	\maketitle
+
+  % Insert cool image here
+
+  \newpage
+  \tableofcontents
 	\newpage
+
 	\section{Introduction to Topology in Euclidean Spaces}
 	\subsection{Norms and Metrics}
   We will start by giving basic topological definitions in the eclidean
 	space $\R^d$. First we define
 	\[
-		\R^d := \set{(x_1,x_2,\dots,x_d)}{\substack{1 \le i \le d \\ x_i\in\R}}
+		\R^d := \set{(x_1,x_2,\dots,x_d) \mid \substack{1 \le i \le d \\ x_i\in\R}}
 	\]
 	And now we can continue to define some more topological terms:
 	\begin{definition}
@@ -148,20 +102,20 @@
 	\begin{definition}
 	The \textbf{closure} of $E$ is defined as:
 	\[
-		\mathrm{Cl}(E) = \set{x}{\exists (x^n) \colon 
+		\mathrm{Cl}(E) = \set{x \mid \exists (x^n) \colon 
     x^n \xrightarrow{n\to\infty} x}
 	\]
 	\end{definition}
 	\begin{definition}
 	The \textbf{interior} of $E$ is defined as:
 	\[
-		\mathrm{Int}(E) = \set{x}{\exists r > 0 \colon B_r(x) \subseteq X}
+		\mathrm{Int}(E) = \set{x \mid \exists r > 0 \colon B_r(x) \subseteq X}
 	\]
 	\end{definition}
 	\begin{definition}
 	The \textbf{boundary} of $E$ is defined as:
 	\[
-		\partial E = \set{x\in\R^d}{\forall r > 0\
+		\partial E = \set{x \in \R^d \mid \forall r > 0 \
 		\exists x \in X \land \exists y \in X^c\ : y,z\in B_r(x)}
 	\]
 	\end{definition}
@@ -466,7 +420,7 @@
 		$x,y \in B_r(a)$ such that $f(x) < f(a) < f(y)$ then $a$ is called
 		a \textbf{saddle point} of $f$.
 	\end{definition}
-	\todo[inline]{ADD EXAMPLES HERE USING PGFPLOTS}
+	% ADD EXAMPLES HERE USING PGFPLOTS
 	\begin{definition}
 		Let $f \in C^2(U)$. We define the \textbf{Hessian} of $f$ at $a$ to be
 		the matrix:
@@ -532,7 +486,7 @@
 	\end{enumerate}
 	In other cases we can't tell anything about the point and it might be
 	of any type.
-	\todo[inline]{ADD EXAMPLES}
+	% ADD EXAMPLES
 
 	\newpage
 	
@@ -600,7 +554,7 @@
 		(f^{-1})'(f(x)) = [f'(x)]^{-1}
 	\]
 	\end{theorem}
-	\todo[inline]{ADD PROOF}
+	% ADD PROOF
 	
 	
 	\newpage
@@ -854,7 +808,8 @@
 	\end{theorem}
 	Notice that this thoerem is very useful because it allows us to find
 	$g'(a)$ without knowing what is $g(a)$ itself.
-	\todo[inline]{ADD PROOFS}
+  
+  % ADD PROOFS
 	
 	\newpage
 	
@@ -1045,7 +1000,8 @@
 		and every vector space $V \subset \R^n$ is a manifold of dimension 
 		$\dim(V)$.
 	\end{remark}
-	\todo[inline]{ADD PROOF OF THE EQUIVALENCIES}
+	
+  % ADD PROOF OF THE EQUIVALENCIES
 	
 	\begin{definition}
 		Let $M \subset \R^n$ be a manifold of dimension $k$. A function
@@ -1072,7 +1028,7 @@
 		it is a \textbf{continuously differentiable path}. The ``$1$-
 		dimensional'' set $f([a,b])$ is called a \textbf{curve}.
 	\end{definition}
-	\todo[inline]{ADD INTUITION FOR THE TANGENT SPACE}
+	% ADD INTUITION FOR THE TANGENT SPACE
 	\begin{definition}
 		For each point $p \in \R^n$ we define the \textbf{tangent space}
 		to $\R^n$ in $p$ as:
@@ -1140,7 +1096,7 @@
 			\end{pmatrix} \biggr\vert a \in \R \right\}
 		\end{align*}
 	\end{example}
-	\todo[inline]{MORE DEFINITIONS \\}
+	% MORE DEFINITIONS
 	\begin{definition}
 		Let $N \subset \R^3$ be a smooth surface. A vector 
 		$0 \neq v \in \R^3$ is said to be \textbf{normal} to $M$ at a 
@@ -1150,7 +1106,8 @@
 		If $M$ is equal to the set of roots of a regular function $g$
 		in a neighborhood of $a$ then a vector normal to $M$ must be 
 		co-linear with $\nabla g(p)$. 
-		\todo{add later} That is because
+		% add later
+    That is because
 	\end{remark}
 	
 	\newpage
@@ -1225,8 +1182,10 @@
 		$l(f,P) \le \int_{a}^{b}{\|f'(t)\|\,dt}$, and 
 		$l(f) = \int_{a}^{b}{\|f'(t)\|\,dt}$.
 	\end{proposition}
-	\todo[inline]{ADD PROOF}
-	\begin{definition}
+	
+  % ADD PROOF
+	
+  \begin{definition}
 		A \textbf{simple smooth curve} is a set $C \subset \R^n$ that
 		is the image of a path $f \in C^1([a,b],\R^n)$. That satisfies:
 		\begin{enumerate}
@@ -1253,12 +1212,13 @@
 		A parametrization of a curve $g$ such that $\|g'(s)\| = 1$
 		is called an \textbf{arc length paramtrization}.
 	\end{definition}
-	\todo{Some stuff is missing}
+	
+  % Some stuff is missing
 	
 	\newpage
 	
 	\section{Line Integrals}
-	\todo[inline]{ADD PRACTICE FOR ARC LENGTH PARAMETRIZATION}
+	% ADD PRACTICE FOR ARC LENGTH PARAMETRIZATION
 	
 	\begin{definition}
 		Let $C \subset \R^n$ be a smooth simple curve with 
@@ -1360,7 +1320,7 @@
 		  	\int_{z_1(x)}^{z_2(x)}{f(x,y,z)\,dz}
 	\]
 	For the relevant functions. \hfill
-	\todo{Add an example}
+	% Add an example
 	
 	\newpage
 	
@@ -1481,7 +1441,7 @@
 		W = \{x \in R \mid \omega(f,x) \neq 0\}		
 	\]
 	\begin{proof}
-		\todo[inline]{MISSING}
+		% To be added
 	\end{proof}
 	
 	\begin{definition}

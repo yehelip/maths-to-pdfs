@@ -1,74 +1,21 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
-\usepackage{amsthm}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usetikzlibrary{positioning}
-\geometry{margin=1in}
-\pgfplotsset{compat=1.18}
-\setlength{\headheight}{14.6pt}
-\addtolength{\topmargin}{-1.6pt}
-\hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,   %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem*{solution}{Solution}
-\newtheorem{exercise}{Exercise}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
 
-\DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Aut}{Aut}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
-\DeclareMathOperator{\Mat}{Mat}
-\DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\diam}{diam}
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Analysis 2}
 
-\newcommand\dx    {\,\mathrm{d}x}
-\newcommand\dt    {\,\mathrm{d}t}
-\newcommand\du    {\,\mathrm{d}u}
-\newcommand\dv    {\,\mathrm{d}v}
+\input{../header.tex}
 
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\Omicron}{O}
-\newcommand{\st}{\text{ s.t. }}
-\newcommand{\tand}{\quad \text{and} \quad}
-\newcommand{\tor}{\quad \text{or} \quad}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Analysis 2}}
-\author{}
-\date{}
 \begin{document}
 	\maketitle
+
+  % Insert cool image here
+
+  \newpage
+  \tableofcontents
 	\newpage
+
   \section{Proper Integrals}
   \begin{definition}[Riemann integrability]
     A function $f \colon \R \to \R$ is said to be Riemann integrable on the 

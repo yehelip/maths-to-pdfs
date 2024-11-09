@@ -1,0 +1,214 @@
+\makeatletter
+\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools}
+\usepackage{color}   % May be necessary if you want to color links
+\usepackage[hidelinks]{hyperref}
+\usepackage{forest}
+\usepackage{commath}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage{bm}
+\usepackage{witharrows}
+\usepackage{bookmark}
+\usepackage{tikz-cd}
+\usepackage{bbm}
+\usepackage{cleveref}
+\pagestyle{fancy}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.markings}
+\geometry{margin=1in}
+\pgfplotsset{compat=1.18}
+\setlength{\headheight}{14.6pt}
+\addtolength{\topmargin}{-1.6pt}
+\hypersetup{
+    colorlinks=false,
+    linktoc=section,
+    linkcolor=black,
+}
+
+\ifx \nauthor\undefined
+  \def\nauthor{yehelip}
+\else
+\fi
+
+\ifx \ncoursehead \undefined
+\def\ncoursehead{\ncourse}
+\fi
+
+\lhead{\emph{\nouppercase{\leftmark}}}
+\ifx \nextra \undefined
+  \rhead{
+    \ifnum\thepage=1
+    \else
+      \ncoursehead
+    \fi}
+\else
+  \rhead{
+    \ifnum\thepage=1
+    \else
+      \ncoursehead \ (\nextra)
+    \fi}
+\fi
+
+\let\@real@maketitle\maketitle
+\renewcommand{\maketitle}{\@real@maketitle\begin{center}
+\begin{minipage}[c]{0.9\textwidth}\centering\footnotesize
+These notes are not endorsed by the lecturers.
+I have revised them outside lectures to incorporate supplementary explanations,
+clarifications, and material for fun.
+While I have strived for accuracy, any errors or misinterpretations 
+are most likely mine.
+\end{minipage}\end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{paradox}{Paradox}[section]
+\newtheorem*{solution}{Solution}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
+\tikzset{->/.style = {decoration={markings,
+                                  mark=at position 1
+                                  with {\arrow[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<-/.style = {decoration={markings,
+                                  mark=at position 0 with {\arrowreversed[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<->/.style = {decoration={markings,
+                                   mark=at position 0 with {\arrowreversed[scale=2]{latex'}},
+                                   mark=at position 1 with {\arrow[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{->-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrow[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{-<-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrowreversed[scale=2]{latex'}}},
+                       postaction={decorate}}}
+\tikzset{->>/.style = {decoration={markings,
+                                  mark=at position 1 with {\arrow[scale=2]{latex'}}},
+                      postaction={decorate}}}
+\tikzset{<<-/.style = {decoration={markings,
+                                  mark=at position 0 with {\arrowreversed[scale=2]{twolatex'}}},
+                      postaction={decorate}}}
+\tikzset{<<->>/.style = {decoration={markings,
+                                   mark=at position 0 with {\arrowreversed[scale=2]{twolatex'}},
+                                   mark=at position 1 with {\arrow[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+\tikzset{->>-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrow[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+\tikzset{-<<-/.style = {decoration={markings,
+                                   mark=at position #1 with {\arrowreversed[scale=2]{twolatex'}}},
+                       postaction={decorate}}}
+
+\pgfarrowsdeclare{biggertip}{biggertip}{%
+  \setlength{\arrowsize}{1pt}
+  \addtolength{\arrowsize}{.1\pgflinewidth}
+  \pgfarrowsrightextend{0}
+  \pgfarrowsleftextend{-5\arrowsize}
+}{%
+  \setlength{\arrowsize}{1pt}
+  \addtolength{\arrowsize}{.1\pgflinewidth}
+  \pgfpathmoveto{\pgfpoint{-5\arrowsize}{4\arrowsize}}
+  \pgfpathlineto{\pgfpointorigin}
+  \pgfpathlineto{\pgfpoint{-5\arrowsize}{-4\arrowsize}}
+  \pgfusepathqstroke
+}
+\tikzset{
+	EdgeStyle/.style = {>=biggertip}
+}
+
+\tikzset{circ/.style = {fill, circle, inner sep = 0, minimum size = 3}}
+\tikzset{scirc/.style = {fill, circle, inner sep = 0, minimum size = 1.5}}
+\tikzset{mstate/.style={circle, draw, black, text=black, minimum width=0.7cm}}
+
+\tikzset{eqpic/.style={baseline={([yshift=-.5ex]current bounding box.center)}}}
+
+\definecolor{mblue}{rgb}{0.2, 0.3, 0.8}
+\definecolor{morange}{rgb}{1, 0.5, 0}
+\definecolor{mgreen}{rgb}{0, 0.4, 0.2}
+\definecolor{mred}{rgb}{0.5, 0, 0}
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\idealin}{\triangleleft}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\std}{std}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Var}{Var} % Variance
+\DeclareMathOperator{\Cov}{Cov}
+
+\DeclareMathOperator{\Vol}{Vol} % Volume
+
+\DeclareMathOperator{\MOD}{MOD}
+\DeclareMathOperator{\Theory}{Theory}
+
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Poi}{Poi}
+\DeclareMathOperator{\Exp}{Exp}
+
+\newcommand{\dx}{\dif x}
+\newcommand{\dt}{\dif t}
+\newcommand{\du}{\dif u}
+\newcommand{\dv}{\dif v}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\pair}{\del}
+
+\newcommand{\taking}[1]{\xrightarrow{#1}}
+\newcommand{\inv}{^{-1}}
+
+% Probability
+\newcommand{\Prob}{\mathbf{P}}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+
+\newcommand{\ot}{\leftarrow}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Omicron}{O}
+
+\newcommand{\powerset}{\mathcal{P}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\ps}{\mathcal{P}}
+\newcommand{\M}{\mathcal{M}}
+
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\newcommand  \ninfty{-\infty}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\tand}{\quad \text{and} \quad}
+\newcommand{\tor}{\quad \text{or} \quad}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\title{\textbf{\ncourse}}
+\author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
+\date{\nterm\ \nyear}
+\makeatother

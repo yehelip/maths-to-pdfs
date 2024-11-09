@@ -1,86 +1,21 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools,bbm}
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
-\usepackage{amsthm}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usetikzlibrary{positioning}
-\geometry{margin=1in}
-\pgfplotsset{compat=1.18}
-\setlength{\headheight}{14.6pt}
-\addtolength{\topmargin}{-1.6pt}
-\hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,   %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\tikzset{circ/.style = {fill, circle, inner sep = 0, minimum size = 3}}
-\tikzset{scirc/.style = {fill, circle, inner sep = 0, minimum size = 1.5}}
-\tikzset{mstate/.style={circle, draw, blue, text=black, minimum width=0.7cm}}
 
-\definecolor{mblue}{rgb}{0.2, 0.3, 0.8}
-\definecolor{morange}{rgb}{1, 0.5, 0}
-\definecolor{mgreen}{rgb}{0.1, 0.4, 0.2}
-\definecolor{mred}{rgb}{0.5, 0, 0}
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Probability Theory}
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{paradox}{Paradox}[section]
+\input{../header.tex}
 
-\DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Aut}{Aut}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
-\DeclareMathOperator{\Mat}{Mat}
-\DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\Bin}{Bin}
-\DeclareMathOperator{\Geo}{Geo}
-\DeclareMathOperator{\Poi}{Poi}
-\DeclareMathOperator{\Exp}{Exp}
-\DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\Cov}{Cov}
-\DeclareMathOperator{\Vol}{Vol}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\st}{\text{ s.t. }}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\Omicron}{O}
-\newcommand{\E}{\mathbf{E}}
-\newcommand{\Prob}{\mathbf{P}}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Introduction to Probability Theory}}
-\author{}
-\date{}
 \begin{document}
 	\maketitle
+
+  % Insert cool image here
+
 	\newpage
+  \tableofcontents
+  \newpage
+
   \section{Probability Spaces}
   Before diving in into the definition of a probability space, the main object
   of this course, we must note that this course is an introductory course in 
@@ -109,8 +44,8 @@
   A good thing to note, is that we can choose different sample spaces for the
   same experiment. For example, if the experiment consists of rolling two
   dice, and we want to check for the sum of the results, we can set either
-  $\Omega = \{1,2,3,4,5,6\}^2$, for the result of each dice, or 
-  $\Omega = \{1,2,\dots,11,12\}$ for the sum of the results of the dice. 
+  $\Omega = \set{1,2,3,4,5,6}^2$, for the result of each dice, or 
+  $\Omega = \set{1,2,\dots,11,12}$ for the sum of the results of the dice. 
 
   \begin{definition}[Probability space, intuitive definition]
     A discrete probability space is a pair $(\Omega, \Prob)$, where
@@ -154,7 +89,7 @@
   We now proceed to consider an experiment in which we choose a direction in
   $\R^2$ at random, on $S^1$ and write it. The sample space is:
   \[
-    \Omega = S^1 = \set{e^{i \theta}}{\theta \in [0,2 \pi)}.
+    \Omega = S^1 = \set{e^{i \theta} \mid \theta \in [0,2 \pi)}.
   \]
   A natural question to ask, is if we can define a uniform probability function
   in the sense that for any arc $[a,b] \subset S^1$ we have 
@@ -281,14 +216,17 @@
     One of the most important minimal $\sigma$-algebras, is Borel's 
     $\sigma$-algebra defined on $\R$. It is defined as such:
     \[
-      \mathfrak B = \mathfrak B(\R) := \sigma(\set{(a,b)}{a < b}).
+      \mathfrak B =
+      \mathfrak B(\R) :=
+      \sigma\left(\set{(a,b) \mid a < b}\right).
     \]
     That is, the smallest $\sigma$-algebra that contains all the open 
     intervals in $\R$. Similarly, we can define it on the space $\R^d$
     as follows:
     \[
-      \mathfrak B_d = \mathfrak B(\R^d) := 
-      \sigma\left(\set{\prod_{i=1}^{d}(a_i,b_i)}{a_i < b_i}\right).
+      \mathfrak B_d =
+      \mathfrak B(\R^d) :=
+      \sigma\left(\set{\prod_{i=1}^{d}(a_i,b_i) \mid a_i < b_i}\right).
     \]
     Note that in general, Borel's $\sigma$-algebra is defined to be
     the smallest $\sigma$-algebra that contains all the open sets in a
@@ -642,8 +580,9 @@
   sense to define it as such:
   \begin{align*}
     &\Omega_N = \Omega^N. \\
-    &\mathcal F_N = \sigma\left(\set{A_1 \times A_2 \times \cdots \times A_n}
-    {A_1,\dots,A_n \in \mathcal F}\right). \\
+    &\mathcal F_N =
+    \sigma\del{\set{A_1 \times \cdots \times A_n \mid 
+    A_1,\dots,A_n \in \mathcal F}}. \\
     &\Prob_N\left(A_1 \times A_2 \times \cdots A_N\right) = 
     \prod_{i=1}^{N} \Prob(A_i).
   \end{align*}
@@ -654,8 +593,8 @@
   Similarly, when $N=\infty$, we will define the space to be:
   \begin{align*}
     &\Omega_N = \Omega^{\N}. \\
-    &\mathcal F_N = \sigma\left(\set{\prod_{i=1}^{\infty}{A_i}}
-    {A_i \in \mathcal F, \, \forall i \geq 1 \text{ and only for finitely many
+    &\mathcal F_N = \sigma\left(\set{\prod_{i=1}^{\infty}{A_i} \mid
+    A_i \in \mathcal F, \, \forall i \geq 1 \text{ and only for finitely many
     $i$'s } A_i \neq \Omega}\right). \\
     &\Prob_N\left(\prod_{i=1}^{N}{A_i}\right) = 
     \prod_{i=1}^{N} \Prob(A_i).
@@ -800,13 +739,13 @@
     any open interval $(a,b) \subset \R$ we have
     \[
       X^{-1}\left((a,b)\right) = 
-      \set{\omega \in \Omega}{X(\omega) \in (a,b)} \in \mathcal F.
+      \set{\omega \in \Omega \mid X(\omega) \in (a,b)} \in \mathcal F.
     \]
   \end{definition}
   \begin{remark}
     From now on we denote
     \[
-      \{X \in A\} = \set{\omega \in \Omega}{X(\omega) \in A}
+      \{X \in A\} = \set{\omega \in \Omega \mid X(\omega) \in A}
     \]
   \end{remark}
   
@@ -817,7 +756,7 @@
     is a random variable.
     \item If we denote 
     \[
-      \mathcal G_X := \set{D \subset \R}{\{X \in D\} \in \mathcal F},
+      \mathcal G_X := \set{D \subset \R \mid \set{X \in D} \in \mathcal F},
     \]
     we can notice that $\R \in \mathcal G_X$, and that $\mathcal G_X$ is
     closed under countable unions, and complements. 
@@ -852,7 +791,7 @@
 
     First we define our sample space
     \[
-      \Omega = \set{(i,j,k)}{1 \le i \le j \le k \le 20}.
+      \Omega = \set{(i,j,k) \mid 1 \le i \le j \le k \le 20}.
     \]
     Since the balls are taken out uniformly we have 
     \[ \Prob\left((i,j,k)\right) = {\binom{20}{3}}^{-1}. \]
@@ -896,7 +835,7 @@
     We define a random variable $T \colon \Omega \to \R$ as such:
     \[
       T(\omega) = 
-      \inf\left\{\set{k \geq 1}{\abs{\{\omega_1,\dots,\omega_k\} = N}}\right\}.
+      \inf\set[2]{k \geq 1 \colon \abs{\set{\omega_1,\dots,\omega_k} = N}}.
     \]
     Notice that $T$ is undefined for $\omega \in \Omega$ that doesn't include
     all the coupons, so we need to show that the probability of such events
@@ -1259,8 +1198,8 @@
   For any natural number $m$ set
   \[
     A_m = 
-    \set{k \in \N}{\text{$k$ is divisible by $m$}} =
-    \set{nm}{n \in \N}.
+    \set{k \in \N \mid \text{$k$ is divisible by $m$}} =
+    \set{nm \mid n \in \N}.
   \]
   Since $\Prob_X$ is a probability function we get that for any $m \in N$
   \begin{align*}
@@ -1588,7 +1527,7 @@
       \item
       If $h$ is a strictly increasing function then $F_Y(a) = F_X(h^{-1}(a))$,
       where 
-      \[ h^{-1}(a) := \sup\set{b \in \R}{h(b) \le a} \] 
+      \[ h^{-1}(a) := \sup\set{b \in \R \mid h(b) \le a} \] 
       if $h$ is not
       a surjection. Additionaly, if $X$ is an absolutely continuous variable
       and $h$ is differentiable, 
@@ -1598,7 +1537,7 @@
       If $h$ is a strictly decreasing function then 
       $F_Y(a) = 1 - \lim_{y \to h^{-1}(a)^-} F_X(y)$,
       where
-      \[ h^{-1}(a) := \inf\set{b \in \R}{h(b) \geq a}. \]
+      \[ h^{-1}(a) := \inf\set{b \in \R \mid h(b) \geq a}. \]
       Additionaly, if $X$ is an absolutely continuous variable
       and $h$ is differentiable, then $Y$ is absolutely continuous,
       and then $f_Y(a) = -f_X(h^{-1}(a)) \cdot (h^{-1})'(a)$. 
@@ -2161,7 +2100,7 @@
     \end{center}
     The corresponding sample space is
     \[
-      \Omega = \set{(\theta, x)}{ \theta \in [0, 2 \pi),\, x \in [0,1]}.
+      \Omega = \set{(\theta, x) \mid \theta \in [0, 2 \pi),\, x \in [0,1]}.
     \]
     Because we choose the angle and radius uniformly on their respective
     intervals, and independently, we see that for any 
@@ -2201,7 +2140,7 @@
     \end{center}
     The corresponding sample space is
     \[
-      \Omega = \set{(x, y)}{ x^2 + y^2 \le 1}.
+      \Omega = \set{(x, y) \mid x^2 + y^2 \le 1}.
     \]
     Because we choose the coordinates uniformly, and independently, 
     we see that for any
@@ -2218,8 +2157,8 @@
     Now we see that
     \[
       \Prob\left(Y \geq \sqrt{3}\right) = 
-      \Prob\left(\set{(x,y)}{2 \sqrt{1 - x^2 - y^2} \geq \sqrt{3}}\right) =
-      \Prob\left(\set{(x,y)}{x^2 + y^2 \le \frac{1}{4}}\right) =
+      \Prob\left(\set{(x,y) \mid 2 \sqrt{1 - x^2 - y^2} \geq \sqrt{3}}\right) =
+      \Prob\left(\set{(x,y) \mid x^2 + y^2 \le \frac{1}{4}}\right) =
       \frac{\frac{\pi}{4}}{\pi} =
       \frac{1}{4}
     \]
@@ -2236,7 +2175,7 @@
     \end{center}
     The corresponding sample space is
     \[
-      \Omega = \set{(\theta_1, \theta_2)}{\theta_1, \theta_2 \in [0,2 \pi)}.
+      \Omega = \set{(\theta_1, \theta_2) \mid \theta_1, \theta_2 \in [0,2 \pi)}.
     \]
     Because we choose the angles uniformly, and independently,
     we see that for any
@@ -2269,8 +2208,8 @@
     $1 \le i \le N$ we have
     \[
       \vec{X}^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
-      \set{\omega \in \Omega}
-      {a_i < X_i(\omega) < b_i,\, \forall 1 \le i \le N} \in
+      \set{\omega \in \Omega \mid
+      a_i < X_i(\omega) < b_i,\, \forall 1 \le i \le N} \in
       \mathcal F.
     \]
     A multivariate random variable is sometimes also called a random vector.
@@ -2297,7 +2236,7 @@
     for $1 \le i \le N$ we have
     \[
       \vec{X}^{-1}\left(\prod_{i=1}^{N} (a_i, b_i)\right) =
-      \bigcap_{i=1}^{N}\set{\omega \in \Omega}{a_i < X_i(\omega) < b_i} \in
+      \bigcap_{i=1}^{N}\set{\omega \in \Omega \mid a_i < X_i(\omega) < b_i} \in
       \mathcal F,
     \]
     where the last equality follows from the fact $\mathcal F$ is  sigma
@@ -2339,7 +2278,7 @@
 
     We see that
     \[
-      \Omega = \set{(i,j)}{i,j \geq 0,\, i + j < 3},
+      \Omega = \set{(i,j) \mid i,j \geq 0,\, i + j < 3},
     \]
     where $i$ denotes the number of red balls drawn, and $j$ the number
     of white balls drawn. From combinatorial arguments we get
@@ -2542,7 +2481,7 @@
     To find $\Prob(X + Y \le 1)$, we need to understand that the function
     is only different than zero on $R = [0,1] \times [0,2]$. Which means that
     we need to find the integral of $f_X$ on 
-    $T = R \cup \set{(x,y)}{x + y \le 1}$. 
+    $T = R \cup \set{(x,y) \mid x + y \le 1}$. 
     Using Fubini's theorem we get
     \begin{align*}
       \Prob(X + Y \le 1) &= \int_{T}f_{(X,Y)}*(x,y)\,d(x,y) \\
@@ -2916,8 +2855,8 @@
   all random variables to be $0$. Now we can define the space
   \[
     L_2(\Omega, \mathcal F, \Prob) =
-    \set{X \colon \Omega \to \R}
-    {X\text{ is a random variable}, \E[X] = 0, \Var(X) < \infty}
+    \set{X \colon \Omega \to \R \mid
+    X\text{ is a random variable},\ \E[X] = 0,\ \Var(X) < \infty}
   \]
   coupled with the bilinear form $\ip{X}{Y} := \Cov(X,Y)$.
   Then, the space 
@@ -3276,7 +3215,7 @@
     for all $\epsilon > 0$ we have
     \[
       \lim_{n \to \infty}
-      \Prob\left(\{\abs{X_n - X} > \epsilon\}\right) = 0.
+      \Prob\left(\set{\,\abs{X_n - X} > \epsilon}\right) = 0.
     \]
     In this case we denote $X_n \xrightarrow{p} X$.
   \end{definition}
@@ -3287,7 +3226,7 @@
     Given $p \geq 1$, the sequence $X_n$ is said to converge in $L^p$
     if
     \[
-      \lim_{n \to \infty} \E\left[\abs{X_n - X}^p\right] = 0.
+      \lim_{n \to \infty} \E\left[\,\abs{X_n - X}^p\right] = 0.
     \]
     In this case we denote $X_n \xrightarrow{L^p} X$.
     We sometimes say that $X_n$ converges to $X$ in the $r$-th mean.

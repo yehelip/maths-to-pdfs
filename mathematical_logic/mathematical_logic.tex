@@ -1,71 +1,15 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools}
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
-\usepackage{amsthm}
-\usepackage{fancyhdr}
-\usepackage{MnSymbol}
-\pagestyle{fancy}
-\usetikzlibrary{positioning}
-\geometry{margin=1in}
-\pgfplotsset{compat=1.18}
-\setlength{\headheight}{14.6pt}
-\addtolength{\topmargin}{-1.6pt}
-\hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,   %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
 
-\DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Aut}{Aut}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
-\DeclareMathOperator{\Mat}{Mat}
-\DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\MOD}{MOD}
-\DeclareMathOperator{\Theory}{Theory}
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {Shay Moran}
+\def\ncourse {Mathematical Logic}
 
-\newcommand{\ot}{\leftarrow}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\M}{\mathcal{M}}
-\renewcommand{\L}{\mathcal{L}}
-\newcommand{\Omicron}{O}
-\newcommand{\st}{\text{ s.t. }}
-\newcommand{\tand}{\quad \text{and} \quad}
-\newcommand{\tor}{\quad \text{or} \quad}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
+\input{../header.tex}
+
 \renewcommand{\implies}{\rightarrow}
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Mathematical Logic}}
-\author{}
-\date{}
+\usepackage{MnSymbol}
+
 \begin{document}
 	\maketitle
 	\newpage
@@ -583,7 +527,7 @@
   \begin{definition}
     Let $\Sigma$ be a set of propositions. Define
     \[
-      \mu(\Sigma) := \set{M}{M \models \Sigma}.
+      \mu(\Sigma) := \set{M \mid M \models \Sigma}.
     \]
   \end{definition}
 
@@ -624,14 +568,14 @@
     Define
     \[
       \Sigma :=
-      \set{p \in AP}{V(p) = T} \cup
-      \set{\neg p \in AP}{V(p) = F}.
+      \set{p \in AP \mid V(p) = T} \cup
+      \set{\neg p \in AP \mid V(p) = F}.
     \]
     We have that $\mu(\Sigma) = \{V\}$ which completes the proof.
   \end{proof}
 
   \begin{proposition}
-    The set $\mathcal M = \set{M}{M \text{ is monotonic}}$ is definable.
+    The set $\mathcal M = \set{M \mid M \text{ is monotonic}}$ is definable.
     In this question $M$ is monotonic if for all $i < j$ we have
     $M(p_i) \Rightarrow M(p_j)$.
   \end{proposition}
@@ -668,7 +612,7 @@
         $\mathcal M_2$ are definable then $\mathcal M_1 \cup \mathcal M_2$
         is definable. Define
         \[
-          \Sigma := \set{A_1 \lor A_2}{A_1 \in \Sigma_1 \land A_2 \in \Sigma_2}.
+          \Sigma := \set{A_1 \lor A_2 \mid A_1 \in \Sigma_1 \land A_2 \in \Sigma_2}.
         \]
         We will show that $\mu(\Sigma) = \mathcal M_1 \cup \mathcal M_2$.
         It is clear that $\mathcal M_1 \cup \mathcal M_2 \subset \mu(\Sigma)$.
@@ -684,7 +628,7 @@
         $\mathcal M = \mu(\Sigma)$ such that $\Sigma$ is finite.
         Define
         \[
-          \Sigma' := \set{\bigwedge_{i=1}^{n} A_i}{A_i \in \Sigma}.
+          \Sigma' := \set{\bigwedge_{i=1}^{n} A_i \mid A_i \in \Sigma}.
         \]
         It is clear that $\mu(\Sigma') = \mathcal M$ which completes the
         proof.
@@ -708,7 +652,7 @@
   \end{definition}
   
   \begin{example}
-    The set $\mathcal M = \set{M}{M \text{ is monotonic}} \setminus \{m_0\}$
+    The set $\mathcal M = \set{M \mid M \text{ is monotonic}} \setminus \{m_0\}$
     such that $m_0(p) = T$ for any $p \in AP$ is not closed.
     Choose the sequence $\{M_n\}_{n=1}^{\infty}$ such that
     \[
@@ -825,8 +769,8 @@
     Recursively define the set $T_n$, assuming that the sets $T_k$ for $k < n$
     are all defined. Define
     \[
-      T_n := \set{f(x_1,\dots,x_k)}
-      {x_1,\dots,x_k \in \bigcup_{k < n} T_n \text{ and $f$ is a $k$-ary 
+      T_n := \set{f(x_1,\dots,x_k) \mid
+      x_1,\dots,x_k \in \bigcup_{k < n} T_n \text{ and $f$ is a $k$-ary 
       function symbol and } \exists i \st x_i \in T_{n-1}}
     \]
     and then the set $T$ defined as
@@ -1022,8 +966,8 @@
 
   \begin{remark}
     Let $S$ be a substitution, let $x$ be a variable, let $w \in W^\M$.
-    From now on we denote $S^{x \ot a}$ the substitution that agrees
-    with $S$ on all variables execpt for $x$, and $S^{x \ot a}(x) = a$.
+    From now on we denote $S^{x \gets a}$ the substitution that agrees
+    with $S$ on all variables execpt for $x$, and $S^{x \gets a}(x) = a$.
   \end{remark}
 
   % Some more stuff may be here
@@ -1390,14 +1334,14 @@
     For a language $\L$ with a single constant symbol $c$ we have
     \[
       \MOD(\{(\forall x)(\forall y)(x = y)\}) =
-      \set{\M}{|W^\M| = 1}.
+      \set{\M \colon |W^\M| = 1}.
     \]
-    which shows that $\set{\M}{|W^\M| = 1}$ is definable.
+    which shows that $\set{\M \colon |W^\M| = 1}$ is definable.
   \end{example}
 
   \begin{example}
     The structure collection
-    \[ \mathfrak M := \set{\M}{\text{$\M$ is a finite field}} \]
+    \[ \mathfrak M := \set{\M \mid \text{$\M$ is a finite field}} \]
     is not definable.
     Assume by contradiction that existed $\Sigma$ such that 
     $\MOD(\Sigma) = \mathfrak M$, then from 
@@ -1554,7 +1498,7 @@
     to $\N \models \alpha$.
   \end{remark}
 
-  Recall that $\Theory(\N) = \set{\alpha}{\N \models \alpha}$.
+  Recall that $\Theory(\N) = \set{\alpha \mid \N \models \alpha}$.
   \begin{proposition}
     There is no algorithm that determines whether a sentence is a member
     of $\Theory(\N)$.

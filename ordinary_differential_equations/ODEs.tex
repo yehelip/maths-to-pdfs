@@ -1,33 +1,20 @@
-\documentclass{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,geometry}
+\documentclass[11pt,a4paper]{article}
 
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,     %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
-\geometry{margin=1in}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Omicron}{O}
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Ordinary Differential Equations}
 
-\title{\textbf{Ordinary Differential}}
-\author{Yeheli Fomberg}
-\date{}
+\input{../header.tex}
 
-\usepackage{amsmath}
 \begin{document}
 	\maketitle
 	\newpage
 	\tableofcontents
 	\newpage
 	\section{Introduction}
-  This is the best configuration.	
-	ODE is short for Oridnary differential equation.	An ODE of order $n$ is defined as such
+	ODE is short for Oridnary differential equation.
+  An ODE of order $n$ is defined as such
 	\[
 		F(x,y,y',\ldots,y^{(n)})=0
 	\]
@@ -49,7 +36,12 @@
 	\[
 		y'=p(x)y+q(x)
 	\]
-	Solving $y'=q(x)$ could give us infinitly many solutions because of the integration constant. That's why we usually have these kind of problem coupled with an initial condition - $y(x_0)=y_0$. Given an ODE and an inital condition we get an IVP ir an \textbf{I}nitial \textbf{V}alue \textbf{P}roblem.
+	Solving $y'=q(x)$ could give us infinitly many solutions because of the 
+  integration constant.
+  That's why we usually have these kind of problem coupled with an
+  initial condition - $y(x_0)=y_0$.
+  Given an ODE and an inital condition we get an IVP ir an 
+  \textbf{I}nitial \textbf{V}alue \textbf{P}roblem.
 	\subsection{Existence and Uniqueness Theorem}
 	Given an IVP
 	\begin{equation}
@@ -58,11 +50,14 @@
     y(x_0)=y_0
     \end{cases}
 	\end{equation}
-	Such that $f(x,y)$ and $f'_y(x,y)$ are continuous functions over $D\in\R^2$ and $(x_0,y_0)\in D$ then there exists an $\varepsilon>0$ such that there exists only one unique solution to the problem in $[x_0-\varepsilon,x_0+\varepsilon]$ \\
-	\\
+	Such that $f(x,y)$ and $f'_y(x,y)$ are continuous functions over $D\in\R^2$ 
+  and $(x_0,y_0)\in D$ then there exists an $\varepsilon>0$ such that there 
+  exists only one unique solution to the problem in 
+  $[x_0-\varepsilon,x_0+\varepsilon]$.
+
 	Accordingly there couldn't be two intersecting solutions to such an equation.
+
 	\subsection{General Solution to First Order Homogeneous Linear ODEs}
-	
 	\[
 		y'+p(x)y=0
 	\]
@@ -86,7 +81,10 @@
 	\[
 		Uy' + Up(x)y = Uq(x)
 	\]
-	Now let's force $U'=Uq(x)$. We already know how to solve these kind of problems. Let's pronouce one such solution $u$. Now:
+	Now let's force $U'=Uq(x)$.
+  We already know how to solve these kind of problems.
+  Let's pronouce one such solution $u$.
+  Now:
 	\[
 		uy' + u'y = Uq(x)
 	\]
@@ -120,7 +118,7 @@
 	\[
 		G(y(x)) = H(x) + C
 	\]
-	That's an implicit solution to the ODE. Sometimes we can write it explicitly and sometimes we can't. If there exists a scalar $y_0$ such that $g(y_0)=0$ then $y(x)=y_0$ is a solution - called the \textbf{singular solution}. Think why.
+	That's an implicit solution to the ODE. Sometimes we can write it explicitly and sometimes we can't. If there exists a scalar $y_0$ such that $g(y_0)=0$ then $y(x)=y_0$ is a solution - called the \textbf{singular solution}.
 	\subsection{Homogeneous ODEs}
 	Different then linear homogeneous ODEs. These are equations of the form:
 	$$y' = F(\frac yx)$$

@@ -1,105 +1,28 @@
-\makeatletter
 \documentclass[11pt,a4paper]{article}
-\usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry}
-\usepackage{color}   %May be necessary if you want to color links
-\usepackage[hidelinks]{hyperref}
-\usepackage{amsthm}
-\usepackage{fancyhdr}
-\usepackage{bookmark}
-\pagestyle{fancy}
-\usetikzlibrary{positioning}
-\geometry{margin=1in}
-\pgfplotsset{compat=1.18}
-\setlength{\headheight}{14.6pt}
-\addtolength{\topmargin}{-1.6pt}
-\hypersetup{
-    linktocpage,
-    colorlinks=false, %set true if you want colored links
-    linktoc=section,   %set to all if you want both sections and subsections linked
-    linkcolor=black,  %choose some color if you want links to stand out
-}
-\ifx \nauthor\undefined
-  \def\nauthor{yehelip}
-\else
-\fi
+
+\def\nyear {2025}
+\def\nterm {Winter}
 \def\nlecturer {Ariel Rapaport}
-\def\nterm {Spring}
-\def\nyear {2024}
-\let\@real@maketitle\maketitle
-\renewcommand{\maketitle}{\@real@maketitle\begin{center}
-\begin{minipage}[c]{0.9\textwidth}\centering\footnotesize
-These notes are not endorsed by the lecturers.
-I have revised them outside lectures to incorporate supplementary explanations,
-clarifications, and material for fun.
-While I have strived for accuracy, any errors or misinterpretations 
-are most likely mine.
-\end{minipage}\end{center}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
+\def\ncourse {Introrduction to Metric and Topological Spaces}
+\def\ncoursehead {Topology}
 
-\newcommand\dx    {\,\mathrm{d}x}
-\newcommand\dt    {\,\mathrm{d}t}
-\newcommand\du    {\,\mathrm{d}u}
-\newcommand\dv    {\,\mathrm{d}v}
+\input{../header.tex}
 
-\DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Aut}{Aut}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
-\DeclareMathOperator{\Mat}{Mat}
-\DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\id}{id}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\st}{\text{ s.t. }}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\Omicron}{O}
-\newcommand{\tand}{\quad \text{and} \quad}
-\newcommand{\tor}{\quad \text{or} \quad}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\newcommand{\set}[2]{ \left\{ #1 \mid #2 \right\} }
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\textbf{Introduction to Metric and Topological Spaces}}
-\author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
-\date{\nterm\ \nyear}
-\fancyhead[L]{\leftmark}
-\fancyhead[R]{Topology}
 \begin{document}
   \maketitle
   \vspace{5cm}
   \begin{center}
-\begin{tikzpicture}[x=5cm, scale=2.5]
-    % \draw[xstep=.2,ystep=.5,lightgray,ultra thin] (-0.1,-1.5) grid (1.1,1.5);
-    \draw[->] (0,0) -- (1.1,0);
-    \draw[->] (0,-1) -- (0,1.1);
-  \draw[blue,domain=0.01:1,samples=5000] plot (\x, {sin((1/\x)r)});
-\end{tikzpicture}
+    \begin{tikzpicture}[x=5cm, scale=2.5]
+        \draw[->] (0,0) -- (1.1,0);
+        \draw[->] (0,-1) -- (0,1.1);
+      \draw[blue,domain=0.01:1,samples=5000] plot (\x, {sin((1/\x)r)});
+    \end{tikzpicture}
   \end{center}
 
   \newpage
   \tableofcontents
   \newpage
+
   \section{Metric Spaces}\label{sec:metric-spaces}
   First we will begin with metric spaces.
   \begin{definition}[Metric space]
@@ -199,7 +122,7 @@ are most likely mine.
   \begin{definition}[Open ball]
     Let $(X,d)$ be a metric space. For $x \in X$ and $r > 0$ write:
     \[
-      B(x,r) := \set{y \in X}{d(x,y) < r}.
+      B(x,r) := \set{y \in X \mid d(x,y) < r}.
     \]
     The set $B(x,r)$ is called the open ball in $X$ with center $x$
     and radius $r$.
@@ -271,7 +194,7 @@ are most likely mine.
     We now clearly have that $\cup_{\alpha \in A} A_\alpha = (a,b)$, 
     which completes the proof.
   \end{proof}
-  We will now prove \autoref{thm:open-are-intervals}.
+  We will now prove \Cref{thm:open-are-intervals}.
   \begin{proof}
     Let $U \subset \R$ be open and nonempty.
     For any $x \in U$ let $I_x$ be the union of all open intervals $I \subset U$
@@ -287,8 +210,8 @@ are most likely mine.
     $q_I \in \Q$ such that $q \in I$. Since all the elements in $\mathcal E$
     are disjoint, we have that
     \[
-      \abs{\mathcal E} =
-      \abs{\set{q_I}{I \in \mathcal E}} \le
+      \abs{\mathcal E}=
+      \abs{\set{q_I \mid I \in \mathcal E}} \le
       \abs{\Q} =
       \abs{\N},
     \]
@@ -301,7 +224,7 @@ are most likely mine.
     Let $\{x_n\}_{n \geq 1}$ be a sequence in $X$, and let $x \in X$.
     We say that $\{x_n\}_{n \geq 1}$ converges to $x$ and write
     \[
-      x_n \xrightarrow{n \to \infty} x \quad \text{or} \quad \lim_{n \to \infty}
+      x_n \taking{n \to \infty} x \quad \text{or} \quad \lim_{n \to \infty}
     \]
     if for all $\epsilon > 0$ there exists $N \geq 1$ such that
     $d(x_n,x) \le \epsilon$ for all $n \geq N$.
@@ -309,8 +232,8 @@ are most likely mine.
 
   \begin{proposition}[Uniqueness of the limit]
     Let $\{x_n\}_{n \geq 1}$ be a sequence in $X$ and $x, x' \in X$ such
-    that $\{x_n\}_{n \geq 1} \xrightarrow{n \to \infty} x$ and
-    $\{x_n\}_{n \geq 1} \xrightarrow{n \to \infty} x'$. Then $x = x'$.
+    that $\{x_n\}_{n \geq 1} \taking{n \to \infty} x$ and
+    $\{x_n\}_{n \geq 1} \taking{n \to \infty} x'$. Then $x = x'$.
   \end{proposition}
   \begin{proof}
     For all $n \geq 1$ we have that
@@ -326,7 +249,7 @@ are most likely mine.
   \begin{definition}[Closed subset]
     We say that $F \subset X$ is a closed subset of $X$ if for every
     sequence $\{x_n\}_{n \geq 1} \subset F$ and $x \in X$ such that
-    $\{x_n\}_{n \geq 1} \xrightarrow{n \to \infty} x$, we have that
+    $\{x_n\}_{n \geq 1} \taking{n \to \infty} x$, we have that
     $x \in F$.
   \end{definition}
   \begin{proposition}
@@ -347,7 +270,7 @@ are most likely mine.
     $x \in X$ such that for all $\frac{1}{n} > 0$ exists
     $x_n \in F$ such that $d(x,x_n) \le 1/n$. It follows that
     \[
-      \{x_n\}_{n \geq 1} \xrightarrow{n \to \infty} x \tand
+      \{x_n\}_{n \geq 1} \taking{n \to \infty} x \tand
       x \in X \setminus F
     \]
     which shows that $F$ is not closed which completes the proof.
@@ -368,7 +291,7 @@ are most likely mine.
     Let $(X,d)$ be a metric space. Let $x \in X$ and $r > 0$.
     We define
     \[
-      \overline{B}(x,r) := \set{y \in X}{d(x,y) \le B}. 
+      \overline{B}(x,r) := \set{y \in X \mid d(x,y) \le B}. 
     \]
     The set $\overline{B}(x,r)$ is called the closed ball in $x$ with center
     $x$ and radius $r$.
@@ -389,14 +312,14 @@ are most likely mine.
     $C_1 := \left[0,\frac 13\right] \cup \left[\frac 23,1\right]$.
     We can continue this process infinitely many times:
     \begin{align*}
-      &C_0 := [0,1] \\
-      &C_1 := \left[0,\frac 13\right] \cup \left[\frac 23,1\right] \\
+      &C_0 := \intcc{0,1} \\
+      &C_1 := \intcc{0,\frac 13} \cup \intcc{\frac 23,1} \\
       &C_2 := 
-      \left[0, \frac 19\right] \cup
-      \left[\frac 29, \frac 13\right] \cup
-      \left[\frac 23, \frac 79\right] \cup
-      \left[\frac 89, 1\right] \\
-      &\vdots
+      \intcc{0, \frac 19} \cup
+      \intcc{\frac 29, \frac 13} \cup
+      \intcc{\frac 23, \frac 79} \cup
+      \intcc{\frac 89, 1} \\
+      &\phantom{C_k} \vdotswithin{:=}
     \end{align*}
     Since for every $n \in \N$ the set $\N$ is a finite union of closed
     sets, we have that $C_n$ are closed for all $n \in \N$. It then
@@ -410,8 +333,8 @@ are most likely mine.
     Let $f \colon X \to Y$ be a function between two metric spaces.
     We say that $f$ is continuous at $x \in X$ if for every $\{x_n\}_{n \geq 1}$
     \[
-      \{x_n\}_{n \geq 1} \xrightarrow{n \to \infty} x \implies 
-      \{f(x_n)\}_{n \geq 1} \xrightarrow{n \to \infty} f(x).
+      \{x_n\}_{n \geq 1} \taking{n \to \infty} x \implies 
+      \{f(x_n)\}_{n \geq 1} \taking{n \to \infty} f(x).
     \]
     We say that $f$ is continuous if it is continuous at $x$ for all
     $x \in X$.
@@ -456,7 +379,7 @@ are most likely mine.
     Every metric spaces can induce a topological space. Let $(X,d)$ be a
     metric space. Define
     \[
-      \tau := \set{U \subset X}{\forall x \in U \quad \exists \epsilon > 0
+      \tau := \set{U \subset X \mid \forall x \in U \quad \exists \epsilon > 0
       \st B(x,\epsilon) \subset U}.
     \]
     It can be verified that $(X,\tau)$ is a topological space.
@@ -483,7 +406,7 @@ are most likely mine.
   \begin{example}[Finite complement topology]
     Let $X$ be any infinite set and let 
     \[
-      \tau := \set{A \subset X}{\abs{X \setminus A} < \infty} \cup
+      \tau := \set{A \subset X \mid \abs{X \setminus A} < \infty} \cup
       \{\emptyset\}.
     \]
     The topology $\tau$ is called the finite complement topology. Is it 
@@ -543,7 +466,7 @@ are most likely mine.
     Let $(X,\tau_X)$ be a topological space and let $\emptyset \neq Y \subset 
     X$. Define
     \[
-      \tau_Y = \set{U \cap Y}{U \in \tau_X}
+      \tau_Y = \set{U \cap Y \mid U \in \tau_X}
     \]
     We call $\tau_Y$ the subspace topology, induced by $\tau_X$ on $Y$.
   \end{definition}
@@ -587,7 +510,7 @@ are most likely mine.
   \begin{remark}\label{rmk:closure}
     We can also define the closure of $A$ in an alternate way:
     \[
-      \overline{A} = \set{x \in X}{A \cap U \neq \emptyset \;\text{for each 
+      \overline{A} = \set{x \in X \mid A \cap U \neq \emptyset \;\text{for each 
       neighbourhood $U$ of $x$}}.
     \]
     You may try to prove that both definitions are equivalent.
@@ -627,7 +550,7 @@ are most likely mine.
   \end{definition}
 
   \begin{example}
-    Consider the set $A = \set{\frac{1}{n}}{n \in \Z_{+}} \cup \{0\}$ as
+    Consider the set $A = \set{\frac{1}{n} \mid n \in \Z_{+}} \cup \{0\}$ as
     a subset of $\R$. Then $0$ is a limit point of $A$, and every
     other point in $A$ is an isolated point.
   \end{example}
@@ -721,8 +644,8 @@ are most likely mine.
     particular $\partial A$ is closed.
   \end{proposition}
   \begin{proof}
-    The equality follows directly from Definition \ref{dfn:boundary} and
-    Remark \ref{rmk:closure}. We have that $\partial A$ is closed as it
+    The equality follows directly from \Cref{dfn:boundary} and
+    \Cref{rmk:closure}. We have that $\partial A$ is closed as it
     it an intersection of two closed sets.
   \end{proof}
 
@@ -779,7 +702,7 @@ are most likely mine.
     is equivalent. If we denote $(X,d)$ the metric space and $A$ the 
     countable dense set, then
     \[
-      \mathcal{B} = \set{B(a,q)}{a \in A \text{ and } q \in \Q \cap 
+      \mathcal{B} = \set{B(a,q) \mid a \in A \text{ and } q \in \Q \cap 
       (0,\infty)}
     \]
     will form the desired countable open base for $X$.
@@ -800,11 +723,11 @@ are most likely mine.
   \begin{proof}
     Let $\mathcal{B}$ be a countable open base for $X$. Set,
     \[
-      \mathcal{B}_0 = \set{B \in \mathcal{B}}{B \subset U_i
+      \mathcal{B}_0 = \set{B \in \mathcal{B} \mid B \subset U_i
       \text{ for some } i \in I}
     \]
     For each $B \in \mathcal{B}_0$ choose an arbitrary $i_B \in I$ such
-    that $B \subset U_{i_B}$. Set $I_0 = \set{i_B}{B \in \mathcal{B}_0}$.
+    that $B \subset U_{i_B}$. Set $I_0 = \set{i_B \mid B \in \mathcal{B}_0}$.
     Since $\mathcal{B}$ is countable, $I_0$ is also countable. It remains
     to show that $\cup_{i \in I_{0}}{U_i} = \cup_{i \in I}{U_i}$. Let
     $x \in \cup_{i \in I}{U_i}$ then exists some $j$ such that $x \in U_j$
@@ -854,7 +777,10 @@ are most likely mine.
 
   \begin{example}
     Let $(X, d)$ be a metric space. For each $x \in X$ the collection
-    $\set{B(x, \frac{1}{n})}{n \geq 1}$ is a countable open base at $x$. 
+    \[
+      \set{B\del{x, 1/n} \mid n \geq 1}
+    \]
+    is a countable open base at $x$. 
     Thus every metric space is first countable.
   \end{example}
 
@@ -878,7 +804,7 @@ are most likely mine.
     Therefore, for any finite intersection of elements of $\mathcal S$,
     in other words, for any element $U$ of some open case $\mathcal B$
     we have $f^{-1}(U)$ is open. The result now follows directly by 
-    Proposition \ref{prp:base-continuity}.
+    \Cref{prp:base-continuity}.
   \end{proof}
 
   The above proposition shows how convenient working with subbases can be.
@@ -888,12 +814,12 @@ are most likely mine.
     Let $X$ be an aribitrary nonempty set, 
     and let $\mathcal{S} \subset P(X)$. Set,
     \[
-      \mathcal{B} := \set{\cap_{i=1}^{n}{S_i}}{n \geq 0 \textnormal{ and }
+      \mathcal{B} := \set{\cap_{i=1}^{n}{S_i} \mid n \geq 0 \textnormal{ and }
       S_1,\dots,S_n \in \mathcal{S}}
     \]
     And,
     \[
-      \tau := \set{U \subset X}{\forall x \in U \quad \exists B \in 
+      \tau := \set{U \subset X \mid \forall x \in U \quad \exists B \in 
       \mathcal{B} \st x \in B \subset U}
     \]
     Then $\tau$ is a topology on $X$, $\mathcal{B}$ is an open base for 
@@ -945,7 +871,7 @@ are most likely mine.
   It is easy to verify that $\tau = \cap_{\tau_0 \in \mathcal{T}_0}{\tau_0}$
   and also that $\tau$ is generated by the set
   \[
-    S = \set{f_i^{-1}(U)}{i \in I \text{ and $U$ is open in $Y_i$}}
+    S = \set{f_i^{-1}(U) \mid i \in I \text{ and $U$ is open in $Y_i$}}
   \]
   \end{remark}
 
@@ -969,7 +895,7 @@ are most likely mine.
   This definition is a bit abstract, but we can give a more concrete 
   definition by setting,
   \[
-    \mathcal{S} = \set{\prod_{i \in I}{U_i}}{\exists j \in I \st 
+    \mathcal{S} = \set{\prod_{i \in I}{U_i} \mid \exists j \in I \st 
     \text{ $U_i = X_i$ for $i \in I \setminus \{j\}$ and $U_j$ is open in
     $X_j$}}.
   \]
@@ -977,7 +903,7 @@ are most likely mine.
   by $\mathcal{S}$ as a subbase. From this we can also deduce that
   {\small
   \[
-    \mathcal{B} = \set{\prod_{i \in I}U_i}{\text{Exists a finite
+    \mathcal{B} = \set{\prod_{i \in I}U_i \mid \text{Exists a finite
     $I_0 \subset I$ \st $U_i = X_i$ for $i \in I \setminus I_0$ and
     $U_i$ is open in $X_i$ for $i \in I_0$}}
   \]
@@ -1013,7 +939,7 @@ are most likely mine.
     it, the supremum norm.
   \end{definition}
 
-  More about algebras in \autoref{sec:the-AA-theorem}.
+  More about algebras in \Cref{sec:the-AA-theorem}.
 
   \newpage
 
@@ -1061,16 +987,16 @@ are most likely mine.
     for any $x \in X$ that the sequence $\{f_n(x)\}_{n \geq 1}$ is a Cauchy
     sequence in $\R$, and since $\R$ is complete it also has a limit.
     Thus, exists $f \colon Y \to \R$ such that 
-    $\{f_n(x)\}_{n \geq 1} \xrightarrow{n \to \infty} f$ pointwise.
+    $\{f_n(x)\}_{n \geq 1} \taking{n \to \infty} f$ pointwise.
     Now, we see that
     \begin{align*}
       \abs{f(x) - f_n(x)} &\le
       \limsup_{m \to \infty}(\abs{f(x) - f_m(x)} + \abs{f_m(x) - f_n(x)}) \\
       &\le \limsup_{m \to \infty} \norm{f(x) - f_n(x)}_{\infty}.
     \end{align*}
-    Thus, $f_n \xrightarrow{n \to \infty} f$ uniformly,
+    Thus, $f_n \taking{n \to \infty} f$ uniformly,
     which implies that $f \in C_b(X)$. We have also shown that
-    $f_n \xrightarrow{n \to \infty} f$ uniformly with respect to $\norm{\cdot}$
+    $f_n \taking{n \to \infty} f$ uniformly with respect to $\norm{\cdot}$
     which completes the theorem.
   \end{example}
 
@@ -1100,7 +1026,7 @@ are most likely mine.
   \begin{definition}[Diameter]
     Given a nonempty subset $A$ of $X$ we write
     \[
-      \diam(A) := \set{d(x_1,x_2)}{x_1,x_2 \in X}.
+      \diam(A) := \set{d(x_1,x_2) \mid x_1,x_2 \in X}.
     \]
     We call the number $\diam(A)$ the diameter of $A$.
   \end{definition}
@@ -1195,11 +1121,11 @@ are most likely mine.
     that $W$ is nowhere dense. Let $\ip{\cdot}{\cdot}$ be the standard
     inner product on $\R^d$. We notice that for every $v \in \R^d$ the
     map $x \mapsto \ip{x}{v}$ is continuous. Thus the set 
-    $\set{x \in \R^d}{f(x) = 0}$ is closed in $\R^d$ as the preimage of the
+    $\set{x \in \R^d \mid f(x) = 0}$ is closed in $\R^d$ as the preimage of the
     closed set $\{0\}$. From this and from the fact that:
     \[
-      W = (W^{\perp})^{\perp} = \cap_{u \in W^{\perp}}{\set{x \in \R^d}
-      {\ip{x}{u} = 0}},
+      W = (W^{\perp})^{\perp} = 
+      \cap_{u \in W^{\perp}}{\set{x \in \R^d \mid \ip{x}{u} = 0}},
     \]
     it follows that $W$ is closed in $\R^d$. Moreover, for every $w \in W$,
     $0 \neq u \in W^{\perp}$ and $\epsilon > 0$ we have that 
@@ -1534,7 +1460,7 @@ are most likely mine.
     $I_i$, an index set such that $\{B_j\}_{j \ I_i}$ we have
     $U_i = \cup_{j \in I_i} B_i$. This implies that the set
     \[
-      \mathcal B_0 = \set{B_j}{\text{for all $j \in I_i$ for all $i$}}
+      \mathcal B_0 = \set{B_j \mid \text{for all $j \in I_i$ for all $i$}}
     \]
     is also an open cover of $X$. Since $\mathcal B_0 \subset \mathcal B$
     there exists a finite $B_f \subset \mathcal B_0$ such that
@@ -1542,7 +1468,7 @@ are most likely mine.
     $B \in \mathcal B_f \subset \mathcal B_0$, exists $i_B \in I$ such
     that $B \subset U_{i_B}$. It is clear that the index set
     \[
-      I_f = \set{i_B}{B \in \mathcal B_f}
+      I_f = \set{i_B \mid B \in \mathcal B_f}
     \]
     is finite, and by construction we have $\cup_{i \in I_f} U_i = X$.
   \end{proof}
@@ -1553,11 +1479,11 @@ are most likely mine.
     A family $\mathcal{B}$ of closed subsets of $X$ is called a 
     closed base for $X$ if the collection
     \[
-      \set{X \setminus B}{B \in \mathcal B}
+      \set{X \setminus B \mid B \in \mathcal B}
     \]
     is an open base for $X$. Similarly, a family $\mathcal S$ of
     closed subsets of $X$ is called a closed subbase for $X$ 
-    if the collection $\set{X \setminus S}{S \in \mathcal S}$ is 
+    if the collection $\set{X \setminus S \mid S \in \mathcal S}$ is 
     an open subbase for $X$.
   \end{definition}
 
@@ -1596,18 +1522,18 @@ are most likely mine.
     property. Then $X$ is compact.
   \end{theorem}
 
-  First, we will prove theorem \autoref{thm:alexander-first} assuming
-  \autoref{thm:alexander-second}, then we will prove 
-  \autoref{thm:alexander-second} for completeness.
+  First, we will prove theorem \Cref{thm:alexander-first} assuming
+  \Cref{thm:alexander-second}, then we will prove 
+  \Cref{thm:alexander-second} for completeness.
   \begin{proof}
     Let $\mathcal S$ be an open subbase for $X$. Now set
     \[
-      \mathcal E = \set{X \setminus S}{S \in \mathcal S}.
+      \mathcal E = \set{X \setminus S \mid S \in \mathcal S}.
     \]
     It is clear that $\mathcal E$ is a closed subbase of $X$.
     Let $\{E_i\}_{i \in I}$ be a subset of $\mathcal E$ with the finite
     intersection property.
-    By theorem \autoref{thm:alexander-second} it suffices to show that
+    By \Cref{thm:alexander-second} it suffices to show that
     $\cap_{i \in I}{E_i} \neq \emptyset$ to prove that $X$ is compact.
     Assume, for the sake of contradiction, 
     that $\cap_{i \in I}{E_i} = \emptyset$.
@@ -1621,12 +1547,12 @@ are most likely mine.
     completes the proof.
   \end{proof}
 
-  Now we will prove \autoref{thm:alexander-second} using Zorn's lemma.
+  Now we will prove \Cref{thm:alexander-second} using Zorn's lemma.
 
   \begin{proof}
     Let $\mathcal B$ be the open subbase generated by $\mathcal S$.
     Now let $\mathcal B_0 \subset \mathcal B$ be with the finite intersection
-    property. Then, by Proposition \ref{prp:alexander} we it suffices to
+    property. Then, by \Cref{prp:alexander} we it suffices to
     show that $\cap_{B \in \mathcal B_0} \mathcal B = \emptyset$.
     First, let $\mathcal P$ be the set of all $\mathcal B_1$ such that
     $\mathcal B_0 \subset \mathcal B_1$ and $\mathcal B_1$ has the finite
@@ -1685,7 +1611,7 @@ are most likely mine.
 
     Finally, set
     \[
-      \mathcal S_0 := \set{S_B}{B \in \mathcal B_{\max}}.
+      \mathcal S_0 := \set{S_B \mid B \in \mathcal B_{\max}}.
     \]
     It follows that since $\mathcal S_0$ is a subset of $\mathcal B_{\max}$, 
     that it must also satisfiy the finite intersection property.
@@ -1799,8 +1725,8 @@ are most likely mine.
     $S_j = \prod_{i \in I}{F_{j,i}}$. Thus, for every $J_0 \subset J$
     \[
       (*) \quad \bigcap_{j \in J_0}{{S}_j} = 
-      \set{\prod_{x \in I}{x_i} \in \prod_{i \in I}{X_i}}
-      {x_i \in F_{j,i} \text{ for all $i \in I$ and $j \in J_0$}}
+      \set{\prod_{x \in I}{x_i} \in \prod_{i \in I}{X_i} \mid
+      x_i \in F_{j,i} \text{ for all $i \in I$ and $j \in J_0$}}
     \]
     From this, and since $\{S_j\}_{j \in J}$ has the finite intersection
     property, it follows that $\{F_{j,i}\}_{j \in J}$ has the finite
@@ -1837,13 +1763,13 @@ are most likely mine.
   \begin{proof}
     By definition of the product topology, the collection
     \[
-      \set{\pi_{i}^{-1}(U)}{\text{$i \in I$ and $U$ is open in $X_i$}}
+      \set{\pi_{i}^{-1}(U) \mid \text{$i \in I$ and $U$ is open in $X_i$}}
     \]
     is an open subbase for the product space. By a previous lemma
     we have that
     \[
-      \set{\pi_{i}^{-1}(U) \cap Y}
-      {\text{$i \in I$ and $U$ is open in $X_i$}}
+      \set{\pi_{i}^{-1}(U) \cap Y \mid 
+      \text{$i \in I$ and $U$ is open in $X_i$}}
     \]
     is an open subbase for $Y$ with respect to the subspace topology.
     From this, and since $\pi_{i}^{-1}(E) \cap Y = \pi_{i}^{-1} \vert_Y(E)$
@@ -1863,7 +1789,7 @@ are most likely mine.
     by $X_i$. Then $\tau_1 = \tau_2$.
   \end{lemma}
 
-  Now we can go back to prove \autoref{thm:heine-borel}
+  Now we can go back to prove \Cref{thm:heine-borel}
 
   \begin{proof}
     For each $i \in I$ let $\pi_i$ be the coordinate projection from 
@@ -1875,18 +1801,18 @@ are most likely mine.
     For each $i \in I$ let $\tilde{\pi}_i$ be the coordinate projection from 
     $Y$ onto $Y_i$. By the definition of the product topology, the collection
     \[
-      \mathcal{S} := \set{\tilde{\pi}_{i}^{-1}(U)}
-      {\text{$i \in I$ and $U$ is open in $Y_i$}}
+      \mathcal{S} := \set{\tilde{\pi}_{i}^{-1}(U) \mid
+      \text{$i \in I$ and $U$ is open in $Y_i$}}
     \]
     is an open subbase for $Y$ in respect to $\tau_2$. We see that:
     \[
-      \mathcal{S} := \set{({\pi \vert_Y}_{i})^{-1}(V \cap Y_i)}
-      {\text{$i \in I$ and $V$ is open in $X_i$}}
+      \mathcal{S} := \set{({\pi \vert_Y}_{i})^{-1}(V \cap Y_i) \mid
+      \text{$i \in I$ and $V$ is open in $X_i$}}
     \]
     Now since $({\pi \vert_Y}_{i})^{-1}(Y_i) = Y$ for all $i \in I$
     \[
-      \mathcal{S} := \set{({\pi \vert_Y}_{i})^{-1}(V)}
-      {\text{$i \in I$ and $V$ is open in $X_i$}}
+      \mathcal{S} := \set{({\pi \vert_Y}_{i})^{-1}(V) \mid
+      \text{$i \in I$ and $V$ is open in $X_i$}}
     \]
     From this, and since $\mathcal{S}$ is an open subbase for $Y$ with 
     respect to $\tau_2$, it follows that $\tau_2$ is also equal to the weak 
@@ -1946,7 +1872,7 @@ are most likely mine.
     Choose an arbitrary $x_n \in A_n$ to construct the sequence 
     $\{x_n\}_{n \geq 1}$.
     Since $X$ is sequencially compact, there exists a subsequence
-    $\{x_{n_k}\}_{k \geq 1}$ such that $x_{n_k} \xrightarrow{k \to \infty} x$.
+    $\{x_{n_k}\}_{k \geq 1}$ such that $x_{n_k} \taking{k \to \infty} x$.
     Since $\{U_i\}_{i \in I}$ is an open cover for $X$, there exists
     some $i_0 \in I$ such that $x \in U_{i_0}$, and since $U_{i_0}$ is open,
     there must exist some $\epsilon > 0$ such that 
@@ -2127,7 +2053,7 @@ are most likely mine.
     We will prove that $\mathbf L$ is compact. Given
     \[
       f \in C([0,1]) \tand f_1,f_2,\dots \in \mathbf L \st
-      \abs{f - f_n}_{\infty} \xrightarrow{n \to \infty} 0,
+      \abs{f - f_n}_{\infty} \taking{n \to \infty} 0,
     \]
     it is clear that
     \[
@@ -2138,11 +2064,11 @@ are most likely mine.
     \]
     which shows that $f \in \mathbf L$ and that means that $\mathbf L$ is
     closed in $C([0,1])$. Since $\mathbf L$ is a closed subset of $C([0,1])$,
-    which is clearly also bounded and equicontinuous, from \autoref{thm:AA}
+    which is clearly also bounded and equicontinuous, from \Cref{thm:AA}
     we have that $\mathbf L$ is compact.
   \end{example}
 
-  To prove \autoref{thm:AA} we need the following lemmas.
+  To prove \Cref{thm:AA} we need the following lemmas.
 
   \begin{lemma}
     Let $X$ be a metric space and let $A \subset X$ be totally bounded.
@@ -2195,17 +2121,15 @@ are most likely mine.
     nonempty, it suffices to prove that $R$ is totally bounded. Let 
     $\epsilon > 0$, it is clear that the set:
     \[
-      N := \left\{\left(-r + \frac{n_i\epsilon}{2}\right)_{i=1}^{d} 
-      \biggr\vert (n_i)_{i=1}^{d} \in 
-      {\left[\left\lfloor
-      \frac{2r}{\epsilon}
-      \right\rfloor\right]}^{d} \right\}
+      N := \set{\left(-r + \frac{n_i\epsilon}{2}\right)_{i=1}^{d} 
+      \mid (n_i)_{i=1}^{d} \in 
+      {\left[\floor{\frac{2r}{\epsilon}}\right]}^{d}}
     \]
     is an $\epsilon$-net of $R$ and thus $R$ is totally bounded which
     completes the proof.
   \end{proof}
   
-  We can now proceed to the proof of \autoref{thm:AA}.
+  We can now proceed to the proof of \Cref{thm:AA}.
 
   \begin{proof}
     To be added.
@@ -2512,7 +2436,7 @@ are most likely mine.
     that $f$ cannot be extended continuously to a function on $X$.
   \end{example}
 
-  To prove \autoref{thm:tietze} we need to prove the generalized form
+  To prove \Cref{thm:tietze} we need to prove the generalized form
   of the Weierstrass $M$-test we saw in analysis.
 
   \begin{lemma}[Weierstrass $M$-test]\label{lem:m-test}
@@ -2521,7 +2445,7 @@ are most likely mine.
     $\sum_{k \geq 1}^{\infty} M_k < \infty$ and
     $\abs{f_k(x)} \le M_k$ for all $k \geq 1$ and all $x \in X$.
     Then there exists a function $f \in C_b(x)$ such that
-    $\sum_{i=1}^{k} f_i \xrightarrow{k \to \infty} f$ uniformly, and
+    $\sum_{i=1}^{k} f_i \taking{k \to \infty} f$ uniformly, and
     $\abs{f(x)} \le \sum_{k \geq 1}^{\infty} M_k$ for all $x \in X$.
   \end{lemma}
   \begin{proof}
@@ -2539,7 +2463,7 @@ are most likely mine.
     uniformly to some $f \in C_b(X)$ which completes the proof.
   \end{proof}
   
-  We can now go back to the proof of $\autoref{thm:tietze}$.
+  We can now go back to the proof of $\Cref{thm:tietze}$.
   \begin{proof}
     To be added.
   \end{proof}
@@ -2582,13 +2506,14 @@ are most likely mine.
   \begin{definition}[$\ell^1$ space]
     We define the normed space $\ell^1$ with the norm $N$ as such:
     \[
-      \ell^1 := \set{x \in \R^{\N}}{\sum_{i=1}^{\infty} \abs{x_i} < \infty}
+      \ell^1 := \set{x \in \R^{\N} \mid \sum_{i=1}^{\infty} \abs{x_i} < \infty}
       \quad \text{with} \quad
       N(x) := \sum_{i=1}^{\infty} \abs{x_i}.
     \]
     More generally, we define the normed space $\ell^p$ for $0 < p < \infty$ as
     \[
-      \ell^p := \set{x \in \R^{\N}}{\sum_{i=1}^{\infty} \abs{x_i}^p < \infty}
+      \ell^p :=
+      \set{x \in \R^{\N} \mid \sum_{i=1}^{\infty} \abs{x_i}^p < \infty}
       \quad \text{with} \quad
       N(x) := \left(\sum_{i=1}^{\infty} \abs{x_i}^p\right)^{\frac{1}{p}}.
     \]
@@ -2654,8 +2579,8 @@ are most likely mine.
   Write $X_{\infty} := X \cup \{\infty\}$. Then the collection
   \[
     \tau :=
-    \set{U}{\text{$U \subset X$ is open}} \cup
-    \set{X_{\infty} \setminus K}{\text{$K \subset X$ is compact}}
+    \set{U \mid \text{$U \subset X$ is open}} \cup
+    \set{X_{\infty} \setminus K \mid \text{$K \subset X$ is compact}}
   \]
   is a topology on $X_{\infty}$.
 
@@ -2840,7 +2765,7 @@ are most likely mine.
     Suppose next that there exists a continuous mapping from $X$ onto 
     $\{0, 1\}$.
     If $X$ were connected, it would follow that $\{0,1\}$ is also connected
-    by Proposition \ref{prp:connected-continuous}.
+    by \Cref{prp:connected-continuous}.
     Since we know that $\{0,1\}$ is disconnected, it follows that $X$
     must be disconnected which completes the proof of this proposition.
   \end{proof}
@@ -2860,10 +2785,10 @@ are most likely mine.
   \begin{proof}
     Since $n$ is a finite number, we know that the standard topology on
     $\R^n$ is equal to its product topology.
-    As we saw in Proposition \ref{prp:R-connected-interval} we have that
+    As we saw in \Cref{prp:R-connected-interval} we have that
     $\R$ is connected.
     The corollary now immediately follows from Proposition 
-    \ref{prp:product-connected}.
+    \Cref{prp:product-connected}.
   \end{proof}
 
   \begin{proposition}
@@ -2917,8 +2842,8 @@ are most likely mine.
     Choose arbitrary $u \in U$ and $v \in V$.
     Since $X$ is path connected there exists a continuous function
     $\gamma \colon [0,1] \to X$ such that $\gamma(0) = u$ and $\gamma(1) = v$.
-    However, since $[0,1]$ is an interval it follows from proposition
-    \ref{prp:R-connected-interval} that $\gamma([0,1])$ is connected.
+    However, since $[0,1]$ is an interval it follows from
+    \Cref{prp:R-connected-interval} that $\gamma([0,1])$ is connected.
     On the other hand, since $\gamma([0,1]) \subset X = U \cup V$
     and $u \in \gamma([0,1]) \cap U$ and $v \in \gamma([0,1]) \cap V$
     and $U \cap V = \emptyset$ it follows that $\gamma([0,1])$ is connected.
@@ -2935,12 +2860,12 @@ are most likely mine.
   \begin{definition}[Topologist's sine curve]
     The topologist sine curve is defined as the set
     \[
-      T := \set{\left(x,\sin {\tfrac {1}{x}}\right)}{x\in (0,1]} \cup \{(0,0)\}.
+    T := \set{\del{x,\sin {\tfrac {1}{x}}} \mid x\in (0,1]} \cup \{(0,0)\}.
     \]
     The closed topologist's curve is defined as the closure of $T$ and
     we get
     \[
-      \overline T = T \cup \set{(0,y)}{y \in [-1,1]}.
+      \overline T = T \cup \set{(0,y) \mid y \in [-1,1]}.
     \]
   \end{definition}
 
@@ -2970,13 +2895,13 @@ are most likely mine.
     Choose aribirary $a,b \in E$ such that $a < b$.
     Let $x \in (a,b) \setminus \Q$. Set
     \[
-      U := \set{q \in \Q}{q < x} \tand
-      V := \set{q \in \Q}{q > x}.
+      U := \set{q \in \Q \mid q < x} \tand
+      V := \set{q \in \Q \mid q > x}.
     \]
     We have that $E \subset U \cup V$ and $a \in E \cap U$ and
     $b \in E \cap V$ and $U \cap V = \emptyset$ which implies that
     the set $E$ is disconnected.
-    We thus have that $\set{\{q\}}{q \in \Q}$ are the only connected
+    We thus have that $\set{\{q\} \mid q \in \Q}$ are the only connected
     components in $\Q$.
   \end{example}
 
@@ -3041,8 +2966,9 @@ are most likely mine.
     $X = \N \cup\{\pm \infty\}$. Let $\tau$ be the topology on $\N$
     generated by
     \[
-      \set{\{n\}}{n \in \N} \cup \set{\{\eta\} \cup (\N \setminus F)}
-      {n \in \{\pm \infty\} \text{ and $F \subset \N$ is finite}}.
+      \set{\{n\} \mid n \in \N} \cup 
+      \set{\{\eta\} \cup (\N \setminus F) \mid
+      n \in \{\pm \infty\} \text{ and $F \subset \N$ is finite}}.
     \]
     It is easy to show that $(X, \tau)$ is totally disconnected but not
     totally seperated. 
