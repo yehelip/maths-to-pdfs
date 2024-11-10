@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper]{article}
+
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Riemann Surfaces}
+
+\input{../header.tex}
+
+\begin{document}
+\maketitle
+
+% Insert cool image here
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\begin{definition}[Riemann surface]
+    A Riemann surface is a $1$-dimensional complex manifold.
+\end{definition}
+
+\begin{definition}[Riemann surface]
+    A Riemann surface is a topological space $X$ together with
+    open subsets $\set{U_k}_{k \in I}$ of $X$ with
+    $\cup_{k \in I} U_k = X$ together with maps $f_i \colon U_i \to \C$
+    such that
+    \begin{enumerate}
+        \item[(1)] Each $f_i$ is a homeomorphism onto its image.
+        \item[(2)] If $U_i \cap U_j \neq \emptyset$ then 
+            $f_i \colon f_j^{-1} \colon 
+            f_i(U_i \cap U_j) \to f_i(U_i \cap U_j)$ are \emph{biholomorphic}.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    A function $f \colon \C \to \C$ is holomorphic at $p$ if 
+    $f'(p) = \lim_{z \to p} \frac{f(z) - f(p)}{z - p}$ exists.
+\end{remark}
+
+\begin{definition}[Biholomorphism]
+    A function $f \colon \C \to \C$ is called biholomorphic if it has an inverse
+    and both $f$ and $f'$ are holomorphic.
+\end{definition}
+
+\begin{definition}[Atlas]
+    The $\set{(U_i, f_i)}_{i \in I}$ are called an atlas of the Riemann surface.
+\end{definition}
+
+\begin{definition}[Chart]
+    Each individual $(U_i, f_i)$ is called a chart of the Riemann surface.
+\end{definition}
+
+\begin{example}
+    Let $U \subset \C$.
+    Then $U$ can take an atlas with one chart which is the identity map.
+\end{example}
+
+\begin{example}[Riemann sphere]
+    Let $X = \set{(z,t) \in \C \times \R \colon |z|^2 + t^2 = \R}$.
+    We identify $\C$ with the equator of a sphere.
+    Denote $N$ and $S$ the north and south poles of the sphere accordingly.
+    We define $\pi_N \colon \C \to S$ such that $\pi_N$ is the point on the
+    sphere \dots We can similarly define $\pi_S$ and verify and their images
+    are $X \setminus \set{N}$ and $X \setminus \set{S}$ accordingly.
+    
+    $X$ is a Riemann surfacewith an atlas consisting of 
+    $\pi_S \colon X \setminus \set{S} \to \C$ and
+    $\pi_N \colon X \setminus \set{N} \to \C$.
+    We denote the Riemann sphere as $\hat{\C}$.
+\end{example}
+
+\begin{definition}[Biholomorphism of Riemann surfaces]
+    Let $(X, (U_i, f_i))$, $(Y, (W_i,g_i))$ be two Riemann surfaces.
+    A biholomorphism between them is a homeomorphism
+    $X \xrightarrow{\phi} Y$ such that $g_i \circ \phi \circ f_i^{-1}$ 
+    are biholomorphisms on their domains of definition.
+\end{definition}
+
+A main problem in Riemann surfaces was classifying certain types of 
+Riemann surfaces up to biholomorphisms.
+
+\begin{theorem}\tt{Riemann mapping theorem}
+    Any two proper open simply connected subsets of $\C$ are biholomorphic.
+\end{theorem}
+
+A generalization of the Riemann mapping theorem is the uniformization theorem
+proved by Kobe in 1907.
+
+\begin{theorem}\tt{Uniformization theorem}
+    Any simply connected Riemann surface is biholomorphic to one of the
+    following:
+    \begin{enumerate}
+        \item[(1)] $\C$
+        \item[(2)] $\hat{\C}$
+        \item[(3)] $\mathbb H = \set{z \in \C \colon \mathrm{Im}(z) > 0}$
+    \end{enumerate}
+\end{theorem}
+
+We will give a proof for this theorem in the end of the class.
+
+A natural question that arises is what about non simply connected Rieman
+surfaces.
+
+\begin{theorem}\tt{Uniformization theorem, part II}
+    Any connected Riemann surface is biholomorphic either to $\hat{\C}$
+    or to a quotient of $\C$ or $\mathbb{H}$ by a properly discontinuous
+    torsion free subgroup of biholomorphisms.
+\end{theorem}
+
+\begin{remark}
+    Biholomorphisms of $U = \C$ or $\mathbb H$ (or any subset of $\C$)
+    forms a group under composition.
+    We denote that group by $Bih(U)$.
+\end{remark}
+
+\begin{definition}[Properly discontinuity]
+    A countable subgroup of $Bih(U)$ is said to be properly discontinuous
+    if for all compact $K \subseteq U$, the set 
+    $\set{g \in G \colon gK \cap K \neq \emptyset}$ is finite.
+\end{definition}
+
+\begin{definition}[Torsion free group]
+    $G \subseteq Bih(U)$ is torsion free if $gp = p$ for some $p \in U$
+    implies $g$ is the identity.
+\end{definition}
+
+We can know define the quotient space $\bigslant{U}{G}$ where
+$p \sim q$ if there exists $g \in G$ such that $gp = q$.
+
+Introduce a topology on $\bigslant{U}{G}$ which is the coarsest topology
+such that the canonical projections $U \to \bigslant{U}{G}$ are continuous.
+
+Under the assumptions that $G$ is properly discontinuous and torsion-free,
+$\bigslant{U}{G}$ is a Riemann surface with the following charts.
+By assumptions on $G$, we can find for any $p \in U$ a neighbourhood $W$ of
+$p \in U$ such that $\pi \colon U \to \bigslant{U}{G}$ is a homeomorphism
+onto its image when restricted to $W$.
+
+So, restrictions of $\pi$ tp these neighbourhoods $W$ give you an atlas.
+
+
+
+
+
+\end{document}
