@@ -7,6 +7,8 @@
 
 \input{../header.tex}
 
+\newcommand{\powerseries}{\sum_{n=0}^{\infty} a_n (z - z_0)}
+
 \begin{document}
 \maketitle
 
@@ -18,32 +20,35 @@
 
 \section{Introduction}
 
-\subsection{Complex numbers}
+\subsection{Complex numbers and the complex plane}
+
+\subsubsection{Preliminaries}
 
 \begin{definition}[Complex number]
-    A complex number is an expression of the form $x + yi$ such that
-    $x,y \in \R$ and $i$ is a `imaginary number' not in $\R$.
-    We denote
-    \[
-        \Re(z) := x \tand \Im(z) := y.
-    \]
-    If $\Im(z) = 0$ then $z$ is said to be a real number, and if
-    $\Re(z) = 0$ then it is said to be purely imaginary.
+  A complex number is an expression of the form $x + yi$ such that
+  $x,y \in \R$ and $i$ is a `imaginary number' not in $\R$.
+  We denote
+  \[
+      \Re(z) := x \tand \Im(z) := y.
+  \]
+  If $\Im(z) = 0$ then $z$ is said to be a real number, and if
+  $\Re(z) = 0$ then it is said to be purely imaginary.
 \end{definition}
 
 The set of all complex numbers is denoted as $\C$ and it can be made into
 a field with the following operations.
 \[
-    z_1 + z_2 = (x_1 + x_2) + (y_1 + y_2) i \tand
-    z_1 z_2 = (x_1 x_2 - y_1 y_2) + (x_1 y_2 + y_1 x_2) i.
+  z_1 + z_2 = (x_1 + x_2) + (y_1 + y_2) i \tand
+  z_1 z_2 = (x_1 x_2 - y_1 y_2) + (x_1 y_2 + y_1 x_2) i.
 \]
+The field $\C$ is called the complex plane.
 
 Note that $i^2 = -1$.
 Also note that $T(x + y i) = (x, y)$ is a bijection between $\C$ and $\R$ and
 moreover, we have that $T$ is additive.
 That is
 \[
-    T(z_1 + z_2) = T(z_1) + T(z_2)
+  T(z_1 + z_2) = T(z_1) + T(z_2)
 \]
 which gives complex addition a geometric meaning.
 
@@ -60,7 +65,7 @@ which gives complex addition a geometric meaning.
 
 The absolute value of a complex number $x + y i = z \in \C$ is defined by
 \[
-    |z| = \sqrt{x^2 + y^2}.
+  |z| = \sqrt{x^2 + y^2}.
 \]
 Note that $|z| = \norm{(x,y)}= \norm{T(z)}$ where $\norm{\cdot}$ is the standard
 Euclidean norm on $\R^2$.
@@ -70,12 +75,12 @@ numbers $z$, $w$.
 Because we have that $|z| = \norm{T(z)}$ we also have that the triangle
 inequality holds:
 \[
-    |z + w| \le |z| + |w| \text{ for all } z,w \in \C.
+  |z + w| \le |z| + |w| \text{ for all } z,w \in \C.
 \]
 
 \begin{definition}[Complex conjugate]
-    The complex conjugate of $x + y i = z \in C$ is the complex number
-    $x - y i$. The complex conjugate of $z$ is denoted $\bar{z}$.
+  The complex conjugate of $x + y i = z \in C$ is the complex number
+  $x - y i$. The complex conjugate of $z$ is denoted $\bar{z}$.
 \end{definition}
 
 \begin{center}
@@ -89,9 +94,9 @@ inequality holds:
 
 It is easy to verify that
 \[
-    \Re(z) = \frac{z + \bar{z}}{2} \tand 
-    \Re(z) = \frac{z - \bar{z}}{2 i} \tand
-    |z|^2 = z \bar{z}.
+  \Re(z) = \frac{z + \bar{z}}{2} \tand 
+  \Re(z) = \frac{z - \bar{z}}{2 i} \tand
+  |z|^2 = z \bar{z}.
 \]
 
 Given $\theta$ we can denote $e^{i \theta} = \cos \theta + i \sin \theta$,
@@ -101,249 +106,468 @@ We get that $|z| = |r e^{i \theta}| = r$.
 We also have that $\theta$ describes the angle of $z$ with the $x$-axis
 and it is usually denoted $\theta = \arg(z)$.
 
-\subsection{Convergence}
+\subsubsection{Convergence}
 
 \begin{definition}[Convergence]
-    We say that the sequence $\set{z_n}_{n \geq 1} \subset \C$ converges
-    to some $z_0 \in \C$ if $|z - z_0| \taking{n \to \infty} 0$.
-    In this case, we call $z_0$ the limit of the sequence of
-    $\set{z_n}_{n \geq 1}$.
+  We say that the sequence $\set{z_n}_{n \geq 1} \subset \C$ converges
+  to some $z_0 \in \C$ if $|z - z_0| \taking{n \to \infty} 0$.
+  In this case, we call $z_0$ the limit of the sequence of
+  $\set{z_n}_{n \geq 1}$.
 \end{definition}
 
 \begin{remark}
-    It is easy to verify that the limit is unique, and that
-    $z_n \taking{n \to \infty} z$ if and only if
-    $T(z_n) \taking{n \to \infty} T(z)$ in the Euclidean metric.
+  It is easy to verify that the limit is unique, and that
+  $z_n \taking{n \to \infty} z$ if and only if
+  $T(z_n) \taking{n \to \infty} T(z)$ in the Euclidean metric.
 \end{remark}
 
 \begin{definition}[Cauchy sequence]
-    A sequence $\set{z_n}_{n \geq 1}$ is said to be a Cauchy sequence if for
-    all $\espilon > 0$ there exists $N > 1$ such that for all $n,m > N$
-    we have that $|z_n - z_m| < \epsilon$.
+  A sequence $\set{z_n}_{n \geq 1}$ is said to be a Cauchy sequence if for
+  all $\epsilon > 0$ there exists $N > 1$ such that for all $n,m > N$
+  we have that $|z_n - z_m| < \epsilon$.
 \end{definition}
 
 \begin{proposition}
-    The complex plane $\C$ is complete.
-    That is, every Cauchy sequence converges in $\C$.
+  The complex plane $\C$ is complete.
+  That is, every Cauchy sequence converges in $\C$.
 \end{proposition}
 \begin{proof}
-    The proof follows immediately from the known fact that $\R$ is complete
-    and the previous remark.
+  The proof follows immediately from the known fact that $\R$ is complete
+  and the previous remark.
 \end{proof}
 
-\subsection{Sets in the complex plane}
+\subsubsection{Sets in the complex plane}
 
 \begin{definition}[Open disc]
-    For $z_0 \in \C$ and $r > 0$ we set
-    \[
-        D_r(z_0) := \set{z \in \C \colon |z - z_0| < r}.
-    \]
-    We call $D_r(z_0)$ the open disc at center $z_0$ with radius $r$.
+  For $z_0 \in \C$ and $r > 0$ we set
+  \[
+      D_r(z_0) := \set{z \in \C \colon |z - z_0| < r}.
+  \]
+  We call $D_r(z_0)$ the open disc at center $z_0$ with radius $r$.
 \end{definition}
 
 
 \begin{definition}[Closed disc]
-    For $z_0 \in \C$ and $r > 0$ we set
-    \[
-        \overline D_r(z_0) := \set{z \in \C \colon |z - z_0| \le r}.
-    \]
-    We call $\overline D_r(z_0)$ the closed disc at center $z_0$ with
-    radius $r$.
+  For $z_0 \in \C$ and $r > 0$ we set
+  \[
+      \overline D_r(z_0) := \set{z \in \C \colon |z - z_0| \le r}.
+  \]
+  We call $\overline D_r(z_0)$ the closed disc at center $z_0$ with
+  radius $r$.
 \end{definition}
 
 \begin{definition}[Circle]
-    For $z_0 \in \C$ and $r > 0$ we set
-    \[
-        C_r(z_0) := \set{z \in \C \colon |z - z_0| = r}.
-    \]
-    We call $C_r(z_0)$ the circle at center $z_0$ with radius $r$.
+  For $z_0 \in \C$ and $r > 0$ we set
+  \[
+      C_r(z_0) := \set{z \in \C \colon |z - z_0| = r}.
+  \]
+  We call $C_r(z_0)$ the circle at center $z_0$ with radius $r$.
 \end{definition}
 
 \begin{definition}[Interior point]
-    Given $\Omega \subset \C$, we say that $z \in \Omega$ is an interior
-    point of $\Omega$ if exists $r > 0$ such that $D_r(z) \subset \Omega$.
+  Given $\Omega \subset \C$, we say that $z \in \Omega$ is an interior
+  point of $\Omega$ if exists $r > 0$ such that $D_r(z) \subset \Omega$.
 \end{definition}
 
 \begin{definition}[Interior of a set]
-    Given $\Omega \subset \C$, we say that the interior of $\Omega$ is
-    the collection of all interior points of $\Omega$.
-    We denote the interior as $\Int(\Omega)$.
+  Given $\Omega \subset \C$, we say that the interior of $\Omega$ is
+  the collection of all interior points of $\Omega$.
+  We denote the interior as $\Int(\Omega)$.
 \end{definition}
 
 \begin{definition}[Open set]
-    Given $\Omega \subset \C$, we say that $\Omega$ is an open set if
-    $\Int(\Omega) = \Omega$.
+  Given $\Omega \subset \C$, we say that $\Omega$ is an open set if
+  $\Int(\Omega) = \Omega$.
 \end{definition}
 
 \begin{definition}[Closed set]
-    Given $\Omega \subset \C$, we say that $\Omega$ a closed set if
-    $\Omega^c := \C \setminus \Omega$ is open.
+  Given $\Omega \subset \C$, we say that $\Omega$ a closed set if
+  $\Omega^c := \C \setminus \Omega$ is open.
 \end{definition}
 
 \begin{definition}[Limit point]
-    Given $\Omega \subset \C$, we say that $z \in \Omega$ is an interior
-    point of $\Omega$ if there exists a sequence $z_n$ such that
-    $z_n \neq z$ for all $n > 1$ and $z_n \taking{n \to \infty} z$.
+  Given $\Omega \subset \C$, we say that $z \in \Omega$ is an interior
+  point of $\Omega$ if there exists a sequence $z_n$ such that
+  $z_n \neq z$ for all $n > 1$ and $z_n \taking{n \to \infty} z$.
 \end{definition}
 
 \begin{proposition}
-    Let $\Omega \subset \C$ be given.
-    Then $\Omega$ is closed if and only if it contains
-    all of its limit points.
+  Let $\Omega \subset \C$ be given.
+  Then $\Omega$ is closed if and only if it contains
+  all of its limit points.
 \end{proposition}
 \begin{proof}
-    Clear.
+  Clear.
 \end{proof}
 
 \begin{definition}[Closure]
-    Let $\Omega \subset \C$ be given.
-    The closure of $\Omega$, denoted $\overline \Omega$, is defined
-    as
-    \[
-        \overline \Omega =
-        \Omega \cup
-        \set{z \in \C \mid \text{$x$ is a limit point of $\Omega$}}.
-    \]
+  Let $\Omega \subset \C$ be given.
+  The closure of $\Omega$, denoted $\overline \Omega$, is defined
+  as
+  \[
+      \overline \Omega =
+      \Omega \cup
+      \set{z \in \C \mid \text{$x$ is a limit point of $\Omega$}}.
+  \]
 \end{definition}
 
 \begin{remark}
-    Note that $\Omega$ is closed if and only if $\overline \Omega = \Omega$.
+  Note that $\Omega$ is closed if and only if $\overline \Omega = \Omega$.
 \end{remark}
 
 \begin{definition}[Boundary]
-    The boundary of $\Omega \subset \C$ is denoted by $\partial \Omega$
-    and defined by $\partial \Omega := \Omega \setminus \Int(\Omega)$.
+  The boundary of $\Omega \subset \C$ is denoted by $\partial \Omega$
+  and defined by $\partial \Omega := \Omega \setminus \Int(\Omega)$.
 \end{definition}
 
 \begin{definition}[Diameter]
-    Given $\Omega \subset \C$, we define the diameter of $\Omega$ as
-    \[
-        \diam(\Omega) := \sup\set{|z - w| \colon z,w \in \Omega}.
-    \]
+  Given $\Omega \subset \C$, we define the diameter of $\Omega$ as
+  \[
+      \diam(\Omega) := \sup\set{|z - w| \colon z,w \in \Omega}.
+  \]
 \end{definition}
 
 \begin{definition}[Bounded set]
-    Given $\Omega \subset \C$, we say that $\Omega$ is bounded if
-    $\diam(\Omega) < \infty$.
+  Given $\Omega \subset \C$, we say that $\Omega$ is bounded if
+  $\diam(\Omega) < \infty$.
 \end{definition}
 
 \begin{remark}
-    It is clear that a set $\Omega \susbet \C$ is bounded if and only if
-    there exists $z_0 \in \C$ and $r > 0$ such that $\Omega \susbet D_r(z_0)$.
+  It is clear that a set $\Omega \subset \C$ is bounded if and only if
+  there exists $z_0 \in \C$ and $r > 0$ such that $\Omega \subset D_r(z_0)$.
 \end{remark}
 
 \begin{definition}[Compact set]
-    A subset $\Omega$ of $\C$ is said to be compact if it is closed and 
-    bounded.
+  A subset $\Omega$ of $\C$ is said to be compact if it is closed and 
+  bounded.
 \end{definition}
 
 \begin{theorem}\tt{Bolzano--Weierstrass theorem}
-    A subset $\Omega$ in $\C$ is compact if and only if every seqeuence
-    $\set{z_n}_{n \geq 1}$ has a subsequence $\set{z_{n_k}}$ such that
-    $z_{n_k} \taking{k \to \infty} z$ for some $z \in \C$.
+  A subset $\Omega$ in $\C$ is compact if and only if every seqeuence
+  $\set{z_n}_{n \geq 1}$ has a subsequence $\set{z_{n_k}}$ such that
+  $z_{n_k} \taking{k \to \infty} z$ for some $z \in \C$.
 \end{theorem}
 
 \begin{theorem}\tt{Cantor's intersection lemma}
-    Let $\Omega_1, \Omega_2, \dots$ be nonempty compact subsets of $\C$.
-    Suppose that $\Omega_{n+1} \subset \Omega_n$ for all $n \geq 1$,
-    and that $\diam(\Omega_n) \taking{n \to \infty} 0$.
-    Then $\cap_{n \geq 1} \Omega_n = \set{z}$ for some $z \in \C$.
+  Let $\Omega_1, \Omega_2, \dots$ be nonempty compact subsets of $\C$.
+  Suppose that $\Omega_{n+1} \subset \Omega_n$ for all $n \geq 1$,
+  and that $\diam(\Omega_n) \taking{n \to \infty} 0$.
+  Then $\cap_{n \geq 1} \Omega_n = \set{z}$ for some $z \in \C$.
 \end{theorem}
 \begin{proof}
-    Choose $z_n \in \Omega_n$ for all $n \geq 1$.
-    Because $\diam \Omega \taking{n \to \infty} = 0$ we have that
-    $\set{z_n}_{n \geq 1}$ is a Cauchy sequence and therefore it converges
-    to some $z \in \C$. Because $\Omega_n$ is compact for every $n \geq 1$
-    we get that $z \in \cap_{n \geq 1} \Omega_n$.
-    This means that $\cap_{n \geq 1} \Omega_n \neq \emptyset$.
+  Choose $z_n \in \Omega_n$ for all $n \geq 1$.
+  Because $\diam \Omega \taking{n \to \infty} = 0$ we have that
+  $\set{z_n}_{n \geq 1}$ is a Cauchy sequence and therefore it converges
+  to some $z \in \C$. Because $\Omega_n$ is compact for every $n \geq 1$
+  we get that $z \in \cap_{n \geq 1} \Omega_n$.
+  This means that $\cap_{n \geq 1} \Omega_n \neq \emptyset$.
 
-    Let $z,w \in \Omega$.
-    Because $\diam \Omega \taking{n \to \infty} 0$ we have that
-    $|z - w| \le 0$ and thus $z = w$ which implies that
-    $\cap_{n \geq 1} \Omega_n = \set{z}$ which completes the proof.
+  Let $z,w \in \Omega$.
+  Because $\diam \Omega \taking{n \to \infty} 0$ we have that
+  $|z - w| \le 0$ and thus $z = w$ which implies that
+  $\cap_{n \geq 1} \Omega_n = \set{z}$ which completes the proof.
 \end{proof}
 
 \begin{definition}[Connected open set]
-    A nonempty open set $\Omega \subset \C$ is said to be connected if it does
-    not contain disjoint nonempty open subsets $\Omega_1$, $\Omega_2$ such
-    that $\Omega = \Omega_1 \cup \Omega_2$. A connected open set in 
-    $\C$ will be called a region.
+  A nonempty open set $\Omega \subset \C$ is said to be connected if it does
+  not contain disjoint nonempty open subsets $\Omega_1$, $\Omega_2$ such
+  that $\Omega = \Omega_1 \cup \Omega_2$. A connected open set in 
+  $\C$ will be called a region.
 \end{definition}
 
 \begin{definition}[Connected closed set]
-    A nonempty open set $\Omega \subset \C$ is said to be connected if it does
-    not contain disjoint nonempty closed subsets $\Omega_1$, $\Omega_2$ such
-    that $\Omega = \Omega_1 \cup \Omega_2$.
+  A nonempty open set $\Omega \subset \C$ is said to be connected if it does
+  not contain disjoint nonempty closed subsets $\Omega_1$, $\Omega_2$ such
+  that $\Omega = \Omega_1 \cup \Omega_2$.
 \end{definition}
 
 \begin{remark}
-    It can be shown that $\Omega$ is connected if and only if for any
-    $z, w \in \Omega$ there exists a curve $\gamma \colon [0,1] \to \Omega$
-    such that $\gamma(0) = z$ and $\gamma(1)$.
-    This implies that open and closed discs, as well as circles, are
-    connected.
+  It can be shown that $\Omega$ is connected if and only if for any
+  $z, w \in \Omega$ there exists a curve $\gamma \colon [0,1] \to \Omega$
+  such that $\gamma(0) = z$ and $\gamma(1)$.
+  This implies that open and closed discs, as well as circles, are
+  connected.
 \end{remark}
 
-\subsection{Continuous functions}
+\subsubsection{Continuous functions}
 
 \begin{definition}[Continuous function]
-    Let $\Omega$ be a nonempty subset of $\C$ and let 
-    $f \colon \Omega \to \C$ be given.
-    We say that $f$ is continuous at a point $z_0 \in \Omega$ 
-    if for all $\epsilon > 0$ there exists $\delta > 0$ so
-    that $|f(z) - f(z_0)| < \epsilon$ for all $z \in \Omega$ with 
-    $|z - z_0| < \delta$.
-    We say that $f$ is continuous on $\Omega$ if it is continuous at every 
-    $z_0 \in \Omega$.
+  Let $\Omega$ be a nonempty subset of $\C$ and let 
+  $f \colon \Omega \to \C$ be given.
+  We say that $f$ is continuous at a point $z_0 \in \Omega$ 
+  if for all $\epsilon > 0$ there exists $\delta > 0$ so
+  that $|f(z) - f(z_0)| < \epsilon$ for all $z \in \Omega$ with 
+  $|z - z_0| < \delta$.
+  We say that $f$ is continuous on $\Omega$ if it is continuous at every 
+  $z_0 \in \Omega$.
 \end{definition}
 
 \begin{remark}
-    It is easy to verify that the functions $\Im$, $\Re$, $|\cdot|$, and
-    $\theta \mapsto e^{i \theta}$ are all continuous.
+  It is easy to verify that the functions $\Im$, $\Re$, $|\cdot|$, and
+  $\theta \mapsto e^{i \theta}$ are all continuous.
 \end{remark}
 
 \begin{proposition}
-    The composition of continuous functions is continuous.
+  The composition of continuous functions is continuous.
 \end{proposition}
 
 \begin{definition}[Bounded function]
-    Let $\Omega$ be a nonempty subset of $\C$ and let 
-    $f \colon \Omega \to \C$ be given.
-    We say that $f$ is bounded if there exists $M > 0$ so that 
-    $|f(z)| < M$ for all $z \in \Omega$.
-    We say that $f$ attains a maximum if there exists $z_M \in \Omega$
-    such that $f(z) \le f(z_M)$ for all $z \in \Omega$.
-    We define when $f$ attains a minimum similarly.
+  Let $\Omega$ be a nonempty subset of $\C$ and let 
+  $f \colon \Omega \to \C$ be given.
+  We say that $f$ is bounded if there exists $M > 0$ so that 
+  $|f(z)| < M$ for all $z \in \Omega$.
+  We say that $f$ attains a maximum if there exists $z_M \in \Omega$
+  such that $f(z) \le f(z_M)$ for all $z \in \Omega$.
+  We define when $f$ attains a minimum similarly.
 \end{definition}
 
 \begin{proposition}
-    Let $\Omega$ be a nonempty compact subset of $\C$, and let 
-    $f \colon \Omega \to \C$ be continuous.
-    Then $f$ is bounded, and it attains its maximum and minimum on $\Omega$.
+  Let $\Omega$ be a nonempty compact subset of $\C$, and let 
+  $f \colon \Omega \to \C$ be continuous.
+  Then $f$ is bounded, and it attains its maximum and minimum on $\Omega$.
 \end{proposition}
 
 \subsection{Holomorphic functions}
 
 \begin{definition}[Holomorphic function]
-    Let $\Omega$ be a nonempty open subset of $\C$ and let 
-    $f \colon \Omega \to \C$ be given.
-    We say that $f$ is holomorphic at a point $z \in \Omega$
-    if the following limit exists
-    \[
-        f'(z) := \lim_{h \to 0} \frac{f(z + h) - f(z)}{h}.
-    \]
-    The number $f'(z)$ is called the derivative of $f$ at $z$.
+  Let $\Omega$ be a nonempty open subset of $\C$ and let 
+  $f \colon \Omega \to \C$ be given.
+  We say that $f$ is holomorphic at a point $z \in \Omega$
+  if the following limit exists
+  \[
+      f'(z) := \lim_{h \to 0} \frac{f(z + h) - f(z)}{h}.
+  \]
+  The number $f'(z)$ is called the derivative of $f$ at $z$.
+  It is said that $f$ is holomorphic if it is holomorphic at every
+  $z \in \Omega$.
+  Given a closed subset $C \subset \Omega$, we say that $f$ is holomorphic
+  on $C$ if there exists $C \subset \Omega' \subset \Omega$ so that
+  $\Omega'$ is open and $f$ is holomorphic on $\Omega'$.
 \end{definition}
 
+\begin{definition}[Entire function]
+  We say that $f \colon \C \to \C$ is entire if it is holomorphic on $\C$.
+\end{definition}
 
+\begin{remark}
+  Note that $h$ is a complex number and can approach $0$ from any direction.
+\end{remark}
 
+\begin{remark}
+  It is also useful to notice that $f \colon \Omega \to \C$ is holomorphic
+  at $z \in \Omega$ if and only if there exist $a \in \C$, $r > 0$ with
+  $D_r(z) \subset \Omega$, and a function $\psi \colon D_r(0) \to \C$ with
+  $\lim_{h \to 0} \psi(h) = 0$, so that
+  \[
+    f(z + h) = f(z) + ah + h \psi(h) \text{ for all } h \in D_r(0).
+  \]
+  From this formulation is it clear that $f$ is continuous at $z$ whenever
+  $f$ is holomorphic at $z$.
+\end{remark}
 
+\begin{example}
+  It follows directly from the definition that the function $1/z$ is holomorphic
+  on $\C \setminus \set{0}$ with $f'(z) = -1/z^2$. For all $0 \neq z \in \C$
+  we have
+  \[
+    \lim_{h \to 0} \frac{f(z + h) - f(z)}{h} =
+    \lim_{h \to 0} \frac{1}{h} \del{\frac{1}{z + h} - \frac{1}{z}} =
+    \lim_{h \to 0} \frac{-1}{z (z + h)} =
+    \frac{-1}{z^2}.
+  \]
+\end{example}
 
+\begin{example}
+  The function $f(z) = \bar z$ is not holomorphic. For any $z \in \C$ and
+  $r \in \R$ we have that
+  \[
+    \frac{f(z + t) - f(z)}{t} = 1 \tand
+    \frac{f(z + t i) - f(z)}{t i} = -1
+  \]
+\end{example}
 
+\begin{proposition}
+  \label{prop:holo-is-linear}
+  Let $\Omega \subset \C$ be open and let $f,g \colon \Omega \to \C$ be
+  holomorphic at $z \in \Omega$. Then
+  \begin{enumerate}
+    \item[(1)] $f + g$ is holomorphic at $z$ with $(f + g)'(z) = f'(z) + g'(z)$.
+    \item[(2)] $f g$ is holomorphic at $z$ with $(f g)'(z) = 
+      f'(z)g(z) + f(z)g'(z)$.
+  \end{enumerate}
+\end{proposition}
 
+\begin{proof}
+  We will only prove $(2)$ because the proof of $(1)$ is much simpler.
+  Because $f$ and $g$ are holomorphic at $z$, they are also continuous
+  there. Thus,
+  \begin{align*}
+    \lim_{h \to 0} \frac{(f g)(z + h) - (f g)(z)}{h} &=
+    \lim_{h \to 0} \del{\frac{f(z + h) - f(z)}{h} g(z + h) + 
+  f(z) \frac{g(z + h) - g(z)}{h}} \\ &=
+    f'(z)g(z) + f(z)g'(z),
+  \end{align*}
+  which completes the proof.
+\end{proof}
 
+\begin{corollary}
+  It's quite easy to prove that constant function of the form $f(z) = c$
+  for some $c \in \C$ and $f(z) = z$ are holomorphic.
+  It follows immediately from \Cref{prop:holo-is-linear} that all polynomials,
+  functions of the form $p(z) = \sum_{k=0}^{n} a_k z^k$ are entire, with
+  $p'(z) = \sum_{k=1}^{n} k a_k z^{k-1}$ for all $z \in \C$.
+\end{corollary}
 
+\begin{proposition}
+  A composition of holomorphic functions at $z$ is holomorphic at $z$, with
+  $(g \circ f)'(z) = g'(f(z)) f'(z)$.
+\end{proposition}
 
+\begin{corollary}
+  Let $\Omega \subset \C$ be open and let $f,g \colon \Omega \to \C$ be
+  holomorphic at $z \in \Omega$.
+  Suppose also that $g(z) \neq 0$.
+  Then $f/g$ is holomorphic at $z$ with
+  \[
+    (f/g)'(z) = \frac{f'(z)g(z) + f(z)g'(z)}{g(z)^2}.
+  \]
+\end{corollary}
+\begin{proof}
+  Let $h \colon \C \setminus \set{0} \to \C$ be with $h(z) = 1/z$.
+  We now have that
+  \begin{align*}
+    (f/g)'(z) &=
+    (f \cdot (h \circ g))'(z) =
+    f'(z)(h \circ g)(z) + f(z)(h \circ g)'(z) \\ &=
+    f'(z)/g(z) + f(z)h'(g(z))g'(z) =
+    f'(z)/g(z) - f(z)g(z)^{-2}g'(z).
+  \end{align*}
+\end{proof}
+
+Recall that $T \colon \C \to \R^2$ is the operator $T(x + y i) = (x,y)$.
+
+\begin{proposition}
+  \label{prop:pd}
+  Let $\Omega \subset \C$ be open, let $f \colon \Omega \to \C$, let 
+  $u,v \colon T(\Omega) \to \R$ be with $f(x + y i) = u(x,y) + i v(x,y)$
+  for $x + i y \in \Omega$, and let $F \colon T(\Omega) \to \R^2$ be with
+  $F(x,y) = (u(x,y), v(x,y))$ for $(x,y) \in T(\Omega)$.
+  Fix $x_0 + i y_0 = z_0 \in \Omega$,
+  write $p = (x_0, y_0)$, and suppose that $f$ is holomorphic at $z_0$.
+  Then,
+  \begin{enumerate}
+    \item[(1)] the partial derivatives of $u$ and $v$ exist at $p$, and
+      \[
+        f'(z_0) =
+        \pd{u}{x}(p) + i \pd{v}{x}(p) =
+        \pd{v}{y}(p) - i \pd{u}{y}(p);
+      \]
+    \item[(2)] The Cauchy--Riemann equations are satisfied:
+      \[
+        \pd{u}{x}(p) = \pd{v}{y}(p) \stand
+        \pd{u}{y}(p) = \pd{v}{x}(p).
+      \]
+    \item[(3)] $F$ is differentiable at $p$ with,
+      \[
+        dF_p =
+        \begin{pmatrix}
+          \pd{u}{x}(p) & - \pd{v}{x}(p) \\
+          \pd{v}{x}(p) & \pd{u}{x}(p) 
+        \end{pmatrix} =
+        \begin{pmatrix}
+          \pd{v}{y}(p) & \pd{u}{y}(p) \\
+          - \pd{u}{y}(p) & \pd{v}{y}(p) 
+        \end{pmatrix}.
+      \]
+  \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+  Note that $u = \Re \circ f \circ T^{-1}$, $v = \Im \circ f \circ T^{-1}$
+  and $F = T \circ f \circ T^{-1}$.
+  Thus, $F$ is the map corresponding to $f$ under the identification of $\C$ 
+  with $\R^2$ via $T$.
+\end{remark}
+
+\begin{remark}
+  Note that from $(3)$ we have
+  \[
+    \det(dF_p) = \del{\pd{u}{x}(p)}^2 + \del{\pd{v}{x}(p)}^2.
+  \]
+  From this and from $(1)$, it follows that $\det(dF_p) > 0$ whenever
+  $f'(z_0) \neq 0$.
+  Moreover, we have that $\sqrt{\det(dF_p)} \cdot dF_p$ is an orthogonal
+  matrix.
+\end{remark}
+
+We now prove \Cref{prop:pd}.
+
+\begin{proof}
+  To be added.
+\end{proof}
+
+The following proposition is a kind of converse to the previous proposition.
+
+\begin{proposition}
+  Let $\Omega \subset \C$ be open, let $f \colon \Omega \to \C$,
+  and let $u$ and $v$ be as in \Cref{prop:pd}.
+  Fix $x_0 + i y_0 = z_0 \in \Omega$, write $p := (x_0,y_0)$,
+  ans suppose that $u$ and $v$ are differentiable at $p$,
+  that is $\pd{u}{x}(p) = \pd{v}{y}(p)$ and $\pd{u}{y}(p) = - \pd{v}{x}(p)$.
+  Then $f$ is holomorphic at $z_0$.
+\end{proposition}
+\begin{proof}
+  To be added.
+\end{proof}
+
+\subsection{Power series}
+
+\begin{definition}[Power series]
+  A power series centered at $z_0 \in \C$ is an expression of the
+  form $\sum_{0}^{\infty} a_n (z - z_0)^n$,
+  where $\set{a_n}_{n \geq 0} \subset \C$.
+  Given $z \in \C$, we say that the power series converges at $z$ if
+  the limit $\lim_{N \to \infty} \sum_{n=0}^{N} a_n (z - z_0)^n$ exists
+  in $\C$.
+  If this limit does not exist, we say that the series diverges at $z$.
+\end{definition}
+
+\begin{definition}[Absolute convergence]
+  Given a power series $\sum_{n=0}^{\infty} a_n (z - z_0)$,
+  we say that it converges absolutely at $z \in \C$ if
+  $\sum_{n=0}^{\infty} \abs{a_n} \cdot \abs{(z - z_0)} < \infty$.
+\end{definition}
+
+\begin{proposition}
+  If a power series converges absolutely at $z$ then it also converges at $z$.
+  This follows from the completeness of $\C$.
+\end{proposition}
+
+In the following proposition we use the convention that $\frac{1}{0} = \infty$
+and $\frac{1}{\infty} = 0$.
+
+\begin{proposition}[Hadamard's theorem]
+  \label{thm:hadamard}
+  Let $\powerseries$ be a power series, and let $0 \le \R \le \infty$
+  be given by
+  \[
+    \frac{1}{R} = \limsup_{n \to \infty} \abs{a_n}^{\frac 1n}.
+  \]
+  Then for $z \in \C$ the series converges absolutely if $|z - z_0| < R$,
+  and the series diverges if $|z - z_0| > R$.
+\end{proposition}
+
+\begin{remark}
+  The number $R$ is called the radius of convergence of the power series,
+  and the region $\set{z \in \C \colon |z - z_0| < R}$ is called the disc
+  of convergence.
+\end{remark}
+
+We now proceed to prove \Cref{thm:hadamard}
+
+\begin{proof}
+  To be added
+\end{proof}
 
 
 

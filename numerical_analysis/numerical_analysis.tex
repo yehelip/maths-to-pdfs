@@ -18,6 +18,203 @@
 \newpage
 
 \section{Introduction}
+This course addresses what of all the math we have learned so far can
+we compute with the computer
+
+For example, given the task of computing the determinant of a matrix $A$,
+we want to find the most efficient algorithm.
+The most efficient algorithm is the one that uses the least amount of
+operations.
+
+One way of calculating $\det A$ is using permutations:
+\[
+  \det A = \sum_{\gamma \in S_n}
+  \sgn(\gamma) a_{1 \sigma(1)} \cdot a_{2 \sigma(2)} \cdots a_{n \sigma(n)}.
+\]
+Each permutation costs us $n$ operations of multiplication, and to calculate
+the sum we perform $n! - 1$ summation operations.
+Since there are $n!$ permutations in $S_n$, the total amount of operations
+of this algorithm is $n \cdot n! + n! - 1$.
+
+An alternative algorithm would be to find the eigendecomposition
+$A = U^{T} D U$ where $U$ is an orthogonal matrix, and then calculate
+the product of the elements on the main diagonal of $D$ (which are the
+eigenvalues of $A$).
+Using this algorithm we can compute $\det A$ in $C n^3 + n - 1$ operations
+for some costant $C$.
+Although this algorithm is much faster than the previous ones, there are
+more efficient algorithms still.
+
+\begin{definition}[Big $O$ notation]
+  Let $(x_n)_{n \geq 1}$ and $(y_n)_{n \geq 1}$ be sequences of real numbers.
+  We say that $x_n = O(y_n)$ if there exist constants $C$ and $N$ such that
+  for all $n > N$
+  \[
+    |x_n| \le C |y_n|
+  \]
+\end{definition}
+
+Here are some examples
+\begin{align*}
+  \frac{n + 1}{n^2} &= O\del{\frac 1n} \\
+  Cn^3 + n - 1 &= O(n^3) \\
+  n \cdot n! + n! - 1 &= O(n \cdot n!)
+\end{align*}
+
+Using big $O$ notation we can say that direct determinant calculations
+requires $O(n \dots n!)$ calculations, while using eigendecomposition
+to calculate it takes $O(n^3)$ operations.
+
+However, the big $O$ notation is still not very satisfying because
+we still have
+\[
+  C n^3 + n - 1 = O(n \cdot n!).
+\]
+To fix this problem we introduce the $\Theta$ notation.
+
+\begin{definition}[big $\Theta$ notation]
+  Let $(x_n)_{n \geq 1}$ and $(y_n)_{n \geq 1}$ be sequences of real numbers.
+  We say that $x_n = \Theta(y_n)$ if there exist constants $0 < c < C$ and $N$ 
+  such that for all $n > N$
+  \[
+    c |y_n| \le |x_n| \le C |y_n|.
+  \]
+\end{definition}
+
+Here are some examples
+\begin{align*}
+  a_k n^k + \cdots + a_1 n + a_0 &= \Theta(n^k) \\
+  Cn^3 + n - 1 &= \Theta(n^3) \\
+  n \cdot n! + n! - 1 &= \Theta(n \cdot n!)
+\end{align*}
+
+Another important method before we move to the next section,
+is Horner's method.
+It allows computing a polynomial $p(x) = \sum_{k=0}^{n} a_k x^n$ in
+$\Theta(n)$ operations instead of $\Theta(n^2)$ operations.
+It states that
+\[
+  \begin{aligned}
+    &a_{0} + a_{1}x + a_{2}x^{2} + a_{3}x^{3} + \cdots + a_{n}x^{n} \\ = {}
+    &a_{0} + x\del{a_{1} + x\del{a_{2} + x\del{a_{3} + \cdots + 
+    x(a_{n-1} + x a_{n}) \cdots}}}.
+  \end{aligned}
+\]
+
+\section{Digital Number Representation}
+We usually use base-$10$ expansion to represent number.
+For example, the number $x = 123.45$ means
+\[
+  x = 1 \times 10^2 + 2 \times 10^1 + 3 \times 10^0 + 4 \times 10^{-1} +
+    5 \times 10^{-2}.
+\]
+In this case, we say that $x$ has a finite base-$10$ expansion.
+All non-negative real numbers have a (possibly infinite) base-$10$ expansion.
+
+\begin{theorem}
+  \label{thm:bases}
+  Let $x$ be a real number in $[0,1)$, and $b \geq 2$ an integer.
+  Then there exists $L \in \Z$ and a sequence $(c_k)_{k=1}^{\infty}$ where
+  each $c_k$ is in $\set{0,1,\dots,b-1}$, so that
+  \[
+    x = \sum_{k=1}^{\infty} c_k b^{-k}.
+  \]
+\end{theorem}
+
+The motivation for this theorem is to prove for example, that computers,
+who work in base $2$, can represent the same numbers we can represent
+in the way that is more convenient to us like base $10$.
+
+\begin{lemma}
+  \label{lem:bases}
+  If $b \geq 2$ is an integer, $L \in \Z$ and $x \in [0,b^{L+1})$.
+  Then there exists $c_L \in \set{0,1,\dots,b-1}$ such that
+  $x - c_L b^{L} \in [0,b^L)$.
+\end{lemma}
+\begin{proof}
+  We notice that
+  \[
+    \bigcup_{j=0}^{b-1} \intco{j b^L, (j + 1) b^L} =
+    [0, b^{L+1}).
+  \]
+  So there exists $c_L \in \set{0,1,\dots,b-1}$ so that 
+  $x \in [c_L b^L, (c_L + 1) b^L)$.
+  Then
+  \[
+    r_L = x - c_L b^L \in [0,b^L).
+  \]
+\end{proof}
+
+We can now go back to prove \Cref{thm:bases}
+
+\begin{proof}
+  By assumption $x \in [0,b^0)$.
+  By \Cref{lem:bases} with $L = -1$ we now define:
+  \[
+    r_1 := x - c_1 b^{-1} \in [0,b^{-1}).
+  \]
+  And continue indefinitely
+  \[
+    r_S := x - \sum_{k=1}^{S} c_k b^{-k} \in [0,b^{-k}).
+  \]
+  This implies that $r_S \taking{S \to \infty} 0$ which means that
+  \[
+    x = \sum_{k=1}^{\infty} c_k b^{-k}.
+  \]
+\end{proof}
+
+We can now conclude from the theorem that for $x > 0$, we can find $L$
+large enough so that $x < b^L$ and so $x b^{-L} < 1$.
+We can then write
+\[
+  x = b^L \sum_{k=1}^{\infty} c_k b^{-k}.
+\]
+
+It is also possible in base-$b$ for $b \geq 2$ to represent any
+non-negative number as:
+\[
+  x = (-1)^s \times [1.f]_b \times 2^m,
+\]
+for some $s \in \set{0,1}$, $m \geq 0$ and $f$ an infinite sequence
+of digits.
+
+\begin{remark}
+  Obsviouly we can also represent $0$ because $0 \in \set{0,1,\dots,b}$.
+\end{remark}
+
+In a computer, we represent integers using $32$ bits.
+We use one bit to represent the sign of the integer,
+and the other as constants to the powers of two.
+In this way we can represent every integer 
+$n \in [- (2^{-31} - 1), 2^{31} - 1]$ as such:
+\[
+  n = (-1)^{c_31} \sum_{j=0}^{30}.
+\]
+Where $(c_0,c_1,\dots,c_{31})$ represent the bits.
+If we add two numbers and get a result larger than $2^31 - 1$,
+the computer will give us the result $Inf$.
+
+When we consider rational numbers, we write them as
+\[
+    x = (-1)^s \times [1.f]_2 \times 2^m.
+\]
+We use a single bit to encode the sign, eight bits to encode $m$ (also
+known as the exponent) and the remaining $32$ bits to encode $f$ (also known
+as the mantissa).
+
+\begin{definition}[Mantissa]
+  As we saw earlier, every non-zero number can be written as
+  \[
+    x = (-1)^s \times [1.f]_b \times 2^m.
+  \]
+  We call $[1.f]_2$ the mantissa, $f$ the normalized mantissa, and
+  $m$ the exponent.
+\end{definition}
+
+
+
+
+
 
 
 \end{document}
