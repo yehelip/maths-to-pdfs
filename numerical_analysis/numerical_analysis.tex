@@ -200,18 +200,90 @@ When we consider rational numbers, we write them as
 \]
 We use a single bit to encode the sign, eight bits to encode $m$ (also
 known as the exponent) and the remaining $32$ bits to encode $f$ (also known
-as the mantissa).
+as the normalized mantissa). We call $[1.f]_2$ the mantissa.
+This method is known as single precision.
 
-\begin{definition}[Mantissa]
-  As we saw earlier, every non-zero number can be written as
+In double precision (which is the standard in Matlab) we use $64$ bits
+to store each number. A single bit to encode the sign, $11$ bits to encode 
+the exponent and the remaining $52$ bits to encode the normalized mantissa.
+In general we only focus on single precision.
+
+For now, since
+
+% Add discussion about what's possible to represent and rounding numbers.
+
+Denote $\floor x$ the closest number we can represent using this method.
+Then the absolute error is
+\[
+  \abs{\floor x - x} \le 2^m 2^{-24}
+\]
+and the relative error is bounded by
+\[
+  \frac{\abs{\floor x - x}}{|x|} \le
+  \frac{2^m 2^{-24}}{[1.f]_2 \times 2^m} \le
+  2^{-24}.
+\]
+This means that the relative error of rounding is pretty low.
+In double precision because we have more bits the relative error
+is bounded by $2^{-52} \tilde 2 \times 10^{-16}$.
+This number is called $eps$ in Matlab.
+
+\begin{definition}[Relative error]
+  Let $f(x)$ be some approximation of $x \neq 0$, the relative error
+  is defined by
   \[
-    x = (-1)^s \times [1.f]_b \times 2^m.
+    \frac{|f(x) - x|}{|x|} < \epsilon
   \]
-  We call $[1.f]_2$ the mantissa, $f$ the normalized mantissa, and
-  $m$ the exponent.
+  if and only if
+  \[
+    f(x)= x(1 + \delta)
+  \]
+  for some $\delta \in (-\epsilon, \epsilon)$.
+  We can get this equlity by setting $\delta = \frac{f(x) - x}{x}$.
 \end{definition}
 
-
+\begin{proposition}
+  Let $x_1,x_2 > 0$ and assume there exists some $f \colon \R \to \R$ such that
+  there exist $\delta_1$, $\delta_2$, $\delta_3$ such that
+  \[
+    f(x_1) = (1 + \delta_1) x_1 \stand
+    f(x_2) = (1 + \delta_2) x_2 \stand
+    f(f(x_1) \cdot f(x_2)) = (1 + \delta_3)[f(x_1) \cdot f(x_2)]
+  \]
+  where $|\delta_1|, |\delta_2|, |\delta_3| < \epsilon$.
+  Then
+  \[
+    f(f(x_1) \cdot f(x_2)) =
+    (1 + \delta) x_1 x_2
+  \]
+  For some $|\delta| < 3 \epsilon + 3 \epsilon^2 + \epsilon^3$.
+\end{proposition}
+\begin{proof}
+  \[
+    f(f(x_1) \cdot f(x_2)) =
+    (1 + \delta_3)[f(x_1) \cdot f(x_2)] =
+    (1 + \delta_3)(1 + \delta_2)(1 + \delta_1) x_1 x_2
+  \]
+  and
+  \[
+    (1 + \delta_3)(1 + \delta_2)(1 + \delta_1) =
+    1 + \delta_1 + \delta_2 + \delta_3 + 
+    \delta_1 \delta_2 + \delta_1 \delta_3 + \delta_2 \delta_3 + 
+    \delta_1 \delta_2 \delta_3.
+  \]
+  Denote
+  \[
+    \delta =
+    \delta_1 + \delta_2 + \delta_3 + 
+    \delta_1 \delta_2 + \delta_1 \delta_3 + \delta_2 \delta_3 + 
+    \delta_1 \delta_2 \delta_3.
+  \]
+  we get
+  \[
+    |\delta| \le 3 \epsilon + 3 \epsilon^2 + \epsilon^3
+  \]
+  which completes the proof.
+\end{proof}
 
 
 
