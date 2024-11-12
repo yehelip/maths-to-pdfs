@@ -566,10 +566,84 @@ and $\frac{1}{\infty} = 0$.
 We now proceed to prove \Cref{thm:hadamard}
 
 \begin{proof}
-  To be added
+  Set $L := 1/R$.
+  Suppose first that $0 < R \le \infty$, so that $0 \le L < \infty$.
+  Let $z \in \C$ be such that $|z - z_0| < R$, then there exists
+  $L < M < \infty$ so that $M |z - z_0| < 1$.
+  By the definition of $L$ (the limsup) there exists $N \geq 1$ so that
+  $|a_n|^{\frac 1n} < M$ forall $n > N$. Thus
+  \begin{align*}
+    \sum_{n=0}^{\infty} |a_n| \cdot |z - z_0|^n &=
+    \sum_{n=0}^{N-1} |a_n| \cdot |z - z_0|^n +
+    \sum_{n=N}^{\infty} \del{|a_n|^{\frac 1n} \cdot |z - z_0|}^n \\ &\le
+    \sum_{n=0}^{N-1} |a_n| \cdot |z - z_0|^n +
+    \sum_{n=N}^{\infty} \del{M |z - z_0|}^n <
+    \infty.
+  \end{align*}
+  Suppose next that $0 \le R < \infty$, so that $0 < L \infty$.
+  Let $z \in \C$ be such that $|z - z_0| > R$, then similarly there
+  exists $0 < M < L$ so that $M |z - z_0| > 1$.
+  Then, for every $N \geq 1$ there exists $n \geq N$ so that 
+  $|a_n|^{\frac 1n} > M$.
+  For such $n$ we have
+  \begin{align*}
+    \abs{\sum_{k=0}^{n} a_k(z-z_0)^k - \sum_{k=0}^{n-1} a_k(z-z_0)^k} &=
+    |a_n| \cdot |z - z_0|^n \\ &=
+    \del{|a_n|^{\frac 1n} \cdot |z - z_0|}^n >
+    \del{M |z - z_0|}^n > 1,
+  \end{align*}
+  which shows that the partial sums do not form a Cauchy sequence.
+  Thus the series diverges at $z$, which completes the proof.
 \end{proof}
 
+\begin{example}
+  Considert the power series $e^z := \sum_{n=0}^{\infty} \frac{z^n}{n!}$.
+  Because we have
+  \[
+    \sqrt[n]{(2n)!} \geq \sqrt[n]{n^n} = n
+  \]
+  we also have for every $n \geq 1$,
+  \[
+    \del{\frac{1}{(2n)!}}^{\frac{1}{2n}} \le \frac{1}{n^{\half}}
+    \tand
+    \del{\frac{1}{(2n+1)!}}^{\frac{1}{2n+1}} \le \frac{1}{n^{\half}}.
+  \]
+  Since $n^{-\half} \taking{n \to \infty} = 0$ we get that the radius of
+  convergence is $\infty$ for the series.
+  The map $z \mapsto e^z$ is called the exponantial function.
+  We also have that
+  \begin{align*}
+    e^z e^w =
+    \del{\sum_{n=0}^{\infty} \frac{z^n}{n!}} +
+    \del{\sum_{n=0}^{\infty} \frac{w^n}{n!}} =
+    \sum_{n=0}^{\infty}
+    \frac{1}{n!} \sum_{k=0}^{n} \frac{n!}{k!(n-k)!} z^k w^{n-k} =
+    \sum_{n=0}^{\infty} \frac{(z+w)^n}{n!} =
+    e^{z + w}.
+  \end{align*}
+\end{example}
 
+\begin{example}
+  Consider the power series $f(z) := \sum_{n=0}^{\infty} z^n$.
+  Since $1^{\frac 1n} = 1$ we get that the radius of convergence in
+  this case is $1$.
+  Thus $f$ defined a function from $D_1(0)$ to $\C$.
+  Moreover, since we have
+  \[
+    (1 - z) \sum_{n=0}^{N} z^n = 1 - z^{N + 1},
+  \]
+  we get for $z \in D_1(0)$ that
+  \[
+    f(z) =
+    \lim_{N \to \infty} \sum_{n=0}^{N} z^n =
+    \lim_{N \to \infty} \frac{1 - z^{N + 1}}{1 - z} =
+    \frac{1}{1 - z}.
+  \]
+\end{example}
+
+\begin{proposition}
+  Let 
+\end{proposition}
 
 
 
