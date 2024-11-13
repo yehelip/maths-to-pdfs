@@ -399,6 +399,226 @@ It has two main behaviours
 Using this method we gain more accuracy, but lose speed of computation.
 
 Another alternative is called \emph{interval arithmetics}.
+Since our calculations are not exact we can represent numbers using intevals.
+For example, let $x = [1.f]_2$ such that $f = f_1 \circ f_2$.
+where $f_1$ is the first 23 digits of $f$ and $f_2$ is the rest of the digits.
+In this case, we use the interval $I_x = [[1.f_1]_2,[1.f_1 1]_2]$ to represent
+$x$ because $x \in I_X$.
+
+Suppose we have two numbers $x = [a_x, b_x]$ and $y = [a_y, b_y]$, when
+calculating the sum $x + y$ we get $x + y = [a_x + a_y, b_x + b_y]$.
+In this way we can be certain that
+$x + y \in I_{x+y} = [a_x + a_y, b_x + b_y]$.
+We define multiplication in a similar, though more complicated way.
+When tying to define multiplication for intercal arithmetics, one could
+use the following proposition.
+
+\begin{proposition}
+  The minimum and maximum of the function $f(x, y) = xy$ over
+  the rectangle $[a_x, b_x] \times [a_y, b_y]$ are obtained at the corners. 
+\end{proposition}
+
+\section{Solving non-linear equations}
+From now on, we assume we can store numbers without inaccuracies, and
+perfrom arithmetics without errors.
+
+\subsection{Bisection method}
+Suppose we wanted to find a solution to the equation
+\[
+  \sin(x) = e^x.
+\]
+Then from analysis courses we know to approximate the solution by changing
+the equaition to standard form
+\[
+  f(x) = e^x - \sin(x)
+\]
+and then find an interval like $[a, b] = [-\frac{3 \pi}{2}, 1]$ for which
+$f(a) < 0 < f(b)$.
+Because then we know that there exists a solution $x \in [a,b]$.
+
+The bisection method allows us to find roots of continuous functions in
+intervals $[a,b]$ such that $\mathrm{sign} f(a) \neq \mathrm{sign} f(b)$.
+It works by repeating the following process
+\begin{enumerate}
+  \item[(-1)] Set $a_0 = a$, $b_0 = b$ and $c_0 = \frac{a_0 + b_0}{2}$.
+  \item[(n)] Assume $a_n$, $b_n$, $c_n$ are defined. If $f(c_n) = 0$
+    we have found a root. Otherwise, from the pigeonhole principle there
+    exists $x \in \set{a_n,b_n}$ such that $f(c_n)$ and $f(x)$ form an interval
+    that contains $0$. We call this interval $[a_{n + 1}, b_{n + 1}]$.
+    We set $c_{n + 1} = \frac{a_{n + 1} + b_{n + 1}}{2}$. Treating $n$
+    as a variable for formality, we increment it by one, and continue to
+    the next step (step $(n)$).
+\end{enumerate}
+Setting $|a - b| = L$ we get that in the $|a_n - b_n| = L 2^{-n}$.
+By Cantor's intersection theorem, and the squeeze theorem, it is clear
+that $c_n \taking{n \to \infty} x$ where $x$ is a root of $f(x)$.
+
+\begin{remark}
+  Using the bisection method, we can calculate the number of steps we need to
+  take to obtain $x'$ where $x' \in [x - \epsilon, x + \epsilon]$ for any
+  $\epsilon > 0$.
+\end{remark}
+
+% Maybe generate psuedpcode for the bisection method using chatGPT.
+
+\subsection{Newton's algorithm}
+Newton's algorithm (also known as the Newton--Raphson algorithm) is an algorithm
+to compute the root of a function $f \colon \R \to \R$.
+We will assume $f \in C^2(\R)$ and that $f$ has a root $x$.
+
+The idea behind the algorithm is to have a first guess of the root $x_0$,
+and then set $x_{n+1}$ to be the root of the Taylor expansion up to linear
+order of $f$ at the point $x_n$.
+
+This algorithm does not always converge to the root,
+% example
+but if we have a good approximation for the root as $x_0$ it will always
+converge to the root very quickly.
+
+\begin{example}
+  Consider the function $f(x) = e^x - 6$.
+  The solution is $x = \log 6 \approx 1.7918$.
+  We start by a close guess $x_0 = 2$.
+  The iterations are given by
+  \[
+    x_{n + 1} =
+    x_n - \frac{f(x_n)}{f'(x_n)} =
+    x_n - \frac{e^{x_n} - 6}{e^{x_n}}.
+  \]
+  Applying this process gives
+  \[
+    x_1 = 1.8120 \stand
+    x_2 = 1.7920 \stand
+    x_3 = 1.7918 \stand
+    x_4 = 1.7918
+  \]
+  with errors
+  \[
+    e_1 = 2 \times 10^{-2} \stand
+    e_2 = 2 \times 10^{-4} \stand
+    e_3 = 2 \times 10^{-8} \stand
+    e_4 = 4 \times 10^{-16}.
+  \]
+  which shows that the process is very useful.
+\end{example}
+
+\begin{lemma}
+  \label{lem:newton-local}
+  Let $f \in C^2(\R)$ be a function with a root $r \in \R$.
+  Let $x_{n + 1}$ be the solution of $L(x \mid x_n) = 0$ which is
+  the root of the linear Taylor approximation of $f(x)$ at $x_n$.
+  Then there exists $\xi \in (r,x_n)$ such that
+  \[
+    f'(x_n)(x_{n+1} - r) = \half f''(\xi)(x_n - r)^2
+  \]
+\end{lemma}
+\begin{proof}
+  By definition we have $L(x_{n + 1} \mid x_n) = 0$, and Taylor's expansion
+  around $x_n$ gives us
+  \[
+    0 = f(r) = L(r \mid x_n) + \half f''(\xi)(x_n - r)^2
+  \]
+  so
+  \[
+    f'(x_n)(x_{n+1} - r) = L(x_{n + 1} \mid x_n) - L(r \mid x_n) =
+    L(r \mid x_n) = \half f''(\xi)(x_n - r)^2
+  \]
+  which completes the proof.
+\end{proof}
+
+\begin{proposition}
+  Let $f \in C^2(\R)$ be a function with a simple root $r \in \R$.
+  Then there exists $\delta > 0$ and $C > 0$ such that for every Newton
+  iterations starting from $x_0 \in [r - \delta, r + \delta]$, the
+  sequence $|x_n - r|$ converges monotonely to zero and
+  \[
+    |x_{n  + 1} - r| \le C(x_n - r)^2
+  \]
+\end{proposition}
+\begin{remark}
+  A simple root means that $f'(r) \neq 0$.
+\end{remark}
+\begin{proof}
+  Let $x_n$ be the sequence Newton--Raphson iterates starting from $x_0$.
+  Since $f'(r) \neq 0$, we can choose some $\delta_0 > 0$ small enough so
+  that $f'(x) \neq 0$ on $U = [r - \delta_0, r + \delta_0]$.
+  Set
+  \[
+    m = \min_{x \in U} |f'(x)| \stand M = \max_{x \in U} |f''(x)|
+  \]
+  then using \Cref{lem:newton-local} we have that whenever 
+  TO BE CONTINUED
+\end{proof}
+
+The convergence rate of Newton's method near a minimun is qaudratic.
+This means that
+\[
+  |x_{n + 1} - r| \le C (x_n - r)^2.
+\]
+In comparison, the convergence rate of the bisection method was linear
+\[
+  |x_{n + 1} - r| \le \half |x_n - r|.
+\]
+
+\begin{definition}[Convergence rate]
+  Let $x_n$ be a sequence converging to $L$.
+  We say that $x_n$ has a convergence rate $\alpha > 0$ if there exists
+  $C > 0$ and $N > 0$ such that for all $n < N$ we have
+  \[
+    |x_{n + 1} - L| \le C |x_n - L|^{\alpha}
+  \]
+\end{definition}
+
+\begin{theorem}
+  Assume $f \in C^2(\R)$ is strictly increasing, strictly convex, 
+  and has a root.
+  Then the root is unique, and Newton iterations will converge to it from
+  any starting point.
+\end{theorem}
+\begin{proof}
+  It is clear that the root is unique.
+  From strictly convex, and strictly increasing we have that
+  $f''(x) > 0$ and $f'(x) > 0$ for all $x$.
+  From \Cref{lem:newton-local} we see that $x_n - r > 0$ for all $n \geq 1$.
+  Since $f$ is increasing it follows that $f(x_n) > f(r) = 0$.
+  Since
+  \[
+    x_{n + 1} = x_n - \frac{f(x_n)}{f'(x_n)}
+  \]
+  we see that $r < x_{n + 1} < x_n$, so $x_n$ is monotonically decreasing and
+  bounded below, thus it converges to some limit $L$.
+  Since $f \in C^2(\R)$ we have that
+  \[
+    L = 
+    \lim_{x \to \infty} x_{n + 1} =
+    \lim_{n \to \infty} x_n - \frac{f(x_n)}{f'(x_n)} =
+    L - \frac{f(L)}{f'(L)}
+  \]
+  which means that $f(L) = 0$ and thus $L = r$ which completes the proof.
+\end{proof}
+
+We can also generalize Newton's method to higher dimensions.
+
+Let $f \colon \R^d \to \R^d$ be a function such that $f \in C^2{\R^d}$
+and $f$ has a root $r \in \R^d$.
+Given a point $x_n \in \R^d$, we can define $x_{n + 1}$ as the solution
+to the linear approximation of $f$ around $x_n$,
+\[
+  L(x \mid x_n) = f(x_n) + D_f(x_n)(x - x_n).
+\]
+The solution for the equation $L(x \mid x_n) = 0$ is
+\[
+  x_{n + 1} = x_n- D_f^{-1}(x_N) f(x_n)
+\]
+
+
+
+
+
+
+
+
+
 
 
 
