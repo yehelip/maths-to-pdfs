@@ -285,6 +285,120 @@ This number is called $eps$ in Matlab.
   which completes the proof.
 \end{proof}
 
+The above theorem shows that when taking the product of two numbers,
+the error is bigger than epsilon, but not by much.
+The situation is similar for addition and division,
+but not for subtraction.
+
+Consider
+\[
+  x_1 = [1.f0]_2 \stand x_2 = [1.f6]
+\]
+we have that $\floor{x_1} - \floor{x_2} = 0$ which implies that
+relative error is
+\[
+  \frac{\abs{\floor{\floor{x_1} - \floor{x_2}} - |x_1 - x_2|}}{|x_1 - x_2|} = 1.
+\]
+This occurs when the distance between $x_1$ and $x_2$ is very small compared
+to $x_1$.
+
+\begin{proposition}
+  Assume that $x_2 > x_1 > 0$ and $\frac{x_2}{x_2 - x_1} < a$ for some $a$.
+  Let $f \colon \R \to \R$ be a function satisfiying
+  \[
+    f(x_1) = (1 + \delta_1) x_1 \stand
+    f(x_2) = (1 + \delta_2) x_2 \stand
+    f(f(x_1) - f(x_2)) = (1 + \delta_3)[f(x_1) - f(x_2)]
+  \]
+  where $|\delta_1|, |\delta_2|, |\delta_3| < \epsilon$.
+  Then
+  \[
+    f(f(x_1) - f(x_2)) = (1 + \delta)(x_2 - x_1)
+  \]
+  where $|\delta| < 2 \epsilon + 2 a \epsilon + \epsilon^2 + 2 a \epsilon^2$.
+\end{proposition}
+\begin{proof}
+  The proof is simply by calculation
+\end{proof}
+
+Because of the propositions we have seen so far, some ways to compute
+certain expressions are more accurate than others.
+For example instead of computing
+\[
+  x - \sin(x) \tor
+  \sqrt{x^2 + 1} - 1
+\]
+to get a more accurate calculation we can calculate the equivalent
+expressions
+\[
+  - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} \cdots
+  \tand
+  \frac{x^2}{\sqrt{x^2 + 1} + 1}.
+\]
+
+As mentioned earlier, in single precision we can not represent numbers bigger
+than $2^{128}$ or smaller than $2^{-128}$.
+Instead the computer will return us the values $\infty$ and $\ninfty$ 
+respectively. This is called \emph{overflow}.
+We also can not represent numbers in the range $(-2^{-128}, 2^{-128})$.
+Instead the computer will return us the values $0$ or $-0$ if the number
+was negative. This is called \emph{underflow}.
+
+\begin{definition}[Softmax function]
+  For a fixed $\alpha \geq 0$, the softmax function 
+  $s^{\alpha} \colon \R^d \to \R^d$ is defined as
+  \[
+    s^{\alpha}_i := \frac{e^{\alpha x_i}}{\sum_{j=1}^{d} e^{\alpha} x_j}.
+  \]
+\end{definition}
+\begin{remark}
+  For all $x \in \R^d$ and $\alpha \geq 0$ the entries of $s^{\alpha}(x)$
+  are all positive and sum to one.
+\end{remark}
+\begin{remark}
+  If $k$ is some index such that $x_k > x_i$ for all $i \neq k$, then
+  \[
+    \lim_{\alpha \infty} s6{\alpha}(x) = e_k
+  \]
+  where $e_k$ is the unit vector with $1$ in the $k$th index and $0$ otherwise.
+  Thus, for large $\alpha$ softmax gives a strong idication of where the
+  maximum of the vector is located.
+\end{remark}
+\begin{remark}
+  If $\alpha = 0$ then $s^0(0) = (1/d, 1/d, \dots, 1/d)$ for all $x$.
+\end{remark}
+
+This function is intresting because although the entries in the result vectors
+are all between $0$ and $1$, the exponentiation can lead to underflow and
+overflow which will greatly affect its computation.
+
+To avoid overflow when computing softmax we can notice that for any scalar
+$M$ and vector $1_d = (1, 1, \dots, 1)$ we have that 
+$s^{\alpha}(x) = s^{\alpha}(x - M 1_d)$.
+This allows use to choose $M = \max\set{x_i}_i$ and compute
+$s^{\alpha}(x - M 1_d) = s^{\alpha}(x)$ without overflow.
+
+\subsection{Alternatives for symbolic computation*}
+
+The method we have used so far to calculate nubmbers is called numercial
+computation.
+Because of the way we represent numbers in (floating points) we always
+get an error bounded by $2^{-24}$.
+There are some alternatives to numerical calculation.
+
+One alternative for numerical calculations is \emph{symbolic calculations}.
+This method is used by Mathematica, Maple, Wolfram Alpha 
+and can also be used in Matlab.
+It has two main behaviours
+\begin{itemize}
+  \item When multiplying numbers, the numbers of digits increase to avoid
+    truncation.
+  \item Solutions of equations can be given symbolically like $\sqrt{2}$,
+    $\pi$ etc.
+\end{itemize}
+Using this method we gain more accuracy, but lose speed of computation.
+
+Another alternative is called \emph{interval arithmetics}.
 
 
 
