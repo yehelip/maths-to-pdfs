@@ -1,4 +1,6 @@
 \makeatletter
+
+% packages
 \usepackage{amssymb,amsfonts,amsmath,calc,tikz,pgfplots,geometry,mathtools}
 \usepackage{color}   % May be necessary if you want to color links
 \usepackage[hidelinks]{hyperref}
@@ -11,13 +13,19 @@
 \usepackage{bookmark}
 \usepackage{tikz-cd}
 \usepackage{bbm}
+\usepackage{textcomp}
+\usepackage{gensymb}
 \usepackage{cleveref}
-\pagestyle{fancy}
+
+% tikz libraries
 \usetikzlibrary{positioning}
 \usetikzlibrary{matrix}
 \usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{decorations.markings}
+
+% Page style setup
+\pagestyle{fancy}
 \geometry{margin=1in}
 \pgfplotsset{compat=1.18}
 \setlength{\headheight}{14.6pt}
@@ -28,6 +36,7 @@
     linkcolor=black,
 }
 
+%% maketitle setup
 \ifx \nauthor\undefined
   \def\nauthor{yehelip}
 \else
@@ -62,7 +71,7 @@ While I have strived for accuracy, any errors or misinterpretations
 are most likely mine.
 \end{minipage}\end{center}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem environments
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{remark}{Remark}[section]
@@ -70,13 +79,13 @@ are most likely mine.
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem{paradox}{Paradox}[section]
 \newtheorem*{solution}{Solution}
-
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 
+% tikz customization
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,
                                   mark=at position 1
@@ -140,51 +149,58 @@ are most likely mine.
 \definecolor{mgreen}{rgb}{0, 0.4, 0.2}
 \definecolor{mred}{rgb}{0.5, 0, 0}
 
+% algebra
 \DeclareMathOperator{\lcm}{lcm}
-\DeclareMathOperator{\idealin}{\triangleleft}
-\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Out}{Out}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\Inn}{Inn}
-\DeclareMathOperator{\Out}{Out}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\std}{std}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\id}{id}
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\Var}{Var} % Variance
-\DeclareMathOperator{\Cov}{Cov}
-
-\DeclareMathOperator{\Vol}{Vol} % Volume
-
-\DeclareMathOperator{\MOD}{MOD}
-\DeclareMathOperator{\Theory}{Theory}
-
-\DeclareMathOperator{\Bin}{Bin}
-\DeclareMathOperator{\Geo}{Geo}
-\DeclareMathOperator{\Poi}{Poi}
-\DeclareMathOperator{\Exp}{Exp}
-
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\id}{id}
+\newcommand{\idealin}{\triangleleft}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\bigslant}[2]
+{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 
+% analysis
 \newcommand{\dx}{\dif x}
 \newcommand{\dt}{\dif t}
 \newcommand{\du}{\dif u}
 \newcommand{\dv}{\dif v}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Vol}{Vol} % Volume
+
+% logic
+\DeclareMathOperator{\MOD}{MOD}
+\DeclareMathOperator{\Theory}{Theory}
+
+
+% nice
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\pair}{\del}
-
 \newcommand{\taking}[1]{\xrightarrow{#1}}
 \newcommand{\inv}{^{-1}}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\ninfty}{-\infty}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 
-% Probability
+% probability
 \newcommand{\Prob}{\mathbf{P}}
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Poi}{Poi}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Var}{Var} % Variance
+\DeclareMathOperator{\Cov}{Cov}
 
-
-\newcommand{\ot}{\leftarrow}
-
+% special letters
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
@@ -192,26 +208,21 @@ are most likely mine.
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\Omicron}{O}
-
-\newcommand{\powerset}{\mathcal{P}}
-\renewcommand{\L}{\mathcal{L}}
 \newcommand{\ps}{\mathcal{P}}
 \newcommand{\M}{\mathcal{M}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Omicron}{O}
+\newcommand{\powerset}{\mathcal{P}}
 
-\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
-
-\newcommand  \ninfty{-\infty}
+% text
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\tand}{\quad \text{and} \quad}
 \newcommand{\tor}{\quad \text{or} \quad}
 \newcommand{\stand}{\text{ and }}
 \newcommand{\stor}{\text{ or }}
-\newcommand{\ip}[2]{\langle #1, #2 \rangle}
-\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title
-\newcommand{\bigslant}[2]
-{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\renewcommand{\tt}[1]{\textnormal{\textbf{(#1).}}} %tt=theorem title GET RID OF
+
+% title format
 \title{\textbf{\ncourse}}
 \author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
 \date{\nterm\ \nyear}
