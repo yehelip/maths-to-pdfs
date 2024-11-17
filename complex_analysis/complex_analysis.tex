@@ -465,7 +465,7 @@ Recall that $T \colon \C \to \R^2$ is the operator $T(x + y i) = (x,y)$.
     \item[(2)] The Cauchy--Riemann equations are satisfied:
       \[
         \pd{u}{x}(p) = \pd{v}{y}(p) \stand
-        \pd{u}{y}(p) = \pd{v}{x}(p).
+        \pd{u}{y}(p) = -\pd{v}{x}(p).
       \]
     \item[(3)] $F$ is differentiable at $p$ with,
       \[
@@ -503,7 +503,26 @@ Recall that $T \colon \C \to \R^2$ is the operator $T(x + y i) = (x,y)$.
 We now prove \Cref{prop:pd}.
 
 \begin{proof}
-  To be added.
+  For $(1)$ we can first let $t \to 0$ in $\R$ and see that
+  \begin{align*}
+    f'(z_0) &= \lim_{t \to \0} \frac{f(z + t) - f(z)}{h} \\
+            &= \lim_{t \to 0} \frac{u(x_0 + t, y_0) - u(x_0,y_0) + 
+            i v(x_0 + t, y_0) - i v(x_0,y_0)}{t} \\
+            &= \pd{u}{x}(p) + i \pd{v}{x}(p).
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    f'(z_0) &= \lim_{t \to \0} \frac{f(z + i t) - f(z)}{h} \\
+            &= \lim_{t \to 0} \frac{u(x_0, y_0 + t) - u(x_0,y_0) + 
+            i v(x_0, y_0 + t) - i v(x_0,y_0)}{t} \\
+            &= \pd{v}{y}(p) - i \pd{u}{y}(p)
+  \end{align*}
+  which completes the proof of $(1)$.
+  From the equation
+  \[
+     \pd{u}{x}(p) + i \pd{v}{x}(p) = \pd{v}{y}(p) - i \pd{u}{y}(p)
+  \]
+  we immediately get $(2)$.
 \end{proof}
 
 The following proposition is a kind of converse to the previous proposition.
