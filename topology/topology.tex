@@ -405,6 +405,11 @@ For example pasting faces of polygons.
 
 \subsection{Closed topological spaces}
 \begin{definition}[Topological manifold]
+  A topological manifold of dimension $n$ is a Hausdorff
+  topological space $M$ that is locally homeomorphic to $\R^n$.
+\end{definition}
+
+\begin{definition}[Closed topological manifold]
   A closed topological manifold of dimension $n$ is a compact, Hausdorff
   topological space $M$ that is locally homeomorphic to $\R^n$.
 \end{definition}
@@ -416,7 +421,7 @@ For example pasting faces of polygons.
 
 \begin{example}
   A topological manifold of dimension $0$ is a finite set of points endowed
-  with the discrete topology.
+  with the discrete toplogy.
 \end{example}
 
 \begin{example}
@@ -431,7 +436,7 @@ For example pasting faces of polygons.
   Manifolds of dimension $2$ are called surfaces.
 \end{remark}
 
-Some examples of surfaces are:
+Some examples of compact surfaces are:
 \begin{itemize}
   \item The sphere $S^2$.
   \item The torus $T^2 = S^1 \times S^1$.
@@ -439,14 +444,16 @@ Some examples of surfaces are:
     \begin{align*}
       P^2 &= \bigslant{\R^3 \setminus \set{0}}{x \sim \lambda x},\ 
         \forall \lambda \in \R \setminus \set{0} \\
-      &= \bigslant{S^2}{x \sim -x} \\
-      &= \bigslant{D^2}{x \sim -x},\ \forall x \in \partial D^2
+      &= \bigslant{S^2}{(x,y) \sim (-x,-y)} \\
+      &= \bigslant{D^2}{(x,y) \sim (-x,-y)},\ \forall (x,y) \in \partial D^2
     \end{align*}
   we can see it's a surface very easily from the second equivalence.
   \item The Klein bottle $K^2$.
   \item The orientable surface of genus $g$.
 \end{itemize}
-
+\begin{remark}
+  The map $(x,y) \mapsto (-x,-y)$ is called the antipodal map.
+\end{remark}
 \begin{remark}
     In general, any product of closed manifolds of dimensions
     $u$, $v$ is a closed manifold of dimension $u + v$.
@@ -491,7 +498,6 @@ in practice.
   Let $M$ be a compact $n$-dimensional manifold with boundary.
   Then $\partial M$ is a closed $n-1$-dimensional manifold.
 \end{proposition}
-
 Some examples of manifolds with boundary
 \begin{itemize}
   \item The closed interval $[0,1]$ is a compact $1$-dimensional manifold
@@ -502,14 +508,163 @@ Some examples of manifolds with boundary
 \end{itemize}
 
 \subsection{Triangulation}
+\begin{definition}[Triangulation of a surface]
+  A triangulation of a surface is a polygonal complex (made of trianlges)
+  that is homeomorphic to the surface.
+\end{definition}
+\begin{remark}
+  That is like saying there exists a finite collection of triangles, and
+  pastings of their edges (each edge is pasted to at most one other edge).
+  If the surface is closed, each edge is pasted to exactly one other edge.
+\end{remark}
+
+\begin{theorem}[Rad\'o]
+  Every surface is can be triangulated.
+\end{theorem}
+The proof of this theorem will be omitted in this course.
+\begin{remark}
+  We have not defined what is triangularization means in $3$ dimensions,
+  but according to one definition, every manifold of dimension $3$ can be
+  triangulated.
+\end{remark}
+\begin{remark}
+  There is no similar theorem for dimensions $n > 3$.
+\end{remark}
+\begin{remark}
+  The question whether for every $4$-dimensional there exists a CW complex
+  homeomorphic to it is open.
+\end{remark}
+
+\subsection{Connected sum of surfaces}
+\begin{exercise}
+  Let $M$ be a compact manifold with boundary.
+  Suppose there exist two homeomorphic connected components
+  $N_1,N_2 \subseteq \partial M$.
+  Then for any homeomorphism $f \colon N_1 \to N_2$ the space
+  \[
+    \bigslant{M}{x \sim f(x)}, \quad \forall x \in N_1
+  \]
+  is a compact manifold with boundary.
+\end{exercise}
+
+\begin{remark}
+  Every closed $3$-dimensional manifold is the connected sum of two
+  handlebodies on their boundary.
+\end{remark}
+
+\begin{definition}[Knot]
+
+\end{definition}
+
+\begin{definition}[Link]
+
+\end{definition}
+
+\begin{remark}
+  Every closed $3$-dimensional manifold is CONTINUE LATER
+\end{remark}
+
+\begin{definition}[Connected sum]
+  Let $S_1$, $S_2$ be two connected compact manifolds.
+  The connected sum $S_1 \# S_2$ is the space we get by
+  choosing two discs $D_1 \subset S_1$ and $D_2 \subset S_2$,
+  and a homeomorphism $f \colon \partial D_1 \to \partial D_2$ and setting
+  \[
+    S_1 \# S_2 = 
+    (S_1 \setminus D_1^{\circ}) \amalg
+    (S_2 \setminus D_2^{\circ}) \slash x \sim f(x),
+    \quad \forall x \in \partial D_1
+  \]
+\end{definition}
+\begin{remark}
+  The connected sum is not dependent on the choice of discs,
+  nor the homeomorphism.
+\end{remark}
+% examples
+\begin{remark}
+  We can also define the connected of manifolds in $n$ dimensions.
+  In the general case, the result can be dependent on the choice of the
+  homeomorphism - there are two options to the choice of the homeomorphism
+  ASK YALI
+\end{remark}
+
+
+\begin{example}
+  The manifold $S^2$ is the identity element of connected addition.
+  For any manifold $\Sigma$ we have $\Sigma \# S^2 = \Sigma$.
+\end{example}
+\begin{example}
+  The sum $T^2 \# T^2$ is the orientable closed surface of genus $2$.
+\end{example}
+\begin{example}
+  The sum $T^2 \# T^2$ is the closed orientable surface of genus $2$.
+  We can get this by pasting edges of a haptagon as can be seen in ADD IMAGE
+\end{example}
+\begin{example}
+  We have $P^2 \# P^2 = K^2$ as can be seen in ADD IMAGE.
+\end{example}
+\begin{example}
+  %% P
+\end{example}
+
+\begin{remark}
+  If $S_1$, $S_2$ are given by a pasting of a boundary of an $n_1$-gon and
+  $n_2$-gon, then $S_1 \# S_2$ can be given as a pasting of the boundary of
+  an $n_1 + n_2$-gon, with the pasting of its edges being the concatenation
+  of the pastings of $S_1$, $S_2$.
+\end{remark}
+
+\begin{proposition}
+  $P^2 \# P^2 \# + P^2 \cong K^2 \# P^2 \cong T^2 \# P^2$
+\end{proposition}
+\begin{proof}
+  TO BE ADDED.
+\end{proof}
+
+\newpage
+
+\section{Classification of surfaces}
+\subsection{Classification of compact surfaces}
+
+\begin{theorem}[The classification theorem of compact surfaces]
+  Every connected surface is homeomorphic to one of the following:
+  \begin{enumerate}
+    \item[(1)] $S^2$;
+    \item[(2)] $T^2 \# \cdots \# T^2$;
+    \item[(3)] $P^2 \# \cdots \# P^2$.
+  \end{enumerate}
+\end{theorem}
+\begin{definition}[Genus]
+  The number of summands in cases $(2)$ and $(3)$ is called the genus of
+  the surface.
+\end{definition}
+
+% sketch of proof
+
+\subsection{Euler's characteristic}
+\begin{definition}[Euler characteristic]
+  Let $X$ be a CW complex with a finite amount of cells.
+  The Euler characteristic of $X$ is defined as the following alternating
+  sum:
+  \[
+    \chi(X)=
+    \#\set{0-\Cells} -
+    \#\set{1-\Cells} +
+    \#\set{2-\Cells} -
+    \#\set{3-\Cells} + \cdots
+  \]
+\end{definition}
+\begin{example}
+
+\end{example}
+
 
 
 %%%%%%%%
 
-Add example of pasting all sides of the triangle to one another.
+% Add example of pasting all sides of the triangle to one another.
 
-
-
+% locally homeomorphic to R but not hausdorff
 
 
 

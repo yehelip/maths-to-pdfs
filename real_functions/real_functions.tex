@@ -6,6 +6,7 @@
 \def\ncourse {Real Functions}
 
 \input{../header.tex}
+\newcommand{\A}{\mathcal A}
 
 \begin{document}
 \maketitle
@@ -165,6 +166,97 @@ sets form a $\sigma$-algebra on $\R^n$.
 \end{example}
 
 % Add intersection of sigma algebra is a sigma algebra.
+
+% Add lecture 2 from Yarden etc.
+
+We want to construct a measure space $(\R^n, \A, \mu)$ such that
+\[
+  \mu\del{\prod_{i=1}^{n} [a_i,b_i]} =
+  \prod_{i=1}^{n} |a_i - b_i|.
+\]
+
+Recall that we saw earlier that
+\[
+  B(\R^n) =
+  \otimes_{i=1}^{n} B(\R) =
+  \sigma(\prod_{i=1}^{n} [a_i,b_i])
+\]
+Because we want the boxes to be contained in $\A$ we have that
+$B(\R^n) \subseteq \A$.
+To define the measure for other sets we can use an outer measure
+\[
+  \mu^*(E) := \int \set{\sum_{i=1}^{\infty} \mu(R_i) \mid E \subset 
+  \bigcup_{i=1}^{n} R_i}.
+\]
+Is $\mu^*(R) = \mu(R)$? Yes.
+Did we get a measure? No, we got an outer measure.
+\begin{remark}
+  Defining $\mu^*$ only on ``good'' sets gives us Lebesgue measure.
+\end{remark}
+
+\begin{definition}[Outer measure]
+  Let $X \neq \emptyset$. Then $\mu^* \colon 2^X \to [0,\infty]$ is
+  called an outer measure if
+  \begin{enumerate}
+    \item[(1)] $\mu^*(\emptyset) = 0$;
+    \item[(2)] $\mu^*$ is monotone (if $A \subset B$ then $\mu(A) < \mu(B)$);
+    \item[(3)] $\mu$ is subadditive ().
+  \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+  Let $\mathcal E \subseteq 2^X$ be a family of subsets of $X$ and
+  $\varphi \colon \mathcal E \to [0,\infty]$ such that
+  $\emptyset, X \in \mathcal E$ and $\varphi(\emptyset) = 0$.
+  For all $A \subseteq X$ we define
+  \[
+    \mu^*(A) = \inf\set{\sum_{i=1}^{\infty} \varphi(E_i) \colon 
+    E_i \in \mathcal E \stand A \subseteq \bigcup_{i=1}^{\infty} E_i}
+  \]
+  then $\mu^*$ is an outer measure.
+\end{proposition}
+\begin{remark}
+  It is not promised that $\mu*(E) = \varphi(E)$ for $E \in \mathcal E$.
+\end{remark}
+\begin{proof}
+\begin{enumerate}
+  \item[(1)] We can cover by $E_i = \emptyset$.
+  \item[(2)] Let $A \subseteq B$.
+    We can use the cover of $B$ for $A$ since 
+    $A \subseteq B \subseteq \cup E_i$ which implies $\mu^*(A) \le \mu^*(B)$.
+  \item[(3)]
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+  Every outer measure can be constructed the way we constructed them.
+\end{remark}
+
+\begin{definition}[$\mu^*$-measurable set]
+  A set $A \subseteq X$ is called $\mu^*$-measurable if
+  \[
+    \forall E \subseteq X \colon
+    \mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c).
+  \]
+\end{definition}
+
+\begin{theorem}[Caratheodory's outer measure theorem]
+  Let $\mu^*$ be an outer measure on $X$. Then
+  \begin{enumerate}
+    \item[(1)] $\mathcal F_{\mu^*} := \set{\mu^*\text{-measurable sets}}$ is a 
+      $\sigma$-algebra.
+    \item[(2)] $(X, \mathcal F_{\mu^*}, \mu^*\vert_{\mathcal F_{\mu^*}})$
+      is a complete measure space.
+  \end{enumerate}
+\end{theorem}
+\begin{remark}
+
+\end{remark}
+
+% Proof
+
+
+
 
 
 

@@ -1,0 +1,149 @@
+\documentclass[11pt,a4paper]{article}
+
+\def\nyear {2025}
+\def\nterm {Winter}
+\def\nlecturer {}
+\def\ncourse {Complex Analysis - Problems}
+
+\input{../header.tex}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Holomorphic functions}
+\begin{exercise}
+  Let $\Omega \subset \C$ be an open connected set.
+  Let
+  \[
+    \mu = \set{(x,y) \in \R^2 \mid x + yi \in \Omega}.
+  \]
+  Let $f = u + i v$ be a holomorphic function.
+  Suppose $f$ has continuous partial derivatives in $\mu$.
+  Show that each of the following requirements imply that $f$ is bounded.
+  \begin{enumerate}
+    \item[(1)] $\arg(f(z))$ is constant in $\Omega$.
+    \item[(2)] $\Re(f)^2 = \Im(f)^3$ in $\Omega$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}
+  $(1)$ because $\arg(f(z))$ is constant there exist $a,b \in \R$ different
+  not both $0$ such that
+  \[
+    a u(x,y) + b v(x,y) = 0.
+  \]
+  From the Cauchy--Riemann equations we get that
+  \[
+    \begin{cases}
+      a u_x + b v_x = 0 \\
+      a u_y + b v_y = 0 = - a v_x + b u_x
+    \end{cases}
+  \]
+  This is just like saying that
+  \[
+    \begin{pmatrix}
+      a & b \\
+      b & -a
+    \end{pmatrix}
+    \begin{pmatrix}
+      u_x \\
+      v_x
+    \end{pmatrix} =
+    \begin{pmatrix}
+      0 \\
+      0
+    \end{pmatrix}.
+  \]
+  We have that
+  \[
+    \det 
+    \begin{pmatrix}
+      a & b \\
+      b & -a
+    \end{pmatrix} =
+    - a^2 - b^2 \neq 0
+  \]
+  therefore $u_x - v_x = 0$.
+  And then from C--R we have $u_y = v_y = 0$.
+
+  $(2)$ We have that $u^2 = v^3$.
+  Taking the derivatives we get
+  \[
+    \begin{cases}
+      2 u u_x + 3 v^2 v_x = 0 \\
+      2 u u_y + 3 v^2 v_y = 0
+    \end{cases}
+  \]
+  and then we have
+  \[
+    2 u u_y u_x = 3 v^2 v_x v_x \underset{C-R}{\implies}
+    2 u (u_x^2 + u_y^2) = 0.
+  \]
+  This implies that either $u = 0$ or $u_x = u_y = 0$ which implies from C--R
+  that $v_x = v_y = 0$.
+  We denote
+  \begin{align*}
+    \mu_0 &= \set{(x,y) \in \mu \mid u = 0} \\
+    \mu \setminus \mu_0 = \set{(x,y) \mid u \neq 0}.
+  \end{align*}
+  TO BE CONTINUED
+\end{solution}
+
+Let $z = x + i y$, $\bar z = x - i y$.
+We then have $x = \frac{z + \bar z}{2}$, $y = \frac{z - \bar z}{2i}$
+
+\begin{definition}[Wirtinger derivative]
+  We define the Wirtinger derivative as
+  \[
+    \pd{}{z} :=
+    \half \pd{}{x} - \frac{i}{2} \pd{}{y} \tand
+    \pd{}{\bar z} :=
+    \half \pd{}{x} + \frac{i}{2} \pd{}{y}
+  \]
+\end{definition}
+
+\begin{exercise}
+  Let $f = u + i v$, $u$, $v$ have continuous partial derivatives.
+  Show that
+  \begin{enumerate}
+    \item[(1)] If $f$ is holomorphic, then
+      \[
+        \pd{f}{z} = f'(z).
+      \]
+    \item[(2)] $f$ is holomorphic if and only if
+      \[
+        \pd{f}{\bar z} = 0.
+      \]
+    \item[(3)]
+  \end{enumerate}
+\end{exercise}
+\begin{solution}
+  $(1)$ We have
+  \[
+    \pd{f}{z} :=
+    \del{\half \pd{}{x} - \frac{i}{2} \pd{}{y}} (u + i v) =
+    \frac{u_x + i v_x}{2} + \half (v_y - i u_v) = 
+    f'(z)
+  \]
+  $(2)$ We have
+  \[
+    \pd{f}{\bar z} :=
+    \del{\half \pd{}{x} + \frac{i}{2} \pd{}{y}} (u + i v) =
+    \frac{u_x - v_y}{2} + i \frac{u_y + v_x}{2} = 0
+  \]
+  We know that $f$ is holomorphic if and only if it satisfies the C--R
+  equations if and only if $\pd{f}{\bar z} = 0$ which completes this part.
+\end{solution}
+
+\begin{remark}
+  \[
+    \diffp{f}{\bar z}
+  \]
+\end{remark}
+
+
+
+\end{document}
