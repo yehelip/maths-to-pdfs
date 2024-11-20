@@ -183,8 +183,9 @@ Then
     \mathrm{Teich}(S) = 
     \bigslant{\set{(X,f) \colon f \colon S \to X}}{\sim}
   \]
-  where $(X_1,f_1) \sim (X_2,f_2)$ if a biholomorphism $X_1 \taking{\phi} X_2$
-  homotopic to $f_2 \circ f_1^{-1}$.
+  where $(X_1,f_1) \sim (X_2,f_2)$ if there exists a biholomorphism 
+  $X_1 \taking{\phi} X_2$ such that $f_2 \circ f_1^{-1}$ is homotopic to
+  $\phi$.
   In other words
   % Triangle
   commutes up to homotopy.
@@ -204,10 +205,10 @@ Then
 \begin{definition}[Mapping class group]
   First we define:
   \begin{align*}
-    \Homeo^+(S) &= \set{\text{Orientation preserving homeomorphisms
+    &\Homeo^+(S) = \set{\text{Orientation preserving homeomorphisms
     $S \to S$}} \\
-    \Homeo^0 \triangleleft \Homeo^+(S) &= \text{the homeo. homotopic to the
-    identity.}
+    &\Homeo^0 \triangleleft \Homeo^+(S) = \set{
+      \text{the homeo. homotopic to the identity.}}
   \end{align*}
   And now we define
   \[
@@ -278,6 +279,113 @@ Our goal is to determine $\M(S)$ and $\MCG(S)$ when $S$ is a torus.
   We know that $\bar f(\tau_2)$ and $\bar f(1)$ are equivalent mod
   $\ip{1}{\tau_1}$.
 \end{proof}
+
+%%%% LECTURE 4
+
+\begin{remark}
+  Let $S$ be a Riemann surface.
+  Recall that $\M(S)$ is the moduli space of $S$, which is the space of Riemann
+  surfaces homeo to $S$ up to biholomorphism.
+\end{remark}
+Recall that we define
+\[
+  \MCG(S) = \bigslant{\Homeo^+(S)}{\Homeo^0(S)}
+\]
+And the Teichmuller space of $S$
+\[
+  \mathrm{Teich}(S) = 
+  \bigslant{\set{(X,f) \colon f \colon S \to X}}{\sim}
+\]
+where $(X_1,f_1) \sim (X_2,f_2)$ if there exists a biholomorphism 
+$X_1 \taking{\phi} X_2$ such that $f_2 \circ f_1^{-1}$ is homotopic to $\phi$.
+
+Our goal today is to show that for $T = \text{torus} = \bigslant{\R^2}{\Z^2}$.
+\begin{itemize}
+  \item $\MCG(S) \cong \SL_2(\Z)$.
+  \item $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
+  \item $\Teich(S) \cong \H$.
+\end{itemize}
+
+Notice that because of the relation
+\[
+  \bigslant{\Teich(S)}{\MCG(S)} = \M(S)
+\]
+we only need to prove two of these propositions.
+
+First let's prove that $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
+Any Riemann surface is homeomorphic to $T$ (a complex torus) is biholomorphic
+to $\bigslant{\C}{\ip{\tau_1}{\tau_2}}$.
+
+Recall that if $c \in \C^{\times}$ then $\bigslant{\C}{\ip{\tau_1}{\tau_2}}$
+is biholomorphic to $\bigslant{\C}{\ip{c \tau_1}{c \tau_2}}$ via the map
+\[
+  f(z + \ip{\tau_1}{\tau_2}) = cz + \ip{c \tau_1}{c \tau_2}.
+\]
+Up to changing the order of $\tau_1$, $\tau_2$ we can find $c \in \C{\times}$
+such that $c \tau_1 = 1$ and $c_2 \in \H$.
+
+Our goal now is to determine when there exists a biholomorphism
+\[
+  \bigslant{\C}{\ip{1}{\tau_1}} \mapsto
+  \bigslant{\C}{\ip{1}{\tau_2}}, \quad \tau_1,\tau_2 \in \H
+\]
+
+Denote $\Lambda_{\tau} = \ip{1}{\tau}$, when $\tau \in \H$.
+
+\begin{theorem}
+There exists a biholomorphism
+\[
+  \bigslant{\C}{\ip{1}{\tau_1}} \mapsto
+  \bigslant{\C}{\ip{1}{\tau_2}}, \quad \tau_1,\tau_2 \in \H
+\]
+iff there exists 
+\[
+  \begin{pmatrix}
+    a & b \\
+    c & d
+  \end{pmatrix} \in \SL_2(\Z)
+\]
+with $\tau_2= \frac{a \tau_1 + b}{c \tau_2 + d}$.
+This will imply that \item $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
+\end{theorem}
+\begin{proof}
+  Suppose there exists a biholomorphism 
+  \[
+    f \colon \bigslant{\C}{\ip{1}{\tau_1}} \to
+    \bigslant{\C}{\ip{1}{\tau_2}}.
+  \]
+  Lift it up to $\bar f \colon \C \to \C$.
+  Then $\bar f(g + x) - \bar f(x) \in \Lambda_{\tau_1}$
+  whenever $x \in \C$, $g \in \Lambda_{\tau_2}$.
+  We can replace $\bar f$ with $\bar f - \bar f(0)$.
+  We can assume that $\bar f(0) = 0$ (and is still a lift off).
+  \begin{remark}
+    Since $\bar f$ is a lift off of $f$ we have 
+    $\bar f(\Lambda_{\tau_2}) = \Lambda_{\tau_1}$.
+  \end{remark}
+  We know that $\bar f$ has form $\bar f(z) = a z + b$ such that
+  $a \in \C^{\times}$, $b \in \C$.
+  As $\bar f(0) = 0$ we have $\bar f(z) = a z$.
+  Also, $\set{0,1,\tau_2} \subseteq \Lambda_{\tau_2}$ so 
+  $0 = \bar f(0), \bar f(1) = a, \bar f(\tau_2) = a \tau_2$ are in
+  $\Lambda_{\tau_1}$ so we can write $a = \bar f(1) = $
+  %% MORE STUFF?
+  We now have
+  \[
+    \tau_2 =
+    \begin{pmatrix}
+      a & b \\
+      c & d
+    \end{pmatrix}
+  \]
+  and we still need to show it is an element of $\SL_2(\Z)$.
+  %% THE PART
+\end{proof}
+
+
+
+
+
 
 
 \end{document}
