@@ -35,7 +35,7 @@ a Lebesgue integral that allows us to compute integrals for functions
 like Dirichelt's function, and he continued to develop more concepts
 like measure, and almost everywhere.
 
-\subsection{Lebesgue integral}
+\subsection{Motivation for Lebesgue integral}
 Let $f(x) = \mathbbm{1}_A$ be the function that 
 we want $\int \mathbbm{1}_A$ to be the volume of the set $A$.
 
@@ -88,13 +88,17 @@ requirements.
 
 Instead of $(4)$ we require subadditivity:
 \[
-  \mu\del{\bigcup_{i=1}^{\infty} \le \sum_{i=1}^{\infty} \mu(A_i)}.
+\mu\del{\bigcup_{i=1}^{\infty} A_i} \le \sum_{i=1}^{\infty} \mu(A_i).
 \]
 This is possible but instead we would like to keep $\sigma$-additivity
 but instead give up on requirement $(0)$.
 We will only define volume only for ``nice'' sets which include
 all of the sets we work with in analysis or geometry etc.\ these
 sets form a $\sigma$-algebra on $\R^n$.
+
+\section{Algebras and \texorpdfstring{$\sigma$}{s}-algebras}
+
+\subsection{Definitions}
 
 \begin{definition}[Algebra]
   An algebra on a nonempty set $X$ is a collection $\mathcal A$ of
@@ -215,6 +219,8 @@ sets form a $\sigma$-algebra on $\R^n$.
   omitted.
 \end{proof}
 
+\subsection{The product \texorpdfstring{$\sigma$}{s}-algebra}
+
 \begin{definition}[Product $\sigma$-algebra]
   Let $\set{\A_{i}}_{i}$ be a collection of $\sigma$-algebras on
   $\set{X_{i}}_{i}$.
@@ -246,6 +252,9 @@ sets form a $\sigma$-algebra on $\R^n$.
   (which exist because $A$ is open).
 \end{proof}
 
+\section{Measure}
+\subsection{Definitions}
+
 \begin{definition}[Measure]
   Let $\A$ be a $\sigma$-algebra on $X$.
   A function $\mu \colon \A \to [0,\infty]$ is called a measure if
@@ -254,7 +263,7 @@ sets form a $\sigma$-algebra on $\R^n$.
   \item[(2)] Given a sequence $\set{E_i}_{i=1}^{\infty} \subseteq \A$ of
     disjoint sets we have
     \[
-      \mu\del{\bigoplus_{i=1}^{\infty} E_i} =
+      \mu\del{\biguplus_{i=1}^{\infty} E_i} =
       \sum_{i=1}^{\infty} \mu(E_i).
     \]
   \end{enumerate}
@@ -280,15 +289,13 @@ sets form a $\sigma$-algebra on $\R^n$.
 
 \begin{definition}[$\sigma$-finite measure]
   A $\sigma$-finite measure is a measure $\mu$ on $X$ such that
-  $X = \cup_{i=1}^{\infty} E_i$ for $E_j \in \A$ such that $\mu(E_i) < \infty$
-  for all $i$.
+  $X = \cup_{i=1}^{\infty} E_i$ for $E_i \in \A$ such that $\mu(E_i) < \infty$.
 \end{definition}
 
 \begin{definition}[Borel measure]
   A measure $\mu$ on a topological space $X$ is called a Borel measure
   if $B(X) \subseteq \A$.
 \end{definition}
-
 
 \begin{example}[Delta measure]
   Let $x_0 \in X$ and $\A = 2^X$.
@@ -308,8 +315,8 @@ sets form a $\sigma$-algebra on $\R^n$.
 \end{example}
 
 \begin{example}
-  Suppose $\aleph_0 < |X|$ and $\A$ be the $\sigma$-algebra of the countable
-  or cocountable subsets of $X$.
+  Suppose $\aleph_0 < |X|$ and let $\A$ be the $\sigma$-algebra of the countable
+  or cocountable subsets of $X$. Then the follwing is a measure on $X$,
   \[
     \mu(E) =
     \begin{cases}
@@ -321,6 +328,7 @@ sets form a $\sigma$-algebra on $\R^n$.
 
 \begin{example}
   Suppose $|X| = \infty$ and $\A = 2^X$.
+  Then the following is a measure on $X$,
   \[
     \mu(E) =
     \begin{cases}
@@ -374,14 +382,14 @@ sets form a $\sigma$-algebra on $\R^n$.
 \begin{example}
   We have that $\sin x \neq 0$ almost everywhere because
   \[
-    |E| = |\set{x \in \R \mid \sin x = 0}| = \aleph_0
+    |E| = \left|\set{x \in \R \mid \sin x = 0}\right| = \aleph_0
   \]
   is $\mu$-negligible for 
   \[
     \mu(E) =
     \begin{cases}
-      0, |E| \le \aleph_0 \\
-      1, |E^c| = \aleph_0
+      0, &|E| \le \aleph_0 \\
+      1, &|E^c| = \aleph_0
     \end{cases}
   \]
 \end{example}
@@ -390,9 +398,11 @@ sets form a $\sigma$-algebra on $\R^n$.
   subadditivity.
 \end{remark}
 \begin{remark}
-  A subset of a $\mu$-negligible set is $\mu$-negligible since $\mu$ is
+  A subset of a $\mu$-negligible set is $\mu$-negligible since measures are
   monotone.
 \end{remark}
+
+\subsection{Complete measure spaces}
 
 \begin{definition}[Complete measure space]
   A triple $(X,\A,\mu)$ is called a complete measure space if
@@ -406,38 +416,46 @@ sets form a $\sigma$-algebra on $\R^n$.
   \begin{align*}
     \mathcal N &= \set{N \in \A \mid \mu(N) = 0} \\
     \overline \A &= 
-    \set{E \cup F \mid E \in \A \stand F \subseteq N \in \mathcal N}
+    \set{E \cup F \mid E \in \A \stand F \subseteq N \in \mathcal N}.
   \end{align*}
+  Then $\overline A$ is a $\sigma$-algebra, and there exists 
+  a unique extension $\bar \mu$ of $\mu$ such that $(X, \overline \A, \bar \mu)$
+  is a complete measure space.
 \end{theorem}
+\begin{proof}
+  In hw
+\end{proof}
+\begin{remark}
+  $\overline A$ is the smallest $\sigma$-algebra containing $\A$ and all
+  the subsets of $\mu$-negligible sets.
+\end{remark}
 
-
-
-
-% Add lecture 2 from Yarden etc.
-
-We want to construct a measure space $(\R^n, \A, \mu)$ such that
+Our goal is to construct a measure space $(\R^n, \A, \mu)$ such that
 \[
   \mu\del{\prod_{i=1}^{n} [a_i,b_i]} =
   \prod_{i=1}^{n} |a_i - b_i|.
 \]
-
-Recall that we saw earlier that
+Recall that earlier we saw that
 \[
   B(\R^n) =
-  \otimes_{i=1}^{n} B(\R) =
-  \sigma(\prod_{i=1}^{n} [a_i,b_i])
+  \bigotimes_{i=1}^{n} B(\R) =
+  \sigma\del{\prod_{i=1}^{n} [a_i,b_i]}
 \]
-Because we want the boxes to be contained in $\A$ we have that
-$B(\R^n) \subseteq \A$.
+which implies that $B(\R^n) \subseteq \A$.
 To define the measure for other sets we can use an outer measure
 \[
-  \mu^*(E) := \int \set{\sum_{i=1}^{\infty} \mu(R_i) \mid E \subset 
+  \mu^*(E) := \inf \set{\sum_{i=1}^{\infty} \mu(R_i) \mid E \subseteq 
   \bigcup_{i=1}^{n} R_i}.
 \]
-Is $\mu^*(R) = \mu(R)$? Yes.
-Did we get a measure? No, we got an outer measure.
+We now have two questions.
+\begin{itemize}
+  \item[(1)] Is $\mu^*(R) = \mu(R)$? Yes.
+  \item[(2)] Did we get a measure? No, we got an outer measure.
+\end{itemize}
 \begin{remark}
-  Defining $\mu^*$ only on ``good'' sets gives us Lebesgue measure.
+  Defining $\mu^*$ only on ``good'' sets gives us a measure called
+  Lebesgue measure.
+  Good sets are sets for which the outer measure is equal to the inner measure.
 \end{remark}
 
 \begin{definition}[Outer measure]
@@ -446,7 +464,9 @@ Did we get a measure? No, we got an outer measure.
   \begin{enumerate}
     \item[(1)] $\mu^*(\emptyset) = 0$;
     \item[(2)] $\mu^*$ is monotone (if $A \subset B$ then $\mu(A) < \mu(B)$);
-    \item[(3)] $\mu$ is subadditive ().
+    \item[(3)] $\mu$ is subadditive 
+      $\del{\mu\del{\bigcup_{i=1}^{\infty} E_i} \le 
+      \sum_{i=1}^{\infty} \mu(E_i)}$.
   \end{enumerate}
 \end{definition}
 
@@ -456,61 +476,210 @@ Did we get a measure? No, we got an outer measure.
   $\emptyset, X \in \mathcal E$ and $\varphi(\emptyset) = 0$.
   For all $A \subseteq X$ we define
   \[
-    \mu^*(A) = \inf\set{\sum_{i=1}^{\infty} \varphi(E_i) \colon 
+    \mu^*(A) = \inf\set{\sum_{i=1}^{\infty} \varphi(E_i) \mid 
     E_i \in \mathcal E \stand A \subseteq \bigcup_{i=1}^{\infty} E_i}
   \]
   then $\mu^*$ is an outer measure.
 \end{proposition}
 \begin{remark}
-  It is not promised that $\mu*(E) = \varphi(E)$ for $E \in \mathcal E$.
+  It is not promised that $\mu^*(E) = \varphi(E)$ for $E \in \mathcal E$.
 \end{remark}
-\begin{proof}
+% ADD EXAMPLE?
+\begin{proof} \phantom{}
 \begin{enumerate}
-  \item[(1)] We can cover by $E_i = \emptyset$.
+  \item[(1)] We can cover $\emptyset$ by $E_i = \emptyset$.
   \item[(2)] Let $A \subseteq B$.
     We can use the cover of $B$ for $A$ since 
-    $A \subseteq B \subseteq \cup E_i$ which implies $\mu^*(A) \le \mu^*(B)$.
-  \item[(3)]
+    $A \subseteq B \subseteq \bigcup E_i$ which implies $\mu^*(A) \le \mu^*(B)$.
+  \item[(3)] By the definition of the infimum there exists a covering
+    $A_i \subseteq \cup_{k=1}^{\infty} E_k^i$ such that
+    \[
+      \mu\del{\bigcup_{k=1}^{\infty} E_k^i} \le 
+      \sum_{i=1}^{\infty} \mu^*(A_i) + \epsilon \cdot 2^{-i}
+    \]
+    which implies that 
+    $\bigcup_{i=1}^{\infty} A_i \subseteq \bigcup_{k,i=1}^{\infty} E_k^i$
+    and so
+    \[
+      \mu\del{\bigcup_{i=1}^{\infty} E_i} \le 
+      \sum_{k,i}^{\infty} \varphi(E_k^i) \le
+      \sum_{i=1}^{\infty} \mu(E_i) + \epsilon
+    \]
+    but $\epsilon > 0$ is arbitrary which completes the proof.
 \end{enumerate}
 \end{proof}
 
 \begin{remark}
-  Every outer measure can be constructed the way we constructed them.
+  Every outer measure can be constructed by $\varphi$ in this way.
 \end{remark}
 
 \begin{definition}[$\mu^*$-measurable set]
-  A set $A \subseteq X$ is called $\mu^*$-measurable if
+  A set $A \subseteq X$ is called $\mu^*$-measurable if for all $E \subseteq X$,
   \[
-    \forall E \subseteq X \colon
     \mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c).
   \]
 \end{definition}
 
+\begin{remark}
+  It is clear that the $\le$ direction is always satisfied from subadditivity,
+  so it is only necessary to verify the direction $\geq$.
+  In particular, it is only necessary to verify it for sets such that
+  $\mu^*(E) < \infty$.
+\end{remark}
+
+Let $A \subseteq E$ be such that $\mu^*(E) < \infty$.
+Then we need to verify that
+\[
+  \underbrace{\mu^*(A)}_{\text{outer measure}} = 
+  \underbrace{\mu^*(E) - \mu^*(E \cap A^c)}_{\text{inner measure}}.
+\]
+
+\subsection{Caratheodory's outer measure theorem}
+
 \begin{theorem}[Caratheodory's outer measure theorem]
+  \label{thm:car-outer-measure}
   Let $\mu^*$ be an outer measure on $X$. Then
   \begin{enumerate}
-    \item[(1)] $\mathcal F_{\mu^*} := \set{\mu^*\text{-measurable sets}}$ is a 
+    \item[(1)] $\mathcal F_{\mu^*} := 
+      \set{A \subseteq X \mid A \text{ is }\mu^*\text{-measurable}}$ is a 
       $\sigma$-algebra.
-    \item[(2)] $(X, \mathcal F_{\mu^*}, \mu^*\vert_{\mathcal F_{\mu^*}})$
+    \item[(2)] The triple
+      $(X, \mathcal F_{\mu^*}, \mu^*\vert_{\mathcal F_{\mu^*}})$
       is a complete measure space.
   \end{enumerate}
 \end{theorem}
-\begin{remark}
-
+\begin{remark} \label{recitations-one}
+  We saw in the recitations that in order
+  to show that $\mathcal F$ is a $\sigma$-algebra, it suffices to prove that
+  if $E_i \in \mathcal F$ are disjoint, then
+  \[
+    \biguplus_{i=1}^{\infty} E_i \in \mathcal F.
+  \]
 \end{remark}
+\begin{proof} \phantom{}
+\begin{enumerate}
+  \item[(1)] Let us show that $\mathcal F = \mathcal F_{\mu^*}$ is an algebra.
+  $\mathcal F$ is closed under the complement operation because by the
+  symmetric definition, if $A$ is $\mu^*$-measurable so is $A^c$.
+
+  Let $A,B \in \mathcal F$ and $E \subseteq X$.
+  Since $A$, $B$ are $\mu^*$-measurable we have that
+  \begin{align*}
+    \mu^*(E) &= \mu^*(E \cap A) + \mu^*(E \cap A^c) \\ &=
+    \mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) +
+    \mu^*(E \cap A^c \cap B) + \mu^*(E \cap A^c \cap B^c).
+  \end{align*}
+  We also have that
+  \[
+    (A \cup B) \cap E =
+    \del{(A \cap B) \cap E} \sqcup
+    \del{(A^c \cap B) \cap E} \sqcup
+    \del{(A \cap B^c) \cap E}.
+  \]
+  Thus, from subadditivity
+  \[
+    \mu^*(E) \geq \mu^*(E \cap (A \cup B)) \mu^*(E \cap (A \cup B)^c)
+  \]
+  which implies $A \cup B \in \mathcal F$.
+  By induction we get that  $\mathcal F$ is closed under finite unions
+  which makes it an algebra.
+  Moreover, let $A,B \in \mathcal F$ be disjoint sets. Then
+  \[
+    \mu^*(\underbrace{A \sqcup B}_{E}) =
+    \mu^*((A \sqcup B) \cap A) +
+    \mu^*((A \sqcup B) \cap A^c) =
+    \mu^*(A) + \mu^*(B)
+  \]
+  so $\mu$ is a finite additive measure on $\mathcal F$.
+  
+  Let $\set{A_j}_{j=1}^{\infty} \subseteq \mathcal F$ be a sequence of
+  disjoint sets.
+  Define
+  \[
+    B_n = \biguplus_{i=1}^{n} A_i \in \mathcal F \tand
+    B_{\infty} \biguplus_{i=1}^{\infty} A_i.
+  \]
+  For all $E \subseteq X$ we have
+  \begin{align*}
+    \mu^*(E \cap B_n) &= 
+    \mu^*((E \sqcup B_n) \cap A_n) +
+    \mu^*((E \sqcup B_n) \cap A_n^c) \\ &=
+    \mu^*(E \cap A_n) + \mu^*(E \cap B_{n-1}) \\ &=
+    \sum_{i=1}^{n} \mu^*(E \cap A_i).
+  \end{align*}
+  Using this and since $\mu^*$ is monotone we have
+  \[
+    \mu^*(E) =
+    \mu^*(E \cap B_n) + \mu^*(E \cap B_n^c) \geq
+    \sum_{i=1}^{n} \mu^*(E \cap A_i) + \mu^*(E \cap B_{\infty}^c).
+  \]
+  Taking $n \to \infty$ we have
+  \[
+    \mu^*(E) \geq
+    \sum_{i=1}^{\infty} \mu^*(E \cap A_i) + \mu^*(E \cap B_{\infty}^c) \geq
+    \mu^*\del[4]{E \cap \underbrace{\bigcup_{i=1}^{\infty} A_i}_{B_{\infty}}}   
+    + \mu^*(E \cap B_{\infty}^c) \geq
+    \mu^*(E)
+  \]
+  which implies that $B_{\infty} \in \mathcal F$ ($\sigma$-additive).
+  From \Cref{recitations-one} we have that $\mathcal F$ is a $\sigma$-algebra.
+  \item[(2)] Let $A \subseteq X$ such that $\mu^*(A) = 0$.
+  Then we have
+  \[
+    \mu^*(E) \le
+    \mu^*(E \cap A) + \mu^*(E \cap A^c) \le
+    \underbrace{\mu^*(A)}_{0} + \mu^*(E) =
+    \mu^{E}
+  \]
+  which implies that all the expressions must be equal so
+  \[
+    \mu^*(E) =
+    \mu^*(E \cap A) + \mu^*(E \cap A^c)
+  \]
+  which means $A \in \mathcal F_{\mu^*}$.
+  Since $\mathcal F_{\mu^*}$ contains all $\mu^*$-negligible sets, it is
+  complete which also completes the proof.
+\end{enumerate}
+\end{proof}
+
+\subsubsection{Constructing Lebesgue measure on \texorpdfstring{$\R^n$}{Rn}}
+
+Let
+\[
+  \mathcal R = \set{R = \prod_{i=1}^{\infty} [a_i,b_i] \mid a_i,b_i \in \R}
+\]
+and define
+\[
+  \varphi(R) = \Vol(R) = \prod_{i=1}^{\infty} |a_i - b_i|.
+\]
+Let us define the outer Lebesgue measure for $E \subseteq \R^n$
+\[
+  \mu^*(E) = \inf\set{\sum_{i=1} \Vol(R_i) \mid 
+  E \subseteq \bigcup_{i=1}^{\infty} R_i \st R_i \in \mathcal R}.
+\]
+We saw that it is an outer measure.\
+By \Cref{thm:car-outer-measure} the space 
+$(\R^n, L(\R^n), \mu^*\vert_{L(\R^n)})$ is a complete measure space,
+such that
+\[
+  \mu^*\vert_{L(\R^n)} = \mu \quad 
+  \parbox{8em}{ \phantom{calle}is called \\ Lebesgue measure}
+  \tand
+  L(\R^n) = \mathcal F_{\mu^*} \quad
+  \parbox{10em}{is the $\sigma$-algebra \\ of the Lebesure \\
+  measurable sets in $\R^n$}
+\]
+We now need to show that
+\begin{enumerate}
+  \item[(1)] For all $R \in \mathcal R$ we have $\mu^*(R) = \Vol(R)$;
+  \item[(2)] $R \subseteq L(\R^n) \iff 
+    B(\R^n) = \sigma(\mathcal R) \subseteq L(\R^n)$.
+\end{enumerate}
+
+
+
 
 % Proof
-
-
-
-
-
-
-
-
-
-
-
 
 
 

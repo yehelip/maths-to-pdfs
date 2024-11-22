@@ -300,7 +300,8 @@ The following lemma will allow us to discuss more pastings of spaces.
 
 \begin{proposition}[Universal property of disjoint union]
   Let $\set{X_{\alpha}}_{\alpha}, Y$ be topological spaces,
-  let $f_{\alpha} \colon X_{\alpha} \to Y$ be continuous functions.
+  let $f_{\alpha} \colon X_{\alpha} \to Y$ be a collection of continuous
+  functions.
   Then exists a unique continuous function 
   $f \colon \coprod_{\alpha} X_{\alpha} \to Y$ such that
   $f_{\alpha} = f \circ i_{\alpha}$ where $i_{\alpha} \colon X_{\alpha} \to
@@ -320,14 +321,14 @@ The following lemma will allow us to discuss more pastings of spaces.
   A CW complex is a topological space $X$ with subspaces
   \[
     \emptyset= X^{-1} \subseteq X^{0} \subseteq X^{1} \subseteq \cdots
-    \subseteq X = \bigcup_{n} X^{n}
+    \subseteq X^n = X = \bigcup_{n} X^{n}
   \]
   such that the spaces $X^n$ are constructed inductively in the following
   way. Define
   \[
     X^{-1} := \emptyset.
   \]
-  For $n \geq 1$ assume that $X^{n-1}$ is defined.
+  For $n \geq 0$ assume that $X^{n-1}$ is defined.
   Let $\set{D^n_{\alpha}}_{\alpha}$ be a collection of $n$-dimensional discs,
   let $\set{f_{\alpha} \colon \partial D^n_{\alpha} \to X^{n-1}}_{\alpha}$
   be a collection of continuous functions. Define:
@@ -357,7 +358,8 @@ The following lemma will allow us to discuss more pastings of spaces.
 \end{remark}
 
 \begin{example}
-  A $0$-dimensional complex $X$ is a discrete set.
+  Note that since $\partail D^0 = \emptyset$ a $0$-dimensional complex $X$ 
+  is always a set of points with the discrete topology.
   The $0$-cells are called the vertices of $X$.
 \end{example}
 
@@ -382,6 +384,13 @@ The following lemma will allow us to discuss more pastings of spaces.
   and indeed we have $S^n = X^n = \bigslant{\set{*} \coprod D^n_{\alpha}}{\sim}$
   where $x \sim *$ for all $x \in \partial D^n_{\alpha}$.
 \end{example}
+
+In the above example it might be useful to imagine the cases for $n = 1$
+and $n = 2$.
+In $n = 1$ we paste the boundary $(-1,0)$ and $(0,1)$ to get $S^1$ just as
+expected.
+In $n = 2$ we paste the boundary again, closing the disc to form the sphere
+$S^2$ as expected.
 
 \begin{example}
   Using the construction from the previous example, we can construct a CW
@@ -615,6 +624,7 @@ The proof of this theorem will be omitted in this course.
 \end{remark}
 
 \begin{proposition}
+  \label{prop:pp-kp-tp}
   $P^2 \# P^2 \# + P^2 \cong K^2 \# P^2 \cong T^2 \# P^2$
 \end{proposition}
 \begin{proof}
@@ -626,7 +636,9 @@ The proof of this theorem will be omitted in this course.
 \section{Classification of surfaces}
 \subsection{Classification of compact surfaces}
 
+
 \begin{theorem}[The classification theorem of compact surfaces]
+  \label{thm:surfaces-classification}
   Every connected surface is homeomorphic to one of the following:
   \begin{enumerate}
     \item[(1)] $S^2$;
@@ -639,7 +651,18 @@ The proof of this theorem will be omitted in this course.
   the surface.
 \end{definition}
 
-% sketch of proof
+\begin{theorem}
+  \label{thm:classification-lemma}
+  Every compact surface with triangulation is homeomorphic to
+  \[
+    \underbrace{T^2 \# \cdots \# T^2}_{n \text{ times}} \# 
+    \underbrace{P^2 \# \cdots \# P^2}_{m \text{ times}}
+  \]
+\end{theorem}
+The idea of the proof of \Cref{thm:surfaces-classification} is to show
+we can assume $S$ is not homeomorphic to $S^2$ and then using 
+\Cref{prop:pp-kp-tp} and \Cref{thm:classification-lemma} we would get the
+desired result.
 
 \subsection{Euler's characteristic}
 \begin{definition}[Euler characteristic]
@@ -648,19 +671,27 @@ The proof of this theorem will be omitted in this course.
   sum:
   \[
     \chi(X)=
-    \#\set{0-\Cells} -
-    \#\set{1-\Cells} +
-    \#\set{2-\Cells} -
-    \#\set{3-\Cells} + \cdots
+    \#\set{0\text-\Cells} -
+    \#\set{1\text-\Cells} +
+    \#\set{2\text-\Cells} -
+    \#\set{3\text-\Cells} + \cdots
   \]
 \end{definition}
 \begin{example}
-
+  A CW complex of the sphere $S^2$ with one $0$-cell and one $2$-cell gives
+  \[
+    \chi(S^2) = 1 - 0 + 1 = 2
+  \]
+\end{example}
+\begin{example}
+  A CW complex of the sphere $S^2$ with one $0$-cell and one $2$-cell gives
+  \[
+    \chi(S^2) = 1 - 0 + 1 = 2
+  \]
 \end{example}
 
-
-
 %%%%%%%%
+
 
 % Add example of pasting all sides of the triangle to one another.
 
