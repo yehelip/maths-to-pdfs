@@ -502,27 +502,30 @@ Recall that $T \colon \C \to \R^2$ is the operator $T(x + y i) = (x,y)$.
 
 We now prove \Cref{prop:pd}.
 
-\begin{proof}
-  For $(1)$ we can first let $t \to 0$ in $\R$ and see that
+\begin{proof} \phantom{}
+\begin{enumerate}
+  \item[(1)] We can first let $t \to 0$ in $\R$ and see that
   \begin{align*}
-    f'(z_0) &= \lim_{t \to \0} \frac{f(z + t) - f(z)}{h} \\
+    f'(z_0) &= \lim_{t \to 0} \frac{f(z + t) - f(z)}{h} \\
             &= \lim_{t \to 0} \frac{u(x_0 + t, y_0) - u(x_0,y_0) + 
             i v(x_0 + t, y_0) - i v(x_0,y_0)}{t} \\
-            &= \pd{u}{x}(p) + i \pd{v}{x}(p).
+            &= \diffp{u}{x}(p) + i \diffp{v}{x}(p).
   \end{align*}
   Similarly,
   \begin{align*}
-    f'(z_0) &= \lim_{t \to \0} \frac{f(z + i t) - f(z)}{h} \\
+    f'(z_0) &= \lim_{t \to 0} \frac{f(z + i t) - f(z)}{h} \\
             &= \lim_{t \to 0} \frac{u(x_0, y_0 + t) - u(x_0,y_0) + 
             i v(x_0, y_0 + t) - i v(x_0,y_0)}{t} \\
-            &= \pd{v}{y}(p) - i \pd{u}{y}(p)
+            &= \diffp{v}{y}(p) - i \diffp{u}{y}(p)
   \end{align*}
   which completes the proof of $(1)$.
   From the equation
   \[
      \pd{u}{x}(p) + i \pd{v}{x}(p) = \pd{v}{y}(p) - i \pd{u}{y}(p)
   \]
-  we immediately get $(2)$.
+  \item[(2)] This is an immediate result of $(1)$.
+  \item[(3)]
+\end{enumerate}
 \end{proof}
 
 The following proposition is a kind of converse to the previous proposition.
@@ -661,7 +664,7 @@ We now proceed to prove \Cref{thm:hadamard}
 \end{example}
 
 \begin{proposition}
-  Let 
+  Let $f(z) := \sum_{n=0}^{\infty} $
 \end{proposition}
 
 

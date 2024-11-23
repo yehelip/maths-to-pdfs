@@ -99,9 +99,9 @@ We then have $x = \frac{z + \bar z}{2}$, $y = \frac{z - \bar z}{2i}$
   We define the Wirtinger derivative as
   \[
     \pd{}{z} :=
-    \half \pd{}{x} - \frac{i}{2} \pd{}{y} \tand
+    \half \diffp{}{x} - \frac{i}{2} \diffp{}{y} \tand
     \pd{}{\bar z} :=
-    \half \pd{}{x} + \frac{i}{2} \pd{}{y}
+    \half \diffp{}{x} + \frac{i}{2} \diffp{}{y}
   \]
 \end{definition}
 
@@ -124,25 +124,20 @@ We then have $x = \frac{z + \bar z}{2}$, $y = \frac{z - \bar z}{2i}$
   $(1)$ We have
   \[
     \pd{f}{z} :=
-    \del{\half \pd{}{x} - \frac{i}{2} \pd{}{y}} (u + i v) =
+    \del{\half \diffp{}{x} - \frac{i}{2} \diffp{}{y}} (u + i v) =
     \frac{u_x + i v_x}{2} + \half (v_y - i u_v) = 
     f'(z)
   \]
   $(2)$ We have
   \[
     \pd{f}{\bar z} :=
-    \del{\half \pd{}{x} + \frac{i}{2} \pd{}{y}} (u + i v) =
+    \del{\half \diffp{}{x} + \frac{i}{2} \diffp{}{y}} (u + i v) =
     \frac{u_x - v_y}{2} + i \frac{u_y + v_x}{2} = 0
   \]
   We know that $f$ is holomorphic if and only if it satisfies the C--R
   equations if and only if $\pd{f}{\bar z} = 0$ which completes this part.
 \end{solution}
 
-\begin{remark}
-  \[
-    \diffp{f}{\bar z}
-  \]
-\end{remark}
 
 
 
