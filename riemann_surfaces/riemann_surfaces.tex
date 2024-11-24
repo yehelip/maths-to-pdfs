@@ -369,7 +369,7 @@ This will imply that \item $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
   Also, $\set{0,1,\tau_2} \subseteq \Lambda_{\tau_2}$ so 
   $0 = \bar f(0), \bar f(1) = a, \bar f(\tau_2) = a \tau_2$ are in
   $\Lambda_{\tau_1}$ so we can write $a = \bar f(1) = $
-  %% MORE STUFF?
+  %% MOR$E STUFF?
   We now have
   \[
     \tau_2 =
@@ -383,6 +383,121 @@ This will imply that \item $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
 \end{proof}
 
 
+\newpage
+
+\section{Isotopy and Homotopy}
+Let $X$ be a metric space and $F_0, F_1 \colon X \to X$ homeomorphisms.
+Then we say $F_0$, $F_1$ are homotopic if there exists a family $F_t$
+for $t \in [0,1]$ of continuous maps such that $t \mapstp F_t(x)$ is
+continuous for all $x \in X$ (we don't require $F_0$, $F_1$ to be 
+homeomorphisms).
+
+The maps $F_0$, $F_1$ are said to be isotopic if $F_t$ are required to
+be homeomorphisms.
+
+For a surface $S$, we defined $\MCS(S)$
+
+\begin{theorem}[Baire, Epstein]
+  If $S$ is a finite type surface (e.g.\ closed surface of XXX)
+  then two homeomorphisms $F_0, F_1 \colon X \to X$ are homotopic
+  iff they are isotopic.
+\end{theorem}
+
+Last time we have shown that if $T = \R^2 / \Z^2$ is a torus,
+then $\MCG(S) = \SL_2(\Z)$.
+For any $A \in \SL_2(\Z)$ we obtained a homeomorphism
+\[
+  \fullfunction{\psi_A}{T}{T}{[x]}{[Ax]}
+\]
+We showed that any orientation preserving homeomorphism $\phi \colon T \to T$
+is homotopic to $\psi_A$ for some $A \in \SL_2(\Z)$.
+
+This gives a map
+\[
+  \fullfunction{\Phi}{\SL_2(\Z)}{\MCG(T)}{[A]}{[\psi_A]}
+\]
+which we know is surjective.
+Why is $\Phi$ injective?
+
+
+We want to show that for $A \in \SL_2(\Z)$ and $A \neq I$ that $\psi_A$
+is not homotopic to the identity map.
+
+We will see this by showing that $\psi_A$ acts nontrivially on the fundamental
+group $\Pi_1(T)$.
+
+\begin{definition}[Loop]
+  A loop based at $p$ is a continuous function $\gamma \colon [0,1] \to X$ with 
+  $f(0) = f(1) = 0$.
+\end{definition}
+
+\begin{definition}[Homotopy]
+  We say that two continuous functions $f$, $g$ from a topological space $X$
+  to $Y$ are homotopic if there exists a continuous function 
+  $H \colon X \times [0,1] \to Y$ such that $H(x,0) = f(x)$ and
+  $H(x,1) = g(x)$ for all $x \in X$.
+\end{definition}
+
+\begin{definition}[Fundamental group]
+  The fundamental group of a topological space $X$ is the space of all loops
+  in $X$ based at a point $p \in X$ up to homotopy.
+\end{definition}
+ 
+A homeomorphism $\psi \colon X \to X$ acts on $\Pi_1(X)$ by
+\[
+  \psi[\gamma] = [\psi \circ \gamma].
+\]
+The group operation is concatenation of loops.
+
+Invesrion is changing the direction of the loop.
+
+\begin{exercise}[Fundamental group of the torus]
+  The fundamental group of $T$ is $\Pi_1(T) \cong \Z^2$ is generated
+  by \[\left[\begin{pmatrix} 1 \\ 0 \end{pmatrix}\right] \tand
+  \left[\begin{pmatrix} 0 \\ 1 \end{pmatrix}\right].\]
+  This means any loop is homotopic to
+  $[\begin{pmatrix} a \\ b \end{pmatrix}]$
+  by doing $[\begin{pmatrix} 1 \\ 0 \end{pmatrix}]$ $a$ times
+  and $[\begin{pmatrix} 0 \\ 1 \end{pmatrix}]$ $b$ times.
+\end{exercise}
+
+For $A \in \SL_2(\Z)$ and $\psi_A \colon T \to T$ action on
+$\Pi_1(T, (0,0))$ (fundamental group of the torus based in $(0,0)$)
+defined by
+\[
+  (x,y) \mapsto A \begin{pmatrix} x \\ y \end{pmatrix}.
+\]
+If $\psi_A$ was homotopic to the identity it owuld act trivially on
+$\Pi_1(T, (0,0))$ which means that
+\[
+  [0,1] = [A (1,0)] = [(b,d)] \stand [(1,0)] = [A(1,0)] = [(a,c)]
+\]
+so $(a,c) = (1,0)$ and $(b,d) = (0,1)$ so $A$ is the identity matrix.
+
+\newpage
+
+\section{Hyperbolic geometry}
+Recall that $\Nih(\H)$ is the set of Mobius transformations with a representing
+matrix in $\SL_2(\Z)$.
+
+But $z \mapsto \frac 1z$ does not present Euclidean metric on 
+$\H = \set{z \colon \Im(z) > 0}$.
+
+We will introduce a metric $\rho = \rho_{hyp}$ on $\H$ s.t.\
+\[
+  \Bih(\H) = \text{Orientation preserving isometrics of } (\H,\rho).
+\]
+
+\begin{definition}[Length]
+  Let $\gamma \colon [0,1] \to \H$ be a pointwise continuous smooth path
+  between $a$ and $b$.
+
+  The hyperbolic length of $\gamma$ is
+  \[
+    L_{\rho}(\gamma) :=
+    \int_0^1 
+  \]
+\end{definition}
 
 
 
