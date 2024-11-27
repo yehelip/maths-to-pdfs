@@ -226,29 +226,34 @@ implies $f^{-1}(U)$ is an open set we say that $f$ is continuous on $A$.
 \newpage
 
 \section{Differentiability}
-Let $A \in \R^{m \times n}$. We define the linear map 
-$T_A \colon \R^n \to \R^m$ by:
+\subsection{Definitions}
+Let $A \in \R^{m \times n}$.
+We define the linear map $T_A \colon \R^n \to \R^m$ as such:
 \[
-  T(x) = Ax \quad x\in \R^n
+  T(x) := Ax.
 \]
-Let $T \colon V \to M$ be a linear transformation between inner product
-spaces, we define the operator norm to be:
-\[
-  \norm{T}_{\op} = \norm{T} = 
-  \sup_{v \neq 0} \frac{\norm{Tv}_W}{\norm{v}_V}
-\]
-and $T$ is said to be bounded if $\norm{T} < \infty$.
-An important result to prove is that if $T$ is a bounded linear 
-transformation then:
-\[
-  \norm{T}_{\op} \le 
-  \del{\sum_{i,j} a_{ij}^2}^{\half} < \infty
-\]
-and since this gives that:
-\[
-  \norm{T(x) - T(y)} \le \norm{T}_{\op} \norm{x - y}
-\]
-we get that $T$ is continuous and even Lipschitz continuous on its domain.
+\begin{definition}[Operator norm]
+  Let $T \colon V \to W$ be a linear transformation between inner product
+  spaces, we define the operator norm to be:
+  \[
+    \norm{T}_{\op} = \norm{T} = 
+    \sup_{v \neq 0} \frac{\norm{Tv}_W}{\norm{v}_V}
+  \]
+  and $T$ is said to be bounded if $\norm{T} < \infty$.
+\end{definition}
+\begin{remark}
+  An important result to prove is that if $T$ is a bounded linear 
+  transformation then:
+  \[
+    \norm{T}_{\op} \le 
+    \del{\sum_{i,j} a_{ij}^2}^{\half} < \infty
+  \]
+  and since this gives that:
+  \[
+    \norm{T(x) - T(y)} \le \norm{T}_{\op} \norm{x - y}
+  \]
+  we get that $T$ is continuous and even Lipschitz continuous on its domain.
+\end{remark}
 \begin{definition}[Affine function]
 An affine function is a function fo the form:
 \[
@@ -256,9 +261,43 @@ An affine function is a function fo the form:
 \]
 such that $A\in\R^{m \times n}$ and $b\in x\in \R^m$.
 \end{definition}
-\noindent Many basic properties of derivatives also satisfied by this
-definition of differentiablity. Now to define a general directional
-derivative:
+\begin{definition}[Differentiable function]
+  Let $U \subseteq \R^n$ be an open set, and let $f \colon U \to \R^m$.
+  Given $a \in U$ we say that $f$ is differentiable at $a$ if there exists
+  a linear transformation $T \colon \R^n \to \R^m$ such that
+  \[
+    \lim_{h \to 0} \frac{f(a + h) - (f(a) + Th)}{\norm{h}} = 0.
+  \]
+  We say that $f$ is differentiable if $f$ is differentiable at every $a \in U$.
+\end{definition}
+\begin{remark}
+  Note that since $U$ is open there exists a $\delta$ small enough such
+  that $B(a,\delta) \subseteq U$.
+\end{remark}
+\begin{remark}
+  We can also say that $f$ is differentiable at $a$ if there exists an ``error''
+  function $\epsilon(h)$ defined around $0$ such that 
+  $f(a + h) = f(a) + Th + \epsilon(h)$ and
+  \[
+    \lim_{h \to 0} \frac{\epsilon(h)}{\norm{h}} = 0.
+  \]
+  This property is equivalent to requiring $\epsilon(h) = o\del{\norm{h}}$.
+\end{remark}
+\begin{remark}
+  We denote the derivative of $f$ at $a$ either as $f'(a)$ or $\Dif f(a)$.
+\end{remark}
+Many basic properties of derivatives also satisfied by this
+definition of differentiablity.
+For example, the chain rule.
+\begin{proposition}[The chain rule]
+  Let $f$ be differentiable at $a$, and suppose that $g$ is differentiable
+  at $b := f(a)$. Then $g \circ f$ is differentiable at $a$ and
+  \[
+    (g \circ f)'(a) = g'(f(a)) f'(a) \stor
+    \Dif\, (g \circ f)(a) = \Dif g(b) \Dif f(a).
+  \]
+\end{proposition}
+We can even define directional derivatives.
 \begin{definition}[Directional derivative]
   Let $f \colon U \to \R$ with $U \subset \R^n$, $a \in U$, $0 \neq v
   \in \R^n$. Then, if the following limit exists:
@@ -275,18 +314,20 @@ derivative:
   in the direction of $e_i$ in one of the following ways:
   \[
     D_{e_i} f(a) = D_i f(a) = \diffp{f}{{e_i}}(a) = 
-    f_{x_i}(a)
+    f_{x_i}(a).
   \]
+  These are also called the partial derivatives of $f$.
 \end{remark}
 
 \begin{proposition}
-  If $f$ is differentiable at $a$ then:
+  If $f \colon \underset{\subset \R^n}{U} \to \R$ for is differentiable 
+  at $a$ then:
     \[
       D_v f(a) = D f(a) v
     \]	
-  For every $v \in \R^n$.
+  for every $v \in \R^n$.
 \end{proposition} 
-\noindent Try proving this using the fact that:
+The proof is using the fact that:
 \[
   f(a+h) = f(a) + Df(a)h + o(h).
 \]
@@ -355,9 +396,277 @@ An important corollary of this proposition is
   \]
 \end{definition}
 
+\subsection{Properties of the operator norm}
+For convenience we identify any matrix $A \in \R^{n \times n}$ as the operator
+it defines $T_A \colon \R^n \to \R^n$.
+
+Recall that we defined the operator norm as
+\[
+  \norm A = \norm{A}_{\op} = \sup\set{\norm{Ax} \colon \norm{x} = 1} =
+  \sup\set{\frac{\norm{Ax}}{\norm x} \colon x \neq 0}.
+\]
+We can easily prove that $A \mapsto \norm A$ is a norm, and that $\norm A$
+is the smallest constant that satisfies the ineqaility 
+$\norm{Ax} \le \norm A \norm x$ for all $x \in \R^n$.
+
+The operator norm also satifies
+\[
+  \norm{AB} \le \norm A \norm B
+\]
+because we have
+\[
+  \norm{(AB)x} \le A \norm{Bx} \le AB \norm x.
+\]
+
+\begin{proposition}
+  A matrix $A \in \R^{n \times n}$ is invertible if and only if there exists
+  a constant $c > 0$ such that $\norm{Ax} \geq c \norm x$ for all $x \in \R^n$.
+  Moreover, the constant $c = \norm{A^{-1}}^{-1}$ is the smallest such constant,
+  and the is also the biggest constant that satisfies $\norm{Ax} \geq c \norm c$
+  for all $x \in \R^n$.
+\end{proposition}
+\begin{proof}
+  Suppose $A$ is invertible, then we have
+  \[
+    \norm x = \norm{A^{-1} A x} \le \norm{A^{-1}} \cdot \norm{Ax},
+  \]
+  and because $\norm{A^{-1}} \neq 0$ we get that
+  \[
+    c \norm{x} \le \norm{Ax}
+  \]
+  for $c = \norm{A^{-1}}^{-1}$ for all $x \in \R^n$.
+  It is the biggest constant the satisfies this inequality because
+  \[
+    r \norm{x} \le \norm{Ax} \iff
+    \norm{A^{-1} A x} \le r^{-1} \cdot \norm{Ax} \iff
+    r \le \norm{A^{-1}}^{-1} = c
+  \]
+  Next suppose there exists $c > 0$ such that $\norm{Ax} \geq c \norm x$ for all
+  $x \in \R^n$.
+  From this we get that
+  \[
+    Ax = 0 \iff \norm{Ax} = 0 \implies c \norm x = 0 \implies x = 0,
+  \]
+  which shows that $A$ is invertible.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:invertible-balls}
+  Let $A,B \in \R^{n \times n}$.
+  If $A$ is invertible, and $\norm{A - B} < \half \norm{A^{-1}}^{-1}$ then
+  $B$ is also invertible, and $\norm{B^{-1}} \le 2 \norm{A^{-1}}$.
+\end{proposition}
+\begin{proof}
+  We want to somehow get to $B - A$ so we may notice that
+  for all $x \in \R^n$ we have that
+  \[
+    Bx = Ax + (B - A)x.
+  \]
+  Thus,
+  \[
+    \norm{Bx} \geq \norm{Ax} - \norm{(B - A)x} \geq
+    \norm{A^{-1}}^{-1} \norm x - \half \norm{A^{-1}}^{-1} \norm x \geq
+    \half \norm{A^{-1}}^{-1} \norm x.
+  \]
+  From the previous proposition, we get that $B$ is invertible and that
+  $\norm{B^{-1}} \le 2 \norm{A^{-1}}$ which completes the proof.
+\end{proof}
+
+\begin{definition}[General linear group]
+  We denote $\GL(\R^n)$ the collection of invertible matrices in 
+  $\R^{n \times n}$.
+\end{definition}
+\begin{remark}
+  It is clear that the set $\GL(\R^n)$ coupled with matrix multiplication
+  forms a group.
+\end{remark}
+
+\begin{proposition}
+  The group $\GL(\R^n)$ is an open set in $\R^{n \times n}$, and the operations
+  of multiplication and inverse are continuous.
+\end{proposition}
+\begin{proof}
+  Let $A \in \GL(\R^n)$.
+  According to \Cref{prop:invertible-balls} we have that for 
+  $r = \half \norm{A^{-1}}^{-1}$ that $B(A,r) \subseteq \GL(\R^n)$,
+  so $\GL(\R^n)$ is indeed open in $\R^n$.
+
+  To prove that the operator $m \colon \GL(\R^n) \times \GL(\R^n) \to \GL(\R^n)$
+  given by $m(A,B) = AB$ is continuous, let $A_k \taking{k \to \infty} A$
+  and $B_k \taking{k \to \infty} B$. Then
+  \[
+    \norm{A_k B_k - A B} =
+    \norm{A_k B_k - A_k B + A_k B - A B} \le
+    \norm{A_k} \norm{B_k - B} + \norm{A_k - A} \norm{B} \taking{k \to \infty}
+    0.
+  \]
+  Notice that we used the fact that a convergent sequence is bounded.
+
+  To prove that the operator $A \mapsto A^{-1}$ is continuous, set 
+  $A \in \GL(\R^n)$.
+  Let $\epsilon > 0$.
+  Choose
+  $\delta = \min\set{\half \norm{A^{-1}}^{-1},\half \norm{A^{-2}}^{-1}} 
+  \cdot \epsilon$.
+  Now for any $B$ such that $B \in B(A,\delta)$ then $B$ is invertible
+  and from \Cref{prop:invertible-balls} we have 
+  $\norm{B^{-1}} \le 2 \norm{A^{-1}}$ so
+  \[
+    \norm{A^{-1} - B^{-1}} =
+    \norm{A^{-1} (B - A) B^{-1}} \le
+    2 \norm{A^{-1}}^2 \delta < \epsilon
+  \]
+  which shows that taking the inverse of $A$ is a continuous operation and
+  completes the proof.
+\end{proof}
+
+\subsection{Continuous and differentiable partial derivatives}
+Recall that a map $f \colon \R^n \to \R^m$ is called differentiable if
+it has an affine approximation.
+In the case of a single variable functions
+\[
+  f(x) = f(a) + f'(a)(x - a) + o(x - a).
+\]
+In the case of multivariate functions, we have
+\[
+  f'(a) = J_f(a) = {\begin{bmatrix}
+    {\dfrac {\partial f_{1}}{\partial x_{1}}}&\cdots &{\dfrac {\partial 
+    f_{1}}{\partial x_{n}}}\\\vdots &\ddots &\vdots \\{\dfrac {\partial 
+    f_{m}}{\partial x_{1}}}&\cdots &{\dfrac {\partial f_{m}}{\partial 
+    x_{n}}}\end{bmatrix}}.
+\]
+If all the partial derivatives are continuous, then $f$ is differetiable at
+$a$.
+
+\begin{proposition}
+  Let $f \colon \underset{\subseteq \R^n}{U} \to \R^m$ be a function
+  such that $f = (f_1,\dots,f_m)$.
+  Suppose that for all $i$, $j$ the partial derivative $\diffp{{f_i}}{{x_j}}$
+  is continuous in a neighbourhood of $a$.
+  Then $f$ is differentiable at $a$.
+\end{proposition}
+\begin{proof}
+  We know that it suffices to prove that $f_i$ is differentiable for
+  all $i$, so suppose $f \colon U \to \R$ and let $h \in \R^n$ then
+  \[
+    h = (h_1,\dots,h_n) = \sum_{j=1}^{n} h_j e_j
+  \]
+  where $e_j$ are the unit vectors.
+  We then have that
+  \[
+    f(a + h) - f(a) =
+    \sum_{j=1}^{n}
+    \del
+    {
+      f\del{a + \sum_{i=1}^{j} h_i e_i} -
+      f\del{a + \sum_{i=1}^{j - 1} h_i e_i}
+    }
+  \]
+  because this is a telescopic sum, and since the elements in this sum
+  are the partial derivatives $\diffp{f}{{x_j}}$ at the point
+  $a + \sum_{i=1}^{j - 1} h_i e_i$ we get that this is equal to
+  \[
+    \sum_{j=1}^{n} \diffp{f}{{x_j}} \del{a + \sum_{i=1}^{j - 1} h_i e_i} h_j
+    + o(h_j) =
+    \nabla f(a) \cdot h +
+    \sum_{j=1}^{n} \del{\diffp{f}{{x_j}} 
+    \del{a + \sum_{i=1}^{j - 1} h_i e_i} - \diffp{f}{{x_j}}(a)} h_j
+    + o(h)
+  \]
+  and now we only need to show that
+  \[
+    \sum_{j=1}^{n} \del{\diffp{f}{{x_j}} 
+    \del{a + \sum_{i=1}^{j - 1} h_i e_i} - \diffp{f}{{x_j}}(a)} h_j
+    = o(h)
+  \]
+  but this follows from the continuity of the partial derivatives in a
+  neighbourhood of $a$.
+  Thus for $h \to 0$ we get that $f$ is differentiable at $a$ which completes
+  the proof.
+\end{proof}
+
+\begin{remark}
+  Let $f \colon \underset{\subset \R^n}{U} \to \R^m$ be a function.
+  If $\diffp{f_i}{{x_j}}$ is continuous for all $i$, $j$ then we say
+  $f \in C^1(U,\R^m)$.
+  This is the collection of the continuously differentiable functions from
+  $U$ to $\R^m$.
+\end{remark}
+\begin{remark}
+  A function $f \colon \underset{\subset \R^n}{U} \to \R^m$ is continuously
+  differentiable if and only if the map $x \mapsto \Dif f(x)$ is continuous
+  from $U$ to the space of linear maps $L(\R^n,\R^m)$ with respect to the
+  operator norm.
+\end{remark}
+\begin{example}
+  We will show that the function $f \colon \GL(\R^n) \to \GL(\R^n)$ defined
+  by $f(A) = A^{-1}$ is differentiable.
+
+  TO BE ADDED.
+\end{example}
+
+
+
 \newpage
 
 \section{Least Squares and Gradient Descent}
+Let $f \colon U \subset \R^n \to \R^m$ be a differentiable function.
+Suppose we are intrested in finding a minimum (maybe a local minimum) of $f$,
+then there are two methods to solve find it using the tools we have aquired
+so far.
+
+\subsection{The standard method}
+We can use the fact that if $f$ has a local minimum at a point $a \in U$ then
+$\nabla f(a) = 0$.
+We get $n$ equations in $n$ variables given by
+\begin{align*}
+  \diffp{f}{{x_1}}(a_1,\dots,a_n) &= 0 \\
+                                  &\vdotswithin{=} \\
+  \diffp{f}{{x_n}}(a_1,\dots,a_n) &= 0
+\end{align*}
+This method is good because if we solve these equations, and only get a single
+point where the gradient is $0$ and know that there must be a minimum in $U$
+then we can find it quite easily.
+
+\subsection{Least squares}
+Consider the function $f(x) = \norm{Ax - b}^2$, where $A \in \R^{m \times n}$
+and $b \in \R^m$.
+When the rank of $A$ is $m$ we can solve the system of linear equations
+\[
+  (*)\,Ax = b
+\]
+and the minimum will be $0$.
+This is also the case when the rank of $A$ is lower than $m$.
+However the problem gets way more intresting when $m > n$ because this means
+that it's possible that there is no solution to $(*)$ so we need to find
+the solution with the smallest error.
+This problem is called the ``least squares'' problem because we are trying
+to find the least sum of the following squares
+\[
+  \norm{Ax - b}^2 = \sum_{i}\del{\sum_{j} a_{ij} x_{j} - b_{i}}^2.
+\]
+This problem is also sometimes called ``linear regression and it is very
+important in all fields of science and engineering.
+
+Since this is the simplest case of such a problem it has a closed solution.
+We notice that
+\[
+  f(x) = \ip{Ax - b}{Ax - b} =
+  \ip{A^T Ax, Ax} - 2 \ip{Ax}{b} + \ip{b}{b} :=
+  g(x) + h(x)
+\]
+for
+\begin{align*}
+  g(x) &= \ip{A^T Ax, Ax} = x^T A^T A x \\
+  h(x) &= - 2 \ip{Ax}{b} + \ip{b}{b}
+\end{align*}
+We therefore have $\nabla f = \nabla g + \nabla h$.
+Since $h$ is an affine function, its derivative is its linear part
+\[
+  \Dif h(x) \colon x \mapsto - 2 \ip{Ax, b} = - 2 b^T A x \implies
+  \nabla h = - 2 b^T A
+\]
+We also have
 
 \newpage
 
