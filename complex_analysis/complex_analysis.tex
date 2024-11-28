@@ -7,7 +7,8 @@
 
 \input{../header.tex}
 
-\newcommand{\powerseries}{\sum_{n=0}^{\infty} a_n (z - z_0)}
+\newcommand{\powerseries}{\sum_{n=0}^{\infty} a_n (z - z_0)^n}
+\newcommand{\length}{\mathrm{length}}
 
 \begin{document}
 \maketitle
@@ -664,10 +665,356 @@ We now proceed to prove \Cref{thm:hadamard}
 \end{example}
 
 \begin{proposition}
-  Let $f(z) := \sum_{n=0}^{\infty} $
+  \label{prop:holo-on-disc}
+  Let $f(z) := \sum_{n=0}^{\infty} a_n (z - z_0)^n$ be a power series,
+  and let $R$ be the radius of convergence of $f$. Then,
+  \begin{enumerate}
+    \item[(1)] $R$ is also the radius of convergence of
+      $\sum_{n=0}^{\infty} n a_n (z - z_0)^{n - 1}$;
+    \item[(2)] suppose $R > 0$, then $f$ is holomorphic in its disc of
+      convergence with
+      \[
+        f'(z) = \sum_{n=1}^{\infty} n a_n (z - z_0)^{n - 1}.
+      \]
+  \end{enumerate}
 \end{proposition}
+\begin{proof}
+\begin{enumerate} \phantom{}
+  \item[(1)] Since $n^{1/n} \taking{n \to \infty} 1$ and
+    $\frac{n-1}{n} \taking{n \to \infty} 1$, we have
+    \[
+      \frac{1}{R} =
+      \limsup_{n \to \infty} |a_n|^{\frac{1}{n}} =
+      \limsup_{n \to \infty} |n a_n|^{\frac{1}{n - 1}}
+    \]
+    which gives the first part of the proposition.
+  \item[(2)] By the chain rule, the derivative of $f(z)$ wouldn't change
+    for any $z_0 \in \C$ so we may choose $z_0 = 0$ and then
+    $f(z) = \sum_{n=0}^{\infty} a_n z^n$.
+    Suppose $R > 0$, let $0 < r < R$, fix $w \in D_r(0)$, and define
+    \[
+      g(z) := \sum_{n=1}^{\infty} n a_n (z - z_0)^{n - 1}.
+    \]
+    Since
+    \[
+      \sum_{n=1}^{\infty} n |a_n| r^{n - 1} \le
+      \sum_{n=1}^{\infty} n |a_n| |z|^{n - 1} < \infty
+    \]
+    there exists $N \geq 1$ so that
+    \[
+      \sum_{n=N+1}^{\infty} n |a_n| r^{n - 1} < \frac{\epsilon}{3}.
+    \]
+    For $z \in D_r(0)$ set
+    \[
+      S(z) = \sum_{n=0}^{N} a_n z^n \stand
+      E(z) = \sum_{n=N+1}^{\infty} a_n z^n.
+    \]
+    Since $w \in D_r(0)$ and $S$ is holomorphic at $w$ 
+    (since it is a polynomial), there exists $\delta > 0$ so that
+    $D_{\delta}(w) \subset D_r(0)$ and
+    \begin{multline*}
+      \left|
+      \frac{f(w + h) - f(w)}{h} - g(w)
+      \right| \le
+      \left|
+      \frac{S(w + h) - S(w)}{h} - S'(w)
+      \right| +
+      \left| S'(w) - g(w) \right| \\ +
+      \left|
+      \frac{E(w + h) - E(w)}{h}
+      \right|.
+    \end{multline*}
+    Recall that
+    \[
+      S'(w) = \sum_{n=1}^{N} n a_n z^{n - 1}.
+    \]
+    Since $w \in B_r(0)$ we get
+    \[
+      \abs{S'(w) - g(w)} =
+      \abs{\sum_{n=N+1}^{\infty} n a_n w^{n - 1}} \le
+      \abs{\sum_{n=N+1}^{\infty} n |a_n| r^{n - 1}} <
+      \frac{\epsilon}{3}.
+    \]
+    Notice that for each $n \geq 1$ and $a,b \in \C$,
+    \[
+      a^n - b^n =
+      (a - b)(a^{n - 1} + a^{n - 2} b + \cdots + a b^{n-2} + b^{n-1}) =
+      (a - b) \sum_{k=0}^{n-1} a^{n-k-1} b^{k}.
+    \]
+    Using this fact, and since $w,w+h \in D_r(0)$,
+    \[
+      \abs{(w + h)^n - w^n} =
+      \abs{h \sum_{k=0}^{n-1} (w + h)^{n-k-1} w^{k}} \le
+      |h| n r^{n-1}.
+    \]
+    We now have that
+    \begin{align*}
+      \abs{\frac{E(w + h) - E(w)}{h}} 
+        &= \frac{1}{|h|} \abs{\sum_{n=N+1}^{\infty} a_n((w+h)^{n}-w^n)} \\
+        &= \frac{1}{|h|} \sum_{n=N+1}^{\infty} |a_n| \cdot |(w+h)^{n}-w^n| \\
+        &= \sum_{n=N+1}^{\infty} |a_n| n r^{n-1} < \frac{\epsilon}{3}.
+    \end{align*}
+    It now follows that
+    \[
+      \left|
+      \frac{f(w + h) - f(w)}{h} - g(w)
+      \right| < \epsilon \text{ for } 0 \neq h \in D_{\delta}(0).
+    \]
+    This shows that $f$ is holomorphic at $w$ with $f'(w) = g(w)$, which
+    completes the proof.
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}
+  A power series is infinitely complex differentiable in its disc of
+  convergence, and the higher derivatives are also power series obtained 
+  by termwise differentiation.
+\end{corollary}
+
+\begin{example}
+  The function $e^z$ is entire with
+  \[
+    (e^z)' = \sum_{n=1}^{\infty} n \frac{z^{n-1}}{n!} = e^z
+    \text{ for all } z \in \C.
+  \]
+\end{example}
+
+\begin{example}
+  The standard trigonometric functions are given by
+  \[
+    \cos z := \sum_{n=0}^{\infty} (-1)^n \frac{z^{2n}}{(2n)!} \stand
+    \sin z := \sum_{n=0}^{\infty} (-1)^n \frac{z^{2n+1}}{(2n+1)!}.
+  \]
+  It is easy to verify that in both cases the radius of convergence
+  is $\infty$.
+  We also see that
+  \[
+    (\cos z)' = \sum_{n=1}^{\infty} (-1)^n \frac{z^{2n-1}}{(2n-1)!} = - \sin z
+  \]
+  and
+  \[
+    (\sin z)' = \sum_{n=0}^{\infty} (-1)^n \frac{z^{2n}}{(2n)!} = \cos z.
+  \]
+  From these equalities it is easy to check that $\sin z$ and $\cos z$ agree
+  with their respective real versions.
+  Moreover, a simple calculation gives the identities
+  \[
+    \cos z = \frac{e^{iz} + e^{-iz}}{2} \stand
+    \sin z = \frac{e^{iz} - e^{-iz}}{2 i},
+  \]
+  which are called Euler formulas.
+  By adding these identites we get
+  \[
+    e^{iz} = \cos z + i \sin z.
+  \]
+  It follows that for all $x,y \in \R$ we have
+  \[
+    e^{x + y i} = e^x e^{y i} = e^x (\cos y + i \sin y).
+  \]
+\end{example}
+
+\begin{definition}[Analytic function]
+  Let $\Omega \subset \C$ be open.
+  A function $f \colon \Omega \to \C$ is said to be analytic at
+  $z_0 \in \Omega$ if there exists a power series $\powerseries$,
+  with radius of convergence $R > 0$, such that for some $0 < r < R$
+  with $D_r(z_0) \subset \Omega$ we have
+  \[
+    f(z) = \powerseries \text{ for } z \in D_r(z_0).
+  \]
+  If $f$ has a power series expansion at every point in $\Omega$,
+  we say that $f$ is analytic on $\Omega$.
+\end{definition}
+
+\begin{remark}
+  From \Cref{prop:holo-on-disc} we get that an analytic function on $\Omega$
+  is also holomorphic there. 
+  A deep theorem theorem we shall prove later is that every holomorphic 
+  function is analytic.
+  This is why the terms holomorphic and analytic are often used interchangeably.
+\end{remark}
+
+\subsection{Integration along paths}
+\begin{definition}[Path]
+  A path (in $\C$) is a continuous function $\gamma \colon [a,b] \to \C$,
+  where $a,b \in \R$ with $a < b$.
+\end{definition}
+\begin{definition}[Closed path]
+  A closed path is a path such that $\gamma(a) = \gamma(b)$.
+\end{definition}
+\begin{definition}[Simple path]
+  A path is called simple if $\gamma$ is injective, unless the path is closed,
+  in which case we only require $\gamma\vert_{(a,b)}$ to be injective.
+\end{definition}
+\begin{remark}
+  We sgakk write $\gamma^*$ for the image of $\gamma$, i.e.\
+  $\gamma^* := \gamma([a,b])$.
+  Note that $\gamma^*$ is a compact subset of $\C$.
+\end{remark}
+
+\begin{definition}[Differentiable path]
+  Let $\gamma \colon [a, b] \to \C$ be a path.
+  We say that $\gamma$ is differentiable at $t \in [a, b]$
+  if the following limit exists
+  \[
+    \gamma'(t) = \lim_{h \to 0} \frac{\gamma(t + h) - \gamma(t)}{h},
+  \]
+  where at the endpoints $a$, $b$ the limit is one-sided.
+\end{definition}
+
+\begin{definition}[Smooth path]
+  Let $\gamma \colon [a, b] \to \C$ be a path.
+  We say that $\gamma$ is smooth if $\gamma'(t)$ exists at all 
+  $t \in [a, b]$, and the map $\gamma' \colon [a, b] \to \C$ is continuous.
+\end{definition}
+
+\begin{definition}[Piecewise-smooth path]
+  Let $\gamma \colon [a, b] \to \C$ be a path.
+  We say that $\gamma$ is piecewise-smooth if there exist points 
+  $a = a_0 < a_1 < \dots < a_n = b$ so that
+  for each $0 \le k < n$ the restriction of $\gamma$ to $[a_k, a_{k+1}]$
+  is smooth.
+\end{definition}
+
+\begin{remark}
+  Note that a piecewise-smooth path is continuous and not just
+  piecewise continuous. Also, from now on every time we say `path' we mean
+  `piecewise-smooth path'.
+\end{remark}
+
+\begin{definition}[Integral]
+  Given a continuous function $f \colon [a,b] \to \C$ we define
+  \[
+    \int_{a}^{b} f(t) \dt :=
+    \int_{a}^{b} \Re(f(t)) \dt +
+    \int_{a}^{b} \Im(f(t)) \dt.
+  \]
+\end{definition}
+
+\begin{definition}[Integral along path]
+  Let $\gamma \colon [a, b] \to \C$ be a path,
+  and let $a = a_0 < a_1 < \dots < a_n = b$
+  be such that $\gamma$ is smooth on $[a_k, a_{k+1}]$ for each 
+  $0 \le k < n$.
+  Given a continuous $f \colon \gamma^* \to \C$,
+  we define the integral of $f$ along $\gamma$ as follows
+  \[
+    \int_{\gamma} f(z) \dz :=
+    \sum_{k=0}^{n-1} \int_{a_k}^{a^{k+1}} f(\gamma(t)) \gamma'(t) \dt.
+  \]
+\end{definition}
+\begin{remark}
+  Notice that the integrand $f(\gamma(t)) \gamma'(t)$ is well defined
+  and continuous at each $t \in [a,b] \setminus \set{a_1,\dots,a_{n-1}}$.
+  This we can also write,
+  \[
+    \int_{\gamma} f(z) \dz :=
+    \int_{a}^{b} f(\gamma(t)) \gamma'(t) \dt.
+  \]
+\end{remark}
+
+\begin{definition}[Length of a path]
+  Let $\gamma \colon [a, b] \to \C$ be a path,
+  and let $a = a_0 < a_1 < \dots < a_n = b$
+  be such that $\gamma$ is smooth on $[a_k, a_{k+1}]$ for each 
+  $0 \le k < n$.
+  The length of $\gamma$ is defined as follows,
+  \[
+    \length(\gamma) := \int_{a}^{b} |\gamma'(t)| \dt.
+  \]
+\end{definition}
+
+\begin{example}[Length of a circle]
+  Let $z_0 \in C$ and $r > 0$ be given.
+  Let $\gamma \colon [0, 2 \pi] \to \C$ be with
+  $\gamma(\theta) = z_0 + r e^{i \theta}$ for $\theta \in [0, 2 \pi]$.
+  It is clear that $\gamma$ is a smooth, closed and simple path.
+  Let $f \colon C_r(z_0) \to \C$ be a continuous.
+  Using a simple substitution we see that
+  \[
+    \int_{\gamma} f(z) \dz =
+    \int_{C_r(z_0)} f(z) \dz =
+    \int_{0}^{2 \pi} f(z_0 + r e^{i \theta}) i r e^{i \theta} \dtheta.
+  \]
+  Also,
+  \[
+    \length(\gamma) =
+    \length(C_r(z_0)) =
+    \int_{0}^{2 \pi} |i r e^{i \theta}| \dtheta =
+    \int_{0}^{2 \pi} |r| \dtheta =
+    2 \pi r.
+  \]
+\end{example}
+\begin{remark}
+  The curve $\gamma$ in this example is called a positively oriented circle
+  with center $z_0$ and radius $r$.
+  That is because when travelling along the curve, the interior of the circle
+  would be on the left, and the exterior on the right.
+  If we chose $\gamma(\theta) = z_0 + r^{e^{- i \theta}}$ then it would
+  be the other way around, so we would call it a negatively oriented circle.
+  Every simple closed curve has such an orientation by a heavy theorem called
+  the Jordan curve theorem which we will not prove in these notes.
+\end{remark}
+
+\begin{example}
+  Let $\alpha, \beta \in \C$ be given.
+  Let $\gamma \colon [0, 1] \to \C$ be such that
+  $\gamma(t) = t \beta + (1 - t) \alpha$ for $t \in [0,1]$.
+  Then $\gamma$ is a smooth path, and it is simple if and only 
+  if $\alpha \neq \beta$. We denote the image of $\gamma$ by $[\alpha,\beta]$.
+  Let $f \colon [\alpha,\beta] \to \C$.
+  We have
+  \[
+    \int_{[\alpha,\beta]} f(z) \dz =
+    \int_{0}^{1} f(t \beta + (1 - t) \alpha)(\beta - \alpha) \dt.
+  \]
+  Also,
+  \[
+    \length(\gamma) = \int_{0}^{1} |\beta - \alpha| \dt = |\beta - \alpha|.
+  \]
+\end{example}
+
+\begin{example}
+  Let $\gamma \colon [\alpha, \beta] \to \C$ be a path, and let
+  $\gamma^- \colon [\alpha, \beta]$ be such that
+  $\gamma^-(t) = \gamma(\alpha + \beta - t)$.
+  It is clear that $\gamma^-$ is also a path.
+  We call $\gamma^-$ the path opposite to $\gamma$.
+  Given a continuous $f \colon \gamma^* \to \C$,
+  \[
+    \int_{\gamma^-} f(z) \dz =
+    \int_{a}^{b} f(\gamma^-(t))(\gamma^-)'(t) \dt =
+    - 
+    \int_{a}^{b} f(\gamma(a + b - t))\gamma'(b + a - t) \dt.
+  \]
+  Thus by the substitution $s = b + a - t$,
+  \[
+    \int_{\gamma^-} f(z) \dz =
+    - \int_{a}^{b} f(\gamma(s))\gamma'(s) \dt =
+    - \int_{\gamma} f(z) \dz.
+  \]
+  Moreover, by a similar substitution,
+  \[
+    \length(\gamma^-) =
+    \int_{a}^{b} |\gamma'(b + a - t)| \dt =
+    \int_{a}^{b} |\gamma'(s)| \dt = \length(\gamma).
+  \]
+\end{example}
+\begin{remark}
+  It is worth pointing out that if $w, \eta \in \C$ and 
+  $\gamma$ is the oriented interval from $w$ to $\eta$,
+  then $\gamma^-$ is the oriented interval from $\eta$ to $w$.
+\end{remark}
 
 
+\begin{definition}[Equivalence of paths]
+  Two paths $\gamma_1 \colon [a, b] \to \C$ and 
+  $\gamma_2 \colon [c, d] \to \C$ are said to be
+  equivalent if there exists a continuously differentiable bijection 
+  $\varphi \colon [a, b] \to [c, d]$ so
+  that $\varphi'(t) > 0$ and $\gamma_1(t) = \gamma_2(\varphi(t))$
+  for all $t \in [a, b]$.
+\end{definition}
 
 
 

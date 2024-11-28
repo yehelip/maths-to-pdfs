@@ -660,13 +660,73 @@ for
   g(x) &= \ip{A^T Ax, Ax} = x^T A^T A x \\
   h(x) &= - 2 \ip{Ax}{b} + \ip{b}{b}
 \end{align*}
-We therefore have $\nabla f = \nabla g + \nabla h$.
-Since $h$ is an affine function, its derivative is its linear part
+We therefore have that $\nabla f = \nabla g + \nabla h$.
+Since $h$ is an affine function, its derivative is equal to its linear part:
 \[
-  \Dif h(x) \colon x \mapsto - 2 \ip{Ax, b} = - 2 b^T A x \implies
-  \nabla h = - 2 b^T A
+  \Dif h(x) \colon h \mapsto - 2 \ip{Ah, b} = - 2 b^T A h \implies
+  \nabla h = - 2 b^T A.
 \]
-We also have
+We also have that
+\[
+  g(x + h) - g(x) = \ip{A^T A (x + h)}{x + h} - \ip{A^T A x}{x} =
+  2 \ip{A^T A x)}{h} + \norm{A h}^2
+\]
+and we see that $2 \ip{A^T A x)}{h}$ is linear in $h$, and that
+$\norm{A h}^2 \le \norm{A}^2 \norm{h}^2 = o\del{\norm h}$ so it follows
+that
+\[
+  \Dif g(x) \colon h \mapsto 2 \ip{A^T A x)}{h} = 2 x^T A^T A h \implies
+  \nabla g(a) = 2 x^T A^T A.
+\]
+It now follows that
+\[
+  \nabla f(x) = 2 x^T A^T A - 2 b^T A.
+\]
+To find the minimum of $f$, we now need to solve the equation
+\[
+  \nabla f(x) = 2 x^T A^T A - 2 b^T A = 0 \tor
+  A^T A x = A^T b.
+\]
+Whenever $m > n$ we have that $\mathrm{rank} A = n$ and thus the matrix 
+$A^T A$ is also of rank $n$ so it is invertible.
+In this case the solution to the equation is given by
+\[
+  x = (A^T A)^{-1} A^T b.
+\]
+\begin{remark}
+  In practice we don't calculate the inverse of $A^T A$ since this is a rather
+  complex numerical task, and instead we find the solution in other ways.
+\end{remark}
+
+\subsection{Gradient descent}
+In the example above, finding a solution to the system of linear equations
+$\nabla f(x) = 0$ was easy, however, in practice not all equations are linear,
+and we can't always find a closed solution.
+
+The gradient descent method uses the fact that the direction of the gradient
+at a point is the direction of the steepest slope in order to approximate
+the minimum.
+
+In general, given a function $f \colon U \subset \R^n \to \R$ the algorithm
+goes like this
+\begin{enumerate}
+  \item[(1)] Guess a solution $x$ to the minimazation problem and calculate
+    $\nabla f(x)$ at $x$.
+  \item[(2)] If $\norm{\nabla f(x)}$ is $0$ or ``very close'' to $0$ then
+    $x$ is the minimum we are looking for and we stop the algorithm.
+  \item[(3)] Otherwise, we set $x \mapsto x - c \nabla f(x)$.
+    This moves $x$ down the steepest slope, and since we usually set
+    $0 < c < 1$ it doesn't go too far in that direction as well.
+  \item[(4)] Return to step $(2)$.
+\end{enumerate}
+The steps above only describe the basic idea, and the implementation is usually
+more complex.
+For example, we need to define what ``very close'' means.
+We also set a maximal number of iterations so the computation will stop
+if it doesn't find a minimum.
+
+Here is a code example of the gradient descent method:
+
 
 \newpage
 
@@ -873,31 +933,30 @@ the interval connecting the points is a subset of $C$.
     &h \colon [0,1] \to U \quad h(t) = y + t(x-y)
   \end{align*}
   Differentiating gives:
-  \begin{align*}
-    &Dg = v \\
-    &Dh = x-y
-  \end{align*}
-We can now define the function:
-\[
-  \varphi = g \circ f \circ h
-\]
-And apply Lagrange's theorem to get that exists $c \in (0,1)$ such that:
-\[
-  \varphi'(c) = \frac{\varphi(1) - \varphi(0)}{1 - 0} = 
-  \ip{v}{f(x)} - \ip{v}{f(y)} = \|f(x) - f(y)\|
-\]
-On the other hand we have:
-\[
-  |\varphi'(c)| = \|g'(f \circ h)(f \circ h)'(h)'\| \le 
-  \|v\| \cdot M \cdot \|x - y\|
-\]
-But we know that $\|v\| = 1$ so we get:
-\[
-  \|f(x) - f(y)\| \le M\|x - y\|
-\]
-As wanted.
+  \[
+    Dg = v \tand Dh = x-y.
+  \]
+  We can now define the function:
+  \[
+    \varphi = g \circ f \circ h
+  \]
+  and apply Lagrange's theorem to get that exists $c \in (0,1)$ such that:
+  \[
+    \varphi'(c) = \frac{\varphi(1) - \varphi(0)}{1 - 0} = 
+    \ip{v}{f(x)} - \ip{v}{f(y)} = \|f(x) - f(y)\|.
+  \]
+  On the other hand, we have:
+  \[
+    |\varphi'(c)| = \|g'(f \circ h)(f \circ h)'(h)'\| \le 
+    \|v\| \cdot M \cdot \|x - y\|,
+  \]
+  but we know that $\|v\| = 1$ so we get:
+  \[
+    \|f(x) - f(y)\| \le M\|x - y\|
+  \]
+  as wanted.
 \end{proof}
-\noindent Try showing this still stands for the $|\cdot|_\infty$ norm.
+Try showing this proposition still stands for the $|\cdot|_\infty$ norm.
 \begin{corollary}
   If $f \in C^1$ then $f$ is Lifschitz continuous on any compact
   subset of its domain.
