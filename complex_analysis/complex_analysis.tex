@@ -272,8 +272,11 @@ and it is usually denoted $\theta = \arg(z)$.
 \begin{definition}[Connected open set]
   A nonempty open set $\Omega \subset \C$ is said to be connected if it does
   not contain disjoint nonempty open subsets $\Omega_1$, $\Omega_2$ such
-  that $\Omega = \Omega_1 \cup \Omega_2$. A connected open set in 
-  $\C$ will be called a region.
+  that $\Omega = \Omega_1 \cup \Omega_2$.
+\end{definition}
+
+\begin{definition}[Region]
+  A connected open set in $\C$ will be called a region.
 \end{definition}
 
 \begin{definition}[Connected closed set]
@@ -1006,6 +1009,72 @@ We now proceed to prove \Cref{thm:hadamard}
   then $\gamma^-$ is the oriented interval from $\eta$ to $w$.
 \end{remark}
 
+\begin{proposition}
+  For continuous $f,g \colon [a,b] \to \C$ and $\alpha \in \C$,
+  \[
+    \alpha \int_{a}^{b} f(t) \dt =
+    \int_{a}^{b} \alpha f(t) \dt \stand
+    \int_{a}^{b} (f + g)(t) \dt =
+    \int_{a}^{b} f(t) \dt +
+    \int_{a}^{b} g(t) \dt.
+  \]
+  Moreover,
+  \[
+    \abs{\int_{a}^{b} f(t) \dt} \le
+    \int_{a}^{b} \abs{f(t)} \dt.
+  \]
+\end{proposition}
+\begin{proof}
+  The first two parts of the proposition are rather simple so we will only
+  prove the final part.
+  We may assume that $\int_a^b f(t) \dt \neq 0$.
+  Set $\theta := \arg(\int_a^b f(t) \dt)$. Then,
+  \[
+    \abs{\int_{a}^{b} f(t) \dt} =
+    e^{- i \theta} \int_{a}^{b} f(t) \dt =
+    \int_{a}^{b} e^{- i \theta} f(t) \dt.
+  \]
+  Since the last expression is real we can use properties of the Riemann
+  integral and the fact that $|e^{- i \theta}| = 1$ to get
+  \[
+    \abs{\int_{a}^{b} f(t) \dt} =
+    \int_{a}^{b} \Re\del{e^{- i \theta} f(t)} \dt \le
+    \int_{a}^{b} \abs{e^{- i \theta} f(t)} \dt =
+    \int_{a}^{b} \abs{f(t)} \dt,
+  \]
+  which completes the proof of the proposition.
+\end{proof}
+
+\begin{proposition}
+  Let $\gamma \colon [a, b] \to \C$ be a path. Then,
+  \begin{enumerate}
+    \item[(1)] for every continuous $f, g \colon \gamma^* \to \C$ and 
+      $\alpha, \beta \in \C$
+      \[
+        \int_{\gamma} \alpha f(z) + \beta g(z) \dz =
+        \alpha \int_{\gamma} f(z) \dz +
+        \beta \int_{\gamma} g(z) \dz.
+      \]
+    \item[(2)] for every continuous $f \colon \gamma^* \to \C$
+      \[
+        \abs{\int_{\gamma} f(z) \dz} \le
+        \norm{f}_{\gamma^*} \cdot \length(\gamma).
+      \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The first property follows from the previous proposition, and its proof is
+  omitted.
+  Given a continuous $f \colon \gamma^* \to \C$
+  \[
+    \abs{\int_{\gamma} f(z) \dz} =
+    \abs{\int_{a}^{b} f(\gamma(t)) \gamma'(t) \dt} \le
+    \int_{a}^{b} \abs{f(\gamma(t)) \gamma'(t)} \dt \le
+    \norm{f}_{\gamma^*} \int_{a}^{b} \abs{\gamma'(t)} \dt =
+    \norm{f}_{\gamma^*} \cdot \length(\gamma),
+  \]
+  which completes the proof.
+\end{proof}
 
 \begin{definition}[Equivalence of paths]
   Two paths $\gamma_1 \colon [a, b] \to \C$ and 
@@ -1016,12 +1085,131 @@ We now proceed to prove \Cref{thm:hadamard}
   for all $t \in [a, b]$.
 \end{definition}
 
+\begin{proposition}
+  Let $\gamma_1 \colon [a,b] \to \C$ and $\gamma_2 \colon [c,d] \to \C$
+  be equivalent paths.
+  Then $\length(\gamma_1) = \length(\gamma_2)$, and
+  $\int_{\gamma_1} f(z) \dz = \int_{\gamma_1} f(z) \dz$ for every continuous
+  function $f \colon \gamma_1^* \to \C$.
+\end{proposition}
+\begin{proof}
+  Since $\gamma_1$ and $\gamma_2$ are equivalent,
+  there exists a continuously differentiable bijection 
+  $\varphi$ from $[a, b]$ to $[c, d]$ so
+  that $\varphi'(t) > 0$ and $\gamma_1(t) = \gamma_2(\varphi(t))$
+  for all $t \in [a, b]$. Thus,
+  \[
+    \length{\gamma_1} =
+    \int_{a}^{b} |\gamma_1'(t)| \dt =
+    \int_{a}^{b} |\gamma_2'(\varphi(t)) \varphi'(t)| \dt =
+    \int_{a}^{b} |\gamma_2'(s)| \ds =
+    \length{\gamma_2}.
+  \]
+  Similarly,
+  \begin{align*}
+    \int_{\gamma_1} f(z) \dz &=
+    \int_{a}^{b} f(\gamma_1(t)) \gamma_1'(t) \dt =
+    \int_{a}^{b} f(\gamma_2(\varphi(t))) \gamma_2'(\varphi(t)) \varphi'(t) \dt
+                          \\ &=
+    \int_{c}^{d} f(\gamma_2(s)) \gamma_2'(s) \ds =
+    \int_{\gamma_2} f(z) \dz,
+  \end{align*}
+  which completes the proof.
+\end{proof}
 
+\begin{definition}[Primitive function]
+  Let $\Omega$ be a nonempty open subset of $\C$ and let
+  $f \colon \Omega \to \C$.
+  A primitive for $f$ on $\Omega$ is a function $F \colon \Omega \to \C$
+  that is holomorphic on $\Omega$ with $F'(z) = f(z)$ for all $z \in \Omega$.
+\end{definition}
 
+The following are the complex version of the chain rule and fundamental theorem
+of calculus.
 
+\begin{lemma}
+  Let $\emptyset \neq \Omega \subset \C$ be open,
+  let $F \colon \Omega \to \C$ be holomorphic on $\Omega$,
+  and let $\gamma \colon [a, b] \to \Omega$ be a smooth path.
+  Then $F \circ \gamma$ is also a smooth path with
+  $(F \circ \gamma)'(t) = F'(\gamma(t))\gamma'(t)$ for all $t \in [a, b]$.
+\end{lemma}
 
+\begin{proposition}
+  Let $\emptyset \neq \Omega \subset \C$ be open,
+  let $f \colon \Omega \to \C$ be continuous,
+  let $F \colon \Omega \to \C$ be a primitive for $f$ on $\Omega$,
+  and let $\gamma \colon [a, b] \to \Omega$ be a path. Then,
+  \[
+    \int_{\gamma} f(z) \dz =
+    F\del{\gamma(b)} - F\del{\gamma(a)}.
+  \]
+\end{proposition}
 
+\begin{corollary}
+  \label{cor:zero-int}
+  Let $\emptyset \neq \Omega \subset \C$ be open,
+  let $\gamma \colon [a, b] \to \Omega$ be a closed path,
+  and let $f \colon \Omega \to \C$ be continuous.
+  Suppose that $f$ has a primitive on $\Omega$,
+  then $\int_{\gamma} f(z) \dz = 0$.
+\end{corollary}
+\begin{proof}
+  Since $\gamma$ is closed we have $\gamma(a) = \gamma(b)$.
+  This together with the previous proposition completes the proof.
+\end{proof}
 
+\begin{corollary}
+  Let $\gamma \colon [a, b] \to \C$ be a closed path.
+  Then $\int_{\gamma} p(z) \dz = 0$ for every polynomial $p \colon \C \to \C$.
+\end{corollary}
+
+This corollary follows immediately from the fact that
+$z \mapsto z^{n+1} / (n+1)$ is a primitive for $z \mapsto z^n$ and previous
+propositions.
+However, \Cref{cor:zero-int} can also shine when trying to prove a function
+has no primitive.
+
+\begin{example}
+  Let $f \colon \C \setminus \set{0} \to \C$ be defined with $f(z) = 1 / z$.
+  We have that
+  \[
+    \int_{C_1(0)} f(z) \dz =
+    \int_{0}^{2 \pi} f(e^{i \theta}) i e^{i \theta} \dtheta =
+    \int_{0}^{2 \pi} i \dtheta = 2 \pi i.
+  \]
+  From \Cref{cor:zero-int} we get that $f$ does not have a primitive on
+  $\C \setminus \set{0}$.
+\end{example}
+
+\begin{corollary}
+  Let $\Omega \subset \C$ be a region, and let $f \colon \Omega \to \C$
+  be holomorphic.
+  Suppose that $f'(z) = 0$ for all $z \in \Omega$, then $f$ is constant.
+\end{corollary}
+\begin{proof}
+  \begin{lemma}
+    Let $\Omega \subset \C$ be a region.
+    Then for every $z, w \in \Omega$ there exists a path
+    $\gamma \colon [0, 1] \to \Omega$ with $\gamma(0) = z$ and $\gamma(1) = w$.
+  \end{lemma}
+  This means that a region is also path connected, and we will not prove this
+  here although the proof is quite standard.
+
+  Let $z,w \in \Omega$ be given.
+  Then there exists a path $\gamma \colon [0, 1] \to \Omega$ with
+  $\gamma(0) = z$ and $\gamma(1) = w$.
+  Now since $f'(z) = 0$ on $\Omega$, from \Cref{cor:zero-int} we can conclude
+  that
+  \[
+    0 = \int_{\gamma} f'(z) \dz = f(\gamma(1)) - f(\gamma(0)) = f(w) - f(z)
+    \implies
+    f(w) = f(z).
+  \]
+  This implies that $f$ is constant and completes the proof.
+\end{proof}
+
+\subsection{The index of a point with respect to a path}
 
 
 

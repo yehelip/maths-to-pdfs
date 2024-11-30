@@ -294,7 +294,7 @@ For example, the chain rule.
   at $b := f(a)$. Then $g \circ f$ is differentiable at $a$ and
   \[
     (g \circ f)'(a) = g'(f(a)) f'(a) \stor
-    \Dif\, (g \circ f)(a) = \Dif g(b) \Dif f(a).
+    \Dif\, (g \circ f)(a) = \Dif g(b) \circ \Dif f(a).
   \]
 \end{proposition}
 We can even define directional derivatives.
@@ -599,10 +599,36 @@ $a$.
   operator norm.
 \end{remark}
 \begin{example}
-  We will show that the function $f \colon \GL(\R^n) \to \GL(\R^n)$ defined
+  We will show that the function $f \colon \GL_n(\R) \to \GL_(\R)$ defined
   by $f(A) = A^{-1}$ is differentiable.
-
-  TO BE ADDED.
+  We see that for any matrices $A, H \in \GL_n(\R)$ we have
+  \[
+    f(A + H) - f(A) =
+    (A + H)^{-1} - A^{-1} =
+    (A + H)^{-1} (A - (A + H)) A^{-1} =
+    - (A + H)^{-1} H A^{-1}.
+  \]
+  We need to represent this expression as a linear function in $H$ and
+  an error function that is $o(H)$ so
+  \[
+    - (A + H)^{-1} H A^{-1} =
+    - A^{-1} H A^{-1} + (A^{-1} - (A + H)^{-1}) H A^{-1}.
+  \]
+  The function $H \mapsto - A^{-1} H A^{-1}$ is linear in $H$ and
+  since we know that $A \mapsto A^{-1}$ is continuous we get
+  \begin{align*}
+    \norm{\frac{(A^{-1} - (A + H)^{-1}) H A^{-1}}{\norm{H}}} &\le
+    \frac{\norm{f(A) - f(A + H)} \cdot \norm{H} \cdot 
+    \norm{A^{-1}}}{\norm{H}} \\ &=
+    \norm{f(A) - f(A + H)} \cdot \norm{A^{-1}} \taking{H \to 0} 0
+  \end{align*}
+  which shows that $(A^{-1} - (A + H)^{-1}) H A^{-1} = o(H)$.
+  This means that $f$ is differentiable with
+  \[
+    \Dif f(A)H = - A^{-1} H A^{-1}.
+  \]
+  From this formula we see that $\Dif f$ is also continuous so $f$ is
+  even continuously differentiable.
 \end{example}
 
 
