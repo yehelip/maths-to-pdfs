@@ -138,7 +138,65 @@ We then have $x = \frac{z + \bar z}{2}$, $y = \frac{z - \bar z}{2i}$
   equations if and only if $\pd{f}{\bar z} = 0$ which completes this part.
 \end{solution}
 
+\section{Line integrals}
+\begin{exercise} \phantom{}
+\begin{enumerate}
+  \item[(1)] Let $f(z) = \bar z$.
+  Find
+  \[
+    \int_{\gamma} f(z) \dz
+  \]
+  where $\gamma$ is a positively oriented circle with radius $r > 0$ around 
+  $z_0$.
+  \item[(2)] Show that in any region $\Omega$ that $f$ is not the uniform limit
+    of polynomials.
+  \item[(3)] Show that $f$ doesn't have an antiderivative.
+\end{enumerate}
+\end{exercise}
+\begin{solution} \phantom{}
+\begin{enumerate}
+  \item[(1)] Define $\gamma(t) = z_0 + r e^{i t}$ for $t \in [0, 2 \pi]$.
+  We then have
+  \[
+    \int_{\gamma} f(z) \dz =
+    \int_{0}^{2 \pi} \bar{z_0 + r e^{i t}} i r e^{i t} \dt =
+    \int_{0}^{2 \pi} i r \bar{z_0} e^{i t} + i r^2\dt =
+    r \bar_{z_0} e^{i t} + i r^2 t \biggr\vert_{0}^{2 \pi} =
+    2 \pi i r^2.
+  \]
+  
+  \item[(2)] Assume by contradiction that $\Omega$ is a region such that
+  $f$ is a uniform limit of polynomials.
+  Then for $C_r(z_0) \subseteq \Omega$ we have
+  \begin{align*}
+    \abs{\int_{C_r(z_0)} f(z) \dz - \int_{C_r(z_0) p_n(z) \dz}} &=
+    \abs{\int_{C_r(z_0)} f(z) - p_n(z) \dz} \le
+    2 \pi r \sum_{C_r(z_0)} \abs{f - p_n} \\ &\le
+    2 \pi r \sum_{\Omega} \abs{f - p_n} \taking{n \to \infty} = 0.
+  \end{align*}
+  Finally we have
+  \[
+    \int_{\gamma} f =
+    \lim_{n \to \infty} \int_{\gamma} f =
+    \lim_{n \to \infty} \int_{\gamma} f - p_n + \int_{\gamma} p_n = 0
+  \]
+  where the last inequality follows from the previous calculation, and the
+  fact that $p_n$ has an antiderivative.
 
+  \item[(3)] Assume by contradiction  that $F$ is the antiderivative of $f$ on
+  $\Omega$.
+  Then since $\Omega$ is a region there exists some $C_r(z_0) \subseteq \Omega$.
+  Then by a theorem
+  \[
+    2 \pi i r^2 = \int_{C_r(z_0)} \bar z \dz = 0
+  \]
+  which is a contradiction.
+\end{enumerate}
+\end{solution}
+
+\begin{exercise}
+
+\end{exercise}
 
 
 \end{document}

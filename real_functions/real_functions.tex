@@ -465,10 +465,10 @@ We now have two questions.
   called an outer measure if
   \begin{enumerate}
     \item[(1)] $\mu^*(\emptyset) = 0$;
-    \item[(2)] $\mu^*$ is monotone (if $A \subset B$ then $\mu(A) < \mu(B)$);
-    \item[(3)] $\mu$ is subadditive 
-      $\del{\mu\del{\bigcup_{i=1}^{\infty} E_i} \le 
-      \sum_{i=1}^{\infty} \mu(E_i)}$.
+    \item[(2)] $\mu^*$ is monotone (if $A \subset B$ then $\mu^*(A) < \mu^*(B)$);
+    \item[(3)] $\mu^*$ is subadditive
+      $\del{\mu^*\del{\bigcup_{i=1}^{\infty} E_i} \le 
+      \sum_{i=1}^{\infty} \mu^*(E_i)}$.
   \end{enumerate}
 \end{definition}
 
@@ -678,8 +678,151 @@ We now need to show that
     B(\R^n) = \sigma(\mathcal R) \subseteq L(\R^n)$.
 \end{enumerate}
 
+% Bunch of fuckary fuck fuck
+
+\begin{remark}
+  Recall that we defined the Cantor set as
+  \[
+    C := \set{x \in [0,1] \mid x = \sum_{n=1}^{\infty} \frac{a_n}{3^n} \st
+    a_n \in \set{0,2}}.
+  \]
+\end{remark}
+
+\begin{proposition}
+  The Cantor set satisfies the following properties:
+  \begin{enumerate}
+    \item[(1)] It is compact;
+    \item[(2)] We have $m(C) = 0$;
+    \item[(3)] $|C| = \aleph = 2^{\aleph_0}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof} \phantom{}
+\begin{enumerate}
+\item[(1)] We notice that
+  $C = \bigcap_{n} K_n$ such that
+  \[
+    K_n := \biguplus
+    \set{x_0 + [0,\frac{1}{3^{n}}] \mid x_0 = 
+    \sum_{n=1}^{\infty} \frac{a_n}{3^n} \st a_n \in \set{0,2}}.
+  \]
+  Since $K_n$ is a union of a finite amount of compact sets it is compact,
+  and since $C$ is an intersection of a countable amount of compact sets
+  it is compact.
+\item[(2)] We have from the monotonicity of $m$ that:
+  \[
+    0 \le m(C) \le m(K_n) = \frac{2^n}{3^n} \taking{n \to \infty} 0.
+  \]
+\item[(3)] Let $x \in C$. Then it has a unique ternary expansion without
+  the digit $1$:
+  \[
+    x = \sum_{n=1}^{\infty} \frac{a_n}{3^n} \st a_n \in \set{0,2}
+  \]
+  so it is clear that
+  \[
+    |C| = \abs{\set{0,2}^{\N}} = 2^{\aleph_0} = \aleph = \abs{[0,1]}.
+  \]
+\end{enumerate}
+\end{proof}
+
+We can construct the almost-bijection $f \colon [0,1] \to C$ explicitly:
+
+Define $b_n = \frac{a_n}{2} \in \set{0,1}$ and define
+\[
+    y = f(x) := \sum_{n=1}^{\infty} \frac{b_n}{2^n}.
+\]
+It is clear that $f(C) = [0,1]$ because every number in $[0,1]$ has a binary
+expansion, and $f$ is injective except for the numbers that have two
+binary expansions.
+
+We notice that $f$ is monotonic (nondecreasing).
+That is $x < y$ implies $f(x) \le f(y)$ and if $x$, $y$ are points
+on the boundary of a $G_n$ set we have $f(x) < f(y)$.
+
+We can expand the function such that $f \colon [0,1] \to [0,1]$ by
+defining it to be constant on $G_n$, and this is well defined because
+$f(x) = f(y)$ for $x,y \in \partial G_n$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Since $f$ is monotonic it can only have a jumping point of discontinuity,
+but since $f$ is onto $[0,1]$ it doesn't have such points and thus continuous.
+
+The function $f$ is called Cantor's function.
+It is 
+
+\begin{proposition}
+  There exists a Lebesgue measurable function that is not a Borel set.
+  That is,
+  \[
+    L(\R) \setminus B(\R) \neq \emptyset.
+  \]
+\end{proposition}
+\begin{proof}
+  We notice that
+  \[
+    |B(\R)| = \aleph_1 = 2^{\aleph},
+  \]
+  but we have that
+  \[
+    |L(\R)| \geq 2^{\aleph_1} > \aleph_1
+  \]
+  because every subset of $C$ is of measure $0$, (and since the measure
+  is complete) it is measurable, and there are $2^{|C|}$ such subsets.
+\end{proof}
+\begin{proof}
+  Let $f$ be the Cantor function, and define
+  \[
+    g(y) = \inf\set{x \in [0,1] \mid f(x) = y}
+  \]
+  as its inverse function.
+  The function $g$ is strictly increasing, and thus injective, 
+  but it is not continuous.
+\end{proof}
+
+\section{Measurable functions}
+\begin{definition}[Inverse image]
+  Given a map $f \colon X \to Y$.
+  The inverse image map $f^{-1} \colon 2^{Y} \to 2^{X}$ is given by
+  \[
+    f^{-1}(E) = \set{x \in X \mid f(x) \in E}, \quad E \subseteq Y.
+  \]
+\end{definition}
+\begin{remark}
+  The inverse image preserves taking complements, unions, and intersections
+  of any cardinality.
+\end{remark}
+
+From this remark we get the following proposition.
+
+\begin{proposition}
+  Let $\A_Y$ be a $\sigma$-algebra on $Y$.
+  Then $f^{-1}(\A_Y) = \set{f^{-1}(E) \mid E \in \A_Y} \subseteq 2^X$
+  is a $\sigma$-algebra on $X$.
+\end{proposition}
+
+\begin{definition}[Measurable function]
+  Let $(X, \A_X)$ and $(Y, \A_Y)$ be measurable spaces,
+  and let $f \colon X \to Y$ be a function.
+  Then $f$ is called a measurable function if for all $E \in \A_Y$ we
+  have $f^{-1}(E) \in \A_X$.
+  That is $f^{-1}(\A_Y) \subseteq \A_X$.
+\end{definition}
+
+\begin{remark}
+  A composition of measurable functions is measurable.
+  This easily follows from $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$.
+\end{remark}
+
+\begin{lemma}
+  Let $\A_Y = \sigma(\mathcal E)$ such that $\mathcal E \subseteq 2^{Y}$.
+  Then $f \colon X \to Y$ is measurable if and only if for all
+  $E \in \mathcal E$ we have $f^{-1}(E) \in \A_X$.
+\end{lemma}
+\begin{proof}
+  Thef first direction is trivial
+\end{proof}
 
 
+
+% Push forward ----- meaning?
 
 % Proof
 
