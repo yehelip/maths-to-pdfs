@@ -14,7 +14,8 @@
 \DeclareMathOperator{\Diff}{Diff}
 \DeclareMathOperator{\MCG}{MCG}
 \DeclareMathOperator{\Teich}{Teich}
-\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Mob}{Mob}
+\DeclareMathOperator{\PSL}{PSL}
 
 
 \begin{document}
@@ -177,7 +178,7 @@ Then
 \]
 \begin{definition}[Teichmuller space]
   We consider pairs $(X,f)$ where $X$ is a Riemann space and
-  $f \colonS \to X$ is a homeomorphism.
+  $f \colon S \to X$ is a homeomorphism.
   Then
   \[
     \mathrm{Teich}(S) = 
@@ -217,7 +218,7 @@ Then
   \]
 \end{definition}
 
-We have that $\MCS$ acts on $\Teich(S)$ by $\varphi \in \Homeo^+(S),
+We have that $\MCG$ acts on $\Teich(S)$ by $\varphi \in \Homeo^+(S),
 [\varphi] \in \MCG(S)$
 as such
 \[
@@ -236,14 +237,14 @@ Our goal is to determine $\M(S)$ and $\MCG(S)$ when $S$ is a torus.
 \begin{proof}
   Any Riemann surfaces homeomorphic to $S$ has to form 
   $\bigslant{\C}{\Lambda}$ where $\Lambda \subseteq \Bih(\C)$ is
-  properly disc, free, and $\Lambda\ip{z \to z _ \tau_1, z \to z + \tau_2}$
+properly disc, free, and $\Lambda \ip{z \to z + \tau_1}{z \to z + \tau_2}$
   where $\tau_1,\tau_2 \notin \R$.
   We have to determine when different $\bigslant{\C}{\Lambda}$ are
   biholomorphic.
-  We can also write $\biglsnat{\C}{\Lambda}$ where 
+  We can also write $\bigslant{\C}{\Lambda}$ where 
   $\Lambda = \ip{\tau_1}{\tau_2} \subseteq \C$.
   If $\Lambda_1 = \ip{\tau_1}{\tau_2}$, $\Lambda_2 = \ip{c \tau_1}{c \tau_2}$
-  for $c \in \C^&$.
+  for $c \in \C^*$.
   Then $\bigslant{\C}{\Lambda_1} \to \bigslant{\C}{\Lambda_2}$
   is given by $[z] \to [cz]$.
 
@@ -268,7 +269,7 @@ Our goal is to determine $\M(S)$ and $\MCG(S)$ when $S$ is a torus.
   Suppose there exists a biholomorphism 
   $f \colon \bigslant{\C}{\ip{1}{\tau_1}} \to \bigslant{\C}{\ip{1}{\tau_2}}$.
   Let $\bar f \colon \C \to \C$ be a lift of $f$.
-  This means $f(g + x) - f(x) \in \ip{1,\tau_1}$ whenever}
+  This means $f(g + x) - f(x) \in \ip{1}{\tau_1}$ whenever
   $g \in \ip{1}{\tau_1}$.
   \begin{align*}
     &f \colon \bigslant{\C}{\ip{1}{\tau_1}} \to \bigslant{\C}{\ip{1}{\tau_2}}
@@ -388,14 +389,14 @@ This will imply that \item $\M(S) \cong \bigslant{\H}{\SL_2(\Z)}$.
 \section{Isotopy and Homotopy}
 Let $X$ be a metric space and $F_0, F_1 \colon X \to X$ homeomorphisms.
 Then we say $F_0$, $F_1$ are homotopic if there exists a family $F_t$
-for $t \in [0,1]$ of continuous maps such that $t \mapstp F_t(x)$ is
+for $t \in [0,1]$ of continuous maps such that $t \mapsto F_t(x)$ is
 continuous for all $x \in X$ (we don't require $F_0$, $F_1$ to be 
 homeomorphisms).
 
 The maps $F_0$, $F_1$ are said to be isotopic if $F_t$ are required to
 be homeomorphisms.
 
-For a surface $S$, we defined $\MCS(S)$
+For a surface $S$, we defined $\MCG(S)$
 
 \begin{theorem}[Baire, Epstein]
   If $S$ is a finite type surface (e.g.\ closed surface of XXX)
@@ -477,7 +478,7 @@ so $(a,c) = (1,0)$ and $(b,d) = (0,1)$ so $A$ is the identity matrix.
 \newpage
 
 \section{Hyperbolic geometry}
-Recall that $\Nih(\H)$ is the set of Mobius transformations with a representing
+Recall that $\Bih(\H)$ is the set of Mobius transformations with a representing
 matrix in $\SL_2(\Z)$.
 
 But $z \mapsto \frac 1z$ does not present Euclidean metric on 
@@ -499,7 +500,74 @@ We will introduce a metric $\rho = \rho_{hyp}$ on $\H$ s.t.\
   \]
 \end{definition}
 
+%%%%%%%%
 
+Recall that every element in every $\Mob(\hat \C)$ is conjugate
+to either $z \mapsto z + 1$ or $z \mapsto \Lambda z$ for
+$\Lambda \in \C \setminus \set{0,1}$.
+
+Recall that $T_{\lambda}(z)= \Lambda z$ and
+$T_{\Lambda^{-1}}(z) = \Lambda^{-1} z$ are conjugate via the transform
+\[
+  S(z) = \frac{1}{z}.
+\]
+Indeed this can be verified.
+
+So in the above classification we can assume $|\Lambda| \geq 1$.
+
+\begin{corollary}
+  A complete set of nonindentity conjugacy class representations in $\Mob(\C)$
+  is $z \mapsto z + 1$ or $z \mapsto \Lambda z$ for $\set{\Lambda, 1 / \Lambda}$
+  distinct unordered pairs.
+\end{corollary}
+\begin{proof}
+  We know that $z \mapsto z + 1$ cannot be conjugate to $z \mapsto \Lambda z$
+  which has two fixed points in $\hat \C$.
+
+  We need to show that for different $\Lambda \neq 1$ and $|\Lambda| \geq 1$,
+  $z \mapsto \Lambda z$ are not conjugate.
+
+  Recall that in general if $\psi \in \Mob(\hat \C)$ then
+  \[
+    \psi = \psi_A(z) = \frac{a z + b}{c z + d} \st
+    A =
+    \begin{pmatrix}
+      a & b \\
+      c & d
+    \end{pmatrix} \in \SL_2(\C).
+  \]
+  There are two matrices representing $\psi$ which are $A$ and $-A$.
+
+  Since $\PSL_2(\C) \to \Mob(\hat \C)$ defined as $[A] \mapsto \psi_A$
+  is an isomorphism, we know that $\psi_A$ and $\psi_B$ are conjugate
+  in $\Mob(\hat C)$ if and only if $A$ is conjugate to $\pm B$ in
+  $\SL_2(\C)$.
+
+  Now, if $A$ is conjugate to $B$ then $A$, $B$ have the same eigenvalues.
+
+  Coming back to $z \mapsto \Lambda z$.
+
+  If $\Lambda_1, \Lambda_2 \in \C \setminus{0,1}$ such that
+  $|\Lambda_1|, |\Lambda_2| \geq 1$. $z \mapsto \Lambda z$ is represented
+  by
+  \[
+    \begin{pmatrix}
+      \Lambda & 0 \\
+      0 & 1 / \Lambda
+    \end{pmatrix} \in \SL_2(\C).
+  \]
+  which has eigenvalues $(1, 1 / \Lambda)$ for distinct $|\Lambda| \geq 1$
+  so they can't be conjugate.
+\end{proof}
+
+\subsection{Qualitative properties of M\"obius transformations}
+
+The map $z \mapsto z + 1$ preserves the unique line in $\H$ which converges
+to $\infty$ (which is the fixed point of $z \mapsto z + 1$) in both directions. 
+In other words, all the horizontal lines.
+
+The map $z \mapsto \Lambda z$ preserves the geodesic in $\H$ which converges to
+the two fixed points $z \to \Lambda z$ (namely $0$, $\infty$).
 
 
 
