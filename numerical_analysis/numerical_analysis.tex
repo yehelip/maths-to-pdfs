@@ -8,6 +8,8 @@
 
 \input{../header.tex}
 
+\DeclareMathOperator{\fl}{fl}
+
 \begin{document}
 \maketitle
 
@@ -45,9 +47,9 @@ for some costant $C$.
 Although this algorithm is much faster than the previous ones, there are
 more efficient algorithms still.
 
-\begin{definition}[Big $O$ notation]
+\begin{definition}[Big $\O$ notation]
   Let $(x_n)_{n \geq 1}$ and $(y_n)_{n \geq 1}$ be sequences of real numbers.
-  We say that $x_n = O(y_n)$ if there exist constants $C$ and $N$ such that
+  We say that $x_n = \O(y_n)$ if there exist constants $C$ and $N$ such that
   for all $n > N$
   \[
     |x_n| \le C |y_n|
@@ -56,19 +58,19 @@ more efficient algorithms still.
 
 Here are some examples
 \begin{align*}
-  \frac{n + 1}{n^2} &= O\del{\frac 1n} \\
-  Cn^3 + n - 1 &= O(n^3) \\
-  n \cdot n! + n! - 1 &= O(n \cdot n!)
+  \frac{n + 1}{n^2} &= \O\del{\frac 1n} \\
+  Cn^3 + n - 1 &= \O(n^3) \\
+  n \cdot n! + n! - 1 &= \O(n \cdot n!)
 \end{align*}
 
-Using big $O$ notation we can say that direct determinant calculations
-requires $O(n \dots n!)$ calculations, while using eigendecomposition
-to calculate it takes $O(n^3)$ operations.
+Using big $\O$ notation we can say that direct determinant calculations
+requires $\O(n \dots n!)$ calculations, while using eigendecomposition
+to calculate it takes $\O(n^3)$ operations.
 
-However, the big $O$ notation is still not very satisfying because
+However, the big $\O$ notation is still not very satisfying because
 we still have
 \[
-  C n^3 + n - 1 = O(n \cdot n!).
+  C n^3 + n - 1 = \O(n \cdot n!).
 \]
 To fix this problem we introduce the $\Theta$ notation.
 
@@ -212,21 +214,21 @@ For now, since
 
 % Add discussion about what's possible to represent and rounding numbers.
 
-Denote $\floor x$ the closest number we can represent using this method.
-Then the absolute error is
-\[
-  \abs{\floor x - x} \le 2^m 2^{-24}
-\]
-and the relative error is bounded by
-\[
-  \frac{\abs{\floor x - x}}{|x|} \le
-  \frac{2^m 2^{-24}}{[1.f]_2 \times 2^m} \le
-  2^{-24}.
-\]
-This means that the relative error of rounding is pretty low.
-In double precision because we have more bits the relative error
-is bounded by $2^{-52} \tilde 2 \times 10^{-16}$.
-This number is called $eps$ in Matlab.
+\begin{definition}[Machine number]
+  Any number that can be represented in the computer exactly is called
+  a machine number.
+  In most cases we refer to numbers that can be represented using the floating
+  point method.
+\end{definition}
+
+Denote $\floor x$ or $\fl(x)$ the closest machine number to $x$.
+\begin{definition}[Absolute error]
+  The absolute error is defined as the value of $\abs{\fl(x) - x}$ and
+  we can see that in the case of a floating point that
+  \[
+    \abs{\fl(x) - x} \le 2^m 2^{-24}
+  \]
+\end{definition}
 
 \begin{definition}[Relative error]
   Let $f(x)$ be some approximation of $x \neq 0$, the relative error
@@ -240,6 +242,31 @@ This number is called $eps$ in Matlab.
   \]
   for some $\delta \in (-\epsilon, \epsilon)$.
   We can get this equlity by setting $\delta = \frac{f(x) - x}{x}$.
+\end{definition}
+
+\begin{remark}
+  The relative erroor in the case of a floating point approximation satisfies
+  \[
+    \frac{\abs{\fl(x) - x}}{|x|} \le
+    \frac{2^m 2^{-24}}{[1.f]_2 \times 2^m} \le
+    2^{-24}.
+  \]
+\end{remark}
+This means that the relative error of rounding is pretty low.
+In double precision because we have more bits the relative error
+is bounded by $2^{-52} \sim 2 \times 10^{-16}$.
+This number is called $eps$ in Matlab.
+
+\begin{definition}[Unit roundoff error]
+  The unit roundoff error in a machine, is defined to be the minimal upper bound
+  of the relative error.
+  In single precision, the unit roundoff error is $2^{-24}$.
+\end{definition}
+
+\begin{definition}[Machine precision, machine epsilon]
+  The machine precision (or machine epsilon) is defined to be the distance
+  between the number $1$ and the immediate following machine number.
+  In single precision, the machine epsilon is $2^{-23}$.
 \end{definition}
 
 \begin{proposition}

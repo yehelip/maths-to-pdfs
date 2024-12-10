@@ -820,6 +820,206 @@ From this remark we get the following proposition.
   Thef first direction is trivial
 \end{proof}
 
+% Missing something again?????????????????????????????????????????
+
+\section{Simple functions}
+\begin{definition}[Indicator function]
+  An indicator function of a set $E \subseteq X$ is defined as
+  \[
+    \mathbbm{1}_E(x) =
+    \xsi_E(x) =
+    \begin{cases}
+      1, &x \in E \\
+      0, &\text{otherwise}
+    \end{cases}.
+  \]
+\end{definition}
+\begin{remark}
+  $\mathbbm 1_E$ is measurable if and only if $E$ is measurable.
+\end{remark}
+
+\begin{definition}[Simple function]
+  A function $\phi \colon (X,\A) \to \R$ is called simple if
+  \[
+    \phi(X) = \sum_{j=1}^{N} c_j \cdot \mathbbm{1}_{E_j}, \quad
+    c_j \in \R \stand E_j \in \A.
+  \]
+\end{definition}
+% which is measurable as a sum of measurable???
+
+\section{Integration}
+Set a measure space $(X,\A,\mu)$ and denote
+$\L^+ := \set{f \colon X \to [0,\infty] \mid \text{$f$ is measurable}}$.
+\begin{remark}
+  If $\phi \in \L^+$ is simple, then
+  \[
+    \phi = 
+    \sum_{j=1}^{N} c_j \cdot \mathbbm{1}_{E_j}, \quad
+    c_j \in [0,\infty] \stand E_j \in \A.
+  \]
+\end{remark}
+
+\begin{definition}[Integration of simple functions]
+  Let $\phi \in \L^+$ be simple.
+  Then we define
+  \[
+    \int \phi \dmu = 
+    \sum_{j=1}^{N} c_j \cdot \mu(E_j) \in [0,\infty].
+  \]
+\end{definition}
+
+\begin{remark}
+  We can verify that this definition is not dependent on the representation
+  of $\phi$.
+\end{remark}
+\begin{remark}
+  The convention is that
+  $\underset{=c_j}{0} \cdot \underset{=\mu(E_j)}{\infty} = 0$.
+\end{remark}
+\begin{remark}
+  We denote
+  \[
+    \int \phi =
+    \int \phi \dmu =
+    \int \phi(x) \dmu(x) =
+    \int \phi(x) mu(\dx)
+  \]
+  and
+  \[
+    \forall A \in \A, \quad
+    \int_{A} \phi \dmu =
+    \int \underbrace{\phi \mathbbm{1}_{A}}_{\text{simple function}} \dmu
+  \]
+\end{remark}
+
+\begin{proposition}
+  Let $\phi, \psi \in \L^+$ be simple functions. Then
+  \begin{enumerate}
+    \item[(1)] For all $a \geq 0$ we have $\int a \phi = a \int \phi$.
+    \item[(2)] $\int (\phi + \psi) = \int \phi + \int \psi$.
+    \item[(3)] If $\phi \le \psi$ then $\int \phi \le \int \psi$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof} \phantom{}
+\begin{enumerate}
+  \item[(1)] Immediate result.
+  \item[(2)] 
+  \item[(2)] 
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Integrability]
+  Let $f \in \L^+$.
+  We define
+  \[
+    \int f \dmu :=
+    \sup\set{\int \phi \dmu \colon 0 \le \phi \le f \stand \mu 
+    \text{ is simple}}.
+  \]
+  A function $f \in \L^+$ is called integrable with respect to $\mu$ if
+  $\int f \dmu < \infty$.
+  We define
+  \[
+    \int_{A} f \dmu = \int f \cdot \mathbbm{1}_{A} \dmu.
+  \]
+\end{definition}
+\begin{remark}
+  This definition generalized the previous definition for $f = \phi$.
+  This follows from property $(3)$ in the previous proposition.
+\end{remark}
+
+%%%%% MESS
+\begin{proposition}
+  Let $\psi, \phi, \phi_1, \phi_2 \in \L^+$.
+  Then
+  \begin{enumerate}
+    \item[(1)] For all $a \geq 0$ we have $\int a \phi = a \int \phi$.
+    \item[(2)] $\int (\phi_1 + \phi_2) = \int \phi_1 + \int \phi_2$.
+    \item[(3)] If $0 \le \psi \le \phi$ then $0 \le \int \psi \le \int \phi$.
+  \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Monotone convergence theorem]
+  If $\set{f_n} \subseteq \L^+$ be a pointwise monotone sequence of functions.
+  Then
+  \[
+    \lim_{n \to \infty} \int f_n \dmu = \int f \dmu.
+  \]
+\end{theorem}
+\begin{remark}
+  The function $f$ is measurable because $f = \sup_{n} f_n$.
+\end{remark}
+\begin{remark}
+  The theorem is false for the Riemann integral.
+  Since $\Q$ is countable we can construct a well order on it such that
+  $\set{q_k}_{k=1}^{\infty} = \Q$ and then define
+  \[
+    f_n(x) = \begin{cases}
+      1, &x\in \bigcup_{k=1}^{n} q_k \\
+      0, &\text{otherwise}
+    \end{cases}
+  \]
+  but the limit function is $f = \mathbbm{1}_{\Q \cap [0,1]}$ which is not
+  Riemann integrable.
+\end{remark}
+\begin{proof}
+  From property $(3)$ of %%%Cref%%%
+  we have
+  \[
+    \int f_1 \le \int f_2 \le \cdots \le \int f_n \le \int f
+  \]
+  so the sequence $\int f_n$ converges and we have
+  \[
+    \lim_{n \to \infty} \int f_n \dmu \le \int f \dmu.
+  \]
+  Now set $\alpha \in (0,1)$ and let $\phi$ be a simple function such that
+  $0 \le \phi \le f$.
+  We define
+  \[
+    A_n =\set{x \in X \colon f_n(x) \geq \alpha \cdot \phi(x)}
+  \]
+  and see that they are measurable, increasing, and $\bigcup A_n = X$.
+  Thus
+  \[
+    \int f_n \geq
+    \int f_n \mathbbm{1}_{A} \geq
+    \int \alpha \phi \cdot \mathbbm{1}_{A_n} =
+    \alpha \int_{A_n} \phi.
+  \]
+  and then
+  \[
+    \int_{A_n} \phi =
+    \int \phi \mathbbm{1}_{A_n} =
+    \sum_{j=1}^{N} c_j \mu\del{E_j \cap A_n} %%%% weird up arrow
+    \sum_{j=1}^{N} c_j \mu(E_j) = \int \phi.
+  \]
+  Thus finally we have
+  \[
+    \lim_{n \to \infty} \int f_n \geq \alpha \int \phi
+  \]
+  for an arbitrary $\alpha \in (0,1)$ so we can take $\alpha \to 1$
+  and get
+  \[
+    \lim_{n \to \infty} \int f_n \geq \int \phi.
+  \]
+  We can now take $\sup_{\phi}$ and get that
+  \[
+    \lim_{n \to \infty} \int f_n \geq \int f
+  \]
+  which completes the proof.
+\end{proof}
+\begin{corollary}
+  An equivalent definition to the integral of $f \in \L^+$ is
+  \[
+    \int f \dmu = \lim_{n \to \infty} \int \phi_n \dmu
+  \]
+  for any sequence of positive simple functions $0 \le \phi_n \to f$.
+  This is because we have shown that there exists such a sequence and the
+  limit is not dependent on the choice of sequence.
+\end{corollary}
+
+
+
 
 
 % Push forward ----- meaning?
